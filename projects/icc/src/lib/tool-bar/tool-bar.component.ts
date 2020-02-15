@@ -14,6 +14,7 @@ export class IccToolBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log( ' tool bar is ok')
   }
 
   toolBarItemClick(item: IccMenuItem) {

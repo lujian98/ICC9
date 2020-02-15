@@ -2,6 +2,7 @@ export * from './date-picker.module';
 export * from './calendar-wrapper/calendar-wrapper.component';
 export * from './model/model';
 export * from './date-range-picker/date-range-picker.component';
+export * from './picker-overlay/date-picker-overlay.component';
 export * from './picker-overlay/date-range-picker-overlay.component';
 export * from './picker-overlay/picker-overlay.animations';
 export * from './calendar-presets/calendar-presets.component';

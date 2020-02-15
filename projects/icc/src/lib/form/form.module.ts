@@ -12,7 +12,21 @@ import { IccDatePickerModule } from '../date-picker/date-picker.module';
 // import { DisplayComponent } from './fields/display/display.component'
 import { IccLocaleDatePipe } from '../pipes/locale-date.pipe';
 import { IccFormComponent } from './form.component';
-import { MaterialModule } from './material.module';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+// import { MatNativeDateModule } from '@angular/material/datepicker/'; TODOv9
+import { MatSelectModule } from '@angular/material/select';
+// import { MatOptionModule } from '@angular/material/select'; TODOv9
+import { MatRadioModule } from '@angular/material/radio';
+
+
 import { IccFieldViewComponent } from './view/field-view.component';
 import { IccFormCheckboxComponent } from './view/fields/checkbox/form-checkbox.component';
 import { IccFormDateComponent } from './view/fields/date/form-date.component';
@@ -28,7 +42,18 @@ import { IccFormViewComponent } from './view/form-view.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    MaterialModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatDatepickerModule,
+    // MatNativeDateModule,
+    MatSelectModule,
+    // MatOptionModule,
+    MatCheckboxModule,
+    MatRadioModule,
     FormsModule,
     MatTooltipModule,
 /*
