@@ -1,0 +1,18 @@
+<mat-form-field *ngIf="field" [ngClass]="'icc-grid-form-field'" [ngStyle]="{'height': rowHeight+'px'}">
+  <input #cellInput matInput type="number" [value]="value" autocomplete="off"
+    [min]="column.minValue" [max]="column.maxValue"
+    (click)="click($event)"  (blur)="onBlur()"
+    (focus)="focus($event)"
+    (wheel)="wheel($event)"
+    (keydown)="keydown($event)"
+    (input)="valueChanged($event, $event.target.value)" [placeholder]="message">
+  <i matPrefix class="fas fa-edit" style="color:green"></i>
+  <i *ngIf="message" class="fas fa-times" style="color:orange" matSuffix (click)="resetValue($event)"></i>
+  <i class="fas fa-check" [ngStyle]="{'color': isValueChanged() ? 'green':bgcolor}"
+     matSuffix (click)="resetValue($event)"></i>
+</mat-form-field>
+
+<!--
+  (mouseleave)="cellInput.blur()"
+  (keyup)="valueChanged($event, $event.target.value)"
+-->

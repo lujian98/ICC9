@@ -1,0 +1,41 @@
+<span
+  iccCellEdit
+  [rowHeight]="rowHeight"
+  [column]="column"
+  [dataKeyId]="dataKeyId"
+  [field]="column.name"
+  [value]=record[column.name]
+  [record]="record"
+  [rowIndex]="rowIndex"
+  [colIndex]="colIndex"
+  [dataSource]="dataSource">
+</span>
+
+<!--
+
+
+            <span *ngSwitchCase="RendererType.CellEdit"
+            iccCellEdit
+            [rowHeight]="rowHeight"
+            [column]="column"
+            [dataKeyId]="dataKeyId"
+            [field]="column.name"
+            [value]=record[column.name]
+            [record]="record"
+            [rowIndex]="rowIndex"
+            [colIndex]="colIndex"
+            [dataSource]="dataSource"
+            (iccSaveCellEditValueEvent)="onSaveCellEditValue($event)"
+            (iccCellEditSpecialKeyEvent)="onCellEditSpecialKeyEvent($event)">
+          </span>
+
+  rowHeight: number;
+  column: IccField;
+  field: string;
+  value: T;
+  rowIndex: number;
+  record: T;
+  dataSource: IccBaseGridDataSource<T>;
+
+
+-->

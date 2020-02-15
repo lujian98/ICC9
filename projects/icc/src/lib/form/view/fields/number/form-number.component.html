@@ -1,0 +1,22 @@
+<div>
+  <mat-form-field [hidden]="field.hidden"
+    [formGroup]="group" [ngStyle]="{'width': field.width+'px', 'text-align': field.align}">
+    <mat-label>{{field.title}}:</mat-label>
+    <input [ngStyle]="{'text-align': field.align}"
+      matInput [formControlName]="field.name"
+      type="number"
+      labelPosition="before"
+      autocomplete="off"
+      [placeholder]="field.title"
+      [readonly]="field.readonly"
+      (wheel)="onWheelMove()"
+      (input)="fieldChange($event, $event.target.value)"
+      [value]="field.value">
+    <i *ngIf="!field.readonly" matPrefix class="fas fa-edit" style="color:green"></i>
+    <i class="fas fa-times" [ngStyle]="{'color': field.isValueChanged ? 'orange':'white'}"
+      matSuffix (click)="resetValue($event)"></i>
+    <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
+      <mat-error *ngIf="group.get(field.name).hasError(validation.name)">{{validation.message}}</mat-error>
+    </ng-container>
+  </mat-form-field>
+</div>

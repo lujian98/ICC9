@@ -1,0 +1,11 @@
+:host ::ng-deep {
+  .mat-select-value {
+    color: green;
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .mat-form-field-empty.mat-form-field-label {
+    color: red;
+  }
+}

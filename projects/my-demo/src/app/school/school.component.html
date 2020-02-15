@@ -1,0 +1,81 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidemenunav class="sidenav mat-elevation-z10"
+    [(mode)]="sideNavMode" [(opened)]="sideNavOpened">
+    <mat-list role="list">
+
+    <mat-list-item>
+      <a routerLink="icc-base-grid-example" routerLinkActive="active">Grid Demo</a>
+    </mat-list-item>
+    <mat-list-item>
+      <a routerLink="outlets" routerLinkActive="active">Outlets</a>
+    </mat-list-item>
+
+      <mat-list-item *ngIf="isVisible">
+        <a routerLink="users" routerLinkActive="active">Users</a>
+      </mat-list-item>
+      <mat-list-item *ngIf="isVisible">
+        <a routerLink="teachers" routerLinkActive="active">Teachers</a>
+      </mat-list-item>
+      <mat-list-item *ngIf="isVisible">
+        <a routerLink="courses" routerLinkActive="active">Courses</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="students" routerLinkActive="active">Students</a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="poutlets" routerLinkActive="active">P Outlets</a>
+      </mat-list-item>
+      <mat-list-item>
+          <a (click)="onClassRegistration()"><span style="color:blue">Class Registration</span></a>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+<!--
+          [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right, 'text-align': column.align}">
+
+      <mat-list-item>
+        <a [routerLink]="['class-registration']"
+        //  [queryParams]="{'id': 962}"
+          routerLinkActive="active">Class Registration</a>
+      </mat-list-item>
+  <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidemenunav class="sidenav mat-elevation-z10"
+    [(mode)]="sideNavMode" [(opened)]="sideNavOpened">
+    <mat-list role="list">
+      <mat-list-item><a routerLink="users" routerLinkActive="active">Users</a></mat-list-item>
+      <mat-list-item><a routerLink="teachers" routerLinkActive="active">Teachers</a></mat-list-item>
+      <mat-list-item><a routerLink="courses" routerLinkActive="active">Courses</a></mat-list-item>
+      <mat-list-item><a routerLink="students" routerLinkActive="active">Students</a></mat-list-item>
+
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+        <mat-list-item><a [routerLink]="['class-registration']" [queryParams]="{id: 682}" routerLinkActive="active">Class Registration</a></mat-list-item>
+
+        <mat-list-item><a [routerLink]="['class-registration']" [queryParams]="{id: 682}">Product Details</a></mat-list-item>
+
+  <a [routerLink]=”/b” [state]=”{ data: {...}}”>Go to B</a>
+ [state]="{name:'jim'}"
+<a [router-link]="['./sub3'],{name:'jim'}">Three</a>
+<a [routerLink]="['./product', 1234]">Product Details</a>
+        <mat-list-item><a routerLink="students" routerLinkActive="active">Students</a></mat-list-item>
+
+      <mat-list-item><a routerLink="student-classs" routerLinkActive="active">Student Classes</a></mat-list-item>
+      <mat-list-item><a routerLink="adult-classs" routerLinkActive="active">Adult Classes</a></mat-list-item>
+-->

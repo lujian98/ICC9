@@ -1,0 +1,10 @@
+<div>
+  <form [formGroup]="formView">
+    <ng-container *ngFor="let field of fields;">
+      <icc-field-view [field]="field"
+        [formView]="formView"
+        (iccFieldValueChangedEvent)="onFieldValueChanged($event)">
+      </icc-field-view>
+    </ng-container>
+  </form>
+</div>

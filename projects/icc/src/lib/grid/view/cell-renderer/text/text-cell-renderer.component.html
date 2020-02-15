@@ -1,0 +1,26 @@
+
+<span [matTooltip]="getDisplayDetail(column, record)" [ngClass]="'icc-grid-column-cell'">
+  <span [ngClass]="'icc-grid-column-cell-item'">{{getDisplayValue(column, record)}}</span>
+  <span *ngIf="column.cellMenu" [ngClass]="'icc-grid-column-cell-menu'"
+    (click)="cellMenuClick($event, column, rowIndex, record)">
+    <i class="fas fa-ellipsis-v" style="color:green"></i>
+  </span>
+</span>
+
+<!--
+            <span *ngSwitchDefault [matTooltip]="getDisplayDetail(column, record)">
+            {{getDisplayValue(column, record)}}
+          </span>
+
+
+
+                    <span *ngSwitchCase="RendererType.CellMenu" [matTooltip]="getDisplayDetail(column, record)"
+            [ngClass]="'icc-grid-column-cell'">
+            <span [ngClass]="'icc-grid-column-cell-item'">{{getDisplayValue(column, record)}}</span>
+            <span *ngIf="column.cellMenu" [ngClass]="'icc-grid-column-cell-menu'"
+              (click)="cellMenuClick($event, column, rowIndex, record)">
+              <i class="fas fa-ellipsis-v" style="color:green"></i>
+            </span>
+          </span>
+
+-->

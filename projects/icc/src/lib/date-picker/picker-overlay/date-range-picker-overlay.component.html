@@ -1,0 +1,34 @@
+<div [@transformPickerOverlay]="shouldAnimate" class="icc-date-range-calendar-container">
+
+  <div class="icc-date-range-calendar-item">
+    <icc-calendar-wrapper
+    [prefixLabel]="startDatePrefix"
+    [selectedDate]="fromDate"
+    [minDate]="fromMinDate"
+    [maxDate]="fromMaxDate"
+    [selectedRangeDates]="selectedRangeDates"
+    (monthViewChange)="fromMonthViewChange($event)"
+    (selectedDateChange)="updateFromDate($event)">
+  </icc-calendar-wrapper>
+  </div>
+  <div class="icc-date-range-calendar-item">
+    <icc-calendar-wrapper
+      [prefixLabel]="endDatePrefix"
+      [selectedDate]="toDate"
+      [minDate]="toMinDate"
+      [maxDate]="toMaxDate"
+      [selectedRangeDates]="selectedRangeDates"
+      (monthViewChange)="toMonthViewChange($event)"
+      (selectedDateChange)="updateToDate($event)">
+    </icc-calendar-wrapper>
+  </div>
+  <div class="icc-date-range-calendar-presets">
+    <div class="icc-date-range-menu">
+      <icc-calendar-presets *ngIf="presets" [presets]="presets" (presetChanged)="updateRangeByPreset($event)"></icc-calendar-presets>
+      <div class="icc-date-range-controls">
+        <button mat-button color="primary" (click)="applyNewDates($event)">{{applyLabel}}</button>
+        <button mat-button (click)="discardNewDates($event)">{{cancelLabel}}</button>
+      </div>
+    </div>
+  </div>
+</div>

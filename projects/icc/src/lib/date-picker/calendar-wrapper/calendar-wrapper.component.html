@@ -1,0 +1,18 @@
+<div>
+  <span *ngIf="displaySelected" class="icc-date-range-date-label">
+    <label>{{prefixLabel}}</label>
+    <label class="icc-date-range-selected-date-label">{{selectedDate | localeDate: dateFormat}}</label>
+  </span>
+  <mat-calendar
+    [startAt]="selectedDate"
+    [selected]="selectedDate"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    [dateClass]="dateClass()"
+    (selectedChange)="onSelectedChange($event)"
+    (yearSelected)="onYearSelected($event)"
+    (monthSelected)="onMonthSelected($event)"
+    (_userSelection)="onUserSelection($event)"
+    [dateFilter]="weekendFilter">
+  </mat-calendar>
+</div>

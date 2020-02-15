@@ -1,0 +1,60 @@
+  header {
+    border-bottom: 1px solid #adadad;
+    background-color: #fff;
+  }
+  nav ul {
+    list-style: none;
+    background-color: #444;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  .nav li {
+    font-family: 'Roboto';
+    font-size: 12px;
+    line-height: 40px;
+    height: 44px;
+    border-bottom: 1px solid #888;
+    padding-bottom: 3px;
+  }
+
+  .nav a {
+    text-decoration: none;
+    display: block;
+    transition: .3s background-color;
+    margin: 0 13px;
+    color: #4b4f54;
+    font-weight: 500;
+  }
+
+  .nav a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .nav a.active {
+    background-color: #fff;
+    color: #444;
+    cursor: default;
+    border-bottom: 2px solid #f18a20;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 600px) {
+    .nav li {
+      border-bottom: none;
+      height: 40px;
+      line-height: 40px;
+      font-size: 12px;
+    }
+
+    .nav li {
+      display: inline-block;
+      margin-right: -4px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .hidden-sm {
+        display: none;
+    }
+  }
