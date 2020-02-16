@@ -473,6 +473,12 @@ export class IccColumnsService {
           if (column.right !== element.style.right) {
             element.style.right = column.right; // angular material bug
           }
+          if (column.sticky) {
+            if (element.style.position !== 'sticky') {
+              element.style.position = 'sticky'; // angular material bug
+              element.style.background = 'inherit';
+            }
+          }
           if (column.stickyEnd) {
             if (element.style.position !== 'sticky') {
               element.style.position = 'sticky'; // angular material bug
@@ -485,22 +491,29 @@ export class IccColumnsService {
           }
         });
       });
-      if (stickyEndColumns.length > 0) {
-        stickyEndColumns.forEach(column => {
-          const headerColumns: HTMLDivElement[] = this.getHeaderColumns(column, matTableRef);
-          headerColumns.forEach((element: HTMLDivElement) => {
-            if (column.stickyEnd) {
-              if (element.style.position !== 'sticky') {
-                element.style.position = 'sticky'; // angular material bug
-              }
-              let right = column.right;
-              if (this.isVerticalScrollVisible(viewport)) { // make sure the headers are align with table cell with stickyEnd
-                right = `${parseInt(right, 10) + 15}px`;
-              }
-              element.style.right = right;
+      stickyColumns.forEach(column => {
+        const headerColumns: HTMLDivElement[] = this.getHeaderColumns(column, matTableRef);
+        headerColumns.forEach((element: HTMLDivElement) => {
+          if (column.sticky) {
+            if (element.style.position !== 'sticky') {
+              element.style.position = 'sticky'; // angular material bug only first time pin with first column
+              element.style.background = 'inherit';
+              element.style.zIndex = '1';
             }
-          });
+          }
+          if (column.stickyEnd) {
+            if (element.style.position !== 'sticky') {
+              element.style.position = 'sticky'; // angular material bug
+            }
+            let right = column.right;
+            if (this.isVerticalScrollVisible(viewport)) { // make sure the headers are align with table cell with stickyEnd
+              right = `${parseInt(right, 10) + 15}px`;
+            }
+            element.style.right = right;
+          }
         });
+      });
+      if (stickyEndColumns.length > 0) {
         stickyEndColumns.reverse().forEach(column => { // Add left border to leftest stickyEnd column
           const headerColumns: HTMLDivElement[] = this.getHeaderColumns(column, matTableRef);
           headerColumns.forEach((element: HTMLDivElement) => {
