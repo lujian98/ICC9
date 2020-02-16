@@ -19,6 +19,7 @@ export class IccColumnResizeDnDService {
   private isResizingRight: boolean;
   private resizableMousemove: () => void;
   private resizableMouseup: () => void;
+  private resizableMouseleave: () => void;
   private viewportWidth: number;
   private allowChangeFlexWidth: boolean;
   private cellData: Array<any>;
@@ -183,20 +184,22 @@ export class IccColumnResizeDnDService {
       }
     });
     this.resizableMouseup = renderer.listen(matTableRef.nativeElement, 'mouseup', (event) => {
-      if (this.pressed) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.stopColumnResize();
-      }
+      this.stopColumnResize(event);
+    });
+    this.resizableMouseleave = renderer.listen(matTableRef.nativeElement, 'mouseleave', event => {
+      this.stopColumnResize(event);
     });
   }
 
-  public stopColumnResize() {
-    if (this.isColumnResizing) {
+  private stopColumnResize(event) {
+    if (this.pressed && this.isColumnResizing) {
+      event.preventDefault();
+      event.stopPropagation();
       this.pressed = false;
       this.currentResizeIndex = -1;
       this.resizableMousemove();
       this.resizableMouseup();
+      this.resizableMouseleave();
       setTimeout(() => {
         this.isColumnResized$.next(true);
         this.isColumnResizing = false;

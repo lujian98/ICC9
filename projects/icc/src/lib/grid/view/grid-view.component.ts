@@ -808,10 +808,5 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   onResize(event: MouseEvent) {
     this.isWindowReszie$.next(true);
   }
-
-  @HostListener('window:mouseup', ['$event'])
-  onMouseUp(event) {
-    this.columnResizeDnDService.stopColumnResize();
-  }
 }
 
