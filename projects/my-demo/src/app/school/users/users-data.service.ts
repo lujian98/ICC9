@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { IccRansackDataService, IccGridState, IccCellEditData } from 'icc';
+import { IccRansackDataService } from 'icc';
 
 @Injectable({
   providedIn: 'root'

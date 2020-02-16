@@ -44,9 +44,9 @@ import { IccUtils } from '../../utils/utils';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  providers: [
-    { provide: IccGridViewComponent, useClass: forwardRef(() => IccGridViewComponent) }
-  ]
+  // providers: [
+  //  { provide: IccGridViewComponent, useClass: forwardRef(() => IccGridViewComponent) }
+  // ]
 })
 export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() gridConfigs: IccGridConfigs = {

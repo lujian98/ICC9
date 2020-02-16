@@ -2,6 +2,23 @@
   <icc-tool-bar
     [toolBarItems]="toolBarItems">
   </icc-tool-bar>
+
+  <icc-grid-view id="contentToConvert"
+    [data]="data"
+    [columnConfigs]="columnConfigs"
+    [gridConfigs]="{
+      'enableDisplayGridSummary': true,
+      'enableMultiColumnSort': true,
+      'enableColumnFilter': true,
+      'enableColumnResize': true,
+      'enableColumnDnD': true,
+      'enableColumnHide': true,
+      'enableMultiRowSelection': true,
+      'enableMultiRowGroup': true,
+      'enableColumnSticky': true,
+      'dataKeyId': 'index'
+    }">
+  </icc-grid-view>
 </div>
 
 <!--
