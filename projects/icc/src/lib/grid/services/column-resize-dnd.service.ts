@@ -336,27 +336,30 @@ export class IccColumnResizeDnDService {
     return i;
   }
 
-  onDropListPredicate(column: IccField) {
+  onDropListPredicate() {
     const me = this;
     if (!me.isColumnResizing) {
       return (drag: CdkDrag<number>): boolean => {
         const dragedColumn = this.visibleColumns[drag.data['columIndex']];
-        return this.isColumnDroppable(column, dragedColumn, false);
+        return this.isColumnDroppable(dragedColumn, false);
       };
     }
   }
 
-  private isColumnDroppable(column: IccField, dragedColumn: IccField, isDragGroupHeader: boolean): boolean {
+  private isColumnDroppable(dragedColumn: IccField, isDragGroupHeader: boolean): boolean {
     let droppable = false;
-    if (!column.dragDisabled && !column.sticky && !column.stickyEnd && column.index !== dragedColumn.index) {
-      if (dragedColumn.groupHeader) {
-        if (column.groupHeader && dragedColumn.groupHeader.name === column.groupHeader.name) {
-          droppable = true;
-        } else if (isDragGroupHeader) {
+    if (this.currentIndex > -1) {
+      const column = this.visibleColumns[this.currentIndex];
+      if (!column.dragDisabled && !column.sticky && !column.stickyEnd && column.index !== dragedColumn.index) {
+        if (dragedColumn.groupHeader) {
+          if (column.groupHeader && dragedColumn.groupHeader.name === column.groupHeader.name) {
+            droppable = true;
+          } else if (isDragGroupHeader) {
+            droppable = true;
+          }
+        } else {
           droppable = true;
         }
-      } else {
-        droppable = true;
       }
     }
     return droppable;
@@ -378,7 +381,7 @@ export class IccColumnResizeDnDService {
         dragedColumn = this.visibleColumns[dragedColumn.index];
         column = this.visibleColumns[column.index];
       }
-      if (this.isColumnDroppable(column, dragedColumn, isDragGroupHeader)) {
+      if (this.isColumnDroppable(dragedColumn, isDragGroupHeader)) {
         const previousIndex = dragedColumn.index;
         let currentIndex = column.index;
         if (this.visibleColumns.length !== visibleColumns.length) {

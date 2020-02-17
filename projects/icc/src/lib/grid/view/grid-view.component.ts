@@ -523,9 +523,9 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
     this.columnResizeDnDService.onDragMoved(event, index, visibleColumns);
   }
 
-  onDropListPredicate(column: IccField) {
+  onDropListPredicate() {
     const me = this;
-    return me.columnResizeDnDService.onDropListPredicate(column);
+    return me.columnResizeDnDService.onDropListPredicate();
   }
 
   onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
