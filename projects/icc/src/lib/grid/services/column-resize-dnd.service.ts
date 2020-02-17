@@ -93,7 +93,7 @@ export class IccColumnResizeDnDService {
     return width;
   }
 
-  onResizeHeaderColumn(event: any, index: number, enableColumnResize: boolean, renderer: Renderer2, matTableRef: ElementRef) {
+  private getResizedColumnIndex(event, matTableRef: ElementRef): number {
     let resizedColumnIndex = -1;
     this.visibleColumns.filter((column: IccField, i) => {
       const cellData = this.getCellData(i, matTableRef);
@@ -101,8 +101,25 @@ export class IccColumnResizeDnDService {
         resizedColumnIndex = i;
       }
     });
+    return resizedColumnIndex;
+  }
+
+  onResizeHeaderColumn(event: any, index: number, enableColumnResize: boolean, renderer: Renderer2, matTableRef: ElementRef) {
+    const resizedColumnIndex = this.getResizedColumnIndex(event, matTableRef);
     if (resizedColumnIndex > -1) {
       this.onResizeColumn(event, resizedColumnIndex, enableColumnResize, renderer, matTableRef);
+    }
+  }
+
+  checkHeaderResizeORDnD(event: any, index: number, matTableRef: ElementRef) {
+    const resizedColumnIndex = this.getResizedColumnIndex(event, matTableRef);
+    this.checkResizeORDnD(event, resizedColumnIndex, matTableRef);
+  }
+
+  checkResizeORDnD(event: any, index: number, matTableRef: ElementRef) {
+    if (!this.pressed) {
+      this.isColumnResizing = false;
+      this.checkIsResizing(event, index, matTableRef);
     }
   }
 

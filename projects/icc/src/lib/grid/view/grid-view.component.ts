@@ -502,7 +502,16 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
       .onResizeColumn(event, index, this.gridConfigs.enableColumnResize, this.renderer, this.matTableRef);
   }
 
+  checkHeaderResizeORDnD(event: any, index: number) {
+    this.columnResizeDnDService.checkHeaderResizeORDnD(event, index, this.matTableRef);
+  }
+
+  checkResizeORDnD(event: any, index: number) {
+    this.columnResizeDnDService.checkResizeORDnD(event, index, this.matTableRef);
+  }
+
   isDragDisabled(column: IccField): boolean {
+    // console.log( ' this.isColumnResizing=', this.columnResizeDnDService.isColumnResizing )
     return !this.gridConfigs.enableColumnDnD || this.columnResizeDnDService.isColumnResizing || column.dragDisabled;
   }
 
