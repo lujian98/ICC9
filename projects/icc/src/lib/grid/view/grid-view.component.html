@@ -7,34 +7,8 @@
   </div>
 </div>
 
-<!-- <div style="overflow-x: hidden; overflow-y: scroll"> <div style="overflow-x: hidden; overflow-y: hidden"> -->
-<!--
-
-      cdkDrag
-      [cdkDragDisabled]="isDragDisabled(header)"
-      (cdkDragStarted)="onDragStarted($event, colIndex, groupHeaderColumns)"
-      (cdkDragMoved)="onDragMoved($event, colIndex, groupHeaderColumns)"
-      [cdkDragData]="{name: header.name, columIndex: colIndex}"
-
-      cdkDropList
-      cdkDropListLockAxis="x"
-      cdkDropListOrientation="horizontal"
-      (cdkDropListDropped)="onDropListDropped($event, visibleColumns)"
-      [cdkDropListEnterPredicate]="onDropListPredicate(column)"
-      cdkDrag
-      [cdkDragDisabled]="isDragDisabled(column)"
-      (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
-      (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
-      [cdkDragData]="{name: column.name, columIndex: colIndex}"
-
--->
-<mat-table
-  matSort
-  (matSortChange)="sortData($event)"
-  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}"
-  cdkDropListGroup>
-  <!-- [attr.colspan]="header.colspan"  class="icc-grid-right-menu" 'position': 'relative',
-    *matHeaderCellDef [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"  -->
+<mat-table matSort (matSortChange)="sortData($event)" cdkDropListGroup
+  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}">
   <span cdkDropList
     cdkDropListLockAxis="x"
     cdkDropListOrientation="horizontal"
@@ -119,8 +93,7 @@
   </mat-header-row>
 </mat-table>
 
-<cdk-virtual-scroll-viewport
-  iccGridTableVirtualScroll
+<cdk-virtual-scroll-viewport iccGridTableVirtualScroll
   [rowHeight]="gridConfigs.rowHeight"
   [dataSource]="dataSource"
   [viewportBuffer]="viewportBuffer"
@@ -177,87 +150,12 @@
   </mat-table>
 </cdk-virtual-scroll-viewport>
 
-
 <!--
-
-  [ngClass]="'icc-grid-column-priority-'+column.priority"
-
-          <div class="icc-grid-column-renderer-item" [ngSwitch]="getRendererType(column, rowIndex, record)">
-          <span *ngSwitchDefault [matTooltip]="getDisplayDetail(column, record)">
-            {{getDisplayValue(column, record)}}
-          </span>
-          <span *ngSwitchCase="RendererType.CellMenu" [matTooltip]="getDisplayDetail(column, record)"
-            [ngClass]="'icc-grid-column-cell'">
-            <span [ngClass]="'icc-grid-column-cell-item'">{{getDisplayValue(column, record)}}</span>
-            <span *ngIf="column.cellMenu" [ngClass]="'icc-grid-column-cell-menu'"
-              (click)="cellMenuClick($event, column, rowIndex, record)">
-              <i class="fas fa-ellipsis-v" style="color:green"></i>
-            </span>
-          </span>
-
-          <span *ngSwitchCase="RendererType.Date">{{record[column.name] | localeDate: column.dateFormat}}</span>
-
-
-          <span *ngSwitchCase="RendererType.InnerHTML"
-            [innerHTML]="getInnerHtml(column, column.name, record[column.name], record, rowIndex) | iccEscapeHtml"
-            iccInnerHtmlRoute
-            [value]=record[column.name]
-            >
-          </span>
-          <span *ngSwitchCase="RendererType.Component"
-            iccCellRenderer
-            [rowHeight]="rowHeight"
-            [column]="column"
-            [field]="column.name"
-            [value]=record[column.name]
-            [record]="record"
-            [rowIndex]="rowIndex"
-            [dataSource]="dataSource">
-          </span>
-          <span *ngSwitchCase="RendererType.CellEdit"
-            iccCellEdit
-            [rowHeight]="rowHeight"
-            [column]="column"
-            [dataKeyId]="dataKeyId"
-            [field]="column.name"
-            [value]=record[column.name]
-            [record]="record"
-            [rowIndex]="rowIndex"
-            [colIndex]="colIndex"
-            [dataSource]="dataSource"
-            (iccSaveCellEditValueEvent)="onSaveCellEditValue($event)"
-            (iccCellEditSpecialKeyEvent)="onCellEditSpecialKeyEvent($event)">
-          </span>
-          <span *ngSwitchCase="RendererType.Checkbox">
-            <mat-checkbox
-              (click)="checkboxClick($event)"
-              (change)="checkboxChange($event, rowIndex, record, column)"
-              [checked]="isRowSelected(record)">
-            </mat-checkbox>
-          </span>
-        </div>
-
--->
-
-
-<!-- autosize [ngStyle]="{'min-height': headerOffset+'px'}"
-
   <cdk-virtual-scroll-viewport autosize
   iccGridTableVirtualScroll
   [rowHeight]="rowHeight"
   [headerOffset]="headerOffset"
   [isDataSourceReady]="isDataSourceReady"
   [viewportBuffer]="viewportBuffer"
-  (scrolledIndexChange)="nextBatch()">
-
-  CdkFixedSizeVirtualScroll
-  itemSize="30"
-  minBufferPx="600"
-  maxBufferPx="600"
-
-  <cdk-virtual-scroll-viewport
-  itemSize="30"
-  minBufferPx="300"
-  maxBufferPx="300"
   (scrolledIndexChange)="nextBatch()">
 -->

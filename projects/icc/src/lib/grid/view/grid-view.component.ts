@@ -44,7 +44,7 @@ import { IccUtils } from '../../utils/utils';
   selector: 'icc-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss'],
-  // providers: [
+  // providers: [ // WARNING this is not allowed in angular 9
   //  { provide: IccGridViewComponent, useClass: forwardRef(() => IccGridViewComponent) }
   // ]
 })
@@ -667,15 +667,6 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   isGroup(index: number, item: IccRowGroup): boolean {
     return item.level ? true : false;
   }
-
-
-  /*
-  groupByFieldName(group: IccRowGroup): string {
-    const groupColumn = this.groupByColumns[group.level - 1];
-    const column = this.columns.filter(item => item.name === groupColumn);
-    if (column && column.length > 0) {
-      return column[0].title;
-    } */
 
   groupByFieldName(group: IccRowGroup): string {
     const groupColumn: IccGroupByColumn = this.groupByColumns[group.level - 1];

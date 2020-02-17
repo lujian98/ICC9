@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ElementRef, Injectable, OnDestroy, Renderer2 } from '@angular/core';
+import { ElementRef, Injectable, Renderer2 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccGroupHeader } from '../../models';
