@@ -5,7 +5,7 @@ export * from './services/columns.service';
 export * from './services/column-resize-dnd.service';
 export * from './services/grid-states.service';
 
-export * from './virtual-scroll/virtual-scroll.directive';
+// export * from './virtual-scroll/virtual-scroll.directive';
 
 
 export * from './view/grid-view.component';

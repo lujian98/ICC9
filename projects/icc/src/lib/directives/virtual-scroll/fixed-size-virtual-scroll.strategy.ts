@@ -2,7 +2,7 @@ import { CdkVirtualScrollViewport, VirtualScrollStrategy } from '@angular/cdk/sc
 import { Observable, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-export class FixedSizeGridTableVirtualScrollStrategy implements VirtualScrollStrategy {
+export class FixedSizeVirtualScrollStrategy implements VirtualScrollStrategy {
   scrolledIndexChange: Observable<number>;
   private previousIndex = -1;
   private readonly indexChange = new Subject<number>();

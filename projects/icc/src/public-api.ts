@@ -28,4 +28,6 @@ export * from './lib/form/index';
 export * from './lib/grid/index';
 export * from './lib/services/index';
 
+export * from './lib/directives/index';
+
 export * from './lib/jsonapi/index';

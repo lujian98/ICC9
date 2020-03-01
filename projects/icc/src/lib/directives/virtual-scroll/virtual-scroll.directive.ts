@@ -12,39 +12,35 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { fromEvent, Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-// import { IccBaseGridDataSource } from '../datasource/grid-datasource';
-import { FixedSizeGridTableVirtualScrollStrategy } from './fixed-size-virtual-scroll.strategy';
+import { FixedSizeVirtualScrollStrategy } from './fixed-size-virtual-scroll.strategy';
 
-export function getIccScrollStrategy(scroll: GridTableVirtualScrollDirective) {
+export function getIccScrollStrategy(scroll: IccVirtualScrollDirective) {
   return scroll.scrollStrategy;
 }
 
 @Directive({
-  selector: '[iccGridTableVirtualScroll]',
+  selector: '[iccVirtualScroll]',
   providers: [{
     provide: VIRTUAL_SCROLL_STRATEGY,
     useFactory: getIccScrollStrategy,
-    deps: [forwardRef(() => GridTableVirtualScrollDirective)],
+    deps: [forwardRef(() => IccVirtualScrollDirective)],
   }],
 })
-export class GridTableVirtualScrollDirective implements AfterViewInit, OnChanges, OnDestroy {
+export class IccVirtualScrollDirective implements AfterViewInit, OnChanges, OnDestroy {
   @Input() dataSourceLength = 0;
   @Input() rowHeight = 30;
   @Input() viewportBuffer = 5;
   @Input() minBufferPx = 300;
   @Input() maxBufferPx = 300;
-  // @Input() dataSource: IccBaseGridDataSource<T>;
 
-  // scrollStrategy: GridTableVirtualScrollStrategy;
-  scrollStrategy: FixedSizeGridTableVirtualScrollStrategy;
+  scrollStrategy: FixedSizeVirtualScrollStrategy;
   private sub: Subscription;
   protected readonly destroy$ = new Subject();
 
   constructor(
     public platform: Platform,
   ) {
-    // this.scrollStrategy = new GridTableVirtualScrollStrategy(this.rowHeight);
-    this.scrollStrategy = new FixedSizeGridTableVirtualScrollStrategy(
+    this.scrollStrategy = new FixedSizeVirtualScrollStrategy(
       this.rowHeight, this.minBufferPx, this.maxBufferPx);
   }
 
@@ -61,12 +57,7 @@ export class GridTableVirtualScrollDirective implements AfterViewInit, OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // if (changes.dataSource && changes.dataSource.currentValue) {
-      // this.initialScrollStrategy();
-    // }
-
     if (changes.dataSourceLength) {
-      console.log(' changes.dataSourceLength= ', changes.dataSourceLength.currentValue);
       this.scrollStrategy.setDataLength(changes.dataSourceLength.currentValue);
     }
 
@@ -79,13 +70,6 @@ export class GridTableVirtualScrollDirective implements AfterViewInit, OnChanges
   setScrollStrategyViewPort() {
     this.scrollStrategy.updateItemAndBufferSize(this.rowHeight, this.minBufferPx, this.maxBufferPx);
   }
-
-//  initialScrollStrategy() {
-//    this.sub = this.dataSource.queryData$.subscribe(data => {
-//      console.log( ' data length =', data.length)
-//      // this.scrollStrategy.setDataLength(data.length);
-//    });
-//  }
 
   scrollToPosition(top: number) {
     top = top > 0 ? top : 0;

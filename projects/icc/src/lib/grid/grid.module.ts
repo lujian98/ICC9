@@ -36,7 +36,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { IccDatePickerModule } from '../date-picker/date-picker.module';
 
 
-import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll.directive';
+// import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll.directive';
 import { IccBaseGridComponent } from './grid.component';
 import { IccGridViewComponent } from './view/grid-view.component';
 
@@ -70,7 +70,7 @@ import { IccMenuModule } from '../menu/menu.module';
 import { IccToolBarModule } from '../tool-bar/tool-bar.module';
 import { IccFormModule } from '../form/form.module';
 import { IccDialogModule } from '../dialog/dialog.module';
-
+import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 
 import { IccCellEditComponent } from './view/cell-edit/cell-edit.component';
 import { IccCellEditDirective } from './view/cell-edit/cell-edit.directive';
@@ -126,12 +126,13 @@ import { IccColumnResizeDnDService } from './services/column-resize-dnd.service'
     IccToolBarModule,
     IccMenuModule,
     IccFormModule,
-    IccDialogModule
+    IccDialogModule,
+    IccVirtualScrollModule
   ],
   declarations: [
     IccBaseGridComponent,
     IccGridViewComponent,
-    GridTableVirtualScrollDirective,
+    // GridTableVirtualScrollDirective,
     IccColumnFilterDirective,
     IccColumnFilterComponent,
     IccCheckboxFilterComponent,
@@ -164,7 +165,7 @@ import { IccColumnResizeDnDService } from './services/column-resize-dnd.service'
   exports: [
     IccBaseGridComponent,
     IccGridViewComponent,
-    GridTableVirtualScrollDirective,
+    // GridTableVirtualScrollDirective,
     IccColumnFilterDirective,
     IccColumnFilterComponent,
     IccCheckboxFilterComponent,
