@@ -59,6 +59,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
 
   columns: IccField[] = [];
   dataSource: IccBaseGridDataSource<T>;
+  dataSourceLength = 0;
   totalRecords = 0;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
@@ -208,6 +209,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   }
 
   dataRecordRefreshed(data: T[]) {
+    this.dataSourceLength = data.length;
     this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
     this.pagination.total = this.totalRecords;
     this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change

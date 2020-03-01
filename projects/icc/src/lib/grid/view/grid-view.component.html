@@ -93,9 +93,11 @@
   </mat-header-row>
 </mat-table>
 
-<cdk-virtual-scroll-viewport iccGridTableVirtualScroll
+<!--   [dataSource]="dataSource" -->
+<cdk-virtual-scroll-viewport
+  iccGridTableVirtualScroll
   [rowHeight]="gridConfigs.rowHeight"
-  [dataSource]="dataSource"
+  [dataSourceLength]="dataSourceLength"
   [viewportBuffer]="viewportBuffer"
   (scroll)="onViewportScroll($event)"
   (scrolledIndexChange)="nextBatch()">

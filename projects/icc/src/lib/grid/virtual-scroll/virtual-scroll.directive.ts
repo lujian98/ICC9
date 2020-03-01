@@ -12,10 +12,10 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { fromEvent, Subject, Subscription } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { IccBaseGridDataSource } from '../datasource/grid-datasource';
+// import { IccBaseGridDataSource } from '../datasource/grid-datasource';
 import { FixedSizeGridTableVirtualScrollStrategy } from './fixed-size-virtual-scroll.strategy';
 
-export function getIccScrollStrategy<T>(scroll: GridTableVirtualScrollDirective<T>) {
+export function getIccScrollStrategy(scroll: GridTableVirtualScrollDirective) {
   return scroll.scrollStrategy;
 }
 
@@ -27,12 +27,13 @@ export function getIccScrollStrategy<T>(scroll: GridTableVirtualScrollDirective<
     deps: [forwardRef(() => GridTableVirtualScrollDirective)],
   }],
 })
-export class GridTableVirtualScrollDirective<T> implements AfterViewInit, OnChanges, OnDestroy {
+export class GridTableVirtualScrollDirective implements AfterViewInit, OnChanges, OnDestroy {
+  @Input() dataSourceLength = 0;
   @Input() rowHeight = 30;
   @Input() viewportBuffer = 5;
   @Input() minBufferPx = 300;
   @Input() maxBufferPx = 300;
-  @Input() dataSource: IccBaseGridDataSource<T>;
+  // @Input() dataSource: IccBaseGridDataSource<T>;
 
   // scrollStrategy: GridTableVirtualScrollStrategy;
   scrollStrategy: FixedSizeGridTableVirtualScrollStrategy;
@@ -60,8 +61,13 @@ export class GridTableVirtualScrollDirective<T> implements AfterViewInit, OnChan
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.dataSource && changes.dataSource.currentValue) {
-      this.initialScrollStrategy();
+    // if (changes.dataSource && changes.dataSource.currentValue) {
+      // this.initialScrollStrategy();
+    // }
+
+    if (changes.dataSourceLength) {
+      console.log(' changes.dataSourceLength= ', changes.dataSourceLength.currentValue);
+      this.scrollStrategy.setDataLength(changes.dataSourceLength.currentValue);
     }
 
     if (changes.viewportBuffer && changes.viewportBuffer.currentValue) {
@@ -74,11 +80,12 @@ export class GridTableVirtualScrollDirective<T> implements AfterViewInit, OnChan
     this.scrollStrategy.updateItemAndBufferSize(this.rowHeight, this.minBufferPx, this.maxBufferPx);
   }
 
-  initialScrollStrategy() {
-    this.sub = this.dataSource.queryData$.subscribe(data => {
-      this.scrollStrategy.setDataLength(data.length);
-    });
-  }
+//  initialScrollStrategy() {
+//    this.sub = this.dataSource.queryData$.subscribe(data => {
+//      console.log( ' data length =', data.length)
+//      // this.scrollStrategy.setDataLength(data.length);
+//    });
+//  }
 
   scrollToPosition(top: number) {
     top = top > 0 ? top : 0;
