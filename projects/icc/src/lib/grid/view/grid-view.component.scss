@@ -463,3 +463,11 @@ cdk-virtual-scroll-viewport {
 ::ng-deep .mat-checkbox-mixedmark {
   background-color: black;
 }
+
+.icc-grid-no-record-header {
+  // background-color: grey;
+  border: none;
+  mat-header-cell {
+    border: none !important;
+  }
+}

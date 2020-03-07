@@ -106,6 +106,7 @@
     [dataSource]="dataSource">
     <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.name }}"
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <mat-header-cell *matHeaderCellDef [ngStyle]="{'flex': '1 ' + column.width + 'px'}"></mat-header-cell>
       <mat-cell [ngClass]="'icc-grid-column-priority-'+column.priority"
         *matCellDef="let record; let rowIndex = index" [attr.data-label]="column.title +': '"
         [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right, 'text-align': column.align}">
@@ -131,6 +132,10 @@
         </div>
       </mat-cell>
     </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" class="icc-grid-no-record-header"
+      [ngStyle]="{'display': totalRecords > 0 ? 'none' : 'flex'}">
+    </mat-header-row>
 
     <mat-row *matRowDef="let record; let rowIndex = index; columns: displayedColumns"
       [ngStyle]="{'min-height': gridConfigs.rowHeight + 'px'}"
