@@ -25,7 +25,7 @@ export class IccBaseTreeComponent<T> {
   isViewportReady = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
-  document: Document;
+  doc: any;
   dragNode: T;
   nodeLookup = {};
   dropInfo: DropInfo = null;
@@ -71,7 +71,7 @@ export class IccBaseTreeComponent<T> {
   dragMoved(event) {
     // console.log('drag moved=', event);
     this.dropInfo = null;
-    const e = this.document.elementFromPoint(event.pointerPosition.x, event.pointerPosition.y);
+    const e = this.doc.elementFromPoint(event.pointerPosition.x, event.pointerPosition.y);
     if (!e) {
       this.clearDragInfo();
       return;
@@ -130,7 +130,7 @@ export class IccBaseTreeComponent<T> {
   protected showDragInfo() {
     this.clearDragInfo();
     if (this.dropInfo && this.dropInfo.targetId) {
-      this.document.getElementById(this.dropInfo.targetId)
+      this.doc.getElementById(this.dropInfo.targetId)
         .classList.add('icc-tree-drop-' + this.dropInfo.position);
     }
   }
@@ -140,13 +140,13 @@ export class IccBaseTreeComponent<T> {
       this.dropInfo = null;
       this.dragNode = null;
     }
-    this.document
+    this.doc
       .querySelectorAll('.icc-tree-drop-before')
       .forEach(element => element.classList.remove('icc-tree-drop-before'));
-    this.document
+    this.doc
       .querySelectorAll('.icc-tree-drop-after')
       .forEach(element => element.classList.remove('icc-tree-drop-after'));
-    this.document
+    this.doc
       .querySelectorAll('.icc-tree-drop-inside')
       .forEach(element => element.classList.remove('icc-tree-drop-inside'));
   }

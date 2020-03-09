@@ -14,10 +14,10 @@ export class IccNestedTreeComponent extends IccBaseTreeComponent<ItemNode> imple
   treeControl = new NestedTreeControl<ItemNode>(node => node.children);
   nodeId = 100000;
   constructor(
-    @Inject(DOCUMENT) document: Document
+    @Inject(DOCUMENT) doc: any
   ) {
     super();
-    this.document = document;
+    this.doc = doc;
   }
 
   ngAfterViewInit() {

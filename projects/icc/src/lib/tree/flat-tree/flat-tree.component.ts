@@ -16,10 +16,10 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
   constructor(
-    @Inject(DOCUMENT) document: Document
+    @Inject(DOCUMENT) doc: any
   ) {
     super();
-    this.document = document;
+    this.doc = doc;
     this.treeFlattener = new IccTreeFlattener(
       this.transformer, node => node.level, node => node.expandable, node => node.children);
   }
