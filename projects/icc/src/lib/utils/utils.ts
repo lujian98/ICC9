@@ -32,4 +32,12 @@ export class IccUtils {
       return find[0];
     }
   }
+
+  static countDecimals(value: any) {
+    if (value === null || isNaN(value) || Math.floor(value.valueOf()) === value.valueOf()) {
+      return 0;
+    }
+    const arr = value.toString().split('.');
+    return arr[1] ? arr[1].length : 0;
+  }
 }

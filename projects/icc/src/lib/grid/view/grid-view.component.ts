@@ -59,6 +59,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
 
   columns: IccField[] = [];
   dataSource: IccBaseGridDataSource<T>;
+  dataSourceLength = 0;
   totalRecords = 0;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
@@ -85,6 +86,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   previousSelectDataId = -1;
   private currentScrollPosition = 0;
 
+  isViewportReady = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   @ViewChild(MatTable, { read: ElementRef }) public matTableRef: ElementRef;
   @ViewChild(MatTable) table: MatTable<T>;
@@ -151,11 +153,12 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   }
 
   ngAfterViewInit() {
+    /*
     setTimeout(() => {
       this.setDefaultSort();
       this.initDataSource();
       this.setGridPanelOffset();
-    }, 10);
+    }, 10); */
   }
 
   private setGridPanelOffset() {
@@ -208,6 +211,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   }
 
   dataRecordRefreshed(data: T[]) {
+    this.dataSourceLength = data.length;
     this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
     this.pagination.total = this.totalRecords;
     this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change
@@ -223,13 +227,20 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   }
 
   nextBatch() {
-    this.previousSelectDataId = -1;
-    const range = this.getViewportRange();
-    if (range && range.end) {
-      this.onNextPageEvent(range);
-      this.setPageSummary();
+    if (this.isViewportReady) {
+      this.previousSelectDataId = -1;
+      const range = this.getViewportRange();
+      if (range && range.end) {
+        this.onNextPageEvent(range);
+        this.setPageSummary();
+      }
+      this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
+    } else {
+      this.isViewportReady = true;
+      this.setDefaultSort();
+      this.initDataSource();
+      this.setGridPanelOffset();
     }
-    this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
   }
 
   onNextPageEvent(range: ListRange) {
