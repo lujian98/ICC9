@@ -25,7 +25,7 @@ export class IccBaseTreeComponent<T> {
   isViewportReady = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
-  document: Document;
+  document: any;
   dragNode: T;
   nodeLookup = {};
   dropInfo: DropInfo = null;

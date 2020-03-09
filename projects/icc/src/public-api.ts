@@ -8,7 +8,7 @@ export * from './lib/items';
 
 export * from './lib/utils/utils';
 
-export * from './lib/datasource';
+// export * from './lib/datasource';
 
 export * from './lib/menu/menu.module';
 export * from './lib/menu/active-menu.component';
