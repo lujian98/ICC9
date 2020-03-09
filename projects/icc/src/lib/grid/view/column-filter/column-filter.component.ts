@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IccField } from '../../../items';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
-
+import { IccDataSource } from '../../../datasource/datasource';
 
 @Component({
   selector: 'icc-grid-column-filter',
@@ -12,7 +11,7 @@ export class IccColumnFilterComponent<T> implements OnInit, OnDestroy {
   filterType: string;
   rowHeight = 48;
   column: IccField;
-  dataSource: IccBaseGridDataSource<T>;
+  dataSource: IccDataSource<T>;
   protected _value: T;
   private _filteredValues: {};
 

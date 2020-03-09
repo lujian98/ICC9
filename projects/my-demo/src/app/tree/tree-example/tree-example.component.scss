@@ -4,6 +4,12 @@
   height: 100%;
 }
 
+:host ::ng-deep icc-table {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 :host ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
   flex: 1;
 }
@@ -23,7 +29,7 @@
   overflow-y: hidden;
   display: block;
   position: relative;
-  height: calc(50vh - 20px);
+  height: calc(50vh - 50px);
 }
 
 

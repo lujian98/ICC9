@@ -10,7 +10,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
+import { IccDataSource } from '../../../datasource/datasource';
 import { IccField } from '../../../items';
 import { IccSelectField } from '../../../items';
 
@@ -20,7 +20,7 @@ import { IccSelectField } from '../../../items';
 export class IccColumnFilterDirective<T> implements OnChanges, OnDestroy {
   @Input() rowHeight = 48;
   @Input() column: IccField;
-  @Input() dataSource: IccBaseGridDataSource<T>;
+  @Input() dataSource: IccDataSource<T>;
   @Input() filteredValues = {};
 
   @Output() iccFilterChangedEvent: EventEmitter<T> = new EventEmitter<T>();

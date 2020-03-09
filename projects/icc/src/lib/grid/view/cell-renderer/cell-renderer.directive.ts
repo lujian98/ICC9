@@ -8,8 +8,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { IccField } from '../../../items';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
-
+import { IccDataSource } from '../../../datasource/datasource';
 
 @Directive({
   selector: '[iccCellRenderer]'
@@ -23,7 +22,7 @@ export class IccCellRendererDirective<T> implements OnChanges, OnDestroy {
   @Input() rowIndex: number;
   @Input() colIndex: number;
   @Input() record: T;
-  @Input() dataSource: IccBaseGridDataSource<T>;
+  @Input() dataSource: IccDataSource<T>;
 
   componentRef: any;
   constructor(
