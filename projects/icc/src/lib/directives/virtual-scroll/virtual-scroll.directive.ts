@@ -100,9 +100,11 @@ export class IccVirtualScrollDirective implements AfterViewInit, OnChanges, OnDe
       } else if (this.platform.BLINK || this.platform.SAFARI) {
         deltaY /= 2;
       }
+      const scrollHeight = this.scrollStrategy.viewport.elementRef.nativeElement.scrollHeight;
       currentOffset += deltaY;
       currentOffset = currentOffset > 0 ? currentOffset : 0;
-      currentOffset = currentOffset < this.scrollStrategy.contentSize ? currentOffset : this.scrollStrategy.contentSize;
+      // currentOffset = currentOffset < this.scrollStrategy.contentSize ? currentOffset : this.scrollStrategy.contentSize;
+      currentOffset = currentOffset < scrollHeight ? currentOffset : scrollHeight;
       const skip = Math.round(currentOffset / this.rowHeight);
       const index = Math.max(0, skip);
       const start = Math.max(0, index);
