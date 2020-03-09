@@ -1,0 +1,17 @@
+
+<table *ngIf="columnConfigs.length > 0" class="cdk-table"
+    [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': gridConfigs.columnHeaderPosition + 'px'}">
+  <thead class="cdk-header-row">
+    <th *ngFor="let column of columnConfigs; let colIndex = index"
+      class="cdk-header-cell"
+      [ngStyle]="{'width': column.width + 'px'}">
+      {{column.name}}
+    </th>
+  </thead>
+</table>
+
+
+<!--
+  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}">
+-->
+

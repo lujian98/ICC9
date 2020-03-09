@@ -67,4 +67,7 @@ export interface IccGridConfigs {
   defaultSortDir?: string;
   filteredValues?: {};
   rowHeight?: number;
+
+  isNestedData?: boolean;
+  columnHeaderPosition?: number;
 }

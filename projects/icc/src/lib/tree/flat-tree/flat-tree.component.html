@@ -1,0 +1,68 @@
+<cdk-virtual-scroll-viewport
+  iccVirtualScroll
+  [dataSourceLength]="dataSourceLength"
+  [minBufferPx]='30'
+  [maxBufferPx]='30'
+  (scroll)="onViewportScroll($event)"
+  (scrolledIndexChange)="nextBatch($event)">
+
+  <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl"
+    cdkDropList
+    [cdkDropListSortingDisabled]="true"
+    (cdkDropListDropped)="drop($event)">
+    <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node"
+      cdkDrag
+      (cdkDragStarted)="dragStart(node)"
+      (cdkDragMoved)="dragMoved($event)"
+      [cdkDragData]="node">
+      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
+        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
+        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          {{ node.name }} - A1
+        </span>
+      </div>
+      <div *ngFor="let column of columnConfigs | slice : 1; let colIndex = index;"
+        class="icc-tree-column" [ngStyle]="{'width': column.width + 'px'}">
+        {{ node[column.name] }} - X2
+      </div>
+    </cdk-tree-node>
+    <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node; when: hasChild"
+      cdkDrag
+      (cdkDragStarted)="dragStart(node)"
+      (cdkDragMoved)="dragMoved($event)"
+      [cdkDragData]="node">
+      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
+        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
+        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+            (click)="nodeExpand(node)">
+            <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
+          </button>
+          {{ node.name }} - B1
+        </span>
+      </div>
+
+      <div *ngFor="let column of columnConfigs | slice : 1; let colIndex = index"
+        class="icc-tree-column" [ngStyle]="{'width': column.width + 'px'}">
+        {{ node[column.name] }} - Y2
+      </div>
+
+    </cdk-tree-node>
+  </cdk-tree>
+
+</cdk-virtual-scroll-viewport>
+
+<!--
+
+        <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
+        (click)="nodeExpand(node)">
+        <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
+      </button>
+      {{node.name}} Y
+
+          <mat-icon class="mat-icon-rtl-mirror">
+          {{node.isExpanded ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+
+ <i [class]="treeControl.isExpanded(node) ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
+-->

@@ -1,0 +1,18 @@
+
+<div class="app-tree-container">
+  <icc-tree
+    treeType="nestedTree"
+    [data]="data"
+    [columnConfigs]="columnConfigs">
+  </icc-tree>
+</div>
+
+<div class="app-tree-container">
+  <icc-tree
+    treeType="flatTree"
+    [gridConfigs]="{'isNestedData': true}"
+    [data]="data"
+    [columnConfigs]="columnConfigs2">
+  </icc-tree>
+</div>
+

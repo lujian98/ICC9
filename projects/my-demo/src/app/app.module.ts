@@ -13,6 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { LoginModule } from './login/login.module';
 import { IccBaseGridExampleModule } from './table/icc-base-grid-example/icc-base-grid-example.module';
+import { TreeExampleModule } from './tree/tree-example/tree-example.module';
+
 import { SchoolModule } from './school/school.module';
 
 import { AppComponent } from './app.component';
@@ -37,6 +39,7 @@ import { AppRoutingModule } from './app-routing.module';
 
     LoginModule,
     IccBaseGridExampleModule,
+    TreeExampleModule,
     SchoolModule,
     AppRoutingModule
   ],
