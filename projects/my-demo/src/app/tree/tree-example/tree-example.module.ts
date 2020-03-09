@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IccGridModule, IccTreeModule } from 'icc';
+import { IccTableModule, IccTreeModule } from 'icc';
 import { TreeExampleComponent } from './tree-example.component';
 
 @NgModule({
@@ -10,6 +10,7 @@ import { TreeExampleComponent } from './tree-example.component';
   ],
   imports: [
     CommonModule,
+    IccTableModule,
     IccTreeModule
   ],
   exports: [

@@ -25,6 +25,7 @@ export * from './lib/date-picker/index';
 export * from './lib/dialog/index';
 export * from './lib/form/index';
 
+export * from './lib/table/index';
 export * from './lib/grid/index';
 export * from './lib/tree/index';
 export * from './lib/services/index';

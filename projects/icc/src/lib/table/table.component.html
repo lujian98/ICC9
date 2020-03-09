@@ -1,0 +1,21 @@
+<span [ngStyle]="{'display': 'inline-block'}">
+  <button (click)="expandAll=!expandAll">Expand all</button>
+  <button (click)="collapseAll=!collapseAll">Collapse all</button>
+</span>
+
+<icc-tree-header
+  [increaseWidth]="expandAll"
+  [descreaseWidth]="collapseAll"
+  [gridConfigs]="gridConfigs"
+  [columnConfigs]="columnConfigs">
+</icc-tree-header>
+
+<span icc-table-view
+  [tableType]="tableType"
+  [data]="data"
+  [columnConfigs]="columnConfigs"
+  [gridConfigs]="gridConfigs"
+  [expandAll]="expandAll"
+  [collapseAll]="collapseAll">
+</span>
+

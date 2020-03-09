@@ -1,5 +1,25 @@
 
 <div class="app-tree-container">
+  <icc-table
+    tableType="nestedTree"
+    [data]="data"
+    [columnConfigs]="columnConfigs">
+  </icc-table>
+</div>
+
+<div class="app-tree-container">
+  <icc-table
+    tableType="flatTree"
+    [gridConfigs]="{'isNestedData': true}"
+    [data]="data"
+    [columnConfigs]="columnConfigs2">
+  </icc-table>
+</div>
+
+
+<!--
+
+  <div class="app-tree-container">
   <icc-tree
     treeType="nestedTree"
     [data]="data"
@@ -15,4 +35,4 @@
     [columnConfigs]="columnConfigs2">
   </icc-tree>
 </div>
-
+-->
