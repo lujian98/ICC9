@@ -18,9 +18,8 @@ export class IccBaseTreeComponent<T> {
   dataSource: IccDataSource<T>;
   dataSourceLength = 0;
 
-  tableWidth = 0;
   treeColumn: any;
-  visibleColumns: any[] = [];
+  visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
 
   isViewportReady = false;
@@ -31,26 +30,16 @@ export class IccBaseTreeComponent<T> {
   nodeLookup = {};
   dropInfo: DropInfo = null;
 
+  get tableWidth(): number {
+    return this.visibleColumns.map(column => column.width).reduce((prev, curr) => prev + curr, 0);
+  }
+
   protected setTreeColumns() {
     if (this.columns.length) {
       this.treeColumn = this.columns[0];
-    } // else {
-     //  this.treeColumn = { width: 300 }; // TODO input tree column width
-    // }
+    }
     this.visibleColumns = this.columns;
     this.displayedColumns = this.visibleColumns.map(column => column.name);
-  }
-
-  protected checkColumnWidth() {
-    this.tableWidth = this.getTableSize();
-  }
-
-  protected getTableSize(): number {
-    let width = 0;
-    this.visibleColumns.forEach(column => {
-        width += column.width;
-    });
-    return width;
   }
 
   nextBatch(event) {

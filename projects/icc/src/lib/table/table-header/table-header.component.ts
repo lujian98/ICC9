@@ -13,38 +13,29 @@ export class IccTableHeaderComponent implements OnChanges, AfterViewInit {
   @Input() increaseWidth: boolean;
   @Input() descreaseWidth: boolean;
 
-  tableWidth = 0;
+  visibleColumns: IccField[] = [];
+  displayedColumns: string[] = [];
 
-  ngAfterViewInit() {
-    this.setTreeColumns();
+  get tableWidth(): number {
+    return this.visibleColumns.map(column => column.width).reduce((prev, curr) => prev + curr, 0);
   }
+
+  ngAfterViewInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.columns) {
+      this.setHeaderColumns();
+    }
     if (changes.increaseWidth && !changes.increaseWidth.firstChange) {
-      this.columns[1].width += 10;
+      this.visibleColumns[1].width += 10;
     } else if (changes.descreaseWidth && !changes.descreaseWidth.firstChange) {
-      this.columns[1].width -= 10;
+      this.visibleColumns[1].width -= 10;
     }
-    this.tableWidth = this.getTableSize();
   }
 
-  protected getTableSize(): number {
-    let width = 0;
-    this.columns.forEach(column => {
-      width += column.width;
-    });
-    return width;
-  }
-
-  protected setTreeColumns() {
-    /*
-    if (this.columnConfigs.length) {
-      this.treeColumn = this.columnConfigs[0];
-    } else {
-      this.treeColumn = { width: 300 }; // TODO input tree column width
-    }
-    this.visibleColumns = this.columnConfigs;
-    this.displayedColumns = this.visibleColumns.map(column => column.name); */
+  protected setHeaderColumns() {
+    this.visibleColumns = this.columns;
+    this.displayedColumns = this.visibleColumns.map(column => column.name);
   }
 }
 

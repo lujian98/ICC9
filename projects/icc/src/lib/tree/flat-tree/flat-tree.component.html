@@ -21,7 +21,7 @@
           {{ node.name }} - A1
         </span>
       </div>
-      <div *ngFor="let column of columns | slice : 1; let colIndex = index;"
+      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
         class="icc-tree-column" [ngStyle]="{'width': column.width + 'px'}">
         {{ node[column.name] }} - X2
       </div>
@@ -42,7 +42,7 @@
         </span>
       </div>
 
-      <div *ngFor="let column of columns | slice : 1; let colIndex = index"
+      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
         class="icc-tree-column" [ngStyle]="{'width': column.width + 'px'}">
         {{ node[column.name] }} - Y2
       </div>

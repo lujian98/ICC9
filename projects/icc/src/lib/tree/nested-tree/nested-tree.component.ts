@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
 
@@ -25,7 +25,6 @@ export class IccNestedTreeComponent extends IccBaseTreeComponent<ItemNode> imple
   }
 
   protected setTreeData() {
-    this.checkColumnWidth();
     this.setDragDrop();
     // this.dataSourceLength = this.getDataLength(this.data, 0); // Don't need this for nested tree
     this.dataSourceLength = this.data.length;

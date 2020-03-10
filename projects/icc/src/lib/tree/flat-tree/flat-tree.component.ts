@@ -1,7 +1,7 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
@@ -32,7 +32,6 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   }
 
   protected setTreeData() {
-    this.checkColumnWidth();
     const nodes = this.data as FlatTreeNode[];
     this.dataSourceLength = this.getDataLength(nodes);
     const treeData = nodes.filter(node => {
