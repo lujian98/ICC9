@@ -1,0 +1,5 @@
+::ng-deep cdk-virtual-scroll-viewport {
+  min-height: 200px;
+  // flex: 1; // his is due to the dynamic load the this view the flex will be it's parent selector
+  height: 100%;
+}

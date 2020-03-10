@@ -1,11 +1,5 @@
 // @import '~@angular/material/theming';
 
-cdk-virtual-scroll-viewport {
-  min-height: 100px;
-  // flex: 1; // his is due to the dynamic load the this view the flex will be it's parent selector
-  height: 100%;
-}
-
 cdk-tree-node, cdk-nested-tree-node {
   display: block;
 }
