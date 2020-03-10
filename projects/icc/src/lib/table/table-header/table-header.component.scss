@@ -1,0 +1,20 @@
+
+table {
+  border-spacing: 0; // override material default value
+}
+
+.cdk-header-cell:first-child, .icc-tree-node {
+  border-left: 1px solid rgba(0,0,0,.12);
+}
+
+.cdk-header-cell {
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+
+.cdk-header-cell {
+  height: 30px;
+  border-bottom: 1px solid  rgba(0,0,0,.12);
+  border-right: 1px solid  rgba(0,0,0,.12);
+  text-align: center;
+}
+

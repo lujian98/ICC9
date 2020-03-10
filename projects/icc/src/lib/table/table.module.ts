@@ -10,12 +10,13 @@ import { IccTreeModule } from '../tree/tree.module';
 
 import { IccTableComponent } from './table.component';
 import { IccTableViewDirective } from './table-view.directive';
-
+import { IccTableHeaderComponent } from './table-header/table-header.component';
 
 @NgModule({
   declarations: [
     IccTableComponent,
     IccTableViewDirective,
+    IccTableHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -29,9 +30,11 @@ import { IccTableViewDirective } from './table-view.directive';
   exports: [
     IccTableComponent,
     IccTableViewDirective,
+    IccTableHeaderComponent
   ],
   entryComponents: [
     IccTableComponent,
+    IccTableHeaderComponent
   ]
 })
 export class IccTableModule { }

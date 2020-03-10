@@ -2,11 +2,11 @@ import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angu
 import { IccGridConfigs } from '../../models';
 
 @Component({
-  selector: 'icc-tree-header',
-  templateUrl: './tree-header.component.html',
-  styleUrls: ['../tree.component.scss'],
+  selector: 'icc-table-header',
+  templateUrl: './table-header.component.html',
+  styleUrls: ['./table-header.component.scss'],
 })
-export class IccTreeHeaderComponent implements OnChanges, AfterViewInit {
+export class IccTableHeaderComponent implements OnChanges, AfterViewInit {
   @Input() columnConfigs: any[] = [];
   @Input() gridConfigs: IccGridConfigs;
   @Input() increaseWidth: boolean;

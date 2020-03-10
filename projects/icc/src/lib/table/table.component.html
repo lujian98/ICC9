@@ -3,12 +3,12 @@
   <button (click)="collapseAll=!collapseAll">Collapse all</button>
 </span>
 
-<icc-tree-header
+<icc-table-header
   [increaseWidth]="expandAll"
   [descreaseWidth]="collapseAll"
   [gridConfigs]="gridConfigs"
   [columnConfigs]="columnConfigs">
-</icc-tree-header>
+</icc-table-header>
 
 <span iccTableView
   [tableType]="tableType"
