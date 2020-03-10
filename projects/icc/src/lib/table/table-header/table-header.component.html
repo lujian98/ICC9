@@ -1,8 +1,8 @@
 
-<table *ngIf="columnConfigs.length > 0" class="cdk-table"
-    [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': gridConfigs.columnHeaderPosition + 'px'}">
+<table *ngIf="columns.length > 0" class="cdk-table"
+    [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   <thead class="cdk-header-row">
-    <th *ngFor="let column of columnConfigs; let colIndex = index"
+    <th *ngFor="let column of columns; let colIndex = index"
       class="cdk-header-cell"
       [ngStyle]="{'width': column.width + 'px'}">
       {{column.name}}

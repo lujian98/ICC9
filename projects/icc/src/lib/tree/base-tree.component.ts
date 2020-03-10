@@ -2,15 +2,16 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, Input, ViewChild } from '@angular/core';
 import { IccDataSource } from '../datasource/datasource';
-import { DropInfo, IccGridConfigs } from '../models';
+import { DropInfo, IccTableConfigs } from '../models';
+import { IccField } from '../items';
 
 @Component({
   template: '',
 })
 export class IccBaseTreeComponent<T> {
   @Input() data: T[] = [];
-  @Input() gridConfigs: IccGridConfigs;
-  @Input() columnConfigs: any[] = [];
+  @Input() tableConfigs: IccTableConfigs;
+  columns: IccField[] = [];
 
   nodeId: number; // TODO global unique node id????
 
@@ -31,12 +32,12 @@ export class IccBaseTreeComponent<T> {
   dropInfo: DropInfo = null;
 
   protected setTreeColumns() {
-    if (this.columnConfigs.length) {
-      this.treeColumn = this.columnConfigs[0];
-    } else {
-      this.treeColumn = { width: 300 }; // TODO input tree column width
-    }
-    this.visibleColumns = this.columnConfigs;
+    if (this.columns.length) {
+      this.treeColumn = this.columns[0];
+    } // else {
+     //  this.treeColumn = { width: 300 }; // TODO input tree column width
+    // }
+    this.visibleColumns = this.columns;
     this.displayedColumns = this.visibleColumns.map(column => column.name);
   }
 
@@ -152,7 +153,7 @@ export class IccBaseTreeComponent<T> {
   }
 
   onViewportScroll(event: any) {
-    this.gridConfigs.columnHeaderPosition = -event.target.scrollLeft;
+    this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
   }
 }
 

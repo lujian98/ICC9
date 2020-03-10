@@ -25,7 +25,7 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   }
 
   ngAfterViewInit() {
-    if (this.gridConfigs && this.gridConfigs.isNestedData) {
+    if (this.tableConfigs && this.tableConfigs.isNestedData) {
       this.data = this.treeFlattener.flattenNodes(this.data);
     }
     this.setTreeColumns();

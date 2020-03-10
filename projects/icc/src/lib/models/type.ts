@@ -68,6 +68,31 @@ export interface IccGridConfigs {
   filteredValues?: {};
   rowHeight?: number;
 
+}
+
+export interface IccTableConfigs {
+  tableId?: string;
+  enableCellEdit?: boolean;
+  enableColumnDnD?: boolean;
+  enableColumnFilter?: boolean;
+  enableColumnHide?: boolean;
+  enableColumnResize?: boolean;
+  enableColumnSort?: boolean;
+  enableColumnSticky?: boolean;
+  enableGridSideMenu?: boolean;
+  enableMultiColumnSort?: boolean;
+  enableMultiRowGroup?: boolean;
+  enableMultiRowSelection?: boolean;
+  enableRowGroup?: boolean;
+  enableRowSelection?: boolean;
+  enableDisplayGridSummary?: boolean;
+
+  dataKeyId?: string;
+  defaultSort?: string;
+  defaultSortDir?: string;
+  filteredValues?: {};
+  rowHeight?: number;
+
   isNestedData?: boolean;
   columnHeaderPosition?: number;
 }

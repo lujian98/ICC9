@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IccGridConfigs } from '../../models';
+import { IccField } from '../../items';
+import { IccTableConfigs } from '../../models';
 
 @Component({
   selector: 'icc-table-header',
@@ -7,16 +8,12 @@ import { IccGridConfigs } from '../../models';
   styleUrls: ['./table-header.component.scss'],
 })
 export class IccTableHeaderComponent implements OnChanges, AfterViewInit {
-  @Input() columnConfigs: any[] = [];
-  @Input() gridConfigs: IccGridConfigs;
+  @Input() columns: IccField[] = [];
+  @Input() tableConfigs: IccTableConfigs;
   @Input() increaseWidth: boolean;
   @Input() descreaseWidth: boolean;
 
   tableWidth = 0;
-  /*
-  treeColumn: any;
-  visibleColumns: any[] = [];
-  displayedColumns: string[] = []; */
 
   ngAfterViewInit() {
     this.setTreeColumns();
@@ -24,16 +21,16 @@ export class IccTableHeaderComponent implements OnChanges, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.increaseWidth && !changes.increaseWidth.firstChange) {
-      this.columnConfigs[1].width += 10;
+      this.columns[1].width += 10;
     } else if (changes.descreaseWidth && !changes.descreaseWidth.firstChange) {
-      this.columnConfigs[1].width -= 10;
+      this.columns[1].width -= 10;
     }
     this.tableWidth = this.getTableSize();
   }
 
   protected getTableSize(): number {
     let width = 0;
-    this.columnConfigs.forEach(column => {
+    this.columns.forEach(column => {
       width += column.width;
     });
     return width;

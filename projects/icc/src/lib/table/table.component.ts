@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IccGridConfigs } from '../models';
+import { ColumnMenuType, IccColumnConfig, IccGroupHeader, IccTableConfigs } from '../models';
+import { IccField } from '../items';
+import { IccItemFieldService } from '../items/item_field.service';
 
 @Component({
   selector: 'icc-table',
@@ -9,22 +11,176 @@ import { IccGridConfigs } from '../models';
 export class IccTableComponent<T> implements OnChanges {
   @Input() tableType: string;
   @Input() data: T[] = [];
-  @Input() gridConfigs: IccGridConfigs = {
+  @Input() columnConfigs: IccColumnConfig[] = [];
+  @Input() tableConfigs: IccTableConfigs = {
     columnHeaderPosition: 0
   };
-  @Input() columnConfigs: any[] = [];
+
+  columns: IccField[] = [];
+
   expandAll: boolean;
   collapseAll: boolean;
 
   constructor(
+    private columnService: IccItemFieldService,
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.gridConfigs) {
-      if (!this.gridConfigs.columnHeaderPosition) {
-        this.gridConfigs.columnHeaderPosition = 0;
+    if (changes.tableConfigs) {
+      if (!this.tableConfigs.columnHeaderPosition) {
+        this.tableConfigs.columnHeaderPosition = 0;
       }
     }
+
+    //  this.treeColumn = { width: 300 }; // TODO input tree column width
+    if (changes.columnConfigs) {
+      if (this.tableConfigs.enableMultiRowSelection) {
+        this.tableConfigs.enableRowSelection = true;
+      }
+
+      /*
+      if (this.tableConfigs.enableRowSelection) {
+        this.columnsService.setupSelectionColumn(this.columnConfigs);
+        this.selection = new SelectionModel<T>(this.tableConfigs.enableMultiRowSelection, []);
+      } */
+
+      this.columns = this.getInitialColumns(this.columnConfigs, this.tableConfigs);
+      // this.setGridColumView();
+      // this.filters.setFilters(this.columns);
+    }
   }
+
+  public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {
+    if (columnConfigs) {
+      if (tableConfigs.enableMultiColumnSort) {
+        tableConfigs.enableColumnSort = true;
+      }
+      if (tableConfigs.enableMultiRowGroup) {
+        tableConfigs.enableRowGroup = true;
+      }
+      const columns = [];
+      columnConfigs.forEach((columnConfig: IccColumnConfig, index) => {
+        if (!columnConfig.index && columnConfig.index !== 0) {
+          columnConfig.index = index;
+        }
+        if (!columnConfig.align) {
+          columnConfig.align = 'center';
+        }
+        if (!columnConfig.type) {
+          columnConfig.type = 'text';
+        }
+        if (columnConfig.filterField === undefined) {
+          columnConfig.filterField = true;
+        }
+        if (columnConfig.sortField === undefined) {
+          columnConfig.sortField = true;
+        }
+        if (columnConfig.groupField && !columnConfig.menu) {
+          columnConfig.menu = true;
+        }
+        if (columnConfig.menu) {
+          // columnConfig.menu = this.setupColumnMenu(columnConfig, tableConfigs);
+        }
+        if (!columnConfig.priority) {
+          columnConfig.priority = 0;
+        }
+        if (columnConfig.sticky || columnConfig.stickyEnd) { // || columnConfig.groupHeader
+          columnConfig.dragDisabled = true;
+        }
+        const column = this.columnService.getItem(columnConfig);
+        /*
+        if (tableConfigs.enableColumnFilter && this.columnFilterService) {
+          column.columnFilter = this.columnFilterService.getColumnFilterByIndex(index, columnConfigs);
+        }
+        if (this.cellRendererService) {
+          column.renderer = this.cellRendererService.getCellRenderByIndex(index, columnConfigs, tableConfigs.enableCellEdit);
+        }
+        if (tableConfigs.enableCellEdit && this.cellEditService) {
+          column.editField = this.cellEditService.getEditFieldByIndex(index, columnConfigs);
+        } */
+        columns.push(column);
+      });
+      return columns;
+    }
+  }
+
+  /*
+    public setupSelectionColumn(columnConfigs: IccColumnConfig[]) {
+      columnConfigs.unshift({
+        name: 'rowSelection',
+        title: '',
+        type: 'checkbox',
+        align: 'center',
+        width: 50,
+        filterField: false,
+        fixedWidth: true,
+        dragDisabled: true,
+        hidden: 'never'
+      });
+    }
+
+
+    private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccGridConfigs): boolean | IccMenuItem {
+      let menu: IccMenuItem = {
+        children: []
+      };
+      const columnMenu = columnConfig.menu as IccMenuItem;
+      if (columnMenu && columnMenu.children) {
+        menu = columnMenu;
+      }
+      menu.icon = 'fas fa-ellipsis-v';
+      if (tableConfigs.enableColumnSort && columnConfig.sortField) {
+        menu.children.push({
+          title: 'Sort Ascending',
+          icon: 'fas fa-sort-amount-down',
+          name: ColumnMenuType.SortAscending,
+        }, {
+            title: 'Sort Descending',
+            icon: 'fas fa-sort-amount-up',
+            name: ColumnMenuType.SortDescending,
+          }, {
+            title: 'Remove Sort',
+            icon: 'fas fa-times',
+            name: ColumnMenuType.RemoveSort,
+          });
+      }
+      if (tableConfigs.enableColumnHide && (!columnConfig.hidden || columnConfig.hidden !== 'never')) {
+        menu.children.push({
+          title: 'Hide Column',
+          icon: 'fas fa-times',
+          name: ColumnMenuType.HideColumn,
+        });
+      }
+      if (tableConfigs.enableRowGroup && columnConfig.groupField) {
+        menu.children.push({
+          title: 'Group By this field',
+          name: 'groupBy',
+        }, {
+            title: 'Ungroup',
+            name: 'unGroupBy',
+            hidden: true,
+          });
+      }
+      if (tableConfigs.enableColumnSticky && columnConfig.stickyable !== false) {
+        menu.children.push({
+          title: 'Pin Left',
+          action: 'pinLeft',
+          icon: 'fas fa-chevron-left'
+        }, {
+            title: 'Pin Right',
+            action: 'pinRight',
+            icon: 'fas fa-chevron-right'
+          }, {
+            title: 'Unpin',
+            action: 'unpin',
+            icon: 'fas fa-times'
+          });
+      }
+      if (menu.children.length > 0) {
+        return menu;
+      } else {
+        return false;
+      }
+    } */
 }
 

@@ -11,10 +11,10 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { IccFlatTreeComponent } from '../tree/flat-tree/flat-tree.component';
 import { IccNestedTreeComponent } from '../tree/nested-tree/nested-tree.component';
-import { IccGridConfigs } from '../models';
+import { IccTableConfigs } from '../models';
+import { IccField } from '../items';
 
 const componentMapper = {
   flatTree: IccFlatTreeComponent,
@@ -27,8 +27,9 @@ const componentMapper = {
 export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() tableType: string;
   @Input() data: T[] = [];
-  @Input() gridConfigs: IccGridConfigs;
-  @Input() columnConfigs: any[] = [];
+  @Input() tableConfigs: IccTableConfigs;
+  @Input() columns: IccField[] = [];
+
   @Input() expandAll: boolean;
   @Input() collapseAll: boolean;
 
@@ -46,8 +47,8 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
     );
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.data = this.data;
-    this.componentRef.instance.gridConfigs = this.gridConfigs;
-    this.componentRef.instance.columnConfigs = this.columnConfigs;
+    this.componentRef.instance.columns = this.columns;
+    this.componentRef.instance.tableConfigs = this.tableConfigs;
   }
 
   ngOnChanges(changes: SimpleChanges) {
