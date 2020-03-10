@@ -22,7 +22,7 @@ const componentMapper = {
 };
 
 @Directive({
-  selector: '[icc-table-view]'
+  selector: '[iccTableView]'
 })
 export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() tableType: string;

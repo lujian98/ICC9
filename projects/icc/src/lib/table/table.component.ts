@@ -3,7 +3,8 @@ import { IccGridConfigs } from '../models';
 
 @Component({
   selector: 'icc-table',
-  templateUrl: './table.component.html'
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
 export class IccTableComponent<T> implements OnChanges {
   @Input() tableType: string;
