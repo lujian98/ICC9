@@ -4,6 +4,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { MatIconModule } from '@angular/material/icon';
+
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 
 import { IccTreeModule } from '../tree/tree.module';
@@ -24,6 +30,11 @@ import { IccTableHeaderComponent } from './table-header/table-header.component';
     ScrollingModule,
     CdkTreeModule,
     MatIconModule,
+    MatDividerModule,
+    MatSortModule,
+    MatTableModule,
+    MatProgressBarModule,
+
     IccVirtualScrollModule,
     IccTreeModule
   ],

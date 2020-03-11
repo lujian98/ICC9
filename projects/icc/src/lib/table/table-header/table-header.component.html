@@ -1,4 +1,34 @@
 
+<mat-table
+  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
+
+  <span >
+    <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.name }}"
+      [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <mat-header-cell [ngClass]="'icc-grid-column-priority-'+column.priority"
+        *matHeaderCellDef
+        [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
+        >
+        <div >
+          <div >
+            <span [ngClass]="column.titleClass">{{column.title}}</span>
+
+          </div>
+
+        </div>
+
+      </mat-header-cell>
+    </ng-container>
+  </span>
+
+
+  <mat-header-row
+    *matHeaderRowDef="displayedColumns; sticky: true">
+  </mat-header-row>
+
+</mat-table>
+
+
 <table *ngIf="visibleColumns.length > 0" class="cdk-table"
     [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   <thead class="cdk-header-row">
@@ -11,6 +41,95 @@
 </table>
 
 
+
+<!--
+
+  <mat-table matSort (matSortChange)="sortData($event)" cdkDropListGroup
+  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}">
+  <span cdkDropList
+    cdkDropListLockAxis="x"
+    cdkDropListOrientation="horizontal"
+    [cdkDropListEnterPredicate]="onDropListPredicate()"
+    (cdkDropListDropped)="onDropListDropped($event, groupHeaderColumns)">
+    <ng-container *ngFor="let header of groupHeaderColumns; let colIndex = index" matColumnDef="{{ header.name }}"
+      [sticky]="header.sticky" [stickyEnd]="header.stickyEnd">
+      <mat-header-cell *matHeaderCellDef
+        [ngStyle]="{'flex': '0 0 ' + header.width + 'px', 'left': header.left, 'right': header.right,
+          'justify-content': header.align == 'center' ? header.align : 'flex-' + header.align}"
+        (mousemove)="checkHeaderResizeORDnD($event, colIndex)"
+        (mousedown)="onResizeHeaderColumn($event, colIndex)"
+        cdkDrag
+        [cdkDragDisabled]="isDragDisabled(header)"
+        (cdkDragStarted)="onDragStarted($event, colIndex, groupHeaderColumns)"
+        (cdkDragMoved)="onDragMoved($event, colIndex, groupHeaderColumns)"
+        [cdkDragData]="{name: header.name, columIndex: colIndex}">
+        <span [ngClass]="header.titleClass">{{header.title}}</span>
+      </mat-header-cell>
+    </ng-container>
+  </span>
+  <mat-header-row *matHeaderRowDef="groupHeaderDisplay"
+    [ngStyle]="{'display': groupHeaderDisplay.length > 0 ? 'flex' : 'none'}">
+  </mat-header-row>
+  <span cdkDropList
+    cdkDropListLockAxis="x"
+    cdkDropListOrientation="horizontal"
+    [cdkDropListEnterPredicate]="onDropListPredicate()"
+    (cdkDropListDropped)="onDropListDropped($event, visibleColumns)">
+    <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.name }}"
+      [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <mat-header-cell [ngClass]="'icc-grid-column-priority-'+column.priority"
+        *matHeaderCellDef [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
+        (mousemove)="checkResizeORDnD($event, colIndex)"
+        (mousedown)="onResizeColumn($event, colIndex)"
+        cdkDrag
+        [cdkDragDisabled]="isDragDisabled(column)"
+        (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
+        (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
+        [cdkDragData]="{name: column.name, columIndex: colIndex}">
+        <div [ngClass]="'icc-grid-column-header'" *ngIf="column.name!='rowSelection'">
+          <div [ngClass]="'icc-grid-column-header-item'"
+            mat-sort-header [disabled]="isSortDisabled(column)">
+            <span [ngClass]="column.titleClass">{{column.title}}</span>
+            <i [class]="getColumnSortState(column)"></i>
+          </div>
+          <icc-active-menu *ngIf="column.menu"
+            [ngClass]="'icc-grid-column-header-menu'"
+            [menuItem]="column.menu"
+            (iccMenuOptionClickEvent)="onColumnMenuClick($event, column)">
+          </icc-active-menu>
+          <mat-divider *ngIf="gridConfigs.enableColumnFilter&&column.filterField"></mat-divider>
+          <div *ngIf="gridConfigs.enableColumnFilter&&column.filterField"
+            iccColumnFilter
+            [column]="column"
+            [dataSource]="dataSource"
+            [filteredValues]="gridConfigs.filteredValues"
+            (iccFilterChangedEvent)="onFilterChanged($event)">
+          </div>
+        </div>
+        <div *ngIf="column.name=='rowSelection'" class="icc-grid-row-selection-checkbox">
+          <mat-checkbox *ngIf="gridConfigs.enableMultiRowSelection"
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </div>
+      </mat-header-cell>
+    </ng-container>
+  </span>
+
+  <ng-container matColumnDef="progress">
+    <mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length" style="width: 99%;">
+      <mat-progress-bar mode="indeterminate" [class.show]="pending"></mat-progress-bar>
+    </mat-header-cell>
+  </ng-container>
+  <mat-header-row
+    *matHeaderRowDef="displayedColumns; sticky: true">
+  </mat-header-row>
+  <mat-header-row [ngClass]="'progress'"
+    *matHeaderRowDef="['progress']; sticky: true">
+  </mat-header-row>
+</mat-table>
+-->
 <!--
   [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}">
 -->
