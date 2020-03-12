@@ -1,18 +1,28 @@
 
-<mat-table
-  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
 
-  <span >
+<mat-table matSort (matSortChange)="sortData($event)" cdkDropListGroup
+  [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
+  <span cdkDropList
+    cdkDropListLockAxis="x"
+    cdkDropListOrientation="horizontal"
+    [cdkDropListEnterPredicate]="onDropListPredicate()"
+    (cdkDropListDropped)="onDropListDropped($event, visibleColumns)">
     <ng-container *ngFor="let column of visibleColumns; let colIndex = index" matColumnDef="{{ column.name }}"
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
       <mat-header-cell [ngClass]="'icc-grid-column-priority-'+column.priority"
-        *matHeaderCellDef
-        [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
-        >
-        <div >
-          <div >
+        *matHeaderCellDef [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
+        (mousemove)="checkResizeORDnD($event, colIndex)"
+        (mousedown)="onResizeColumn($event, colIndex)"
+        cdkDrag
+        [cdkDragDisabled]="isDragDisabled(column)"
+        (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
+        (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
+        [cdkDragData]="{name: column.name, columIndex: colIndex}">
+        <div [ngClass]="'icc-grid-column-header'" *ngIf="column.name!='rowSelection'">
+          <div [ngClass]="'icc-grid-column-header-item'"
+            mat-sort-header [disabled]="isSortDisabled(column)">
             <span [ngClass]="column.titleClass">{{column.title}}</span>
-
+            <i [class]="getColumnSortState(column)"></i>
           </div>
 
         </div>
@@ -21,15 +31,25 @@
     </ng-container>
   </span>
 
-
+  <ng-container matColumnDef="progress">
+    <mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length" style="width: 99%;">
+      <mat-progress-bar mode="indeterminate" [class.show]="pending"></mat-progress-bar>
+    </mat-header-cell>
+  </ng-container>
   <mat-header-row
     *matHeaderRowDef="displayedColumns; sticky: true">
   </mat-header-row>
 
+  <!--
+  <mat-header-row [ngClass]="'progress'"
+    *matHeaderRowDef="['progress']; sticky: true">
+  </mat-header-row>
+  -->
+
 </mat-table>
 
 
-<table *ngIf="visibleColumns.length > 0" class="cdk-table"
+<table *ngIf="visibleColumns.length > 0" class="icc-cdk-table"
     [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   <thead class="cdk-header-row">
     <th *ngFor="let column of visibleColumns; let colIndex = index"
