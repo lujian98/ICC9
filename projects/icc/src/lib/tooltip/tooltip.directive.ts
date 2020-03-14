@@ -2,7 +2,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
-import { IccOverlayComponentContent } from './overlay-component-ref';
+import { IccOverlayComponentContent } from '../services/overlay/overlay-component-ref';
 import { IccTooltipService } from './tooltip.service';
 
 @Directive({

@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { IccOverlayComponentContent, IccOverlayComponentRef } from '../overlay-component-ref';
+import { IccOverlayComponentContent, IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
 
 @Component({
   templateUrl: './tooltip.component.html',

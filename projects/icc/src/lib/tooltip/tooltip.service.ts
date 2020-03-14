@@ -1,7 +1,7 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Injectable, Injector } from '@angular/core';
-import { IccOverlayComponentContent, IccOverlayComponentRef } from './overlay-component-ref';
+import { IccOverlayComponentContent, IccOverlayComponentRef } from '../services/overlay/overlay-component-ref';
 import { IccTooltipComponent } from './tooltip/tooltip.component';
 
 export interface IccOverlayParams<T> {
