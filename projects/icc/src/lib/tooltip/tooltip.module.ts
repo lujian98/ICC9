@@ -17,7 +17,7 @@ import { IccTooltipComponent } from './tooltip/tooltip.component';
     IccTooltipComponent
   ],
   exports: [
-    IccTooltipDirective
+    IccTooltipDirective,
   ],
   providers: [],
 })

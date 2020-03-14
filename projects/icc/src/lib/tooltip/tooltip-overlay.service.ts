@@ -1,4 +1,4 @@
-import { ConnectionPositionPair, Overlay, PositionStrategy } from '@angular/cdk/overlay';
+import { ConnectionPositionPair, Overlay } from '@angular/cdk/overlay';
 import { Component, Injectable, Injector } from '@angular/core';
 import { IccOverlayService } from '../services/overlay/overlay.service';
 import { IccTooltipComponent } from './tooltip/tooltip.component';
@@ -6,7 +6,7 @@ import { IccTooltipComponent } from './tooltip/tooltip.component';
 @Injectable({
   providedIn: 'root'
 })
-export class IccTooltipService extends IccOverlayService {
+export class IccTooltipOverlayService extends IccOverlayService {
 
   componentMapper = {
     tooltip: IccTooltipComponent,
@@ -23,16 +23,7 @@ export class IccTooltipService extends IccOverlayService {
     return this.componentMapper[portal];
   }
 
-  getPositionStrategy(origin: HTMLElement): PositionStrategy {
-    const positionStrategy = this.overlay.position()
-      .flexibleConnectedTo(origin)
-      .withPositions(this.getPositions())
-      .withFlexibleDimensions(false)
-      .withPush(false);
-    return positionStrategy;
-  }
-
-  private getPositions(): ConnectionPositionPair[] {
+  getPositions(): ConnectionPositionPair[] {
     return [
       {
         originX: 'center',
@@ -49,3 +40,4 @@ export class IccTooltipService extends IccOverlayService {
     ];
   }
 }
+

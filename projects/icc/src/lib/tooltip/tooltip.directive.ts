@@ -3,7 +3,7 @@ import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
 import { IccOverlayComponentContent } from '../services/overlay/overlay-component-ref';
-import { IccTooltipService } from './tooltip.service';
+import { IccTooltipOverlayService } from './tooltip-overlay.service';
 import { IccOverlayConfig } from '../services/overlay/overlay.model';
 
 @Directive({
@@ -16,11 +16,16 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
   @Input() height: string | number;
 
   overlayRef: OverlayRef;
+  overlayConfig: IccOverlayConfig = {
+    panelClass: '',
+    backdropClass: 'tooltip-backdrop',
+  };
+
   isOpened = false;
   destroy$ = new Subject<T>();
 
   constructor(
-    private tooltipService: IccTooltipService,
+    private overlayService: IccTooltipOverlayService,
     private elementRef: ElementRef,
   ) { }
 
@@ -50,17 +55,13 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
 
   private openDialog() {
     this.isOpened = true;
-    const overlayConfig: IccOverlayConfig = {
-      panelClass: '',
-      backdropClass: 'tooltip-backdrop',
-    };
-    this.overlayRef = this.tooltipService.open({
+    this.overlayRef = this.overlayService.open({
       origin: this.elementRef.nativeElement,
       content: this.content,
       data: this.data,
       width: this.width,
       height: this.height
-    }, 'tooltip', overlayConfig);
+    }, 'tooltip', this.overlayConfig);
   }
 
   private closeDialog() {

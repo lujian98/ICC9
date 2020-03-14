@@ -1,9 +1,9 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { ElementRef, Injectable, Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
-import { IccOverlayConfig } from './overlay.model';
-import { IccOverlayComponentContent, IccOverlayComponentRef } from './overlay-component-ref';
+import { IccOverlayComponentRef } from './overlay-component-ref';
+import { IccOverlayConfig, IccOverlayParams } from './overlay.model';
 
 const DEFAULT_CONFIG: IccOverlayConfig = {
   panelClass: 'icc-overlay',
@@ -11,15 +11,6 @@ const DEFAULT_CONFIG: IccOverlayConfig = {
   backdropClass: 'icc-overlay-backdrop',
   shouldCloseOnBackdropClick: true
 };
-
-
-export interface IccOverlayParams<T> {
-  origin: HTMLElement;
-  content: IccOverlayComponentContent<T>;
-  data?: T;
-  width?: string | number;
-  height?: string | number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +27,6 @@ export abstract class IccOverlayService {
   }
 
   // private hostElemRef: ElementRef;
-
   // componentRef: any; // TODO remove this???
 
   constructor(
@@ -49,16 +39,11 @@ export abstract class IccOverlayService {
   open<T>(
     { origin, content, data, width, height }: IccOverlayParams<T>,
     portal: string,
-    config: IccOverlayConfig = {},
-
-    // hostElemRef?: any,
+    config: IccOverlayConfig = {}
     // configData?: {}
   ): OverlayRef {
 
-    // this.hostElemRef = hostElemRef;
-
     config = { ...DEFAULT_CONFIG, ...config };
-    console.log( ' config =', config)
     const overlayConfig = this.getOverlayConfig(config, { origin, width, height });
     const overlayRef = this.overlay.create(overlayConfig);
 
@@ -95,6 +80,12 @@ export abstract class IccOverlayService {
     return overlayConfig;
   }
 
+  private createInjector(overlayComponentRef: IccOverlayComponentRef) {
+    const injectionTokens = new WeakMap();
+    injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
+    return new PortalInjector(this.injector, injectionTokens);
+  }
+
   // createComponentInstance(configData: {}) {
   //  this.componentRef.instance.overlayConfigData = configData;
   // }
@@ -103,48 +94,40 @@ export abstract class IccOverlayService {
     return this.overlay
       .position()
       .flexibleConnectedTo(origin)
+      .withPositions(this.getPositions())
       .withFlexibleDimensions(false)
-      .withViewportMargin(8)
-      .withDefaultOffsetY(10)
-      .withPositions([
-        {
-          originX: 'start',
-          originY: 'bottom',
-          overlayX: 'start',
-          overlayY: 'top'
-        },
-        {
-          originX: 'start',
-          originY: 'top',
-          overlayX: 'start',
-          overlayY: 'bottom'
-        },
-        {
-          originX: 'end',
-          originY: 'bottom',
-          overlayX: 'end',
-          overlayY: 'top'
-        },
-        {
-          originX: 'end',
-          originY: 'top',
-          overlayX: 'end',
-          overlayY: 'bottom'
-        }
-      ]);
+      .withPush(false);
+    // .withViewportMargin(8)
+    // .withDefaultOffsetY(10)
   }
 
-  private createInjector(overlayComponentRef: IccOverlayComponentRef) {
-    const injectionTokens = new WeakMap([[IccOverlayComponentRef, overlayComponentRef]]);
-    // injectionTokens.set(OverlayRef, overlayRef);
-    return new PortalInjector(this.injector, injectionTokens);
+  getPositions(): ConnectionPositionPair[] {
+    return [
+      {
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'top'
+      },
+      {
+        originX: 'start',
+        originY: 'top',
+        overlayX: 'start',
+        overlayY: 'bottom'
+      },
+      {
+        originX: 'end',
+        originY: 'bottom',
+        overlayX: 'end',
+        overlayY: 'top'
+      },
+      {
+        originX: 'end',
+        originY: 'top',
+        overlayX: 'end',
+        overlayY: 'bottom'
+      }
+    ];
   }
-  /*
-  private createInjector(overlayRef: OverlayRef): PortalInjector {
-    const injectionTokens = new WeakMap();
-    injectionTokens.set(OverlayRef, overlayRef);
-    return new PortalInjector(this.injector, injectionTokens);
-  } */
 }
-
 
