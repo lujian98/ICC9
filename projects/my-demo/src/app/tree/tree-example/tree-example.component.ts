@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemNode, FlatTreeNode  } from 'icc';
 
+import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component';
+
 import { FoodNode, TREE_DATA } from '../models/tree-data';
 import { LEVEL_TREE_DATA } from '../models/level-tree-data';
 
@@ -13,6 +15,14 @@ const MAX_NODES_PER_LEVEL = 2;
   styleUrls: ['./tree-example.component.scss']
 })
 export class TreeExampleComponent implements OnInit {
+
+  texttooltip = 'This is a text tooltip.';
+  tooltip = TooltipDemoComponent;
+  tooltipdata = {
+    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12]
+  };
+
+
   title = 'nested-tree';
   data: FoodNode[] = TREE_DATA;
 

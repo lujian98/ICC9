@@ -1,4 +1,17 @@
 
+<div class="tooltip-demo" [iccTooltip]="texttooltip">Text Tooltip</div>
+<div class="tooltip-demo" [iccTooltip]="tpl">Template Tooltip</div>
+<div class="tooltip-demo" [iccTooltip]="tooltip" [data]="tooltipdata"> Component Tooltip</div>
+
+<ng-template #tpl let-close="close">
+  And here's some amazing content. It's very engaging. Right?
+  <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+    <a class="button is-danger is-small" (click)="close({id: 2})">Close</a>
+  </div>
+</ng-template>
+
+
+
 <div class="app-tree-container">
   <icc-table
     tableType="nestedTree"
