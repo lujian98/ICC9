@@ -2,9 +2,8 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
-import { IccOverlayComponentContent } from '../services/overlay/overlay-component-ref';
+import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayParams } from '../services/overlay/overlay.model';
 import { IccTooltipOverlayService } from './tooltip-overlay.service';
-import { IccOverlayConfig } from '../services/overlay/overlay.model';
 
 @Directive({
   selector: '[iccTooltip]'
@@ -15,14 +14,13 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
   @Input() width: string | number = 200;
   @Input() height: string | number;
 
-  overlayRef: OverlayRef;
-  overlayConfig: IccOverlayConfig = {
+  private overlayRef: OverlayRef;
+  private overlayConfig: IccOverlayConfig = {
     panelClass: '',
     backdropClass: 'tooltip-backdrop',
   };
-
-  isOpened = false;
-  destroy$ = new Subject<T>();
+  private isOpened = false;
+  private destroy$ = new Subject<T>();
 
   constructor(
     private overlayService: IccTooltipOverlayService,
@@ -55,13 +53,20 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
 
   private openDialog() {
     this.isOpened = true;
-    this.overlayRef = this.overlayService.open({
-      origin: this.elementRef.nativeElement,
+    const overlayConfig: IccOverlayConfig = {
+      width: this.width,
+      height: this.height,
+      ...this.overlayConfig
+    };
+    const overlayParams: IccOverlayParams<T> = {
       content: this.content,
       data: this.data,
-      width: this.width,
-      height: this.height
-    }, 'tooltip', this.overlayConfig);
+    };
+    this.overlayRef = this.overlayService.open(
+      this.elementRef.nativeElement,
+      'tooltip',
+      overlayParams,
+      overlayConfig);
   }
 
   private closeDialog() {
@@ -78,3 +83,4 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 }
+

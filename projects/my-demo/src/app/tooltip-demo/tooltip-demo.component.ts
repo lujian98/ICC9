@@ -9,7 +9,7 @@ export class TooltipDemoComponent {
   skills;
   constructor(private tooltipRef: IccOverlayComponentRef) {
     console.log( ' this.tooltipRef =', this.tooltipRef);
-    this.skills = this.tooltipRef.data.skills;
+    this.skills = this.tooltipRef.overlayParams.data.skills;
   }
 
   close() {

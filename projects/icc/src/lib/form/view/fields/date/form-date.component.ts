@@ -110,6 +110,13 @@ export class IccFormDateComponent extends IccFormFieldComponent implements OnIni
   openCalendar(event) {
     if (this.field && !this.field.readonly) {
       const selectedDate = new Date(this.field.value);
+      this.calendarOverlayService.open(
+        this.calendarInput,
+        'datepicker',
+        { data: selectedDate }, // TODO check if corrent pass inpot data overlayParams: IccOverlayParams
+        this.configStoreService.dateRangeOptions.calendarOverlayConfig,
+      );
+
       /* TODO
       this.calendarOverlayService.open(
         this.configStoreService.dateRangeOptions.calendarOverlayConfig,

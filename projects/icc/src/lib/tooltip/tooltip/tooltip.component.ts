@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { IccOverlayComponentContent, IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
+import { IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
+import { IccOverlayComponentContent } from '../../services/overlay/overlay.model';
 
 @Component({
   templateUrl: './tooltip.component.html',
@@ -15,7 +16,7 @@ export class IccTooltipComponent<T> implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.content = this.tooltipRef.content;
+    this.content = this.tooltipRef.overlayParams.content;
     if (typeof this.content === 'string') {
       this.tooltipType = 'text';
     }
@@ -27,3 +28,4 @@ export class IccTooltipComponent<T> implements OnInit {
     }
   }
 }
+

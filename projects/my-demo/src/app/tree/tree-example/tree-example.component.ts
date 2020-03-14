@@ -19,7 +19,7 @@ export class TreeExampleComponent implements OnInit {
   texttooltip = 'This is a text tooltip.';
   tooltip = TooltipDemoComponent;
   tooltipdata = {
-    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12]
+    skills: [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
   };
 
 

@@ -26,9 +26,6 @@ export abstract class IccOverlayService {
     return this._overlayComponentRef;
   }
 
-  // private hostElemRef: ElementRef;
-  // componentRef: any; // TODO remove this???
-
   constructor(
     protected overlay: Overlay,
     protected injector: Injector
@@ -37,17 +34,17 @@ export abstract class IccOverlayService {
   abstract getPortalComponent(portal: string);
 
   open<T>(
-    { origin, content, data, width, height }: IccOverlayParams<T>,
+    origin: HTMLElement,
     portal: string,
+    overlayParams: IccOverlayParams<T> = {},
     config: IccOverlayConfig = {}
-    // configData?: {}
   ): OverlayRef {
 
     config = { ...DEFAULT_CONFIG, ...config };
-    const overlayConfig = this.getOverlayConfig(config, { origin, width, height });
+    const overlayConfig = this.getOverlayConfig(config, origin);
     const overlayRef = this.overlay.create(overlayConfig);
 
-    this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, content, data);
+    this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayParams);
     const componentInjector = this.createInjector(this.overlayComponentRef);
     const component = this.getPortalComponent(portal);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
@@ -65,12 +62,12 @@ export abstract class IccOverlayService {
     return overlayRef;
   }
 
-  private getOverlayConfig(config: IccOverlayConfig, { origin, width, height }): OverlayConfig {
+  private getOverlayConfig(config: IccOverlayConfig, origin: HTMLElement): OverlayConfig {
     const positionStrategy = this.getPositionStrategy(origin);
     const overlayConfig = new OverlayConfig({
       hasBackdrop: config.hasBackdrop,
-      width,
-      height,
+      width: config.width,
+      height: config.height,
       backdropClass: config.backdropClass,
       panelClass: config.panelClass,
       scrollStrategy: this.overlay.scrollStrategies.reposition(),

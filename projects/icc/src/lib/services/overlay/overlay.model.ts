@@ -1,6 +1,10 @@
-import { IccOverlayComponentContent, IccOverlayComponentRef } from './overlay-component-ref';
+import { TemplateRef, Type } from '@angular/core';
+
+export type IccOverlayComponentContent<T> = string | TemplateRef<T> | Type<T>;
 
 export interface IccOverlayConfig {
+  width?: string | number;
+  height?: string | number;
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
@@ -8,10 +12,12 @@ export interface IccOverlayConfig {
 }
 
 export interface IccOverlayParams<T> {
-  origin: HTMLElement;
-  content: IccOverlayComponentContent<T>;
+  content?: IccOverlayComponentContent<T>;
   data?: T;
-  width?: string | number;
-  height?: string | number;
+}
+
+export interface IccOverlayComponentCloseEvent<T = any> {
+  type: 'backdropClick' | 'close';
+  data: T;
 }
 

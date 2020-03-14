@@ -1,13 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { TemplateRef, Type } from '@angular/core';
 import { Subject } from 'rxjs';
-
-export interface IccOverlayComponentCloseEvent<T = any> {
-  type: 'backdropClick' | 'close';
-  data: T;
-}
-
-export type IccOverlayComponentContent<T> = string | TemplateRef<T> | Type<T>;
+import { IccOverlayComponentCloseEvent, IccOverlayParams } from './overlay.model';
 
 export class IccOverlayComponentRef<T = any> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();
@@ -15,8 +8,7 @@ export class IccOverlayComponentRef<T = any> {
 
   constructor(
     public overlay: OverlayRef,
-    public content: IccOverlayComponentContent<T>,
-    public data: T
+    public overlayParams: IccOverlayParams<T>,
   ) {
     this.overlay.backdropClick().subscribe(() => this._close({ type: 'backdropClick', data: null }));
   }

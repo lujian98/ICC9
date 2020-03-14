@@ -69,6 +69,12 @@ export class IccDatePickerComponent implements OnInit, OnDestroy {
 
   openCalendar(event) {
     // const overlayRef: OverlayRef = this.calendarOverlayService.open(
+      this.calendarOverlayService.open(
+        this.calendarInput,
+        'datepicker',
+        {}, // TODO pass inpot data overlayParams: IccOverlayParams
+        this.options.calendarOverlayConfig,
+      );
       /* TODO
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
