@@ -1,5 +1,5 @@
-import { ConnectionPositionPair, Overlay } from '@angular/cdk/overlay';
-import { Component, Injectable, Injector } from '@angular/core';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
+import { Component, Injectable } from '@angular/core';
 import { IccOverlayService } from '../services/overlay/overlay.service';
 import { IccTooltipComponent } from './tooltip/tooltip.component';
 
@@ -11,13 +11,6 @@ export class IccTooltipOverlayService extends IccOverlayService {
   componentMapper = {
     tooltip: IccTooltipComponent,
   };
-
-  constructor(
-    protected overlay: Overlay,
-    protected injector: Injector
-  ) {
-    super(overlay, injector);
-  }
 
   getPortalComponent(portal: string): Component {
     return this.componentMapper[portal];

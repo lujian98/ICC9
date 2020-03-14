@@ -39,26 +39,18 @@ export abstract class IccOverlayService {
     overlayParams: IccOverlayParams<T> = {},
     config: IccOverlayConfig = {}
   ): OverlayRef {
-
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     const overlayRef = this.overlay.create(overlayConfig);
-
     this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayParams);
     const componentInjector = this.createInjector(this.overlayComponentRef);
     const component = this.getPortalComponent(portal);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
     overlayRef.attach(componentPortal);
-    // this.componentRef = overlayRef.attach(componentPortal);
-    // this.componentRef.instance.hostElemRef = hostElemRef;
-    // this.componentRef.instance.overlayRefParent = overlayRef;
-    // this.createComponentInstance(configData);
-
     overlayRef
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))
       .subscribe(() => overlayRef.dispose());
-
     return overlayRef;
   }
 
@@ -82,10 +74,6 @@ export abstract class IccOverlayService {
     injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
     return new PortalInjector(this.injector, injectionTokens);
   }
-
-  // createComponentInstance(configData: {}) {
-  //  this.componentRef.instance.overlayConfigData = configData;
-  // }
 
   getPositionStrategy(origin: HTMLElement): PositionStrategy {
     return this.overlay
