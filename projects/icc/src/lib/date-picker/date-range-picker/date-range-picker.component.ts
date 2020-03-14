@@ -84,11 +84,13 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
 
   openCalendar(event) {
     // const overlayRef: OverlayRef = this.calendarOverlayService.open(
+
+    /* TODO
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,
       'daterangepicker'
-    );
+    ); */
   }
 
   public resetDates(range: IccDateRange) {

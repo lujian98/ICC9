@@ -4,6 +4,7 @@ import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
 import { IccOverlayComponentContent } from '../services/overlay/overlay-component-ref';
 import { IccTooltipService } from './tooltip.service';
+import { IccOverlayConfig } from '../services/overlay/overlay.model';
 
 @Directive({
   selector: '[iccTooltip]'
@@ -49,13 +50,17 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
 
   private openDialog() {
     this.isOpened = true;
+    const overlayConfig: IccOverlayConfig = {
+      panelClass: '',
+      backdropClass: 'tooltip-backdrop',
+    };
     this.overlayRef = this.tooltipService.open({
       origin: this.elementRef.nativeElement,
       content: this.content,
       data: this.data,
       width: this.width,
       height: this.height
-    });
+    }, 'tooltip', overlayConfig);
   }
 
   private closeDialog() {

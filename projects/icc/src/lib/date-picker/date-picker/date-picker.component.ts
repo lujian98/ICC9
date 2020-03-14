@@ -69,11 +69,12 @@ export class IccDatePickerComponent implements OnInit, OnDestroy {
 
   openCalendar(event) {
     // const overlayRef: OverlayRef = this.calendarOverlayService.open(
+      /* TODO
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,
       'datepicker'
-    );
+    ); */
   }
 
   public resetSelectedDate(selectedDate: Date) {
