@@ -1,4 +1,17 @@
 
+// @import '~@angular/material/theming';
+
+@mixin test-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  .test {
+    background: mat-color($primary);
+  }
+  .test1 {
+    background: orange;
+  }
+}
+
+
 table {
   border-spacing: 0; // override material default value
 }
@@ -114,4 +127,3 @@ table {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-

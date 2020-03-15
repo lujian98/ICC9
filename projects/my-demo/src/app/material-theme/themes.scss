@@ -1,6 +1,8 @@
 
-@import '~@angular/material/theming';
+@import '~@angular/material/_theming.scss';
 @include mat-core();
+
+@import 'icc/_theming.scss';
 
 @mixin my-theme-colors($theme) {
   $primary: map-get($theme, primary);
@@ -19,6 +21,7 @@
   $theme:   mat-light-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
   @include my-theme-colors($theme);
+  @include icc-theme($theme);
 }
 
 .dark-theme {
@@ -28,5 +31,6 @@
   $theme:   mat-dark-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
   @include my-theme-colors($theme);
+  @include icc-theme($theme);
 }
 

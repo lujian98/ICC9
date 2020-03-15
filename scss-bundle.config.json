@@ -1,0 +1,7 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./projects/icc/src/lib/theme/_theming.scss",
+    "outFile": "./dist/icc/_theming.scss",
+    "rootDir": "./projects/icc"
+  }
+}

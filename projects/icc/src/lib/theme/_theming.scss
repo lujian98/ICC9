@@ -1,0 +1,5 @@
+@import '../table/table-header/table-header.component.scss';
+
+@mixin icc-theme($app-theme) {
+  @include test-component-theme($app-theme);
+}
