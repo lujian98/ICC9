@@ -18,6 +18,16 @@ export class NavComponent {
   ) {
   }
 
+  changeTheme(data) {
+    document.querySelector('.app-container').classList.remove('dark-theme');
+    document.querySelector('.app-container').classList.remove('light-theme');
+    if (data.value === 'light') {
+      document.querySelector('.app-container').classList.add('light-theme');
+    } else if (data.value === 'dark') {
+      document.querySelector('.app-container').classList.add('dark-theme');
+    }
+  }
+
   onLoggedout() {
     localStorage.removeItem('isLoggedin');
     this.router.navigate(['login']);

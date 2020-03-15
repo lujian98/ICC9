@@ -1,4 +1,6 @@
-<icc-demo-header-nav
-  (sideMenuNavIconClickEvent)="onSideMenuNavIconClick($event)"
-></icc-demo-header-nav>
-<router-outlet (activate)="onActivate($event)"></router-outlet>
+<div class="app-container light-theme">
+  <icc-demo-header-nav
+    (sideMenuNavIconClickEvent)="onSideMenuNavIconClick($event)">
+  </icc-demo-header-nav>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>

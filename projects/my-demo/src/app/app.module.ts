@@ -11,6 +11,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 
+import { MatRadioModule } from '@angular/material/radio';
+
 import { LoginModule } from './login/login.module';
 import { IccBaseGridExampleModule } from './table/icc-base-grid-example/icc-base-grid-example.module';
 import { TreeExampleModule } from './tree/tree-example/tree-example.module';
@@ -36,6 +38,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatSidenavModule,
     MatListModule,
     MatMenuModule,
+    MatRadioModule,
 
     LoginModule,
     IccBaseGridExampleModule,
