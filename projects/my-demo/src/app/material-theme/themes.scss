@@ -1,8 +1,10 @@
 
-@import '~@angular/material/_theming.scss';
+@import '~@angular/material/theming.scss';
 @include mat-core();
 
-@import 'icc/_theming.scss';
+// @import 'icc/_theming.scss'; // TODO why not working ???
+
+@import '../../../../../dist/icc/theming.scss';
 
 @mixin my-theme-colors($theme) {
   $primary: map-get($theme, primary);
