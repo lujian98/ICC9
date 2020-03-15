@@ -10,10 +10,10 @@
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
-  $background: map-get($theme, background);
+  // $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
   color: mat-color($foreground, base); // or 'lighter-contrast' or 'darker-contrast'
-  background-color: mat-color($background, background);
+  // background-color: mat-color($background, background);
 }
 
 .light-theme {
@@ -22,7 +22,7 @@
   $warn:    mat-palette($mat-red);
   $theme:   mat-light-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
-  @include my-theme-colors($theme);
+  // @include my-theme-colors($theme);
   @include icc-theme($theme);
 }
 
@@ -32,7 +32,13 @@
   $warn:    mat-palette($mat-deep-orange);
   $theme:   mat-dark-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
-  @include my-theme-colors($theme);
+  // @include my-theme-colors($theme);
   @include icc-theme($theme);
+
 }
+
+.dark-theme .mat-table, .mat-drawer {
+  background: unset !important;
+}
+
 
