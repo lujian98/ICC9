@@ -3,7 +3,7 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { Injectable, Injector } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccOverlayComponentRef } from './overlay-component-ref';
-import { IccOverlayConfig, IccOverlayParams } from './overlay.model';
+import { IccOverlayConfig, IccOverlayContent } from './overlay.model';
 
 const DEFAULT_CONFIG: IccOverlayConfig = {
   panelClass: 'icc-overlay',
@@ -36,13 +36,13 @@ export abstract class IccOverlayService {
   open<T>(
     origin: HTMLElement,
     portal: string,
-    overlayParams: IccOverlayParams<T> = {},
+    overlayContent: IccOverlayContent<T> = {},
     config: IccOverlayConfig = {}
   ): OverlayRef {
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     const overlayRef = this.overlay.create(overlayConfig);
-    this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayParams);
+    this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayContent);
     const componentInjector = this.createInjector(this.overlayComponentRef);
     const component = this.getPortalComponent(portal);
     const componentPortal = new ComponentPortal(component, null, componentInjector);

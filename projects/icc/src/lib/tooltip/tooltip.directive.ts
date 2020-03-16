@@ -2,7 +2,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
-import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayParams } from '../services/overlay/overlay.model';
+import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayContent } from '../services/overlay/overlay.model';
 import { IccTooltipOverlayService } from './tooltip-overlay.service';
 
 @Directive({
@@ -58,14 +58,14 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
       height: this.height,
       ...this.overlayConfig
     };
-    const overlayParams: IccOverlayParams<T> = {
+    const overlayContent: IccOverlayContent<T> = {
       content: this.content,
       data: this.data,
     };
     this.overlayRef = this.overlayService.open(
       this.elementRef.nativeElement,
       'tooltip',
-      overlayParams,
+      overlayContent,
       overlayConfig);
   }
 

@@ -11,7 +11,7 @@ export interface IccOverlayConfig {
   shouldCloseOnBackdropClick?: boolean;
 }
 
-export interface IccOverlayParams<T> {
+export interface IccOverlayContent<T> {
   content?: IccOverlayComponentContent<T>;
   data?: T;
 }

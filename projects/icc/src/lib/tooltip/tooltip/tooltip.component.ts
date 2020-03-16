@@ -16,7 +16,7 @@ export class IccTooltipComponent<T> implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.content = this.tooltipRef.overlayParams.content;
+    this.content = this.tooltipRef.overlayContent.content;
     if (typeof this.content === 'string') {
       this.tooltipType = 'text';
     }

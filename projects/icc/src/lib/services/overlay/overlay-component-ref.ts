@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
-import { IccOverlayComponentCloseEvent, IccOverlayParams } from './overlay.model';
+import { IccOverlayComponentCloseEvent, IccOverlayContent } from './overlay.model';
 
 export class IccOverlayComponentRef<T = any> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();
@@ -8,7 +8,7 @@ export class IccOverlayComponentRef<T = any> {
 
   constructor(
     public overlay: OverlayRef,
-    public overlayParams: IccOverlayParams<T>,
+    public overlayContent: IccOverlayContent<T>,
   ) {
     this.overlay.backdropClick().subscribe(() => this._close({ type: 'backdropClick', data: null }));
   }
