@@ -11,6 +11,13 @@ export interface IccOverlayConfig {
   shouldCloseOnBackdropClick?: boolean;
 }
 
+export const DEFAULT_CONFIG: IccOverlayConfig = {
+  panelClass: 'icc-overlay',
+  hasBackdrop: true,
+  backdropClass: 'icc-overlay-backdrop',
+  shouldCloseOnBackdropClick: true
+};
+
 export interface IccOverlayContent<T> {
   content?: IccOverlayComponentContent<T>;
   data?: T;

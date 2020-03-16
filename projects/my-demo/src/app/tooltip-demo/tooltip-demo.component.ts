@@ -7,7 +7,7 @@ import { IccOverlayComponentRef } from 'icc';
 })
 export class TooltipDemoComponent {
   skills;
-  constructor(private tooltipRef: IccOverlayComponentRef) {
+  constructor(private tooltipRef: IccOverlayComponentRef<any>) {
     console.log( ' this.tooltipRef =', this.tooltipRef);
     this.skills = this.tooltipRef.overlayContent.data.skills;
   }

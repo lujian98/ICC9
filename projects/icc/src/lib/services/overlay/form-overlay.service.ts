@@ -18,9 +18,6 @@ export class IccFormOverlayService extends IccOverlayService {
     return this.componentMapper[portal];
   }
 
-  // createComponentInstance(configData: {}) {
-  //  this.componentRef.instance.config = configData;
-  // }
 
   getPositionStrategy(origin: HTMLElement): PositionStrategy {
     return this.overlay.position()

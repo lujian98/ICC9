@@ -4,6 +4,7 @@ import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
 import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayContent } from '../services/overlay/overlay.model';
 import { IccTooltipOverlayService } from './tooltip-overlay.service';
+import { IccTooltipComponent } from './tooltip/tooltip.component';
 
 @Directive({
   selector: '[iccTooltip]'
@@ -64,7 +65,7 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
     };
     this.overlayRef = this.overlayService.open(
       this.elementRef.nativeElement,
-      'tooltip',
+      IccTooltipComponent,
       overlayContent,
       overlayConfig);
   }

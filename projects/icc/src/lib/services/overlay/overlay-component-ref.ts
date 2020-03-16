@@ -2,7 +2,7 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
 import { IccOverlayComponentCloseEvent, IccOverlayContent } from './overlay.model';
 
-export class IccOverlayComponentRef<T = any> {
+export class IccOverlayComponentRef<T> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();
   afterClosed$ = this.afterClosed.asObservable();
 

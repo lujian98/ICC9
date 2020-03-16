@@ -12,7 +12,7 @@ export class IccTooltipComponent<T> implements OnInit {
   context: any;
 
   constructor(
-    private tooltipRef: IccOverlayComponentRef
+    private tooltipRef: IccOverlayComponentRef<T>
   ) { }
 
   ngOnInit() {

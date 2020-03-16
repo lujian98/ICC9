@@ -84,6 +84,7 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
 
   openCalendar(event) {
     // const overlayRef: OverlayRef = this.calendarOverlayService.open(
+          /* TODO
       this.calendarOverlayService.open(
         this.calendarInput,
         'daterangepicker',
@@ -91,7 +92,7 @@ export class IccDateRangePickerComponent implements OnInit, OnDestroy {
         this.options.calendarOverlayConfig,
       );
 
-    /* TODO
+
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,

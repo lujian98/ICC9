@@ -1,50 +1,27 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccOverlayComponentRef } from './overlay-component-ref';
-import { IccOverlayConfig, IccOverlayContent } from './overlay.model';
-
-const DEFAULT_CONFIG: IccOverlayConfig = {
-  panelClass: 'icc-overlay',
-  hasBackdrop: true,
-  backdropClass: 'icc-overlay-backdrop',
-  shouldCloseOnBackdropClick: true
-};
+import { IccOverlayConfig, IccOverlayContent, DEFAULT_CONFIG } from './overlay.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export abstract class IccOverlayService {
-  private _overlayComponentRef: any;
+export class IccOverlayService {
+  constructor(protected overlay: Overlay, protected injector: Injector) { }
 
-  set overlayComponentRef(val: any) {
-    this._overlayComponentRef = val;
-  }
-
-  get overlayComponentRef(): any {
-    return this._overlayComponentRef;
-  }
-
-  constructor(
-    protected overlay: Overlay,
-    protected injector: Injector
-  ) { }
-
-  abstract getPortalComponent(portal: string);
-
-  open<T>(
+  open<T, C>(
     origin: HTMLElement,
-    portal: string,
+    component: Type<C>,
     overlayContent: IccOverlayContent<T> = {},
     config: IccOverlayConfig = {}
   ): OverlayRef {
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     const overlayRef = this.overlay.create(overlayConfig);
-    this.overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayContent);
-    const componentInjector = this.createInjector(this.overlayComponentRef);
-    const component = this.getPortalComponent(portal);
+    const overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayContent);
+    const componentInjector = this.createInjector(overlayComponentRef);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
     overlayRef.attach(componentPortal);
     overlayRef
@@ -69,7 +46,7 @@ export abstract class IccOverlayService {
     return overlayConfig;
   }
 
-  private createInjector(overlayComponentRef: IccOverlayComponentRef) {
+  private createInjector<T>(overlayComponentRef: IccOverlayComponentRef<T>) {
     const injectionTokens = new WeakMap();
     injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
     return new PortalInjector(this.injector, injectionTokens);
