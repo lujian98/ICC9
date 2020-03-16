@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json --port 4203",
-    "build": "ng build",
+    "build": "ng build --prod && scss-bundle",
     "lib:build": "ng build --prod && scss-bundle",
     "build:lib:scss": "scss-bundle",
     "test": "ng test",
