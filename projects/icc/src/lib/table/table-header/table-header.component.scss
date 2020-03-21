@@ -1,16 +1,4 @@
 
-// @import '~@angular/material/theming';
-
-@mixin test-component-theme($theme) {
-  $primary: map-get($theme, primary);
-  .test {
-    background: mat-color($primary);
-  }
-  .test1 {
-    background: orange;
-  }
-}
-
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;

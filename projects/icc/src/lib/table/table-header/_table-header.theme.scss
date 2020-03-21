@@ -1,0 +1,10 @@
+@mixin test-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  .test {
+    background: mat-color($primary);
+  }
+  .test1 {
+    background: orange;
+  }
+}
+

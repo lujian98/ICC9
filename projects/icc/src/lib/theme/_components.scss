@@ -1,0 +1,6 @@
+@import '../table/table-header/table-header.theme';
+
+@mixin icc-theme($app-theme) {
+  @include test-component-theme($app-theme);
+}
+
