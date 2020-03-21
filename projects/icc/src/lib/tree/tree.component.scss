@@ -1,15 +1,19 @@
-// @import '~@angular/material/theming';
 
 cdk-tree-node, cdk-nested-tree-node {
   display: block;
 }
 
-.icc-tree-node, .icc-tree-column {
+$border-color: var(--icc-cdk-table-cell-border-color);
+.icc-tree-node, .icc-table-column {
   display: inline-block;
   height: 30px;
-  border-bottom: 1px solid  rgba(0,0,0,.12);
-  border-right: 1px solid  rgba(0,0,0,.12);
+  border-bottom: 1px solid $border-color;
+  border-right: 1px solid $border-color;
   text-align: center;
+}
+
+.icc-tree-node {
+  border-left: 1px solid $border-color;
 }
 
 // for drag and drop

@@ -30,18 +30,19 @@
     // padding: 0 8px;
   }
 
+  $border-color: var(--icc-cdk-table-cell-border-color);
   .icc-cdk-table-header-cell {
     height: 32px; // TODO configurable
     text-align: center; // TODO configurable
-    border-top: 1px solid var(--grid-header-row-border-color);
-    border-bottom: 1px solid rgba(0,0,0,.12);
-    border-right: 1px solid rgba(0,0,0,.12);
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
     cursor: col-resize;
     padding: 0px 10px;
   }
 
   .icc-cdk-table-header-cell:first-child {
-    border-left: 1px solid rgba(0,0,0,.12);
+    border-left: 1px solid $border-color;
   }
 
 }
