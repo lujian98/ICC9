@@ -67,7 +67,8 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
       this.elementRef.nativeElement,
       IccTooltipComponent,
       overlayContent,
-      overlayConfig);
+      overlayConfig
+    );
   }
 
   private closeDialog() {

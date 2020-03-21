@@ -105,6 +105,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
+    console.log( ' drop llllllllllll')
     // if (this.columnResizeDnDService.isDropListDropped(event, visibleColumns, this.columns)) {
     //  this.setGridColumView();
     //  this.scrollToPosition(0);

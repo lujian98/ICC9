@@ -1,5 +1,29 @@
 
+<cdk-table class="icc-cdk-table-header"
+  cdkDropListGroup cdkDropList cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
+  [cdkDropListEnterPredicate]="onDropListPredicate()"
+  (cdkDropListDropped)="onDropListDropped($event, visibleColumns)"
+  [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
+  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
+    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+    <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
+      [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
+      (mousemove)="checkResizeORDnD($event, colIndex)"
+      (mousedown)="onResizeColumn($event, colIndex)"
+      cdkDrag
+      [cdkDragDisabled]="isDragDisabled(column)"
+      (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
+      (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
+      [cdkDragData]="{name: column.name, columIndex: colIndex}">
+      {{column.title}} X3
+    </cdk-header-cell>
+  </ng-container>
 
+  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></cdk-header-row>
+</cdk-table>
+
+
+<!--
 <mat-table matSort (matSortChange)="sortData($event)" cdkDropListGroup
   [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   <span cdkDropList
@@ -47,7 +71,12 @@
 </mat-table>
 
 
-<table *ngIf="visibleColumns.length > 0" class="icc-cdk-table"
+
+
+
+
+
+  <table *ngIf="visibleColumns.length > 0" class="icc-cdk-table"
     [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   <thead class="cdk-header-row">
     <th *ngFor="let column of visibleColumns; let colIndex = index"
@@ -58,9 +87,6 @@
   </thead>
 </table>
 
-
-
-<!--
 
   <mat-table matSort (matSortChange)="sortData($event)" cdkDropListGroup
   [ngStyle]="{'width': tableWidth + 'px', 'position': 'relative', 'left': columnHeaderPosition + 'px'}">

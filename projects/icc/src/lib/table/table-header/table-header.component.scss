@@ -11,6 +11,7 @@
   }
 }
 
+/*
 
 table {
   border-spacing: 0; // override material default value
@@ -105,6 +106,8 @@ table {
 .mat-divider {
   border-top: 1px solid rgba(0,0,0,.12);
 }
+*/
+
 
 .cdk-drag-preview {
   box-sizing: border-box;
@@ -127,3 +130,20 @@ table {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+
+.icc-cdk-table-header {
+  position: relative;
+  .icc-cdk-table-header-row {
+    display: flex;
+    align-items: center;
+    // padding: 0 8px;
+  }
+
+  .icc-cdk-table-header-cell {
+    // flex: 1;
+    height: 32px;
+    text-align: center;
+  }
+}
+

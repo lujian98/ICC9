@@ -5,6 +5,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { MatIconModule } from '@angular/material/icon';
 
+import { CdkTableModule } from '@angular/cdk/table';
+
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -29,6 +31,7 @@ import { IccTableHeaderComponent } from './table-header/table-header.component';
     DragDropModule,
     ScrollingModule,
     CdkTreeModule,
+    CdkTableModule,
     MatIconModule,
     MatDividerModule,
     MatSortModule,
