@@ -11,6 +11,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { IccFlatTreeComponent } from '../tree/flat-tree/flat-tree.component';
 import { IccNestedTreeComponent } from '../tree/nested-tree/nested-tree.component';
 import { IccTableConfigs } from '../models';
@@ -29,12 +30,12 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() data: T[] = [];
   @Input() tableConfigs: IccTableConfigs;
   @Input() columns: IccField[] = [];
-
   @Input() expandAll: boolean;
   @Input() collapseAll: boolean;
 
   componentRef: any;
   private sub: Subscription;
+  @Output() iccViewportEvent: EventEmitter<CdkVirtualScrollViewport> = new EventEmitter<CdkVirtualScrollViewport>();
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -49,6 +50,10 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
     this.componentRef.instance.data = this.data;
     this.componentRef.instance.columns = this.columns;
     this.componentRef.instance.tableConfigs = this.tableConfigs;
+
+    this.sub = this.componentRef.instance.iccViewportEvent.subscribe((viewport: CdkVirtualScrollViewport) => {
+      this.iccViewportEvent.emit(viewport);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -67,3 +72,4 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
     }
   }
 }
+

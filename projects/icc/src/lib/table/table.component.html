@@ -1,13 +1,14 @@
 
 <div class="icc-cdk-table">
   <span [ngStyle]="{'display': 'inline-block'}">
-    <button (click)="expandAll=!expandAll">Expand all</button>
+    <button (click)="expandAllNode()">Expand all</button>
     <button (click)="collapseAll=!collapseAll">Collapse all</button>
   </span>
 
   <icc-table-header
     [tableConfigs]="tableConfigs"
-    [columns]="columns">
+    [columns]="columns"
+    [viewport]="viewport">
   </icc-table-header>
 
   <span iccTableView
@@ -16,7 +17,8 @@
     [tableConfigs]="tableConfigs"
     [expandAll]="expandAll"
     [collapseAll]="collapseAll"
-    [columns]="columns">
+    [columns]="columns"
+    (iccViewportEvent)="onViewportEvent($event)">
   </span>
 
 </div>

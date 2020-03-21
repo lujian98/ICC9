@@ -17,6 +17,7 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { CdkDragStart, CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CdkTable } from '@angular/cdk/table';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
@@ -29,13 +30,14 @@ import { IccTableConfigs, IccGroupHeader } from '../../models';
 export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
+  @Input() viewport: CdkVirtualScrollViewport;
 
   pending: boolean; // TODO input or connect width view
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
   groupHeaderColumns: IccGroupHeader[] = [];
 
-  // tableWidth: number;
+  tableWidth: number;
 
   isColumnResizing: boolean;
 
@@ -60,11 +62,6 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   @ViewChild(CdkTable) table: CdkTable<T>;
   @ViewChild(MatSort) sort: MatSort;
 
-  get tableWidth(): number {
-    return this.getTableSize();
-    // return this.visibleColumns.map(column => column.width).reduce((prev, curr) => prev + curr, 0);
-  }
-
   constructor(
     private renderer: Renderer2,
     private platform: Platform,
@@ -76,18 +73,42 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     if (changes.columns) {
       this.setHeaderColumns();
     }
+
+    if (changes.viewport && this.viewport) {
+      this.setTableFullSize(1);
+      console.log(' 7777777777777777777777777 viewport=', this.viewport);
+    }
+
   }
 
-  /*
   setTableFullSize(delay: number) {
     setTimeout(() => {
-      if (this.viewport && this.matTableRef) {
+      if (this.viewport && this.cdkTableRef) {
         const viewportWidth = this.viewport.elementRef.nativeElement.clientWidth;
-        this.tableWidth = this.columnResizeDnDService.getTableWidth(viewportWidth);
-        this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
+        console.log( ' viewportWidth =', viewportWidth )
+        this.tableWidth = this.getTableWidth(viewportWidth);
+        // this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
       }
     }, delay);
-  } */
+  }
+
+  getTableWidth(viewportWidth: number): number {
+    const tableWidth = this.getTableSize();
+    let dx = 0;
+    if (this.isAllFlexColumns() || viewportWidth > tableWidth) {
+      dx = viewportWidth - tableWidth;
+    } else if (this.allowChangeFlexWidth && viewportWidth < this.viewportWidth) {
+      dx = viewportWidth - this.viewportWidth;
+    }
+    if (dx !== 0) {
+      this.adjustColumnsWidth(dx, -1);
+    }
+    this.setGroupHeaderColumnWidth();
+    this.tableWidth = this.isAllFlexColumns() ? viewportWidth : this.getTableSize();
+    this.viewportWidth = viewportWidth;
+    this.allowChangeFlexWidth = this.tableWidth <= viewportWidth;
+    return this.tableWidth;
+  }
 
   protected setHeaderColumns() {
     this.visibleColumns = this.columns;
@@ -95,7 +116,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   sortData(event: MatSort) {
-    console.log( ' sort mmmmmmmmmmmmm', event)
+    console.log(' sort mmmmmmmmmmmmm', event)
     this.setSortActive(event.active, event.direction);
     // this.onGridHeaderSort(event);
   }
@@ -135,7 +156,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
-    console.log( ' drop llllllllllll')
+    console.log(' drop llllllllllll')
     // if (this.columnResizeDnDService.isDropListDropped(event, visibleColumns, this.columns)) {
     //  this.setGridColumView();
     //  this.scrollToPosition(0);
@@ -177,7 +198,6 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   checkResizeORDnD(event: any, index: number) {
-    // this.columnResizeDnDService.checkResizeORDnD(event, index, this.matTableRef);
     if (!this.pressed) {
       this.isColumnResizing = false;
       this.checkIsResizing(event, index);
@@ -305,7 +325,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
       if (this.isAllFlexColumns()) {
         this.adjustColumnsWidth(-dx, index);
       } else {
-        // this.tableWidth += dx; // TODO
+        this.tableWidth += dx;
         this.adjustStickyPosition(resizedColumn, index);
       }
     }
@@ -372,5 +392,10 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     // this.columnResizeDnDService.onDragMoved(event, index, visibleColumns);
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setTableFullSize(5);
+    // this.setGridPanelOffset();
+  }
 }
 

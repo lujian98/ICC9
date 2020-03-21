@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Subscription } from 'rxjs';
 import { ColumnMenuType, IccColumnConfig, IccGroupHeader, IccTableConfigs } from '../models';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
@@ -17,13 +19,20 @@ export class IccTableComponent<T> implements OnChanges {
   };
 
   columns: IccField[] = [];
+  viewport: CdkVirtualScrollViewport;
 
   expandAll: boolean;
   collapseAll: boolean;
 
+  private sub: Subscription;
+
   constructor(
     private columnService: IccItemFieldService,
+    // private elementRef: ElementRef,
   ) { }
+
+  ngOnInit() {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.tableConfigs) {
@@ -48,6 +57,14 @@ export class IccTableComponent<T> implements OnChanges {
       // this.setGridColumView();
       // this.filters.setFilters(this.columns);
     }
+  }
+
+  expandAllNode() {
+    this.expandAll = !this.expandAll;
+  }
+
+  onViewportEvent(viewport: CdkVirtualScrollViewport) {
+    this.viewport = viewport;
   }
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {

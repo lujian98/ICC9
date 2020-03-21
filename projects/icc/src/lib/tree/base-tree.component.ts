@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { IccDataSource } from '../datasource/datasource';
 import { DropInfo, IccTableConfigs } from '../models';
 import { IccField } from '../items';
@@ -24,6 +24,7 @@ export class IccBaseTreeComponent<T> {
 
   isViewportReady = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+  @Output() iccViewportEvent: EventEmitter<CdkVirtualScrollViewport> = new EventEmitter<CdkVirtualScrollViewport>();
 
   document: any;
   dragNode: T;
@@ -45,6 +46,7 @@ export class IccBaseTreeComponent<T> {
   nextBatch(event) {
     if (!this.isViewportReady) {
       this.isViewportReady = true;
+      this.iccViewportEvent.emit(this.viewport);
       this.dataSource = new IccDataSource(this.viewport);
       this.setTreeData();
     }

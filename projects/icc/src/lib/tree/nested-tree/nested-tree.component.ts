@@ -47,6 +47,7 @@ export class IccNestedTreeComponent extends IccBaseTreeComponent<ItemNode> imple
   expandAll() {
     this.expandNodes(this.data, true);
     this.setTreeData();
+    console.log( ' viewport=', this.viewport);
   }
 
   collapseAll() {
