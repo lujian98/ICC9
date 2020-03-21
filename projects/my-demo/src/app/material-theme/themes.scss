@@ -17,6 +17,8 @@
 }
 
 .light-theme {
+  --grid-header-row-border-color: green;
+
   $primary: mat-palette($mat-indigo);
   $accent:  mat-palette($mat-pink, A200, A100, A400);
   $warn:    mat-palette($mat-red);
@@ -27,6 +29,8 @@
 }
 
 .dark-theme {
+  --grid-header-row-border-color: orange;
+
   $primary: mat-palette($mat-blue-grey);
   $accent:  mat-palette($mat-amber, A200, A100, A400);
   $warn:    mat-palette($mat-deep-orange);

@@ -1,21 +1,25 @@
-<span [ngStyle]="{'display': 'inline-block'}">
-  <button (click)="expandAll=!expandAll">Expand all</button>
-  <button (click)="collapseAll=!collapseAll">Collapse all</button>
-</span>
 
-<icc-table-header
-  [increaseWidth]="expandAll"
-  [descreaseWidth]="collapseAll"
-  [tableConfigs]="tableConfigs"
-  [columns]="columns">
-</icc-table-header>
+<div class="icc-cdk-table">
+  <span [ngStyle]="{'display': 'inline-block'}">
+    <button (click)="expandAll=!expandAll">Expand all</button>
+    <button (click)="collapseAll=!collapseAll">Collapse all</button>
+  </span>
 
-<span iccTableView
-  [tableType]="tableType"
-  [data]="data"
-  [tableConfigs]="tableConfigs"
-  [expandAll]="expandAll"
-  [collapseAll]="collapseAll"
-  [columns]="columns">
-</span>
+  <icc-table-header
+    [increaseWidth]="expandAll"
+    [descreaseWidth]="collapseAll"
+    [tableConfigs]="tableConfigs"
+    [columns]="columns">
+  </icc-table-header>
+
+  <span iccTableView
+    [tableType]="tableType"
+    [data]="data"
+    [tableConfigs]="tableConfigs"
+    [expandAll]="expandAll"
+    [collapseAll]="collapseAll"
+    [columns]="columns">
+  </span>
+
+</div>
 

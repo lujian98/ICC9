@@ -11,104 +11,6 @@
   }
 }
 
-/*
-
-table {
-  border-spacing: 0; // override material default value
-}
-
-.icc-cdk-table {
-  .cdk-header-cell:first-child, .icc-tree-node {
-    border-left: 1px solid rgba(0,0,0,.12);
-  }
-
-  .cdk-header-cell {
-    border-top: 1px solid blue;
-  }
-
-  .cdk-header-cell {
-    height: 30px;
-    border-bottom: 1px solid  rgba(0,0,0,.12);
-    border-right: 1px solid  rgba(0,0,0,.12);
-    text-align: center;
-  }
-}
-
-
-// below is for mat table header
-@mixin base {
-  .mat-table {
-    width: 100%;
-    // overflow: hidden; // WARNING  this will provent pin left and right with sticky
-    // position: relative; // WARNING  this will provent pin left and right with sticky
-  }
-}
-
-@mixin progress {
-  .mat-header-row.progress {
-    border: none;
-    min-height: 0;
-    .mat-header-cell {
-      border: 0;
-      padding: 0;
-    }
-    mat-progress-bar {
-      bottom: 0;
-      position: absolute;
-      transition: height 0.3s, opacity 0.25s linear;
-      &:not(.show) {
-        height: 0;
-        opacity: 0;
-      }
-    }
-  }
-}
-
-:host {
-  display: block;
-}
-
-@include base;
-@include progress;
-
-::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  color: goldenrod;
-}
-
-::ng-deep .mat-sort-header-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-::ng-deep .mat-button {
-  min-width: 30px;
-}
-
-.mat-header-row {
-  position: sticky;
-  // background: white;
-  border-top: 1px solid rgba(0,0,0,.12);
-}
-
-.mat-table mat-header-cell:first-child {
-  border-left: 1px solid rgba(0,0,0,.12);
-}
-
-.mat-table mat-header-cell {
-  border-right: 1px solid rgba(0,0,0,.12);
-  cursor: col-resize;
-  padding: 0px 10px;
-}
-
-.mat-divider {
-  border-top: 1px solid rgba(0,0,0,.12);
-}
-*/
-
-
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -141,9 +43,18 @@ table {
   }
 
   .icc-cdk-table-header-cell {
-    // flex: 1;
-    height: 32px;
-    text-align: center;
+    height: 32px; // TODO configurable
+    text-align: center; // TODO configurable
+    border-top: 1px solid var(--grid-header-row-border-color);
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12);
+    cursor: col-resize;
+    padding: 0px 10px;
   }
+
+  .icc-cdk-table-header-cell:first-child {
+    border-left: 1px solid rgba(0,0,0,.12);
+  }
+
 }
 
