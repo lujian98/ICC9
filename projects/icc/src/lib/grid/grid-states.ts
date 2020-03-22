@@ -7,10 +7,11 @@ export interface IccColumnState {
   hidden: boolean | string;
 }
 
+/*
 export interface IccSortState {
   key: string;
   direction: string;
-}
+} */
 
 export interface IccFilterPair {
   field: string;
@@ -19,7 +20,8 @@ export interface IccFilterPair {
 
 export interface IccGridState {
   columns: IccColumnState[];
-  sorts: IccSortState[];
+  // sorts: IccSortState[];
+  sorts: [];
   filters: IccFilterPair[];
   selected?: [];
 }

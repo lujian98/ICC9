@@ -21,6 +21,12 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
+import { IccSorts } from '../../services/sort/sorts';
+
+export interface IccSortState {
+  name: string;
+  direction?: string;
+}
 
 @Component({
   selector: 'icc-table-header',
@@ -55,6 +61,8 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   private previousIndex: number;
   private currentIndex: number;
 
+  sorts = new IccSorts();
+  private hoverHeader: string;
   // isColumnResized$: Subject<{}> = new Subject();
 
 
@@ -85,7 +93,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     setTimeout(() => {
       if (this.viewport && this.cdkTableRef) {
         const viewportWidth = this.viewport.elementRef.nativeElement.clientWidth;
-        console.log( ' viewportWidth =', viewportWidth )
+        console.log(' viewportWidth =', viewportWidth)
         this.tableWidth = this.getTableWidth(viewportWidth);
         // this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
       }
@@ -115,36 +123,69 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     this.displayedColumns = this.visibleColumns.map(column => column.name);
   }
 
-  sortData(event: MatSort) {
-    console.log(' sort mmmmmmmmmmmmm', event)
-    this.setSortActive(event.active, event.direction);
-    // this.onGridHeaderSort(event);
+  isHeaderSortable(column: IccField): boolean {
+    return true;
+    // return (!this.tableConfigs.enableColumnSort || !column.sortField || this.isColumnResizing) ? false : true;
   }
 
-  isSortDisabled(column: IccField): boolean {
-    return false;
-    // return (!this.tableConfigs.enableColumnSort || !column.sortField || this.isColumnResizing) ? true : false;
+  onHeaderSort(column: IccField) {
+    if (this.isHeaderSortable(column)) {
+      let direction = 'asc';
+      if (column.sort) {
+        direction = column.sort.direction === 'asc' ? 'desc' : '';
+      }
+      const sort = {
+        name: column.name,
+        direction: direction
+      };
+      this.onColumnSortData(column, sort);
+    }
   }
 
-  getColumnSortState(column: IccField): string {
-    if (column.sort && !column.sort.active) {
-      if (column.sort.direction === 'asc') {
-        return 'fas fa-arrow-up';
-      } else if (column.sort.direction === 'desc') {
-        return 'fas fa-arrow-down';
+  onColumnSortData(column: IccField, sort: IccSortState) {
+    /*
+    if (this.pagination.page > 1) {
+      this.scrollToPosition(0);
+    }
+    if (this.groupByColumns.length > 0) {
+      this.currentScrollPosition = this.viewport.elementRef.nativeElement.scrollTop;
+    } */
+    this.sorts.isSorting = true;
+    this.pending = true;
+    // this.resetDataSourceService();
+    this.sorts.update(column, sort.name, sort.direction, sort.direction !== '');
+
+    /*
+    this.updateColumnSorts();
+    if (!sort.direction) {
+      this.setColumnMenuHidden(ColumnMenuType.RemoveSort, column);
+    }
+    if (column.sort) {
+      column.sort.direction = sort.direction;
+    }
+    this.fetchRecords(); */
+  }
+
+  setSortState(column: IccField, hover: boolean) {
+    this.hoverHeader = hover ? column.name : '';
+  }
+
+  getHeaderSortState(column: IccField): string {
+    let ret = '';
+    if (this.isHeaderSortable(column)) {
+      if (column.sort) {
+        ret = column.sort.direction === 'asc' ? 'fas fa-caret-up' : 'fas fa-caret-down';
+        if (column.sort.active) {
+          ret += ' orange';
+        }
+      } else if (column.name === this.hoverHeader) {
+        ret = 'fas fa-caret-up blue';
       }
     }
+    return ret;
   }
 
-  setSortActive(field: string, direction: SortDirection) {
-    if (direction) {
-      this.sort.active = field;
-      this.sort.direction = direction;
-    } else if (this.sort.active === field) {
-      this.sort.active = null;
-    }
-    this.sort._stateChanges.next();
-  }
+
 
 
 

@@ -21,6 +21,17 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+.orange {
+  color: orange;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
 
 .icc-cdk-table-header {
   position: relative;
@@ -42,6 +53,10 @@
 
   .icc-cdk-table-header-cell:first-child {
     border-left: 1px solid $border-color;
+  }
+
+  .icc-cdk-table-header-title {
+    cursor: pointer;
   }
 }
 
