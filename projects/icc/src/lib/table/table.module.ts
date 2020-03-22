@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
+import { IccDataSourceService } from '../services/data-source.service';
 
 import { IccTreeModule } from '../tree/tree.module';
 
@@ -53,6 +54,9 @@ import { IccTableViewComponent } from './table-view/table-view.component';
     IccTableComponent,
     IccTableHeaderComponent,
     IccTableViewComponent
+  ],
+  providers: [
+    IccDataSourceService,
   ]
 })
 export class IccTableModule { }

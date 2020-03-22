@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { ColumnMenuType, IccColumnConfig, IccGroupHeader, IccTableConfigs } from '../models';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
+import { IccDataSource } from '../datasource/datasource';
+import { IccDataSourceService } from '../services/data-source.service';
 
 @Component({
   selector: 'icc-table',
@@ -20,6 +22,7 @@ export class IccTableComponent<T> implements OnChanges {
 
   columns: IccField[] = [];
   viewport: CdkVirtualScrollViewport;
+  dataSourceService: IccDataSourceService<T>
 
   expandAll: boolean;
   collapseAll: boolean;
@@ -28,8 +31,10 @@ export class IccTableComponent<T> implements OnChanges {
 
   constructor(
     private columnService: IccItemFieldService,
-    // private elementRef: ElementRef,
-  ) { }
+    dataSourceService: IccDataSourceService<T>,
+  ) {
+    this.dataSourceService = dataSourceService;
+  }
 
   ngOnInit() {
   }

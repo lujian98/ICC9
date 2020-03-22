@@ -8,6 +8,7 @@
   <icc-table-header
     [tableConfigs]="tableConfigs"
     [columns]="columns"
+    [dataSourceService]="dataSourceService"
     [viewport]="viewport">
   </icc-table-header>
 
@@ -18,6 +19,7 @@
     [expandAll]="expandAll"
     [collapseAll]="collapseAll"
     [columns]="columns"
+    [dataSourceService]="dataSourceService"
     (iccViewportEvent)="onViewportEvent($event)">
   </span>
 

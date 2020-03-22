@@ -17,6 +17,7 @@ import { IccFlatTreeComponent } from '../tree/flat-tree/flat-tree.component';
 import { IccNestedTreeComponent } from '../tree/nested-tree/nested-tree.component';
 import { IccTableConfigs } from '../models';
 import { IccField } from '../items';
+import { IccDataSourceService } from '../services/data-source.service';
 
 const componentMapper = {
   table: IccTableViewComponent,
@@ -32,6 +33,7 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() data: T[] = [];
   @Input() tableConfigs: IccTableConfigs;
   @Input() columns: IccField[] = [];
+  @Input() dataSourceService: IccDataSourceService<T>;
   @Input() expandAll: boolean;
   @Input() collapseAll: boolean;
 
@@ -50,6 +52,7 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
     );
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.columns = this.columns;
+    this.componentRef.instance.dataSourceService = this.dataSourceService;
     this.componentRef.instance.data = this.data;
     this.componentRef.instance.tableConfigs = this.tableConfigs;
 

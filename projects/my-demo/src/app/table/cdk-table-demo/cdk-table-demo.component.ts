@@ -2,12 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { IccColumnConfig  } from 'icc';
 import { Vehicle } from '../models/vehicle-model';
 import { VehicleData } from '../models/vehicle-data';
-
+import { IccDataSourceService, IccInMemoryDataService } from 'icc';
 
 @Component({
   selector: 'icc-cdk-table-demo',
   templateUrl: './cdk-table-demo.component.html',
-  styleUrls: ['./cdk-table-demo.component.scss']
+  styleUrls: ['./cdk-table-demo.component.scss'],
+  providers: [
+    {
+      provide: IccDataSourceService,
+      useClass: IccInMemoryDataService
+    }
+  ]
 })
 export class CdkTableDemoComponent implements OnInit {
 

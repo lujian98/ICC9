@@ -18,10 +18,16 @@ import { Platform } from '@angular/cdk/platform';
 import { CdkDragStart, CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CdkTable } from '@angular/cdk/table';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, share, switchMap } from 'rxjs/operators';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
 import { IccSorts } from '../../services/sort/sorts';
+import { IccDataSourceService } from '../../services/data-source.service';
+import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
+import { IccRowGroup } from '../../services';
+import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
 
 export interface IccSortState {
   name: string;
@@ -37,6 +43,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
   @Input() viewport: CdkVirtualScrollViewport;
+  @Input() dataSourceService: IccDataSourceService<T>;
 
   pending: boolean; // TODO input or connect width view
   visibleColumns: IccField[] = [];
@@ -64,12 +71,17 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
 
   sorts = new IccSorts();
   private hoverHeader: string;
+  rowGroups = new IccRowGroups();
+  groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
+
   // isColumnResized$: Subject<{}> = new Subject();
 
 
   @ViewChild(CdkTable, { read: ElementRef }) public cdkTableRef: ElementRef;
   @ViewChild(CdkTable) table: CdkTable<T>;
   @ViewChild(MatSort) sort: MatSort;
+
+  private subDataSourceService: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -82,19 +94,60 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     if (changes.columns) {
       this.setHeaderColumns();
     }
-
     if (changes.viewport && this.viewport) {
       this.setTableFullSize(1);
-      console.log(' 7777777777777777777777777 viewport=', this.viewport);
+      this.initDataSourceService();
     }
+  }
 
+  private initDataSourceService() {
+    if (!this.subDataSourceService) {
+      this.subDataSourceService = this.dataSourceService.dataSourceChanged$
+      .subscribe((data: T[]) => this.dataRecordRefreshed(data));
+    }
+  }
+
+  private fetchRecords() {
+    const loadParams: IccLoadRecordParams = this.getLoadRecordParams();
+    this.dataSourceService.requestParamsChanged$.next(loadParams);
+  }
+
+  resetDataSourceService() {
+    if (this.dataSourceService) {
+      this.dataSourceService.resetDataSourceService(this.getLoadRecordParams());
+    }
+  }
+
+  getLoadRecordParams(): IccLoadRecordParams {
+    return {
+      // pagination: this.pagination,
+      sorts: this.sorts,
+      // filters: this.filters,
+      rowGroups: this.rowGroups
+    };
+  }
+
+  dataRecordRefreshed(data: T[]) { // TODO this also will in the table view????
+    console.log( ' refrsh data iiiiiiiiiiiiiiiiiiiiiiiiii')
+    // this.dataSourceLength = data.length;
+    // this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
+    // this.pagination.total = this.totalRecords;
+    this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change
+    setTimeout(() => { // This is for refresh data animation
+      this.pending = false;
+      // if (this.currentScrollPosition > 0) {
+      //   this.scrollToPosition(this.currentScrollPosition);
+      //  this.currentScrollPosition = 0;
+      // }
+      // this.gridStates.setStates();
+      //this.setPageSummary();
+    }, 250);
   }
 
   setTableFullSize(delay: number) {
     setTimeout(() => {
       if (this.viewport && this.cdkTableRef) {
         const viewportWidth = this.viewport.elementRef.nativeElement.clientWidth;
-        console.log(' viewportWidth =', viewportWidth)
         this.tableWidth = this.getTableWidth(viewportWidth);
         // this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
       }
@@ -165,7 +218,8 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     if (column.sort) {
       column.sort.direction = sort.direction;
     }
-    this.fetchRecords(); */
+    */
+    this.fetchRecords();
   }
 
   setSortState(column: IccField, hover: boolean) {

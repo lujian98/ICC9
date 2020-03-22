@@ -19,6 +19,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { IccDataSource } from '../../datasource/datasource';
 import { DropInfo, IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
+import { IccDataSourceService } from '../../services/data-source.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ import { IccField } from '../../items';
 export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChanges {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() columns: IccField[] = [];
+  @Input() dataSourceService: IccDataSourceService<T>;
   @Input() data: T[] = [];
 
   dataSource: IccDataSource<T>;
@@ -120,22 +122,11 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     }
     // this.filters.update(this.gridConfigs.filteredValues);
     this.dataSource = new IccDataSource(this.viewport);
-
-    //
-
     this.dataSourceLength = this.data.length;
-    this.dataSource.data = [...this.data];
-    // this.dataSource.loadRecords(this.data);
-    /*
+    this.dataSource.loadRecords(this.data);
     this.dataSource.dataSourceService = this.dataSourceService;
     this.dataSourceService.queuedData = this.data;
     this.dataSourceService.totalRecords = this.data.length;
-    this.subDataSourceService = this.dataSource.queryData$.pipe(map(data => {
-      return data;
-    }), distinctUntilChanged())
-      .subscribe(data => this.dataRecordRefreshed(data));
-    this.fetchRecords(); */
-
   }
 
 
