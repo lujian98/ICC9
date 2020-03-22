@@ -26,8 +26,20 @@
       </div>
     </cdk-header-cell>
   </ng-container>
+  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
 
-  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></cdk-header-row>
+  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
+    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+    <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
+      [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}">
+      <div>
+        Filter...
+      </div>
+    </cdk-header-cell>
+  </ng-container>
+  <cdk-header-row *cdkHeaderRowDef="filterColumns" [ngStyle]="{'display': filterColumns.length > 0 ? 'flex' : 'none'}">
+  </cdk-header-row>
+
 </cdk-table>
 
 

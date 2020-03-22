@@ -41,6 +41,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   pending: boolean; // TODO input or connect width view
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+  filterColumns: string[] = [];
   groupHeaderColumns: IccGroupHeader[] = [];
 
   tableWidth: number;
@@ -121,6 +122,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   protected setHeaderColumns() {
     this.visibleColumns = this.columns;
     this.displayedColumns = this.visibleColumns.map(column => column.name);
+    this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
   }
 
   isHeaderSortable(column: IccField): boolean {

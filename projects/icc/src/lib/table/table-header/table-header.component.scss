@@ -34,24 +34,32 @@
 }
 
 .icc-cdk-table-header {
+  $border-color: var(--icc-cdk-table-cell-border-color);
+
   position: relative;
   .icc-cdk-table-header-row {
     display: flex;
     align-items: center;
   }
 
-  $border-color: var(--icc-cdk-table-cell-border-color);
-  .icc-cdk-table-header-cell {
+  .icc-cdk-table-header-row:first-child {
+    border-top: 1px solid $border-color;;
+  }
+
+  .icc-cdk-table-header-cell, .icc-cdk-table-filter-cell {
     height: 32px; // TODO configurable
     text-align: center; // TODO configurable
-    border-top: 1px solid $border-color;
+    // border-top: 1px solid $border-color;
     border-bottom: 1px solid $border-color;
     border-right: 1px solid $border-color;
+  }
+
+  .icc-cdk-table-header-cell {
     cursor: col-resize;
     padding: 0px 10px;
   }
 
-  .icc-cdk-table-header-cell:first-child {
+  .icc-cdk-table-header-cell:first-child, .icc-cdk-table-filter-cell:first-child {
     border-left: 1px solid $border-color;
   }
 
