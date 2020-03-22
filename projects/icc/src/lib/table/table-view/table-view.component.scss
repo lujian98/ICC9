@@ -1,0 +1,12 @@
+
+.example-header-row, .example-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  height: 32px;
+  padding: 0 8px;
+}
+
+.example-cell, .example-header-cell {
+  flex: 1;
+}

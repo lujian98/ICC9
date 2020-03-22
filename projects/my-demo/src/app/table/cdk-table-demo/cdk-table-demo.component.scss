@@ -1,0 +1,19 @@
+:host ::ng-deep icc-table-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+:host ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
+  flex: 1;
+}
+
+.app-table-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: block;
+  position: relative;
+  height: calc(100vh - 100px);
+}
+

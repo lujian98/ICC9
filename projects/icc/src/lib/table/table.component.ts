@@ -54,6 +54,7 @@ export class IccTableComponent<T> implements OnChanges {
       } */
 
       this.columns = this.getInitialColumns(this.columnConfigs, this.tableConfigs);
+
       // this.setGridColumView();
       // this.filters.setFilters(this.columns);
     }

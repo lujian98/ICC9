@@ -12,12 +12,14 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { IccTableViewComponent } from './table-view/table-view.component';
 import { IccFlatTreeComponent } from '../tree/flat-tree/flat-tree.component';
 import { IccNestedTreeComponent } from '../tree/nested-tree/nested-tree.component';
 import { IccTableConfigs } from '../models';
 import { IccField } from '../items';
 
 const componentMapper = {
+  table: IccTableViewComponent,
   flatTree: IccFlatTreeComponent,
   nestedTree: IccNestedTreeComponent,
 };
@@ -47,8 +49,8 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
       componentMapper[this.tableType]
     );
     this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.data = this.data;
     this.componentRef.instance.columns = this.columns;
+    this.componentRef.instance.data = this.data;
     this.componentRef.instance.tableConfigs = this.tableConfigs;
 
     this.sub = this.componentRef.instance.iccViewportEvent.subscribe((viewport: CdkVirtualScrollViewport) => {

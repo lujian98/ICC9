@@ -17,6 +17,9 @@ import { LoginModule } from './login/login.module';
 import { IccBaseGridExampleModule } from './table/icc-base-grid-example/icc-base-grid-example.module';
 import { TreeExampleModule } from './tree/tree-example/tree-example.module';
 
+import { CdkTableDemoModule } from './table/cdk-table-demo/cdk-table-demo.module';
+
+
 import { SchoolModule } from './school/school.module';
 
 import { AppComponent } from './app.component';
@@ -43,6 +46,7 @@ import { AppRoutingModule } from './app-routing.module';
     LoginModule,
     IccBaseGridExampleModule,
     TreeExampleModule,
+    CdkTableDemoModule,
     SchoolModule,
     AppRoutingModule
   ],
