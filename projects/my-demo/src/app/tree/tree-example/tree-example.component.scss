@@ -1,13 +1,3 @@
-:host ::ng-deep icc-tree {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-
-:host ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
-  flex: 1;
-}
 
 .app-tree-container {
   overflow-x: hidden;
@@ -16,7 +6,6 @@
   position: relative;
   height: calc(100vh - 200px);
 }
-
 
 .tooltip-demo {
   width: 200px;

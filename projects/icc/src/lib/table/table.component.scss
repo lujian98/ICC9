@@ -9,3 +9,7 @@
   flex-direction: column;
   height: 100%;
 }
+
+::ng-deep icc-table-view, ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
+  flex: 1;
+}

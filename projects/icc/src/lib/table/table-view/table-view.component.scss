@@ -1,12 +1,18 @@
 
-.example-header-row, .example-row {
+.icc-cdk-table-data-row {
   display: flex;
-  border-bottom: 1px solid #ccc;
   align-items: center;
-  height: 32px;
+}
+
+$border-color: var(--icc-cdk-table-cell-border-color);
+.icc-cdk-table-data-cell {
+  height: 32px; // TODO configurable
+  border-bottom: 1px solid $border-color;
+  border-right: 1px solid $border-color;
   padding: 0 8px;
 }
 
-.example-cell, .example-header-cell {
-  flex: 1;
+.icc-cdk-table-data-cell:first-child {
+  border-left: 1px solid $border-color;
 }
+

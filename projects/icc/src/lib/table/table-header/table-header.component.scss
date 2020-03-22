@@ -27,7 +27,6 @@
   .icc-cdk-table-header-row {
     display: flex;
     align-items: center;
-    // padding: 0 8px;
   }
 
   $border-color: var(--icc-cdk-table-cell-border-color);
@@ -44,6 +43,5 @@
   .icc-cdk-table-header-cell:first-child {
     border-left: 1px solid $border-color;
   }
-
 }
 

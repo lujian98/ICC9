@@ -10,7 +10,7 @@
     [dataSource]="dataSource">
     <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
-      <cdk-cell class="example-cell" *cdkCellDef="let record; let rowIndex = index" [attr.data-label]="column.title +': '"
+      <cdk-cell class="icc-cdk-table-data-cell" *cdkCellDef="let record; let rowIndex = index" [attr.data-label]="column.title +': '"
         [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right, 'text-align': column.align}">
         <div>
           {{record[column.name]}}
@@ -18,13 +18,13 @@
       </cdk-cell>
     </ng-container>
 
-    <!--
+    <!-- icc-cdk-table-data-row icc-cdk-table-data-cell
             <cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'flex': '1 ' + column.width + 'px'}"></cdk-header-cell>
     <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="icc-grid-no-record-header"
       [ngStyle]="{'display': totalRecords > 0 ? 'none' : 'flex'}">
     </cdk-header-row>
     -->
-    <cdk-row *cdkRowDef="let record; let rowIndex = index; columns: displayedColumns" class="example-row">
+    <cdk-row *cdkRowDef="let record; let rowIndex = index; columns: displayedColumns" class="icc-cdk-table-data-row">
     </cdk-row>
   </cdk-table>
 </cdk-virtual-scroll-viewport>
