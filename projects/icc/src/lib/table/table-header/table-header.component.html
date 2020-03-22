@@ -26,7 +26,9 @@
       </div>
     </cdk-header-cell>
   </ng-container>
-  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"></cdk-header-row>
+  <cdk-header-row class="icc-cdk-table-header-row"
+    [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}"
+    *cdkHeaderRowDef="displayedColumns; sticky: true"></cdk-header-row>
 
   <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
     [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
@@ -46,7 +48,6 @@
     </cdk-header-cell>
   </ng-container>
   <cdk-header-row [ngClass]="'progress'" *cdkHeaderRowDef="['progress']; sticky: true"></cdk-header-row>
-
 </cdk-table>
 
 
