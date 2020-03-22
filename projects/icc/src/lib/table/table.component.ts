@@ -13,12 +13,9 @@ import { IccDataSourceService } from '../services/data-source.service';
   styleUrls: ['./table.component.scss'],
 })
 export class IccTableComponent<T> implements OnChanges {
-  @Input() tableType: string;
+  @Input() tableConfigs: IccTableConfigs = {};
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
-  @Input() tableConfigs: IccTableConfigs = {
-    columnHeaderPosition: 0
-  };
 
   columns: IccField[] = [];
   viewport: CdkVirtualScrollViewport;
@@ -34,24 +31,21 @@ export class IccTableComponent<T> implements OnChanges {
     dataSourceService: IccDataSourceService<T>,
   ) {
     this.dataSourceService = dataSourceService;
+
   }
 
   ngOnInit() {
+    this.checkTableConfigs();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.tableConfigs) {
-      if (!this.tableConfigs.columnHeaderPosition) {
-        this.tableConfigs.columnHeaderPosition = 0;
-      }
+      this.checkTableConfigs();
     }
 
     //  this.treeColumn = { width: 300 }; // TODO input tree column width
     if (changes.columnConfigs) {
-      if (this.tableConfigs.enableMultiRowSelection) {
-        this.tableConfigs.enableRowSelection = true;
-      }
-
+      this.tableConfigs.enableTableHeader = true;
       /*
       if (this.tableConfigs.enableRowSelection) {
         this.columnsService.setupSelectionColumn(this.columnConfigs);
@@ -65,6 +59,34 @@ export class IccTableComponent<T> implements OnChanges {
     }
   }
 
+  private checkTableConfigs() {
+    if (!this.tableConfigs.tableType) {
+      this.tableConfigs.tableType = 'table';
+    }
+    if (!this.tableConfigs.filteredValues) {
+      this.tableConfigs.filteredValues = {};
+    }
+    if (!this.tableConfigs.rowHeight) {
+      this.tableConfigs.rowHeight = 30;
+    }
+    if (this.tableConfigs.enableMultiRowSelection) {
+      this.tableConfigs.enableRowSelection = true;
+    }
+    if (this.tableConfigs.enableMultiColumnSort) {
+      this.tableConfigs.enableColumnSort = true;
+    }
+    if (this.tableConfigs.enableMultiRowGroup) {
+      this.tableConfigs.enableRowGroup = true;
+    }
+    if (this.columnConfigs.length === 0) {
+      this.columnConfigs = [{
+        name: 'name',
+        width: this.tableConfigs.width || 300
+      }];
+    }
+    this.columns = this.getInitialColumns(this.columnConfigs, this.tableConfigs);
+  }
+
   expandAllNode() {
     this.expandAll = !this.expandAll;
   }
@@ -75,12 +97,7 @@ export class IccTableComponent<T> implements OnChanges {
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {
     if (columnConfigs) {
-      if (tableConfigs.enableMultiColumnSort) {
-        tableConfigs.enableColumnSort = true;
-      }
-      if (tableConfigs.enableMultiRowGroup) {
-        tableConfigs.enableRowGroup = true;
-      }
+
       const columns = [];
       columnConfigs.forEach((columnConfig: IccColumnConfig, index) => {
         if (!columnConfig.index && columnConfig.index !== 0) {

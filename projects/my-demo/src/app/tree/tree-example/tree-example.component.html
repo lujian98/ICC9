@@ -14,15 +14,16 @@
 
 <div class="app-tree-container">
   <icc-table
-    tableType="nestedTree"
+    [tableConfigs]="{'tableType': 'nestedTree'}"
     [data]="data"
-    [columnConfigs]="columnConfigs">
+    >
   </icc-table>
 </div>
 
 
 
-<!--
+<!--     [tableConfigs]="{'enableTableHeader': true}"
+   [columnConfigs]="columnConfigs"
 
   <div class="app-tree-container">
   <icc-tree

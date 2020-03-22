@@ -72,6 +72,7 @@ export interface IccGridConfigs {
 
 export interface IccTableConfigs {
   tableId?: string;
+  tableType?: string;
   enableCellEdit?: boolean;
   enableColumnDnD?: boolean;
   enableColumnFilter?: boolean;
@@ -86,6 +87,7 @@ export interface IccTableConfigs {
   enableRowGroup?: boolean;
   enableRowSelection?: boolean;
   enableDisplayGridSummary?: boolean;
+  enableTableHeader?: boolean;
 
   dataKeyId?: string;
   defaultSort?: string;
@@ -94,5 +96,6 @@ export interface IccTableConfigs {
   rowHeight?: number;
 
   isNestedData?: boolean;
+  width?: number; // if tree panel without table header
   columnHeaderPosition?: number;
 }

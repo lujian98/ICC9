@@ -29,9 +29,8 @@ const componentMapper = {
   selector: '[iccTableView]'
 })
 export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
-  @Input() tableType: string;
-  @Input() data: T[] = [];
   @Input() tableConfigs: IccTableConfigs;
+  @Input() data: T[] = [];
   @Input() columns: IccField[] = [];
   @Input() dataSourceService: IccDataSourceService<T>;
   @Input() expandAll: boolean;
@@ -48,7 +47,7 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     const factory = this.resolver.resolveComponentFactory(
-      componentMapper[this.tableType]
+      componentMapper[this.tableConfigs.tableType]
     );
     this.componentRef = this.container.createComponent(factory);
     this.componentRef.instance.columns = this.columns;

@@ -179,8 +179,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   isHeaderSortable(column: IccField): boolean {
-    return true;
-    // return (!this.tableConfigs.enableColumnSort || !column.sortField || this.isColumnResizing) ? false : true;
+    return (!this.tableConfigs.enableColumnSort || !column.sortField || this.isColumnResizing) ? false : true;
   }
 
   onHeaderSort(column: IccField) {
@@ -344,14 +343,11 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
   }
 
   onResizeColumn(event: any, index: number) {
-    // this.columnResizeDnDService
-    //  .onResizeColumn(event, index, this.gridConfigs.enableColumnResize, this.renderer, this.matTableRef);
     this.isColumnResizing = false;
     this.currentResizeIndex = -1;
     this.startX = event.pageX;
     this.checkIsResizing(event, index);
-    // if (this.tableConfigs.enableColumnResize && this.isColumnResizing) {
-    if (this.isColumnResizing) {
+    if (this.tableConfigs.enableColumnResize && this.isColumnResizing) {
       event.preventDefault();
       event.stopPropagation();
       this.pressed = true;

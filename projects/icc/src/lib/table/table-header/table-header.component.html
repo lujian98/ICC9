@@ -39,7 +39,7 @@
       </div>
     </cdk-header-cell>
   </ng-container>
-  <cdk-header-row *cdkHeaderRowDef="filterColumns" [ngStyle]="{'display': filterColumns.length > 0 ? 'flex' : 'none'}">
+  <cdk-header-row *cdkHeaderRowDef="filterColumns" [ngStyle]="{'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
   </cdk-header-row>
 
   <ng-container cdkColumnDef="progress">
