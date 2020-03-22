@@ -8,12 +8,6 @@ import { IccDataSourceService, IccInMemoryDataService } from 'icc';
   selector: 'icc-cdk-table-demo',
   templateUrl: './cdk-table-demo.component.html',
   styleUrls: ['./cdk-table-demo.component.scss'],
-  providers: [
-    {
-      provide: IccDataSourceService,
-      useClass: IccInMemoryDataService
-    }
-  ]
 })
 export class CdkTableDemoComponent implements OnInit {
 
