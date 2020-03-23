@@ -5,12 +5,19 @@ cdk-tree-node, cdk-nested-tree-node {
 
 $border-color: var(--icc-cdk-table-cell-border-color);
 .icc-tree-node, .icc-table-column {
-  display: inline-block;
+  display: inline-block; // TODO need inline block here, but the text is not valign in the cell
   height: 30px;
   border-bottom: 1px solid $border-color;
   border-right: 1px solid $border-color;
   text-align: center;
 }
+
+/*
+.icc-table-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
 
 .icc-tree-node {
   border-left: 1px solid $border-color;

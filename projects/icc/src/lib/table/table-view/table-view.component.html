@@ -12,9 +12,9 @@
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
       <cdk-cell class="icc-cdk-table-data-cell" *cdkCellDef="let record; let rowIndex = index" [attr.data-label]="column.title +': '"
         [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right, 'text-align': column.align}">
-        <div>
+
           {{record[column.name]}}
-        </div>
+
       </cdk-cell>
     </ng-container>
 

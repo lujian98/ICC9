@@ -68,7 +68,6 @@
   }
 
   .icc-cdk-table-header-cell, .icc-cdk-table-filter-cell {
-    height: 32px; // TODO configurable
     text-align: center; // TODO configurable
     // border-top: 1px solid $border-color;
     border-bottom: 1px solid $border-color;
@@ -76,8 +75,16 @@
   }
 
   .icc-cdk-table-header-cell {
+    height: 40px; // TODO configurable
     cursor: col-resize;
     padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icc-cdk-table-filter-cell {
+    height: 32px; // TODO configurable
   }
 
   .icc-cdk-table-header-cell:first-child, .icc-cdk-table-filter-cell:first-child {

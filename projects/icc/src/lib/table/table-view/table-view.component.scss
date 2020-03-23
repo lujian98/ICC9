@@ -1,15 +1,18 @@
 
 .icc-cdk-table-data-row {
   display: flex;
-  align-items: center;
+  // align-items: center;
 }
 
 $border-color: var(--icc-cdk-table-cell-border-color);
 .icc-cdk-table-data-cell {
-  height: 32px; // TODO configurable
+  height: 30px; // TODO configurable
   border-bottom: 1px solid $border-color;
   border-right: 1px solid $border-color;
-  padding: 0 8px;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .icc-cdk-table-data-cell:first-child {
