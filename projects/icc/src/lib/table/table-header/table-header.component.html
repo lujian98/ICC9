@@ -23,9 +23,19 @@
           {{column.title}} X3
           <i [class]="getHeaderSortState(column)"></i>
         </div>
+        <icc-menu *ngIf="column.menu" [menuItem]="column.menu"></icc-menu>
       </div>
     </cdk-header-cell>
   </ng-container>
+  <!--
+<div class="icc-grid-flex"></div>
+
+                  <div [ngClass]="'icc-cdk-table-header-sort'"> KKK(99)
+
+        </div>
+
+              (iccMenuOptionClickEvent)="onColumnMenuClick($event, column)"
+  -->
   <cdk-header-row class="icc-cdk-table-header-row"
     [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}"
     *cdkHeaderRowDef="displayedColumns; sticky: true"></cdk-header-row>

@@ -14,10 +14,10 @@ export class CdkTableDemoComponent implements OnInit {
   title = 'cdk table';
 
   columnConfigs: IccColumnConfig[] = [
-    { name: 'vin', title: 'Vin' },
-    { name: 'year', title: 'Year', type: 'number' },
-    { name: 'brand', title: 'Brand' },
-    { name: 'color', title: 'Color' }
+    { name: 'vin', title: 'Vin', menu: true },
+    { name: 'year', title: 'Year', type: 'number', menu: true },
+    { name: 'brand', title: 'Brand', menu: true },
+    { name: 'color', title: 'Color', menu: true }
   ];
   data: Vehicle[] = VehicleData;
 

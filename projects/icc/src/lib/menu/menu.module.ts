@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { IccActiveMenuComponent } from './active-menu.component';
+import { IccMenuComponent } from './menu/menu.component';
 export { IccMenuItem } from './menu-item';
 
 @NgModule({
@@ -25,13 +26,16 @@ export { IccMenuItem } from './menu-item';
     MatTooltipModule,
   ],
   declarations: [
-    IccActiveMenuComponent
+    IccActiveMenuComponent,
+    IccMenuComponent
   ],
   exports: [
-    IccActiveMenuComponent
+    IccActiveMenuComponent,
+    IccMenuComponent
   ],
   entryComponents: [
     IccActiveMenuComponent,
+    IccMenuComponent
   ],
 })
 export class IccMenuModule { }

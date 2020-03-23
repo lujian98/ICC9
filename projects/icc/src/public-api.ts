@@ -11,6 +11,7 @@ export * from './lib/utils/utils';
 // export * from './lib/datasource';
 
 export * from './lib/menu/menu.module';
+export * from './lib/menu/menu/menu.component';
 export * from './lib/menu/active-menu.component';
 
 // export * from './lib/tool-bar/tool-bar.module';

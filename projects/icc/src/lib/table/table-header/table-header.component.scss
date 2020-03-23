@@ -54,6 +54,12 @@
   color: blue;
 }
 
+
+.icc-flex {
+  flex: 1;
+}
+
+
 .icc-cdk-table-header {
   $border-color: var(--icc-cdk-table-cell-border-color);
 
@@ -92,7 +98,14 @@
   }
 
   .icc-cdk-table-header-title {
+    display: flex;
     cursor: pointer;
+    width: 100%
   }
+
+  .icc-cdk-table-header-sort {
+    width: 100%
+  }
+
 }
 

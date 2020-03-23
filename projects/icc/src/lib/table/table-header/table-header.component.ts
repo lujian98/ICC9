@@ -108,7 +108,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   private initDataSourceService() {
     if (!this.subDataSourceService) {
       this.subDataSourceService = this.dataSourceService.dataSourceChanged$
-      .subscribe((data: T[]) => this.dataRecordRefreshed(data));
+        .subscribe((data: T[]) => this.dataRecordRefreshed(data));
     }
   }
 
@@ -133,7 +133,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   dataRecordRefreshed(data: T[]) { // TODO this also will in the table view????
-    console.log( ' refrsh data iiiiiiiiiiiiiiiiiiiiiiiiii')
+    console.log(' refrsh data iiiiiiiiiiiiiiiiiiiiiiiiii')
     // this.dataSourceLength = data.length;
     // this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
     // this.pagination.total = this.totalRecords;
@@ -183,8 +183,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
   }
 
-  isHeaderSortable(column: IccField): boolean {
-    return (!this.tableConfigs.enableColumnSort || !column.sortField || this.isColumnResizing) ? false : true;
+  isHeaderSortable(column: IccField): boolean { // TODO check resizeing and drag and drop still need here???
+    return (!this.tableConfigs.enableColumnSort || !column.sortField) ? false : true;
   }
 
   onHeaderSort(column: IccField) {
@@ -477,10 +477,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   isDragDisabled(column: IccField): boolean {
-    return true;
-    // return false;
-    // console.log( ' this.isColumnResizing=', this.columnResizeDnDService.isColumnResizing )
-    // return !this.gridConfigs.enableColumnDnD || this.columnResizeDnDService.isColumnResizing || column.dragDisabled;
+    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || column.dragDisabled;
   }
 
   onDragStarted(event: CdkDragStart, index: number, visibleColumns) {

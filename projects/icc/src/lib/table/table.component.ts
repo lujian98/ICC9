@@ -6,6 +6,7 @@ import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
 import { IccDataSource } from '../datasource/datasource';
 import { IccDataSourceService } from '../services/data-source.service';
+import { IccMenuItem } from '../menu/menu-item';
 
 @Component({
   selector: 'icc-table',
@@ -119,7 +120,7 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.menu = true;
         }
         if (columnConfig.menu) {
-          // columnConfig.menu = this.setupColumnMenu(columnConfig, tableConfigs);
+          columnConfig.menu = this.setupColumnMenu(columnConfig, tableConfigs);
         }
         if (!columnConfig.priority) {
           columnConfig.priority = 0;
@@ -159,8 +160,9 @@ export class IccTableComponent<T> implements OnChanges {
       });
     }
 
-
-    private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccGridConfigs): boolean | IccMenuItem {
+*/
+    private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
+      console.log( ' columnConfig', columnConfig)
       let menu: IccMenuItem = {
         children: []
       };
@@ -216,11 +218,13 @@ export class IccTableComponent<T> implements OnChanges {
             icon: 'fas fa-times'
           });
       }
+      console.log( ' menu', menu)
+
       if (menu.children.length > 0) {
         return menu;
       } else {
         return false;
       }
-    } */
+    }
 }
 
