@@ -13,32 +13,52 @@
 
 
 <div class="app-tree-container">
+    <icc-table
+      [tableConfigs]="{
+        'tableType': 'nestedTree',
+        'enableMultiColumnSort': true,
+        'enableColumnResize': true,
+        'enableColumnFilter': true,
+        'enableColumnDnD': true,
+        'enableColumnHide': true
+      }"
+      [data]="data"
+      [columnConfigs]="columnConfigs">
+    </icc-table>
+  </div>
+
+
+<!--
+
+
+<div class="app-tree-container">
   <icc-table
-    [tableConfigs]="{'tableType': 'nestedTree'}"
+    [tableConfigs]="{
+      'tableType': 'flatTree',
+      'enableMultiColumnSort': true,
+      'enableColumnResize': true,
+      'enableColumnFilter': true,
+      'enableColumnDnD': true,
+      'enableColumnHide': true,
+      'isNestedData': true
+    }"
     [data]="data"
     [columnConfigs]="columnConfigs">
   </icc-table>
 </div>
 
-
-
-<!--     [tableConfigs]="{'enableTableHeader': true}"
-   [columnConfigs]="columnConfigs"
-
-  <div class="app-tree-container">
-  <icc-tree
-    treeType="nestedTree"
-    [data]="data"
-    [columnConfigs]="columnConfigs">
-  </icc-tree>
-</div>
-
 <div class="app-tree-container">
   <icc-table
-    tableType="flatTree"
-    [tableConfigs]="{'isNestedData': true}"
+    [tableConfigs]="{
+      'tableType': 'nestedTree',
+      'enableMultiColumnSort': true,
+      'enableColumnResize': true,
+      'enableColumnFilter': true,
+      'enableColumnDnD': true,
+      'enableColumnHide': true
+    }"
     [data]="data"
-    [columnConfigs]="columnConfigs2">
+    [columnConfigs]="columnConfigs">
   </icc-table>
 </div>
 

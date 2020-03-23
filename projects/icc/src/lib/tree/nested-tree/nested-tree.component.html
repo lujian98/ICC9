@@ -21,8 +21,13 @@
           {{ node.name }} - A1
         </span>
       </div>
-      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
-        class="icc-table-column" [ngStyle]="{'width': column.width + 'px'}">
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
         {{ node[column.name] }} - X2
       </div>
     </cdk-tree-node>
@@ -43,8 +48,13 @@
 
         </span> <!-- <i class="fas fa-caret-right"></i> <i class="fas fa-caret-down"></i> -->
       </div>
-      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
-        class="icc-table-column" [ngStyle]="{'width': column.width + 'px'}">
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
         {{ node[column.name] }} - Y2
       </div>
 

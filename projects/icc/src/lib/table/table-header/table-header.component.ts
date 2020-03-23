@@ -28,6 +28,7 @@ import { IccDataSourceService } from '../../services/data-source.service';
 import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
 import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
+import { IccMenuItem } from '../../menu/menu-item';
 
 export interface IccSortState {
   name: string;
@@ -171,7 +172,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.adjustColumnsWidth(dx, -1);
     }
     this.setGroupHeaderColumnWidth();
-    this.tableWidth = this.isAllFlexColumns() ? viewportWidth : this.getTableSize();
+    const newTableWidth = this.getTableSize();
+    this.tableWidth = this.isAllFlexColumns() && newTableWidth > viewportWidth ? viewportWidth : newTableWidth;
     this.viewportWidth = viewportWidth;
     this.allowChangeFlexWidth = this.tableWidth <= viewportWidth;
     return this.tableWidth;
@@ -273,6 +275,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
         width += column.width;
       }
     });
+    console.log( ' table width =', width)
     return width;
   }
 
@@ -486,6 +489,49 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   onDragMoved(event, index, visibleColumns) {
     // this.columnResizeDnDService.onDragMoved(event, index, visibleColumns);
+  }
+
+  onColumnMenuClick(menuItem: IccMenuItem, column: IccField) {
+    console.log( ' menuItem=', menuItem);
+    if (menuItem.name === 'hideColumn') {
+      this.hideColumn(column);
+    }
+    /*
+    if (option.name === ColumnMenuType.SortAscending) {
+      this.sortColumn(column, 'asc');
+    } else if (option.name === ColumnMenuType.SortDescending) {
+      this.sortColumn(column, 'desc');
+    } else if (option.name === ColumnMenuType.RemoveSort) {
+      column.sort.active = false;
+      this.sort.direction = '';
+      column.sort.direction = '';
+      this.sortColumn(column, '');
+    } else if (option.name === 'hideColumn') {
+      this.hideColumn(column);
+    } else if (option.name === 'groupBy') {
+      this.groupBy(column);
+    } else if (option.name === 'unGroupBy') {
+      this.unGroupBy(column);
+    } else if (option.action === 'pinLeft') {
+      this.columnsService.columnStickyLeft(column, this.columns);
+      this.setGridColumView();
+    } else if (option.action === 'pinRight') {
+      this.columnsService.columnStickyRight(column, this.columns);
+      this.setGridColumView();
+    } else if (option.action === 'unpin') {
+      this.columnsService.columnUnSticky(column, this.columns, this.viewport, this.matTableRef);
+      this.setGridColumView();
+    }
+    this.setColumnMenuHidden(option.name, column);
+    */
+  }
+
+  hideColumn(column: IccField) {
+    if (column.itemConfig.hidden !== 'always') {
+      column.hidden = !column.hidden;
+      this.setTableFullSize(5);
+      // this.setGridColumView();
+    }
   }
 
   @HostListener('window:resize', ['$event'])

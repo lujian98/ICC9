@@ -12,7 +12,7 @@ export class IccMenuComponent {
   @Input() menuItem: IccMenuItem;
   @Input() conflictEvent: boolean;
 
-  @Output() iccMenuOptionClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccMenuClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
   enteredButton = false;
   isMatMenuOpen = false;
@@ -23,17 +23,17 @@ export class IccMenuComponent {
 
   constructor(private renderer: Renderer2) { }
 
-  menuOptionClick(event, option: IccMenuItem) {
+  menuOptionClick(event, menuItem: IccMenuItem) {
     event.stopPropagation();
-    if (!option.disabled) {
-      this.iccMenuOptionClickEvent.emit(option);
+    if (!menuItem.disabled) {
+      this.iccMenuClickEvent.emit(menuItem);
     }
   }
 
   // check box click may not emit correct event while use checkBoxChange is consistent
-  checkBoxChange(event, option: IccMenuItem) {
-    if (!option.disabled) {
-      this.iccMenuOptionClickEvent.emit(option);
+  checkBoxChange(event, menuItem: IccMenuItem) {
+    if (!menuItem.disabled) {
+      this.iccMenuClickEvent.emit(menuItem);
     }
   }
 

@@ -21,8 +21,13 @@
           {{ node.name }} - A1
         </span>
       </div>
-      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
-        class="icc-table-column" [ngStyle]="{'width': column.width + 'px'}">
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
         {{ node[column.name] }} - X2
       </div>
     </cdk-tree-node>
@@ -38,12 +43,17 @@
             (click)="nodeExpand(node)">
             <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
           </button>
-          {{ node.name }} - B1
+          {{ node.name }} - flat tree B1
         </span>
       </div>
 
-      <div *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
-        class="icc-table-column" [ngStyle]="{'width': column.width + 'px'}">
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
         {{ node[column.name] }} - Y2
       </div>
 

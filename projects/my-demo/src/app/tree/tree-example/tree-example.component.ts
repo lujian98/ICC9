@@ -36,15 +36,18 @@ export class TreeExampleComponent implements OnInit {
   },
   {
     name: 'level',
-    width: 200
+    width: 200,
+    menu: true
   },
   {
     name: 'color',
-    width: 250
+    width: 250,
+    menu: true
   },
   {
     name: 'status',
-    width: 100
+    width: 100,
+    menu: true
   }];
 
   columnConfigs2: any[] = [{

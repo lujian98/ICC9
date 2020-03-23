@@ -7,7 +7,7 @@
   <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
     [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
     <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
-      [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}"
+      [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
       (mousemove)="checkResizeORDnD($event, colIndex)"
       (mousedown)="onResizeColumn($event, colIndex)"
       cdkDrag
@@ -23,7 +23,10 @@
           {{column.title}} X3
           <i [class]="getHeaderSortState(column)"></i>
         </div>
-        <icc-menu *ngIf="column.menu" [menuItem]="column.menu"></icc-menu>
+        <icc-menu *ngIf="column.menu"
+          [menuItem]="column.menu"
+          (iccMenuClickEvent)="onColumnMenuClick($event, column)">
+        </icc-menu>
       </div>
     </cdk-header-cell>
   </ng-container>
@@ -43,7 +46,7 @@
   <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
     [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
     <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
-      [ngStyle]="{'flex': '0 0 ' + column.width + 'px', 'left': column.left, 'right': column.right}">
+      [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
       <div>
         Filter...
       </div>

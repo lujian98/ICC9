@@ -163,13 +163,16 @@ export class IccTableComponent<T> implements OnChanges {
 */
     private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
       console.log( ' columnConfig', columnConfig)
-      let menu: IccMenuItem = {
+      const menu: IccMenuItem = {
         children: []
       };
+
+      /*
       const columnMenu = columnConfig.menu as IccMenuItem;
+
       if (columnMenu && columnMenu.children) {
         menu = columnMenu;
-      }
+      } */
       menu.icon = 'fas fa-ellipsis-v';
       if (tableConfigs.enableColumnSort && columnConfig.sortField) {
         menu.children.push({
