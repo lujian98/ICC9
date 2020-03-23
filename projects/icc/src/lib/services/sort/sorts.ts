@@ -53,7 +53,7 @@ export class IccSorts {
   }
 
   update(column: IccField, key: string, direction: string, active: boolean) {
-    column.sort = null;
+    // column.sort = null;
     this.remove(key, true);
     if (active) {
       this.add(column, key, direction, active);
@@ -70,7 +70,7 @@ export class IccSorts {
     } else {
       this.sorts.push(sort);
     }
-    column.sort = sort;
+    // column.sort = sort;
   }
 
   private remove(key: string, setInactive: boolean) {
@@ -79,6 +79,7 @@ export class IccSorts {
       for (const aSort of this.sorts) {
         if (aSort.key === key) {
           found = this.sorts.indexOf(aSort, 0);
+          aSort.remove();
         } else if (setInactive) {
           aSort.active = false;
         }
@@ -131,12 +132,12 @@ export class IccSorts {
       });
     }
     if (!this.multiSort) {
-      // const sorts = this.sorts.filter(sort => groups.indexOf(sort.key) >= 0 || sort.active);
-      // this.sorts = [...sorts];
       const sorts = this.sorts.filter(sort => {
         const groupFields = groups.map(group => group.column);
         return groupFields.indexOf(sort.key) >= 0 || sort.active;
       });
+      const removedSorts = this.sorts.filter(aSort => sorts.indexOf(aSort) < 0);
+      removedSorts.forEach(aSort => aSort.remove());
       this.sorts = [...sorts];
     }
     console.log(' this.sorts=', this.sorts);

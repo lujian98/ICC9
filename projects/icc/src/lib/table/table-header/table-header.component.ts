@@ -39,7 +39,7 @@ export interface IccSortState {
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
 })
-export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
+export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewInit {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
   @Input() viewport: CdkVirtualScrollViewport;
@@ -87,6 +87,11 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     private renderer: Renderer2,
     private platform: Platform,
   ) { }
+
+  ngOnInit() {
+    this.sorts.multiSort = this.tableConfigs.enableMultiColumnSort;
+    // this.rowGroups.enableMultiRowGroup = this.gridConfigs.enableMultiRowGroup;
+  }
 
   ngAfterViewInit() { }
 
@@ -219,6 +224,7 @@ export class IccTableHeaderComponent<T> implements OnChanges, AfterViewInit {
     }
     */
     this.fetchRecords();
+    this.sorts.setRowGroupSort(this.rowGroups.groupByColumns, this.columns);
   }
 
   setSortState(column: IccField, hover: boolean) {

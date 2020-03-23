@@ -57,6 +57,7 @@ export class IccSort {
   ) {
     this.sortField = (typeof column.sortField === 'string') ? column.sortField : column.name;
     this.fieldType = column.type;
+    this.column.sort = this;
   }
 
   convertDirection() {
@@ -68,6 +69,10 @@ export class IccSort {
         return 'desc';
       }
     }
+  }
+
+  remove() {
+    this.column.sort = null;
   }
 }
 
