@@ -1,6 +1,10 @@
 <div class="app-table-container">
   <icc-table
-    [tableConfigs]="{'enableMultiColumnSort': true}"
+    [tableConfigs]="{
+      'enableMultiColumnSort': true,
+      'enableColumnResize': true,
+      'enableColumnFilter': true
+    }"
     [data]="data"
     [columnConfigs]="columnConfigs">
   </icc-table>
