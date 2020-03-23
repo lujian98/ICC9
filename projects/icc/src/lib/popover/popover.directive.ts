@@ -3,14 +3,14 @@ import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, share, startWith, switchMap, switchMapTo, takeUntil } from 'rxjs/operators';
 import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayContent } from '../services/overlay/overlay.model';
-import { IccTooltipOverlayService } from './tooltip-overlay.service';
-import { IccTooltipComponent } from './tooltip/tooltip.component';
+import { IccPopoverService } from './popover.service';
+import { IccPopoverComponent } from './popover/popover.component';
 
 @Directive({
-  selector: '[iccTooltip]'
+  selector: '[iccPopover]'
 })
-export class IccTooltipDirective<T> implements OnInit, OnDestroy {
-  @Input('iccTooltip') content: IccOverlayComponentContent<T>;
+export class IccPopoverDirective<T> implements OnInit, OnDestroy {
+  @Input('iccPopover') content: IccOverlayComponentContent<T>;
   @Input() data: T;
   @Input() width: string | number = 200;
   @Input() height: string | number;
@@ -24,7 +24,7 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
   private destroy$ = new Subject<T>();
 
   constructor(
-    private overlayService: IccTooltipOverlayService,
+    private overlayService: IccPopoverService,
     private elementRef: ElementRef,
   ) { }
 
@@ -65,7 +65,7 @@ export class IccTooltipDirective<T> implements OnInit, OnDestroy {
     };
     this.overlayRef = this.overlayService.open(
       this.elementRef.nativeElement,
-      IccTooltipComponent,
+      IccPopoverComponent,
       overlayContent,
       overlayConfig
     );

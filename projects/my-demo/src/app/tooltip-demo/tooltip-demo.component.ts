@@ -7,12 +7,12 @@ import { IccOverlayComponentRef } from 'icc';
 })
 export class TooltipDemoComponent {
   skills;
-  constructor(private tooltipRef: IccOverlayComponentRef<any>) {
-    console.log( ' this.tooltipRef =', this.tooltipRef);
-    this.skills = this.tooltipRef.overlayContent.data.skills;
+  constructor(private popoverRef: IccOverlayComponentRef<any>) {
+    console.log( ' this.tooltipRef =', this.popoverRef);
+    this.skills = this.popoverRef.overlayContent.data.skills;
   }
 
   close() {
-    this.tooltipRef.close({ id: 1 });
+    this.popoverRef.close({ id: 1 });
   }
 }

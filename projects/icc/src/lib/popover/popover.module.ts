@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { IccTooltipDirective } from './tooltip.directive';
-import { IccTooltipComponent } from './tooltip/tooltip.component';
+import { IccPopoverDirective } from './popover.directive';
+import { IccPopoverComponent } from './popover/popover.component';
 
 @NgModule({
   imports: [
@@ -10,15 +10,15 @@ import { IccTooltipComponent } from './tooltip/tooltip.component';
     OverlayModule
   ],
   declarations: [
-    IccTooltipDirective,
-    IccTooltipComponent,
+    IccPopoverDirective,
+    IccPopoverComponent,
   ],
   entryComponents: [
-    IccTooltipComponent
+    IccPopoverComponent
   ],
   exports: [
-    IccTooltipDirective,
+    IccPopoverDirective,
   ],
   providers: [],
 })
-export class IccTooltipModule { }
+export class IccPopoverModule { }

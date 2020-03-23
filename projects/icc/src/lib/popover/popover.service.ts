@@ -4,7 +4,7 @@ import { IccOverlayService } from '../services/overlay/overlay.service';
 @Injectable({
   providedIn: 'root'
 })
-export class IccTooltipOverlayService extends IccOverlayService {
+export class IccPopoverService extends IccOverlayService {
 
   /*
   getPositions(): ConnectionPositionPair[] {

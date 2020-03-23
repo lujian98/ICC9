@@ -3,27 +3,27 @@ import { IccOverlayComponentRef } from '../../services/overlay/overlay-component
 import { IccOverlayComponentContent } from '../../services/overlay/overlay.model';
 
 @Component({
-  templateUrl: './tooltip.component.html',
-  styleUrls: ['./tooltip.component.scss']
+  templateUrl: './popover.component.html',
+  styleUrls: ['./popover.component.scss']
 })
-export class IccTooltipComponent<T> implements OnInit {
-  tooltipType: 'text' | 'template' | 'component' = 'component';
+export class IccPopoverComponent<T> implements OnInit {
+  popoverType: 'text' | 'template' | 'component' = 'component';
   content: IccOverlayComponentContent<T>;
   context: any;
 
   constructor(
-    private tooltipRef: IccOverlayComponentRef<T>
+    private popoverRef: IccOverlayComponentRef<T>
   ) { }
 
   ngOnInit() {
-    this.content = this.tooltipRef.overlayContent.content;
+    this.content = this.popoverRef.overlayContent.content;
     if (typeof this.content === 'string') {
-      this.tooltipType = 'text';
+      this.popoverType = 'text';
     }
     if (this.content instanceof TemplateRef) {
-      this.tooltipType = 'template';
+      this.popoverType = 'template';
       this.context = {
-        close: this.tooltipRef.close.bind(this.tooltipRef)
+        close: this.popoverRef.close.bind(this.popoverRef)
       };
     }
   }

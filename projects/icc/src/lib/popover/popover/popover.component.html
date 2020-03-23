@@ -1,5 +1,5 @@
-<div class="icc-tooltip">
-  <ng-container [ngSwitch]="tooltipType">
+<div class="icc-popover">
+  <ng-container [ngSwitch]="popoverType">
     <div *ngSwitchCase="'text'" [innerHTML]="content"></div>
     <ng-container *ngSwitchCase="'template'">
       <ng-container *ngTemplateOutlet="content; context: context"></ng-container>
