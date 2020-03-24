@@ -13,9 +13,9 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input() data: T;
   @Input() width: string | number = 200;
   @Input() height: string | number;
+  @Input() disabled = false;
 
-  protected popoverStrategy: IccBasePopoverStrategy;
-  protected alive = true;
+  private popoverStrategy: IccBasePopoverStrategy;
   private overlayRef: OverlayRef;
   private overlayConfig: IccOverlayConfig = {
     panelClass: '',
@@ -29,12 +29,14 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
-    this.popoverStrategy.show$.subscribe(() => this.openDialog());
-    this.popoverStrategy.hide$.subscribe(() => this.closeDialog());
+    if (!this.disabled) {
+      this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
+      this.popoverStrategy.show$.subscribe(() => this.openPopover());
+      this.popoverStrategy.hide$.subscribe(() => this.closePopover());
+    }
   }
 
-  private openDialog() {
+  private openPopover() {
     this.isOpened = true;
     const overlayConfig: IccOverlayConfig = {
       width: this.width,
@@ -55,7 +57,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     this.popoverStrategy.overlayRef = this.overlayRef;
   }
 
-  private closeDialog() {
+  private closePopover() {
     this.isOpened = false;
     if (this.overlayRef) {
       this.overlayRef.detach();
@@ -64,8 +66,6 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     this.popoverStrategy.overlayRef = null;
   }
 
-  ngOnDestroy() {
-    this.alive = false;
-  }
+  ngOnDestroy() { }
 }
 
