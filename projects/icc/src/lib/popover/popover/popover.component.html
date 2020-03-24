@@ -1,11 +1,32 @@
 <div class="icc-popover">
-  <ng-container [ngSwitch]="popoverType">
+  <div *ngIf="!portal" [innerHTML]="content"></div>
+  <ng-template *ngIf="portal" [cdkPortalOutlet]="portal"></ng-template>
+</div>
+
+<!--
+
+      <ng-container [ngSwitch]="popoverType">
     <div *ngSwitchCase="'text'" [innerHTML]="content"></div>
     <ng-container *ngSwitchCase="'template'">
-      <ng-container *ngTemplateOutlet="content; context: context"></ng-container>
+      <ng-template [cdkPortalOutlet]="portal"></ng-template>
     </ng-container>
     <ng-container *ngSwitchCase="'component'">
-      <ng-container *ngComponentOutlet="content"></ng-container>
+      <ng-template [cdkPortalOutlet]="portal"></ng-template>
     </ng-container>
   </ng-container>
+<ng-template cdkPortalOutlet></ng-template>
+
+          <ng-container *ngComponentOutlet="content"></ng-container>
+
+  <h2>The portal outlet is below:</h2>
+<div class="example-portal-outlet">
+  <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
 </div>
+<ng-template #templatePortalContent>Hello, this is a template portal</ng-template>
+
+<button (click)="selectedPortal = componentPortal">Render component portal</button>
+<button (click)="selectedPortal = templatePortal">Render template portal</button>
+
+
+
+-->

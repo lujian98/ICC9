@@ -1,6 +1,6 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { Injectable, Injector, Type } from '@angular/core';
+import { ComponentRef, Injectable, Injector, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccOverlayComponentRef } from './overlay-component-ref';
 import { IccOverlayConfig, IccOverlayContent, DEFAULT_CONFIG } from './overlay.model';
@@ -9,6 +9,7 @@ import { IccOverlayConfig, IccOverlayContent, DEFAULT_CONFIG } from './overlay.m
   providedIn: 'root'
 })
 export class IccOverlayService {
+  containerRef: ComponentRef<any>;
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
   open<T, C>(
@@ -23,7 +24,7 @@ export class IccOverlayService {
     const overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, overlayContent);
     const componentInjector = this.createInjector(overlayComponentRef);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
-    overlayRef.attach(componentPortal);
+    this.containerRef = overlayRef.attach(componentPortal);
     overlayRef
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))
