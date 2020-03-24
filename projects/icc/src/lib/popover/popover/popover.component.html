@@ -1,10 +1,20 @@
 <div class="icc-popover">
-  <div *ngIf="!portal" [innerHTML]="content"></div>
-  <ng-template *ngIf="portal" [cdkPortalOutlet]="portal"></ng-template>
+  <div *ngIf="popoverType=='text'" [innerHTML]="content"></div>
+  <ng-template cdkPortalOutlet></ng-template>
 </div>
+
 
 <!--
 
+    <ng-template *ngIf="portal" [cdkPortalOutlet]="portal"></ng-template>
+
+
+  <ng-template #c [cdkPortalOutlet]="userSettingsPortal"></ng-template>
+
+<div class="portals-outlet">
+  <ng-container #virtualContainer cdkPortalOutlet>
+  </ng-container>
+</div>
       <ng-container [ngSwitch]="popoverType">
     <div *ngSwitchCase="'text'" [innerHTML]="content"></div>
     <ng-container *ngSwitchCase="'template'">

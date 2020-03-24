@@ -162,7 +162,7 @@ export class IccTableComponent<T> implements OnChanges {
 
 */
     private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
-      console.log( ' columnConfig', columnConfig)
+      // console.log( ' columnConfig', columnConfig)
       const menu: IccMenuItem = {
         children: []
       };
@@ -221,7 +221,7 @@ export class IccTableComponent<T> implements OnChanges {
             icon: 'fas fa-times'
           });
       }
-      console.log( ' menu', menu)
+      // console.log( ' menu', menu)
 
       if (menu.children.length > 0) {
         return menu;

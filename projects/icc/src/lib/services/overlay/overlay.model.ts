@@ -18,13 +18,8 @@ export const DEFAULT_CONFIG: IccOverlayConfig = {
   shouldCloseOnBackdropClick: true
 };
 
-export interface IccOverlayContent<T> {
-  content?: IccOverlayComponentContent<T>;
-  data?: T;
-}
-
 export interface IccOverlayComponentCloseEvent<T = any> {
   type: 'backdropClick' | 'close';
-  data: T;
+  context?: {};
 }
 

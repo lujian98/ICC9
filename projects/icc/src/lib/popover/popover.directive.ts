@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { IccOverlayComponentContent, IccOverlayConfig, IccOverlayContent } from '../services/overlay/overlay.model';
+import { IccOverlayComponentContent, IccOverlayConfig } from '../services/overlay/overlay.model';
 import { IccPopoverService } from './popover.service';
 import { IccBasePopoverStrategy, IccPopoverHoverStrategy } from './popover.strategy';
 import { IccPopoverComponent } from './popover/popover.component';
@@ -10,7 +10,7 @@ import { IccPopoverComponent } from './popover/popover.component';
 })
 export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input('iccPopover') content: IccOverlayComponentContent<T>;
-  @Input() data: T;
+  @Input('iccPopoverContext') context = {};
   @Input() width: string | number = 200;
   @Input() height: string | number;
   @Input() disabled = false;
@@ -43,15 +43,12 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       height: this.height,
       ...this.overlayConfig
     };
-    const overlayContent: IccOverlayContent<T> = {
-      content: this.content,
-      data: this.data,
-    };
     this.overlayRef = this.overlayService.open(
       this.elementRef.nativeElement,
       IccPopoverComponent,
-      overlayContent,
-      overlayConfig
+      overlayConfig,
+      this.content,
+      this.context
     );
     this.popoverStrategy.isOpened = this.isOpened;
     this.popoverStrategy.overlayRef = this.overlayRef;

@@ -1,5 +1,5 @@
-import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
-import { AfterViewInit, Component, OnInit, TemplateRef, Type, ViewContainerRef } from '@angular/core';
+import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
 import { IccOverlayComponentContent } from '../../services/overlay/overlay.model';
 
@@ -7,15 +7,12 @@ import { IccOverlayComponentContent } from '../../services/overlay/overlay.model
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss']
 })
-export class IccPopoverComponent<T> implements OnInit, AfterViewInit {
-  popoverType: 'text' | 'template' | 'component' = 'component';
+export class IccPopoverComponent<T> implements OnInit, AfterViewInit, OnDestroy {
+  popoverType: string;
   content: IccOverlayComponentContent<T>;
   context: any;
 
-  // @ViewChild(CdkPortalOutlet) portalOutlet: CdkPortalOutlet;
-
-  // @ViewChild('testPortalOutlet') portalOutlet: CdkPortalOutlet;
-  portal: Portal<any>;
+  @ViewChild(CdkPortalOutlet) portalOutlet: CdkPortalOutlet;
 
   constructor(
     private popoverRef: IccOverlayComponentRef<T>,
@@ -23,20 +20,33 @@ export class IccPopoverComponent<T> implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.content = this.popoverRef.overlayContent.content;
+    this.content = this.popoverRef.componentContent;
+    this.popoverType = (typeof this.content === 'string') ? 'text' : '';
+  }
+
+  ngAfterViewInit() {
     if (this.content instanceof TemplateRef) {
       this.context = {
         close: this.popoverRef.close.bind(this.popoverRef)
       };
-      this.portal = new TemplatePortal(this.content, null, { $implicit: this.context } as any);
+      const portal = new TemplatePortal(this.content, null, { $implicit: this.context } as any);
+      const templateRef = this.portalOutlet.attachTemplatePortal(portal);
+      templateRef.detectChanges();
     } else if (this.content instanceof Type) {
-      this.portal = new ComponentPortal(this.content);
+      const portal = new ComponentPortal(this.content);
+      const componentRef = this.portalOutlet.attachComponentPortal(portal);
+      if (this.popoverRef.componentContext) {
+        Object.assign(componentRef.instance, this.popoverRef.componentContext);
+        componentRef.changeDetectorRef.markForCheck();
+        componentRef.changeDetectorRef.detectChanges();
+      }
     }
-    console.log(' this.content =', this.popoverRef);
-
   }
 
-  ngAfterViewInit() {
+  ngOnDestroy() {
+    if (this.portalOutlet.hasAttached()) {
+      this.portalOutlet.detach();
+    }
   }
 }
 
