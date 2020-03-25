@@ -17,10 +17,6 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
 
   private popoverStrategy: IccBasePopoverStrategy;
   private overlayRef: OverlayRef;
-  private overlayConfig: IccOverlayConfig = {
-    panelClass: '',
-    backdropClass: 'popover-backdrop',
-  };
   private isOpened = false;
 
   constructor(
@@ -37,21 +33,22 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   }
 
   private openPopover() {
-    this.isOpened = true;
-    const overlayConfig: IccOverlayConfig = {
-      width: this.width,
-      height: this.height,
-      ...this.overlayConfig
-    };
-    this.overlayRef = this.overlayService.open(
-      this.elementRef.nativeElement,
-      IccPopoverComponent,
-      overlayConfig,
-      this.content,
-      this.context
-    );
-    this.popoverStrategy.isOpened = this.isOpened;
-    this.popoverStrategy.overlayRef = this.overlayRef;
+    if (!this.isOpened) {
+      this.isOpened = true;
+      const overlayConfig: IccOverlayConfig = {
+        width: this.width,
+        height: this.height
+      };
+      this.overlayRef = this.overlayService.open(
+        this.elementRef.nativeElement,
+        IccPopoverComponent,
+        overlayConfig,
+        this.content,
+        this.context
+      );
+      this.popoverStrategy.isOpened = this.isOpened;
+      this.popoverStrategy.overlayRef = this.overlayRef;
+    }
   }
 
   private closePopover() {

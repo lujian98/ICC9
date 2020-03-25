@@ -9,7 +9,7 @@ import { IccOverlayConfig, IccOverlayComponentContent, DEFAULT_CONFIG } from './
   providedIn: 'root'
 })
 export class IccOverlayService {
-  containerRef: ComponentRef<any>;
+  // containerRef: ComponentRef<any>;
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
   open<T, C>(
@@ -25,7 +25,7 @@ export class IccOverlayService {
     const overlayComponentRef = new IccOverlayComponentRef<T>(overlayRef, componentContent, componentContext);
     const componentInjector = this.createInjector(overlayComponentRef);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
-    this.containerRef = overlayRef.attach(componentPortal);
+    overlayRef.attach(componentPortal);
     overlayRef
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))

@@ -13,7 +13,7 @@ export interface IccOverlayConfig {
 
 export const DEFAULT_CONFIG: IccOverlayConfig = {
   panelClass: 'icc-overlay',
-  hasBackdrop: true,
+  hasBackdrop: false,
   backdropClass: 'icc-overlay-backdrop',
   shouldCloseOnBackdropClick: true
 };
