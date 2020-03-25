@@ -1,10 +1,13 @@
 <div class="icc-popover">
+  <icc-overlay-container></icc-overlay-container>
+</div>
+<!--
+
+  <div class="icc-popover">
   <div *ngIf="popoverType=='text'" [innerHTML]="content"></div>
   <ng-template cdkPortalOutlet></ng-template>
 </div>
 
-
-<!--
 
     <ng-template *ngIf="portal" [cdkPortalOutlet]="portal"></ng-template>
 

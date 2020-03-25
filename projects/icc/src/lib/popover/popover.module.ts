@@ -4,6 +4,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { IccPopoverDirective } from './popover.directive';
 import { IccPopoverComponent } from './popover/popover.component';
+import { IccOverlayContainerComponent } from './overlay-container.component';
 
 @NgModule({
   imports: [
@@ -14,12 +15,15 @@ import { IccPopoverComponent } from './popover/popover.component';
   declarations: [
     IccPopoverDirective,
     IccPopoverComponent,
+    IccOverlayContainerComponent
   ],
   entryComponents: [
-    IccPopoverComponent
+    IccPopoverComponent,
+    IccOverlayContainerComponent
   ],
   exports: [
     IccPopoverDirective,
+    IccOverlayContainerComponent
   ],
   providers: [],
 })
