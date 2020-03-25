@@ -25,7 +25,7 @@
         </div>
         <icc-menu *ngIf="column.menu"
           [menuItem]="column.menu"
-          (iccMenuClickEvent)="onColumnMenuClick($event, column)">
+          (iccMenuItemClickEvent)="onColumnMenuItemClick($event, column)">
         </icc-menu>
       </div>
     </cdk-header-cell>

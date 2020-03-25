@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IccMenuItem } from '../menu-item';
 
@@ -9,9 +9,19 @@ import { IccMenuItem } from '../menu-item';
 })
 export class IccMenuItemComponent implements OnInit {
   @Input() menuItems: IccMenuItem[];
+
+  @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+
   @ViewChild('childMenu', { static: true }) public childMenu: any;
 
   constructor(public router: Router) { }
 
   ngOnInit() { }
+
+  menuItemClick(event, menuItem: IccMenuItem) {
+    event.stopPropagation();
+    if (!menuItem.disabled) {
+      this.iccMenuItemClickEvent.emit(menuItem);
+    }
+  }
 }

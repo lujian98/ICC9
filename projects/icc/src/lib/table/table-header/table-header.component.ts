@@ -491,8 +491,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     // this.columnResizeDnDService.onDragMoved(event, index, visibleColumns);
   }
 
-  onColumnMenuClick(menuItem: IccMenuItem, column: IccField) {
-    console.log( ' menuItem=', menuItem);
+  onColumnMenuItemClick(menuItem: IccMenuItem, column: IccField) {
+    console.log( ' xxx menuItem=', menuItem);
     if (menuItem.name === 'hideColumn') {
       this.hideColumn(column);
     }

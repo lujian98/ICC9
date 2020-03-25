@@ -8,9 +8,15 @@ import { IccMenuItem } from './menu-item';
 })
 export class IccMenuComponent {
   @Input() menuItem: IccMenuItem;
-  @Output() iccMenuClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
   constructor() { }
+
+  onMenuItemClick(menuItem: IccMenuItem) {
+    if (!menuItem.disabled) {
+      this.iccMenuItemClickEvent.emit(menuItem);
+    }
+  }
 }
 
 

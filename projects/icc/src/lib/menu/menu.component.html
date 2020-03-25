@@ -2,4 +2,7 @@
   <span *ngIf="menuItem.title">{{menuItem.title}}</span>
   <i *ngIf="menuItem.icon" [class]="menuItem.icon" style="color:green"></i>
 </div>
-<icc-menu-item #menu [menuItems]="menuItem.children"></icc-menu-item>
+<icc-menu-item #menu
+  [menuItems]="menuItem.children"
+  (iccMenuItemClickEvent)="onMenuItemClick($event)">
+</icc-menu-item>
