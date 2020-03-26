@@ -9,6 +9,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { IccFieldViewModule } from '../directives/field-view/field-view.module';
+import { IccFieldViewService } from '../directives/field-view/field-view.service';
+
+
 import { IccActiveMenuComponent } from './active-menu.component';
 import { IccMenuComponent } from './menu.component';
 import { IccMenuItemComponent } from './menu-item/menu-item.component';
@@ -25,6 +29,7 @@ export { IccMenuItem } from './menu-item';
     MatCheckboxModule,
     MatMenuModule,
     MatTooltipModule,
+    IccFieldViewModule,
   ],
   declarations: [
     IccActiveMenuComponent,
@@ -40,6 +45,9 @@ export { IccMenuItem } from './menu-item';
     IccActiveMenuComponent,
     IccMenuComponent,
     IccMenuItemComponent
+  ],
+  providers: [
+    IccFieldViewService
   ],
 })
 export class IccMenuModule { }

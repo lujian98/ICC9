@@ -37,5 +37,6 @@ export * from './lib/tree/index';
 export * from './lib/services/index';
 
 export * from './lib/directives/index';
+export * from './lib/directives/field-view/index';
 
 export * from './lib/jsonapi/index';

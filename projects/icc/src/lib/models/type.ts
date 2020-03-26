@@ -1,6 +1,6 @@
 import { IccAbstractDataService } from '../services';
 
-export type itemType = 'text' | 'number' | 'select' | 'radio' | 'fieldset' | 'checkbox' | 'label';
+export type itemType = 'text' | 'number' | 'select' | 'radio' | 'fieldset' | 'checkbox' | 'button';
 
 export interface IccSelectOption {
   label: string;

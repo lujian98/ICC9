@@ -27,6 +27,7 @@ export interface IccItemConfig {
   index?: number; // auto generated
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   disabled?: boolean;
+  fieldView?: any;
 }
 
 export interface IccFieldConfig extends IccItemConfig {

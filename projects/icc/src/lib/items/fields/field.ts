@@ -27,6 +27,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccField[];
+  fieldView?: any;
 
   sortField?: IccSortField;
   filterField?: IccFilterField;

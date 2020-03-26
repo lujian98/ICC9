@@ -1,0 +1,22 @@
+<div>
+  <button mat-menu-item>
+    <span>{{field.title}}</span>
+  </button>
+</div>
+
+<!--
+  [hidden]="field.hidden"
+  <div [formGroup]="group" [hidden]="field.hidden"
+  [ngStyle]="{'width': field.width+'px', 'text-align': field.align}">
+  <mat-checkbox
+    [formControlName]="field.name"
+    [labelPosition]="field.labelPosition"
+    (change)="fieldChange($event, $event.checked)"
+    [checked]="field.value">
+    {{field.title}}
+  </mat-checkbox>
+
+    <button mat-menu-item (click)="menuItemClick($event, item)">
+    <span>{{item.title}}</span>
+  </button>
+-->

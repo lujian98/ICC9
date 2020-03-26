@@ -24,7 +24,7 @@
           <i [class]="getHeaderSortState(column)"></i>
         </div>
         <icc-menu *ngIf="column.menu"
-          [menuItem]="column.menu"
+          [menuItemConfig]="column.menu"
           (iccMenuItemClickEvent)="onColumnMenuItemClick($event, column)">
         </icc-menu>
       </div>
