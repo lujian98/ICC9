@@ -1,4 +1,8 @@
 
+::ng-deep .mat-menu-content:not(:empty) {
+  background-color: gray;
+}
+
 /*
 .icc-menu-icon-only {
   // vertical-align: center;

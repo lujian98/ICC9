@@ -1,10 +1,10 @@
 <div>
-  <button mat-menu-item>
-    <span>{{field.title}}</span>
+  <button [ngStyle]="{'width': '100%', 'height': '30px'}">
+    {{field.title}}
   </button>
 </div>
 
-<!--
+<!-- mat-menu-item
   [hidden]="field.hidden"
   <div [formGroup]="group" [hidden]="field.hidden"
   [ngStyle]="{'width': field.width+'px', 'text-align': field.align}">
