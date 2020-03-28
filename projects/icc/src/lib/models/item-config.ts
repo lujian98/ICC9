@@ -28,6 +28,8 @@ export interface IccItemConfig {
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
   disabled?: boolean;
   fieldView?: any;
+  action?: string;
+  checked?: boolean; // for checkbox
 }
 
 export interface IccFieldConfig extends IccItemConfig {
@@ -44,7 +46,7 @@ export interface IccFieldConfig extends IccItemConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccFieldConfig[] | IccField[];
-  checked?: boolean; // for checkbox
+
   // allowBlank?: boolean;
 }
 

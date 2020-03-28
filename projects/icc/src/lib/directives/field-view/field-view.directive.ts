@@ -46,6 +46,7 @@ export class IccFieldViewDirective<T> implements OnInit, OnChanges, OnDestroy {
           .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
       }
     }
+    console.log( ' mmmmmmmmmmmmmmmmmmmmmmmm changes = ', changes)
   }
 
   ngOnDestroy() {

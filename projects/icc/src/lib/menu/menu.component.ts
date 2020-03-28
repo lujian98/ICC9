@@ -126,6 +126,7 @@ export class IccMenuComponent implements OnChanges {
 
   onMenuItemClick(menuItem: IccMenuItem) {
     if (!menuItem.disabled) {
+      console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
       this.iccMenuItemClickEvent.emit(menuItem);
     }
   }

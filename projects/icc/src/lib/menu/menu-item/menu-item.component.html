@@ -4,10 +4,14 @@
       <button mat-menu-item [matMenuTriggerFor]="menu.childMenu" (click)="$event.stopPropagation()">
         <span>{{item.title}}</span>
       </button>
-      <icc-menu-item #menu [menuItems]="item.children"></icc-menu-item>
+      <icc-menu-item #menu [menuItems]="item.children"
+        (iccMenuItemClickEvent)="menuItemClick($event)">
+      </icc-menu-item>
     </span>
     <span *ngIf="!item.children || item.children.length === 0">
-      <span iccFieldView [field]="item"></span>
+      <span iccFieldView [field]="item"
+        (iccFieldValueChangedEvent)="onMenuItemClickEvent($event, item)">
+      </span>
     </span>
   </span>
 </mat-menu>

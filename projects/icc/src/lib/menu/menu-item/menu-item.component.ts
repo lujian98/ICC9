@@ -18,10 +18,16 @@ export class IccMenuItemComponent implements OnInit {
 
   ngOnInit() { }
 
-  menuItemClick(event, menuItem: IccMenuItem) {
-    event.stopPropagation();
-    if (!menuItem.disabled) {
-      this.iccMenuItemClickEvent.emit(menuItem);
+  menuItemClick(event) {
+    // event.stopPropagation();
+    console.log(' 99999 event', event)
+    if (!event.disabled) {
+      this.iccMenuItemClickEvent.emit(event);
     }
+  }
+
+  onMenuItemClickEvent(event, item) {
+    console.log(' 777777777777 event=', event, ' item=', item)
+    this.iccMenuItemClickEvent.emit(event);
   }
 }

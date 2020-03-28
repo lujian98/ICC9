@@ -100,11 +100,13 @@ export class IccTableComponent<T> implements OnChanges {
     if (columnConfigs) {
       const columnsHideShow: IccMenuItem = {
         title: 'Columns',
+        name: 'columns',
         children: this.columnConfigs.map((column: IccField) => {
           return {
             type: 'checkbox',
             title: column.title,
-            name: 'columnHideShow',
+            name: column.name,
+            action: 'columnHideShow',
             checked: !column.hidden
           };
         })
@@ -130,7 +132,7 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.menu = true;
         }
         if (columnConfig.menu) {
-         columnConfig.menu = this.getColumnMenu(columnConfig, columnsHideShow, tableConfigs);
+          columnConfig.menu = this.getColumnMenu(columnConfig, columnsHideShow, tableConfigs);
         }
         if (!columnConfig.priority) {
           columnConfig.priority = 0;
@@ -171,68 +173,66 @@ export class IccTableComponent<T> implements OnChanges {
     }
 
 */
-    private getColumnMenu(column: any, columnsHideShow: IccMenuItem, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
-      const menu: IccMenuItem = {
-        children: []
-      };
-      // TODO if use input column menu
-      menu.icon = 'fas fa-ellipsis-v';
-      if (tableConfigs.enableColumnSort && column.sortField) {
-        menu.children.push({
-          title: 'Sort Ascending',
-          icon: 'fas fa-sort-amount-down',
-          name: ColumnMenuType.SortAscending,
+  private getColumnMenu(column: any, columnsHideShow: IccMenuItem, tableConfigs: IccTableConfigs): IccMenuItem {
+    const menu: IccMenuItem = {
+      children: []
+    };
+    // TODO if use input column menu
+    menu.icon = 'fas fa-ellipsis-v';
+    if (tableConfigs.enableColumnSort && column.sortField) {
+      menu.children.push({
+        title: 'Sort Ascending',
+        icon: 'fas fa-sort-amount-down',
+        name: ColumnMenuType.SortAscending,
+      }, {
+          title: 'Sort Descending',
+          icon: 'fas fa-sort-amount-up',
+          name: ColumnMenuType.SortDescending,
         }, {
-            title: 'Sort Descending',
-            icon: 'fas fa-sort-amount-up',
-            name: ColumnMenuType.SortDescending,
-          }, {
-            title: 'Remove Sort',
-            icon: 'fas fa-times',
-            name: ColumnMenuType.RemoveSort,
-          });
-      }
-      /*
-      if (tableConfigs.enableColumnHide && (!columnConfig.hidden || columnConfig.hidden !== 'never')) {
-        menu.children.push({
-          title: 'Hide Column',
+          title: 'Remove Sort',
           icon: 'fas fa-times',
-          name: ColumnMenuType.HideColumn,
+          name: ColumnMenuType.RemoveSort,
         });
-      } */
-      menu.children.push(columnsHideShow);
-      if (tableConfigs.enableRowGroup && column.groupField) {
-        menu.children.push({
-          title: 'Group By this field',
-          name: 'groupBy',
-        }, {
-            title: 'Ungroup',
-            name: 'unGroupBy',
-            hidden: true,
-          });
-      }
-      /*
-      if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
-        menu.children.push({
-          title: 'Pin Left',
-          action: 'pinLeft',
-          icon: 'fas fa-chevron-left'
-        }, {
-            title: 'Pin Right',
-            action: 'pinRight',
-            icon: 'fas fa-chevron-right'
-          }, {
-            title: 'Unpin',
-            action: 'unpin',
-            icon: 'fas fa-times'
-          });
-      } */
-      // console.log( ' menu', menu)
-      if (menu.children.length > 0) {
-        return menu;
-      } else {
-        return false;
-      }
     }
+    /*
+    if (tableConfigs.enableColumnHide && (!columnConfig.hidden || columnConfig.hidden !== 'never')) {
+      menu.children.push({
+        title: 'Hide Column',
+        icon: 'fas fa-times',
+        name: ColumnMenuType.HideColumn,
+      });
+    } */
+    menu.children.push(columnsHideShow);
+    if (tableConfigs.enableRowGroup && column.groupField) {
+      menu.children.push({
+        title: 'Group By this field',
+        name: 'groupBy',
+      }, {
+          title: 'Ungroup',
+          name: 'unGroupBy',
+          hidden: true,
+        });
+    }
+    /*
+    if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
+      menu.children.push({
+        title: 'Pin Left',
+        action: 'pinLeft',
+        icon: 'fas fa-chevron-left'
+      }, {
+          title: 'Pin Right',
+          action: 'pinRight',
+          icon: 'fas fa-chevron-right'
+        }, {
+          title: 'Unpin',
+          action: 'unpin',
+          icon: 'fas fa-times'
+        });
+    } */
+    // console.log( ' menu', menu)
+
+    return menu;
+
+  }
 }
 
