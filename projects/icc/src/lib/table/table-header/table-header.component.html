@@ -1,5 +1,5 @@
 
-<cdk-table class="icc-cdk-table-header"
+<cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"
   cdkDropListGroup cdkDropList cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
   [cdkDropListEnterPredicate]="onDropListPredicate()"
   (cdkDropListDropped)="onDropListDropped($event, visibleColumns)"

@@ -18,8 +18,9 @@ import { Platform } from '@angular/cdk/platform';
 import { CdkDragStart, CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CdkTable } from '@angular/cdk/table';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ListRange, SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, share, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
@@ -29,6 +30,7 @@ import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
 import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
 import { IccMenuItem } from '../../menu/menu-item';
+import { IccPagination } from '../../services/pagination/pagination';
 
 export interface IccSortState {
   name: string;
@@ -45,8 +47,9 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @Input() tableConfigs: IccTableConfigs;
   @Input() viewport: CdkVirtualScrollViewport;
   @Input() dataSourceService: IccDataSourceService<T>;
+  private alive = false;
 
-  pending: boolean; // TODO input or connect width view
+  pending: boolean;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
   filterColumns: string[] = [];
@@ -72,17 +75,17 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   sorts = new IccSorts();
   private hoverHeader: string;
+  pagination = new IccPagination();
+  pageBuffer = 20;
+  totalRecords = 0;
   rowGroups = new IccRowGroups();
   groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
 
   // isColumnResized$: Subject<{}> = new Subject();
 
-
   @ViewChild(CdkTable, { read: ElementRef }) public cdkTableRef: ElementRef;
   @ViewChild(CdkTable) table: CdkTable<T>;
   @ViewChild(MatSort) sort: MatSort;
-
-  private subDataSourceService: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -107,11 +110,43 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   private initDataSourceService() {
-    if (!this.subDataSourceService) {
-      this.subDataSourceService = this.dataSourceService.dataSourceChanged$
+    if (!this.alive) {
+      this.alive = true;
+      this.dataSourceService.dataSourceChanged$.pipe(takeWhile(() => this.alive))
         .subscribe((data: T[]) => this.dataRecordRefreshed(data));
+      this.viewport.scrolledIndexChange.pipe(takeWhile(() => this.alive)).subscribe(index => {
+        // console.log( ' table header track viewport scroll index 00000000000000000')
+        const range = this.getViewportRange();
+        if (range && range.end) {
+          this.onNextPageEvent(range);
+          // this.setPageSummary();
+        }
+      });
+      this.fetchRecords();
     }
   }
+
+  getViewportRange(): ListRange { // TODO correct range???
+    const range = this.viewport.getRenderedRange();
+    return range;
+  }
+
+  onNextPageEvent(range: ListRange) {
+    if (this.pagination.isScrollPaging && (!this.pending || this.rowGroups.hasRowGroupCollapsed)) {
+      if (this.isLoadNextPage(range.end)) {
+        this.pending = true;
+        this.fetchRecords();
+      }
+    }
+  }
+
+  private isLoadNextPage(end: number): boolean {
+    if (this.rowGroups.isRowGrouped) {
+      end = this.rowGroups.getRowGroupScrollPosition(end);
+    }
+    return this.pagination.isLoadNextPage(end + this.pageBuffer);
+  }
+
 
   private fetchRecords() {
     const loadParams: IccLoadRecordParams = this.getLoadRecordParams();
@@ -126,7 +161,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   getLoadRecordParams(): IccLoadRecordParams {
     return {
-      // pagination: this.pagination,
+      pagination: this.pagination,
       sorts: this.sorts,
       // filters: this.filters,
       rowGroups: this.rowGroups
@@ -135,9 +170,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   dataRecordRefreshed(data: T[]) { // TODO this also will in the table view????
     console.log(' refrsh data iiiiiiiiiiiiiiiiiiiiiiiiii')
-    // this.dataSourceLength = data.length;
-    // this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
-    // this.pagination.total = this.totalRecords;
+    this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
+    this.pagination.total = this.totalRecords;
+
+
     this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change
     setTimeout(() => { // This is for refresh data animation
       this.pending = false;
@@ -566,6 +602,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       // this.setColumnsMenu(column);
       this.setColumnsHide(column.name);
     }
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 
   @HostListener('window:resize', ['$event'])

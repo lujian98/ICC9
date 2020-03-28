@@ -5,7 +5,7 @@
     (iccMenuItemClickEvent)="onMenuItemClick($event)">
   </icc-table-topbar>
 
-  <icc-table-header *ngIf="tableConfigs.enableTableHeader"
+  <icc-table-header
     [tableConfigs]="tableConfigs"
     [columns]="columns"
     [dataSourceService]="dataSourceService"

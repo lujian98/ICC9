@@ -16,6 +16,8 @@ import {
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../../datasource/datasource';
 import { DropInfo, IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
@@ -32,6 +34,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   @Input() columns: IccField[] = [];
   @Input() dataSourceService: IccDataSourceService<T>;
   @Input() data: T[] = [];
+  private alive = true;
 
   dataSource: IccDataSource<T>;
   dataSourceLength = 0;
@@ -99,20 +102,8 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   nextBatch() {
     if (!this.isViewportReady) {
       this.isViewportReady = true;
-      // this.setDefaultSort();
       this.iccViewportEvent.emit(this.viewport);
       this.initDataSource();
-      // this.setGridPanelOffset();
-    } else {
-      /*
-      this.previousSelectDataId = -1;
-      const range = this.getViewportRange();
-      if (range && range.end) {
-        this.onNextPageEvent(range);
-        this.setPageSummary();
-      }
-      this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
-      */
     }
   }
 
@@ -120,18 +111,27 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     if (this.dataSource) {
       return;
     }
-    // this.filters.update(this.gridConfigs.filteredValues);
     this.dataSource = new IccDataSource(this.viewport);
     this.dataSourceLength = this.data.length;
     this.dataSource.loadRecords(this.data);
     this.dataSource.dataSourceService = this.dataSourceService;
     this.dataSourceService.queuedData = this.data;
     this.dataSourceService.totalRecords = this.data.length;
+    this.dataSourceService.dataSourceChanged$.pipe(takeWhile(() => this.alive))
+      .subscribe((data: T[]) => this.dataRecordRefreshed(data));
+  }
+
+  dataRecordRefreshed(data: T[]) {
+    this.dataSourceLength = data.length;
   }
 
 
   onViewportScroll(event: any) {
     this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }
 

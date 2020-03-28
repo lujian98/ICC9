@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { IccTableModule } from 'icc';
 import { CdkTableDemoComponent } from './cdk-table-demo.component';
+import { IccCdkTableDemoDataService } from './cdk-table-demo-data.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { CdkTableDemoComponent } from './cdk-table-demo.component';
   ],
   entryComponents: [
   ],
-  providers: [],
+  providers: [IccCdkTableDemoDataService],
   bootstrap: []
 })
 export class CdkTableDemoModule { }
