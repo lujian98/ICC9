@@ -92,6 +92,7 @@ export interface IccTableConfigs {
   enableTableTopbar?: boolean;
   enableTableHeader?: boolean;
   enableTableSideMenu?: boolean;
+  enableTableViewSummary?: boolean;
 
   dataKeyId?: string;
   defaultSort?: string;

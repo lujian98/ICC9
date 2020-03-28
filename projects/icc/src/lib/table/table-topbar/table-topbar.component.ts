@@ -1,16 +1,26 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ListRange } from '@angular/cdk/collections';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
 import { IccField } from '../../items';
 import { IccMenuItem } from '../../menu/menu-item';
 import { IccTableConfigs } from '../../models';
+import { IccDataSourceService } from '../../services/data-source.service';
 
 @Component({
   selector: 'icc-table-topbar',
   templateUrl: './table-topbar.component.html',
   styleUrls: ['./table-topbar.component.scss'],
 })
-export class IccTableTopbarComponent implements OnChanges {
+export class IccTableTopbarComponent<T> implements OnChanges, OnDestroy {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
+  @Input() viewport: CdkVirtualScrollViewport;
+  @Input() dataSourceService: IccDataSourceService<T>;
+
+  alive = false;
+  totalRecords = 0;
+  tableViewSummary: string;
 
   menuItems: IccMenuItem;
 
@@ -20,6 +30,19 @@ export class IccTableTopbarComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.setSideMenu();
+    if (changes.viewport && this.viewport) {
+      this.initTopbar();
+    }
+  }
+
+  initTopbar() {
+    if (!this.alive) {
+      this.alive = true;
+      this.viewport.scrolledIndexChange.pipe(takeWhile(() => this.alive)).subscribe(index => {
+        this.setTableViewSummary();
+      });
+      this.setTableViewSummary();
+    }
   }
 
   setSideMenu() {
@@ -41,6 +64,53 @@ export class IccTableTopbarComponent implements OnChanges {
 
   onMenuItemClick(event) {
     this.iccMenuItemClickEvent.emit(event);
+  }
+
+  setTableViewSummary() {
+    this.tableViewSummary = 'No record found';
+    if (this.alive) {
+      const range: ListRange = this.getViewportRange();
+      this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
+      if (this.totalRecords > 0) {
+        const viewportPageSize = range.end - range.start + 1;
+        this.tableViewSummary = 'Page Size: ' + viewportPageSize +
+          ' Rows: ' + range.start + ' - ' + range.end + ' of ' + this.totalRecords;
+      }
+    }
+  }
+
+  getViewportRange(): ListRange { // TODO if it is tree cdk-row -> cdk-tree???
+    const range = this.viewport.getRenderedRange();
+    let end = range.end < this.totalRecords ? range.end : this.totalRecords;
+    const vierportRect = this.viewport.elementRef.nativeElement.getBoundingClientRect();
+    const viewportRows = this.viewport.elementRef.nativeElement.getElementsByTagName('cdk-row');
+    let find = -1;
+    if (viewportRows && viewportRows.length > 0) {
+      for (let i = viewportRows.length - 1; i > 0; i--) {
+        const rect = viewportRows[i].getBoundingClientRect();
+        if ((rect.top + rect.height / 2) <= vierportRect.bottom) {
+          find = i + 1;
+          break;
+        }
+      }
+    }
+    if (find > 0) {
+      end = range.start + find;
+    }
+    if (end >= this.totalRecords) {
+      end = this.totalRecords;
+    }
+    let scrollOffset = this.viewport.measureScrollOffset();
+    if (scrollOffset < this.tableConfigs.rowHeight) {
+      scrollOffset = 0;
+    }
+    const index = Math.round(scrollOffset / this.tableConfigs.rowHeight);
+    const start = Math.max(0, index) + 1;
+    return { start, end };
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }
 

@@ -42,7 +42,7 @@ export interface IccSortState {
   templateUrl: './table-header.component.html',
   styleUrls: ['./table-header.component.scss'],
 })
-export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewInit {
+export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
   @Input() viewport: CdkVirtualScrollViewport;

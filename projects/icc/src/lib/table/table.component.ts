@@ -64,7 +64,7 @@ export class IccTableComponent<T> implements OnChanges {
     if (!this.tableConfigs.tableType) {
       this.tableConfigs.tableType = 'table';
     }
-    if (this.tableConfigs.enableTableSideMenu) {
+    if (this.tableConfigs.enableTableSideMenu || this.tableConfigs.enableTableViewSummary) {
       this.tableConfigs.enableTableTopbar = true;
     }
     if (!this.tableConfigs.filteredValues) {

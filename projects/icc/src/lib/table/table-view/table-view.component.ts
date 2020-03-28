@@ -29,7 +29,7 @@ import { IccDataSourceService } from '../../services/data-source.service';
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
 })
-export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChanges {
+export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() columns: IccField[] = [];
   @Input() dataSourceService: IccDataSourceService<T>;

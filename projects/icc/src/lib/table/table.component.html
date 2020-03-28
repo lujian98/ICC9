@@ -2,6 +2,8 @@
   <icc-table-topbar *ngIf="tableConfigs.enableTableTopbar"
     [tableConfigs]="tableConfigs"
     [columns]="columns"
+    [dataSourceService]="dataSourceService"
+    [viewport]="viewport"
     (iccMenuItemClickEvent)="onMenuItemClick($event)">
   </icc-table-topbar>
 
