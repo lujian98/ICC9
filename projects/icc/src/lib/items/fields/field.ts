@@ -28,6 +28,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   readonly?: boolean;
   children?: IccField[];
   fieldView?: any;
+  checked?: boolean; // TODO for checkbox
 
   sortField?: IccSortField;
   filterField?: IccFilterField;

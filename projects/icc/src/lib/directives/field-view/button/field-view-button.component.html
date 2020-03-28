@@ -1,5 +1,6 @@
 <div>
-  <button [ngStyle]="{'width': '100%', 'height': '30px'}">
+  <button [ngStyle]="{'width': '100%', 'height': '30px'}"
+    (click)="$event.stopPropagation()">
     {{field.title}}
   </button>
 </div>

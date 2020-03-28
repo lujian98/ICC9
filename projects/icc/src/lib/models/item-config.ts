@@ -44,6 +44,7 @@ export interface IccFieldConfig extends IccItemConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccFieldConfig[] | IccField[];
+  checked?: boolean; // for checkbox
   // allowBlank?: boolean;
 }
 

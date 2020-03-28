@@ -98,7 +98,17 @@ export class IccTableComponent<T> implements OnChanges {
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {
     if (columnConfigs) {
-
+      const columnsHideShow: IccMenuItem = {
+        title: 'Columns',
+        children: this.columnConfigs.map((column: IccField) => {
+          return {
+            type: 'checkbox',
+            title: column.title,
+            name: 'columnHideShow',
+            checked: !column.hidden
+          };
+        })
+      };
       const columns = [];
       columnConfigs.forEach((columnConfig: IccColumnConfig, index) => {
         if (!columnConfig.index && columnConfig.index !== 0) {
@@ -120,7 +130,7 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.menu = true;
         }
         if (columnConfig.menu) {
-          columnConfig.menu = this.setupColumnMenu(columnConfig, tableConfigs);
+         columnConfig.menu = this.getColumnMenu(columnConfig, columnsHideShow, tableConfigs);
         }
         if (!columnConfig.priority) {
           columnConfig.priority = 0;
@@ -161,20 +171,13 @@ export class IccTableComponent<T> implements OnChanges {
     }
 
 */
-    private setupColumnMenu(columnConfig: IccColumnConfig, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
-      // console.log( ' columnConfig', columnConfig)
+    private getColumnMenu(column: any, columnsHideShow: IccMenuItem, tableConfigs: IccTableConfigs): boolean | IccMenuItem {
       const menu: IccMenuItem = {
         children: []
       };
-
-      /*
-      const columnMenu = columnConfig.menu as IccMenuItem;
-
-      if (columnMenu && columnMenu.children) {
-        menu = columnMenu;
-      } */
+      // TODO if use input column menu
       menu.icon = 'fas fa-ellipsis-v';
-      if (tableConfigs.enableColumnSort && columnConfig.sortField) {
+      if (tableConfigs.enableColumnSort && column.sortField) {
         menu.children.push({
           title: 'Sort Ascending',
           icon: 'fas fa-sort-amount-down',
@@ -189,14 +192,16 @@ export class IccTableComponent<T> implements OnChanges {
             name: ColumnMenuType.RemoveSort,
           });
       }
+      /*
       if (tableConfigs.enableColumnHide && (!columnConfig.hidden || columnConfig.hidden !== 'never')) {
         menu.children.push({
           title: 'Hide Column',
           icon: 'fas fa-times',
           name: ColumnMenuType.HideColumn,
         });
-      }
-      if (tableConfigs.enableRowGroup && columnConfig.groupField) {
+      } */
+      menu.children.push(columnsHideShow);
+      if (tableConfigs.enableRowGroup && column.groupField) {
         menu.children.push({
           title: 'Group By this field',
           name: 'groupBy',
@@ -206,7 +211,8 @@ export class IccTableComponent<T> implements OnChanges {
             hidden: true,
           });
       }
-      if (tableConfigs.enableColumnSticky && columnConfig.stickyable !== false) {
+      /*
+      if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
         menu.children.push({
           title: 'Pin Left',
           action: 'pinLeft',
@@ -220,9 +226,8 @@ export class IccTableComponent<T> implements OnChanges {
             action: 'unpin',
             icon: 'fas fa-times'
           });
-      }
+      } */
       // console.log( ' menu', menu)
-
       if (menu.children.length > 0) {
         return menu;
       } else {

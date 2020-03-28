@@ -35,8 +35,9 @@ export class IccMenuComponent implements OnChanges {
                 {
                   title: 'Delight your Organization',
                   name: 'star_rate',
+                  type: 'checkbox'
                 }
-              ]
+              ],
             },
             {
               title: 'Stephen Fluin',
@@ -95,9 +96,8 @@ export class IccMenuComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.menuItemConfig) {
-      this.menuItemConfig = this.testMenuItems;
+      // this.menuItemConfig = this.testMenuItems;
       this.menuItems = this.getMenuItems(this.menuItemConfig);
-      console.log(' XXXX XXX this.menuItems =', this.menuItems);
     }
   }
 

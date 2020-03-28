@@ -1,10 +1,14 @@
-<div [formGroup]="group" [hidden]="field.hidden"
-  [ngStyle]="{'width': field.width+'px', 'text-align': field.align}">
+<div>
   <mat-checkbox
-    [formControlName]="field.name"
     [labelPosition]="field.labelPosition"
+    (click)="$event.stopPropagation()"
     (change)="fieldChange($event, $event.checked)"
-    [checked]="field.value">
+    [checked]="field.checked">
     {{field.title}}
   </mat-checkbox>
 </div>
+
+<!--
+      [formControlName]="field.name"
+  <div [formGroup]="group" [hidden]="field.hidden"
+-->

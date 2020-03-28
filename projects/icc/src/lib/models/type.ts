@@ -23,6 +23,10 @@ export interface IccNumberType extends IccType {
   maxValue?: number;
 }
 
+// export interface IccCheckboxType extends IccType {
+//  checked?: boolean;
+// }
+
 export interface IccSelectType extends IccType {
   multiSelect?: boolean;
   filterMultiSelect?: boolean;

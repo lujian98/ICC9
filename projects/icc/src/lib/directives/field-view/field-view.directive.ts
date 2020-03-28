@@ -35,7 +35,6 @@ export class IccFieldViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log( ' uuuuuuuuuuu changes=', changes)
     if (changes.field && changes.field.firstChange) {
       const field = changes.field.currentValue;
       if (field.fieldView) {
