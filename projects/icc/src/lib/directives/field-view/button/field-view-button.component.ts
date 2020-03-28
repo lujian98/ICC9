@@ -12,6 +12,7 @@ export class IccFieldViewButtonComponent extends IccFieldViewComponent {
   }
 
   fieldChange(event, value: any) {
+    console.log('this.field=', this.field )
     event.stopPropagation();
     super.fieldChange(event, value);
   }

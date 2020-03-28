@@ -1,6 +1,7 @@
 <div>
-  <button [ngStyle]="{'width': '100%', 'height': '30px'}"
+  <button [ngStyle]="{'width': '100%', 'height': '30px', 'text-align': 'left'}"
     (click)="fieldChange($event, field)">
+    <i *ngIf="field.icon" [class]="field.icon"></i>
     {{field.title}}
   </button>
 </div>

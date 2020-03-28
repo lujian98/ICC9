@@ -26,6 +26,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   defaultValue?: any;
   placeholder?: string;
   readonly?: boolean;
+  icon?: string;
   children?: IccField[];
   fieldView?: any;
   action?: string;
