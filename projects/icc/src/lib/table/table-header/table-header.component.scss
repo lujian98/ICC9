@@ -42,24 +42,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.orange {
-  color: orange;
-}
-
-.green {
-  color: green;
-}
-
-.blue {
-  color: blue;
-}
-
-
-.icc-flex {
-  flex: 1;
-}
-
-
 .icc-cdk-table-header {
   $border-color: var(--icc-cdk-table-cell-border-color);
 

@@ -64,6 +64,9 @@ export class IccTableComponent<T> implements OnChanges {
     if (!this.tableConfigs.tableType) {
       this.tableConfigs.tableType = 'table';
     }
+    if (this.tableConfigs.enableTableSideMenu) {
+      this.tableConfigs.enableTableTopbar = true;
+    }
     if (!this.tableConfigs.filteredValues) {
       this.tableConfigs.filteredValues = {};
     }
@@ -79,6 +82,7 @@ export class IccTableComponent<T> implements OnChanges {
     if (this.tableConfigs.enableMultiRowGroup) {
       this.tableConfigs.enableRowGroup = true;
     }
+
     if (this.columnConfigs.length === 0) {
       this.columnConfigs = [{
         name: 'name',
@@ -210,6 +214,20 @@ export class IccTableComponent<T> implements OnChanges {
     // console.log( ' menu', menu)
 
     return menu;
+  }
+
+  onMenuItemClick(event) {
+    console.log('table 88888 event=', event);
+    const field = event.field;
+    if (field.name === 'expandAll') {
+      this.expandAll = !this.expandAll;
+    } else if (field.name === 'collapseAll') {
+      this.collapseAll = !this.collapseAll;
+    }
+    /*
+      expandAll: boolean;
+  collapseAll: boolean;
+  */
   }
 }
 

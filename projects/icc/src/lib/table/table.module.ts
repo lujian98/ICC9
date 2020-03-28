@@ -20,6 +20,7 @@ import { IccTreeModule } from '../tree/tree.module';
 
 import { IccTableComponent } from './table.component';
 import { IccTableViewDirective } from './table-view.directive';
+import { IccTableTopbarComponent } from './table-topbar/table-topbar.component';
 import { IccTableHeaderComponent } from './table-header/table-header.component';
 import { IccTableViewComponent } from './table-view/table-view.component';
 
@@ -27,6 +28,7 @@ import { IccTableViewComponent } from './table-view/table-view.component';
   declarations: [
     IccTableComponent,
     IccTableViewDirective,
+    IccTableTopbarComponent,
     IccTableHeaderComponent,
     IccTableViewComponent
   ],
@@ -54,6 +56,7 @@ import { IccTableViewComponent } from './table-view/table-view.component';
   ],
   entryComponents: [
     IccTableComponent,
+    IccTableTopbarComponent,
     IccTableHeaderComponent,
     IccTableViewComponent
   ],

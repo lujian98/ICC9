@@ -84,14 +84,14 @@ export interface IccTableConfigs {
   enableColumnResize?: boolean;
   enableColumnSort?: boolean;
   enableColumnSticky?: boolean;
-  enableGridSideMenu?: boolean;
   enableMultiColumnSort?: boolean;
   enableMultiRowGroup?: boolean;
   enableMultiRowSelection?: boolean;
   enableRowGroup?: boolean;
   enableRowSelection?: boolean;
-  enableDisplayGridSummary?: boolean;
+  enableTableTopbar?: boolean;
   enableTableHeader?: boolean;
+  enableTableSideMenu?: boolean;
 
   dataKeyId?: string;
   defaultSort?: string;

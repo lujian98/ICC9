@@ -1,9 +1,9 @@
-
 <div class="icc-cdk-table">
-  <span *ngIf="tableConfigs.tableType !== 'table'" [ngStyle]="{'display': 'inline-block'}">
-    <button (click)="expandAllNode()">Expand all</button>
-    <button (click)="collapseAll=!collapseAll">Collapse all</button>
-  </span>
+  <icc-table-topbar *ngIf="tableConfigs.enableTableTopbar"
+    [tableConfigs]="tableConfigs"
+    [columns]="columns"
+    (iccMenuItemClickEvent)="onMenuItemClick($event)">
+  </icc-table-topbar>
 
   <icc-table-header *ngIf="tableConfigs.enableTableHeader"
     [tableConfigs]="tableConfigs"
@@ -12,6 +12,7 @@
     [viewport]="viewport">
   </icc-table-header>
 
+  <!-- TODO Pass events between seelctors-->
   <span iccTableView
     [tableConfigs]="tableConfigs"
     [data]="data"
@@ -21,6 +22,5 @@
     [dataSourceService]="dataSourceService"
     (iccViewportEvent)="onViewportEvent($event)">
   </span>
-
 </div>
 
