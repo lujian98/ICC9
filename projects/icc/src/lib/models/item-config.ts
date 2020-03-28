@@ -64,7 +64,7 @@ export interface IccColumnConfig extends IccFieldConfig {
   stickyable?: boolean;
   sticky?: boolean;
   stickyEnd?: boolean;
-  menu?: boolean | IccMenuItem;
+  menu?: boolean | IccMenuItem,
   cellMenu?: boolean | IccMenuItem;
   groupHeader?: IccGroupHeader;
   left?: string | 'auto';

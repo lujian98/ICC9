@@ -180,9 +180,36 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   protected setHeaderColumns() {
+    this.setColumnsHide();
     this.visibleColumns = this.columns;
     this.displayedColumns = this.visibleColumns.map(column => column.name);
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
+  }
+
+  private setColumnsHide(colName: string = null) {
+    const columnsHideShow: IccMenuItem = {
+      title: 'Columns',
+      name: 'columns',
+      children: this.columns.map((column: IccField) => {
+        return {
+          type: 'checkbox',
+          title: column.title,
+          name: column.name,
+          action: 'columnHideShow',
+          checked: !column.hidden
+        };
+      })
+    };
+    this.columns.forEach(column => {
+      if (column.menu && column.menu !== true && column.menu.children && column.name !== colName) {
+        const menu = JSON.parse(JSON.stringify(column.menu));
+        const menus = menu.children.filter(item => item.name !== 'columns');
+        menus.push(columnsHideShow);
+        menu.children = [];
+        menu.children = [...menus];
+        column.menu = menu;
+      }
+    });
   }
 
   isHeaderSortable(column: IccField): boolean { // TODO check resizeing and drag and drop still need here???
@@ -497,7 +524,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];
       console.log(' hhhhhhhhhhhh col=', col)
-      this.hideColumn(col);
+      this.hideColumn(col, column);
     }
     /*
     if (option.name === ColumnMenuType.SortAscending) {
@@ -529,43 +556,14 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     */
   }
 
-  hideColumn(column: IccField) { // TODO set other column menu
-    if (column.itemConfig.hidden !== 'always') {
-      column.hidden = !column.hidden;
+  hideColumn(col: IccField, column: IccField) { // TODO set other column menu
+    if (col.itemConfig.hidden !== 'always') {
+      col.hidden = !col.hidden;
       this.setTableFullSize(5);
       // this.setGridColumView();
-      this.setColumnsMenu(column);
-      //console.log(' this.columns =', this.columns)
+      // this.setColumnsMenu(column);
+      this.setColumnsHide(column.name);
     }
-  }
-
-  setColumnsMenu(column: IccField) {
-    this.columns.forEach((col: IccField, index) => {
-      const menus = col.menu as IccMenuItem;
-      // const newMenu = [];
-      const columnsMenu = menus.children.filter(menu => menu.name === 'columns')[0];
-
-
-      columnsMenu.children.forEach(item => {
-        // console.log(' 55555555555 item', item, ' column=', column)
-        if (item.name === column.name) {
-          console.log(' jjjjjjjjjjjjjjjjjj item', item, ' column=', column)
-          item.checked = !column.hidden;
-        }
-      });
-      const existMenu = menus.children.filter(menu => menu.name !== 'columns')
-      ///existMenu.push(columnsMenu); // typeof type !== 'string'
-      // this.columns[index].menu
-      // col.menu.children
-      /*
-      if( typeof col.menu instanceof IccMenuItem) {
-        col.menu.children = [];
-      } */
-
-
-      // menus.children.push(newMenu);
-
-    });
   }
 
   @HostListener('window:resize', ['$event'])

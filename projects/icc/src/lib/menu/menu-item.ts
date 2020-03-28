@@ -1,6 +1,6 @@
-import { IccItemConfig } from '../models/item-config';
+import { IccFieldConfig } from '../models/item-config';
 
-export interface IccMenuItem extends IccItemConfig {
+export interface IccMenuItem extends IccFieldConfig {
   children?: IccMenuItem[];
 
   link?: string;

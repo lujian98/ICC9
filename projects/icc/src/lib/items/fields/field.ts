@@ -30,6 +30,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   fieldView?: any;
   action?: string;
   checked?: boolean; // TODO for checkbox
+  // children?: IccFieldConfig[] | IccField[];
 
   sortField?: IccSortField;
   filterField?: IccFilterField;

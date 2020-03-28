@@ -101,6 +101,7 @@ export class IccTableComponent<T> implements OnChanges {
       const columnsHideShow: IccMenuItem = {
         title: 'Columns',
         name: 'columns',
+        /*
         children: this.columnConfigs.map((column: IccField) => {
           return {
             type: 'checkbox',
@@ -109,7 +110,7 @@ export class IccTableComponent<T> implements OnChanges {
             action: 'columnHideShow',
             checked: !column.hidden
           };
-        })
+        })*/
       };
       const columns = [];
       columnConfigs.forEach((columnConfig: IccColumnConfig, index) => {
@@ -202,7 +203,7 @@ export class IccTableComponent<T> implements OnChanges {
         name: ColumnMenuType.HideColumn,
       });
     } */
-    menu.children.push(columnsHideShow);
+    // menu.children.push(columnsHideShow);
     if (tableConfigs.enableRowGroup && column.groupField) {
       menu.children.push({
         title: 'Group By this field',
