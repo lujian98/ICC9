@@ -187,29 +187,31 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   private setColumnsHide(colName: string = null) {
-    const columnsHideShow: IccMenuItem = {
-      title: 'Columns',
-      name: 'columns',
-      children: this.columns.map((column: IccField) => {
-        return {
-          type: 'checkbox',
-          title: column.title,
-          name: column.name,
-          action: 'columnHideShow',
-          checked: !column.hidden
-        };
-      })
-    };
-    this.columns.forEach(column => {
-      if (column.menu && column.menu !== true && column.menu.children && column.name !== colName) {
-        const menu = JSON.parse(JSON.stringify(column.menu));
-        const menus = menu.children.filter(item => item.name !== 'columns');
-        menus.push(columnsHideShow);
-        menu.children = [];
-        menu.children = [...menus];
-        column.menu = menu;
-      }
-    });
+    if (this.tableConfigs.enableColumnHide) {
+      const columnsHideShow: IccMenuItem = {
+        title: 'Columns',
+        name: 'columns',
+        children: this.columns.map((column: IccField) => {
+          return {
+            type: 'checkbox',
+            title: column.title,
+            name: column.name,
+            action: 'columnHideShow',
+            checked: !column.hidden
+          };
+        })
+      };
+      this.columns.forEach(column => {
+        if (column.hidden !== 'always' && column.menu && column.menu !== true && column.name !== colName) {
+          const menu = JSON.parse(JSON.stringify(column.menu));
+          const menus = column.menu.children ? menu.children.filter(item => item.name !== 'columns') : [];
+          menus.push(columnsHideShow);
+          menu.children = [];
+          menu.children = [...menus];
+          column.menu = menu;
+        }
+      });
+    }
   }
 
   isHeaderSortable(column: IccField): boolean { // TODO check resizeing and drag and drop still need here???

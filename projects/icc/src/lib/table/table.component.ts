@@ -98,20 +98,6 @@ export class IccTableComponent<T> implements OnChanges {
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {
     if (columnConfigs) {
-      const columnsHideShow: IccMenuItem = {
-        title: 'Columns',
-        name: 'columns',
-        /*
-        children: this.columnConfigs.map((column: IccField) => {
-          return {
-            type: 'checkbox',
-            title: column.title,
-            name: column.name,
-            action: 'columnHideShow',
-            checked: !column.hidden
-          };
-        })*/
-      };
       const columns = [];
       columnConfigs.forEach((columnConfig: IccColumnConfig, index) => {
         if (!columnConfig.index && columnConfig.index !== 0) {
@@ -133,7 +119,7 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.menu = true;
         }
         if (columnConfig.menu) {
-          columnConfig.menu = this.getColumnMenu(columnConfig, columnsHideShow, tableConfigs);
+          columnConfig.menu = this.getColumnMenu(columnConfig, tableConfigs);
         }
         if (!columnConfig.priority) {
           columnConfig.priority = 0;
@@ -174,7 +160,7 @@ export class IccTableComponent<T> implements OnChanges {
     }
 
 */
-  private getColumnMenu(column: any, columnsHideShow: IccMenuItem, tableConfigs: IccTableConfigs): IccMenuItem {
+  private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccMenuItem {
     const menu: IccMenuItem = {
       children: []
     };
@@ -195,15 +181,6 @@ export class IccTableComponent<T> implements OnChanges {
           name: ColumnMenuType.RemoveSort,
         });
     }
-    /*
-    if (tableConfigs.enableColumnHide && (!columnConfig.hidden || columnConfig.hidden !== 'never')) {
-      menu.children.push({
-        title: 'Hide Column',
-        icon: 'fas fa-times',
-        name: ColumnMenuType.HideColumn,
-      });
-    } */
-    // menu.children.push(columnsHideShow);
     if (tableConfigs.enableRowGroup && column.groupField) {
       menu.children.push({
         title: 'Group By this field',
@@ -233,7 +210,6 @@ export class IccTableComponent<T> implements OnChanges {
     // console.log( ' menu', menu)
 
     return menu;
-
   }
 }
 

@@ -10,5 +10,10 @@ export class IccFieldViewButtonComponent extends IccFieldViewComponent {
   constructor() {
     super();
   }
+
+  fieldChange(event, value: any) {
+    event.stopPropagation();
+    super.fieldChange(event, value);
+  }
 }
 
