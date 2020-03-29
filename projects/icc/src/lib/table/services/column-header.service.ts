@@ -49,6 +49,67 @@ export class IccColumnHeaderService {
 
   constructor() { }
 
+  public setColumnChanges(columns: IccField[]) {
+    // this.setColumnSticky(columns, gridConfigs); // TODO
+    this.groupHeaderColumns = [];
+    columns.forEach((column, index) => {
+      column.index = index;
+      if (!column.hidden && column.itemConfig.hidden !== 'always') {
+        this.setGroupHeader(column);
+      }
+    });
+    this.visibleColumns = columns.filter(column => column.hidden !== 'always');
+  }
+
+  public setGroupHeaderSticky() {
+    this.groupHeaderColumns.forEach(header => {
+      const columns = this.visibleColumns.filter(column => {
+        const groupname = column.groupHeader ? column.groupHeader.name : `group${column.name}`;
+        return header.name === groupname;
+      });
+      if (columns.length > 0) {
+        header.width = 0;
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            Object.assign(header, {
+              dragDisabled: column.sticky || column.stickyEnd ? true : column.dragDisabled,
+              sticky: column.sticky,
+              stickyEnd: column.stickyEnd,
+              left: column.left,
+              right: column.right
+            });
+          }
+          if (column.groupHeader && column.stickyEnd && index === columns.length - 1) {
+            header.right = column.right;
+          }
+          header.width += column.width;
+        });
+      }
+    });
+  }
+
+  private setGroupHeader(column: IccField) { // columns service
+    let groupHeader: IccGroupHeader = {
+      name: `group${column.name}`,
+      index: column.index,
+      title: column.title,
+      colspan: 1
+    };
+    if (column.groupHeader) {
+      const header = this.groupHeaderColumns.filter(item => item.name === column.groupHeader.name);
+      if (header.length === 0) {
+        groupHeader = column.groupHeader;
+        groupHeader.colspan = 1;
+        groupHeader.index = column.index; // first grouped header column index
+        this.groupHeaderColumns.push(groupHeader);
+      } else {
+        header[0].colspan++;
+      }
+    } else {
+      this.groupHeaderColumns.push(groupHeader);
+    }
+  }
+
   getTableWidth(viewportWidth: number): number {
     const tableWidth = this.getTableSize();
     let dx = 0;

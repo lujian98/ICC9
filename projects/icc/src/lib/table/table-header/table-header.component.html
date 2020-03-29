@@ -17,7 +17,7 @@
     (cdkDropListDropped)="onDropListDropped($event, groupHeaderColumns)">
     <ng-container *ngFor="let header of groupHeaderColumns; let colIndex = index" cdkColumnDef="{{ header.name }}"
       [sticky]="header.sticky" [stickyEnd]="header.stickyEnd">
-      <cdk-header-cell *cdkHeaderCellDef
+      <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
         [ngStyle]="{'flex':'0 0 '+header.width+'px','left':header.left,'right':header.right,'display':header.hidden?'none':'flex',
           'justify-content': header.align == 'center' ? header.align : 'flex-' + header.align}"
         (mousemove)="checkHeaderResizeORDnD($event, colIndex)"

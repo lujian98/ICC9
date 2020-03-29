@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IccColumnConfig  } from 'icc';
 import { Vehicle } from '../models/vehicle-model';
 import { VehicleData } from '../models/vehicle-data';
-import { IccDataSourceService, IccInMemoryDataService } from 'icc';
+import { IccDataSourceService, IccGroupHeader } from 'icc';
 import { IccCdkTableDemoDataService } from './cdk-table-demo-data.service';
 
 @Component({
@@ -20,11 +20,17 @@ export class CdkTableDemoComponent implements OnInit {
 
   title = 'cdk table';
 
+  carGroupHeader: IccGroupHeader = {
+    name: 'cargroup',
+    title: 'Vehicle Information',
+    align: 'center',
+  };
+
   columnConfigs: IccColumnConfig[] = [
     { name: 'index', title: '#row', type: 'number' },
     { name: 'vin', title: 'Vin', menu: true },
-    { name: 'year', title: 'Year', type: 'number', menu: true },
-    { name: 'brand', title: 'Brand', menu: true },
+    { name: 'year', title: 'Year', type: 'number', menu: true, groupHeader: this.carGroupHeader },
+    { name: 'brand', title: 'Brand', menu: true, groupHeader: this.carGroupHeader },
     { name: 'color', title: 'Color', menu: true }
   ];
   data: Vehicle[] = VehicleData;

@@ -99,48 +99,18 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     }
   }
 
-  protected setHeaderColumns() { // columns service
-    this.groupHeaderColumns = [];
-    this.columns.forEach((column, index) => {
-      column.index = index;
-      if (!column.hidden && column.itemConfig.hidden !== 'always') {
-        this.setGroupHeader(column);
-      }
-    });
+  protected setHeaderColumns() {
+    this.columnHeaderService.setColumnChanges(this.columns);
+    this.visibleColumns = this.columnHeaderService.visibleColumns;
+    this.groupHeaderColumns = this.columnHeaderService.groupHeaderColumns;
     this.setColumnsHide();
-    this.visibleColumns = this.columns.filter(column => column.hidden !== 'always');
     this.displayedColumns = this.visibleColumns.map(column => column.name);
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
-
     const totalVisibleColumns = this.visibleColumns.length;
     this.groupHeaderDisplay = [];
     if (this.groupHeaderColumns.length < totalVisibleColumns) {
       this.groupHeaderDisplay = this.groupHeaderColumns.map(header => header.name);
-      // this.setGroupHeaderSticky();
-    }
-    this.columnHeaderService.visibleColumns = this.visibleColumns;
-    this.columnHeaderService.groupHeaderColumns = this.groupHeaderColumns;
-  }
-
-  private setGroupHeader(column: IccField) { // columns service
-    let groupHeader: IccGroupHeader = {
-      name: `group${column.name}`,
-      index: column.index,
-      title: column.title,
-      colspan: 1
-    };
-    if (column.groupHeader) {
-      const header = this.groupHeaderColumns.filter(item => item.name === column.groupHeader.name);
-      if (header.length === 0) {
-        groupHeader = column.groupHeader;
-        groupHeader.colspan = 1;
-        groupHeader.index = column.index; // first grouped header column index
-        this.groupHeaderColumns.push(groupHeader);
-      } else {
-        header[0].colspan++;
-      }
-    } else {
-      this.groupHeaderColumns.push(groupHeader);
+      this.columnHeaderService.setGroupHeaderSticky();
     }
   }
 

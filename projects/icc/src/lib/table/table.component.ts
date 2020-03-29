@@ -19,7 +19,6 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() columnConfigs: IccColumnConfig[] = [];
 
   columns: IccField[] = [];
-  columnsChanged: string[];
   viewport: CdkVirtualScrollViewport;
   dataSourceService: IccDataSourceService<T>
 
@@ -224,10 +223,6 @@ export class IccTableComponent<T> implements OnChanges {
     } else if (field.name === 'collapseAll') {
       this.collapseAll = !this.collapseAll;
     }
-  }
-
-  onColumnsChange(columns: string[]) {
-    this.columnsChanged = columns;
   }
 }
 
