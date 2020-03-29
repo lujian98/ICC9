@@ -65,15 +65,6 @@
       </cdk-header-cell>
     </ng-container>
   </span>
-  <!--
-<div class="icc-grid-flex"></div>
-
-                  <div [ngClass]="'icc-cdk-table-header-sort'"> KKK(99)
-
-        </div>
-
-              (iccMenuOptionClickEvent)="onColumnMenuClick($event, column)"
-  -->
   <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"
     [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
   </cdk-header-row>
@@ -81,18 +72,16 @@
   <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
     [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
     <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
-      [ngStyle]="{'flex':'0 1 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+      [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
       <div *ngIf="column.name!='rowSelection'">
-        Filter
+        Filter...
       </div>
-
     </cdk-header-cell>
   </ng-container>
+
   <cdk-header-row class="icc-cdk-table-header-filter-row" *cdkHeaderRowDef="filterColumns"
-    [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px', 'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
+    [ngStyle]="{'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
   </cdk-header-row>
-
-
 
   <ng-container cdkColumnDef="progress">
     <cdk-header-cell *cdkHeaderCellDef [attr.colspan]="displayedColumns.length" style="width: 99%;">
