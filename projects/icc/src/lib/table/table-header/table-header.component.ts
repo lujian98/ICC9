@@ -73,8 +73,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @ViewChild(CdkTable) table: CdkTable<T>;
   @ViewChild(MatSort) sort: MatSort;
 
-  @Output() iccColumnsChangeEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
-
   constructor(
     private columnHeaderService: IccColumnHeaderService,
     private renderer: Renderer2,
@@ -184,7 +182,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     return this.pagination.isLoadNextPage(end + this.pageBuffer);
   }
 
-
   private fetchRecords() {
     const loadParams: IccLoadRecordParams = this.getLoadRecordParams();
     this.dataSourceService.requestParamsChanged$.next(loadParams);
@@ -206,11 +203,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   dataRecordRefreshed(data: T[]) { // TODO this also will in the table view????
-    console.log(' refrsh data iiiiiiiiiiiiiiiiiiiiiiiiii')
     this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
     this.pagination.total = this.totalRecords;
-
-
     this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change
     setTimeout(() => { // This is for refresh data animation
       this.pending = false;
@@ -363,17 +357,14 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
     if (this.columnHeaderService.isDropListDropped(event, visibleColumns, this.columns)) {
       this.setHeaderColumns();
-      this.iccColumnsChangeEvent.emit(this.displayedColumns);
       // this.scrollToPosition(0);
     }
   }
 
   onColumnMenuItemClick(menuItem: any, column: IccField) {
-    console.log(' table header xxx menuItem=', menuItem);
     const field = menuItem.field as IccField;
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];
-      console.log(' hhhhhhhhhhhh col=', col)
       this.hideColumn(col, column);
     }
     /*

@@ -32,7 +32,6 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() tableConfigs: IccTableConfigs;
   @Input() data: T[] = [];
   @Input() columns: IccField[] = [];
-  @Input() columnsChanged: string[]; // columns order channge
   @Input() dataSourceService: IccDataSourceService<T>;
   @Input() expandAll: boolean;
   @Input() collapseAll: boolean;
@@ -67,8 +66,6 @@ export class IccTableViewDirective<T> implements OnInit, OnChanges, OnDestroy {
         this.componentRef.instance.expandAll();
       } else if (changes.collapseAll) {
         this.componentRef.instance.collapseAll();
-      } else if (changes.columnsChanged && !changes.firstChange) {
-        this.componentRef.instance.setTableColumns();
       }
     }
   }

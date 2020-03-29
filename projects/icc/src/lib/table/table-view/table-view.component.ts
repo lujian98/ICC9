@@ -22,6 +22,7 @@ import { IccDataSource } from '../../datasource/datasource';
 import { DropInfo, IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
 import { IccDataSourceService } from '../../services/data-source.service';
+import { IccColumnHeaderService } from '../services/column-header.service';
 
 
 @Component({
@@ -52,18 +53,19 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   constructor(
+    private columnHeaderService: IccColumnHeaderService,
   ) {
   }
 
   ngOnInit() {
+    this.columnHeaderService.isColumnChanged$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableColumns());
     this.setTableColumns();
   }
 
   ngAfterViewInit() {
   }
 
-
-  public setTableColumns() {
+  private setTableColumns() {
     this.checkTableConfigs();
     this.visibleColumns = this.columns.filter(column => column.hidden !== 'always');
     this.displayedColumns = this.visibleColumns.map(column => column.name);

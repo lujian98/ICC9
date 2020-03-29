@@ -1,6 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ElementRef, Injectable, Renderer2 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccGroupHeader } from '../../models';
 
@@ -29,6 +29,7 @@ export class IccColumnHeaderService {
   private currentIndex: number;
 
   isColumnResized$: Subject<{}> = new Subject();
+  isColumnChanged$ = new BehaviorSubject<boolean>(false);
 
   set visibleColumns(val: IccField[]) {
     this._visibleColumns = val;
@@ -397,6 +398,7 @@ export class IccColumnHeaderService {
           }
           moveItemInArray(columns, previousIndex, currentIndex);
         }
+        this.isColumnChanged$.next(true);
         return true;
       }
     }
