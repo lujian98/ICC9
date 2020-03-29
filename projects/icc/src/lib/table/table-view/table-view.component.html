@@ -29,35 +29,13 @@
       </cdk-cell>
     </ng-container>
 
-    <!--
-
-        <div class="icc-grid-column-renderer-item">
-          <span *ngIf="column.name!='rowSelection'" iccCellRenderer
-            [rowHeight]="gridConfigs.rowHeight"
-            [column]="column"
-            [dataKeyId]="gridConfigs.dataKeyId"
-            [field]="column.name"
-            [value]=record[column.name]
-            [record]="record"
-            [rowIndex]="rowIndex"
-            [colIndex]="colIndex"
-            [dataSource]="dataSource">
-          </span>
-          <span *ngIf="column.name=='rowSelection'">
-            <mat-checkbox
-              (click)="checkboxClick($event)"
-              (change)="checkboxChange($event, rowIndex, record, column)"
-              [checked]="isRowSelected(record)">
-            </mat-checkbox>
-          </span>
-        </div>
-      icc-cdk-table-data-row icc-cdk-table-data-cell
-            <cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'flex': '1 ' + column.width + 'px'}"></cdk-header-cell>
-    <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="icc-grid-no-record-header"
-      [ngStyle]="{'display': totalRecords > 0 ? 'none' : 'flex'}">
-    </cdk-header-row>
-    -->
-    <cdk-row *cdkRowDef="let record; let rowIndex = index; columns: displayedColumns" class="icc-cdk-table-data-row">
+    <cdk-row class="icc-cdk-table-data-row" *cdkRowDef="let record; let rowIndex = index; columns: displayedColumns"
+      [ngClass]="{ 'selected': isRowSelected(record)}"
+      (click)="rowClick($event, rowIndex, record)">
     </cdk-row>
   </cdk-table>
 </cdk-virtual-scroll-viewport>
+
+<!--
+  TODO selected class
+-->

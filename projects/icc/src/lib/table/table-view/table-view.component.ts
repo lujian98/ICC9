@@ -64,11 +64,14 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   ngOnInit() {
-    this.columnHeaderService.isColumnChanged$.pipe(
-      takeWhile(() => this.alive),
-      delay(10)
-    )
-      .subscribe((v) => this.setTableColumns());
+    this.columnHeaderService.columnHeaderChanged$.pipe(takeWhile(() => this.alive), delay(10))
+      .subscribe((change) => {
+        if (change === 'column') {
+          this.setTableColumns();
+        } else if (change === 'selectAll') {
+          this.selectAll();
+        }
+      });
     this.setTableColumns();
   }
 
@@ -149,7 +152,11 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
       const range = this.viewport.getRenderedRange();
       const currentDataId = range.start + rowIndex;
       if (event.shiftKey) {
-        this.setSelectionRange(this.previousSelectDataId, currentDataId);
+        if (this.isRowSelected(record)) {
+          this.selection.toggle(record);
+        } else {
+          this.setSelectionRange(this.previousSelectDataId, currentDataId);
+        }
       } else {
         if (!event.ctrlKey && !event.metaKey) {
           const isRowSelected = this.isRowSelected(record);
@@ -185,6 +192,9 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     }
   }
 
+  private selectAll() {
+    this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 
   ngOnDestroy() {
     this.alive = false;

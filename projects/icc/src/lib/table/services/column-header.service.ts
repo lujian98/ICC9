@@ -31,7 +31,7 @@ export class IccColumnHeaderService {
   private currentIndex: number;
 
   isColumnResized$: Subject<{}> = new Subject();
-  isColumnChanged$ = new BehaviorSubject<boolean>(false);
+  columnHeaderChanged$ = new BehaviorSubject<{}>(false);
 
   set visibleColumns(val: IccField[]) {
     this._visibleColumns = val;
@@ -463,7 +463,7 @@ export class IccColumnHeaderService {
           }
           moveItemInArray(columns, previousIndex, currentIndex);
         }
-        this.isColumnChanged$.next(true);
+        this.columnHeaderChanged$.next('column');
         return true;
       }
     }
@@ -538,7 +538,7 @@ export class IccColumnHeaderService {
         });
       });
     this.setGroupHeaderSticky();
-    this.isColumnChanged$.next(true);
+    this.columnHeaderChanged$.next('column');
   }
 
   columnStickyRight(column: IccField, columns: IccField[]) {
@@ -555,7 +555,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.isColumnChanged$.next(true);
+    this.columnHeaderChanged$.next('column');
   }
 
   columnUnSticky(column: IccField, columns: IccField[], viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
@@ -575,7 +575,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.isColumnChanged$.next(true);
+    this.columnHeaderChanged$.next('column');
   }
 
   private checkRowSelectionSticky(columns: IccField[]) {

@@ -51,6 +51,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @Input() dataSourceService: IccDataSourceService<T>;
   @Input() selection: SelectionModel<T>;
   private alive = false;
+  dataSourceLength = 0;
 
   pending: boolean;
   visibleColumns: IccField[] = [];
@@ -121,7 +122,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.dataSourceService.dataSourceChanged$.pipe(takeWhile(() => this.alive))
         .subscribe((data: T[]) => this.dataRecordRefreshed(data));
       this.viewport.scrolledIndexChange.pipe(takeWhile(() => this.alive)).subscribe(index => {
-        // console.log( ' table header track viewport scroll index 00000000000000000')
         const range = this.getViewportRange();
         if (range && range.end) {
           this.onNextPageEvent(range);
@@ -174,6 +174,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   dataRecordRefreshed(data: T[]) { // TODO this also will in the table view????
+    this.dataSourceLength = data.length;
     this.totalRecords = this.dataSourceService.totalRecords + this.dataSourceService.totalRowGroups;
     this.pagination.total = this.totalRecords;
     this.setTableFullSize(5); // this is needed due to the vetical scroll bar show/hidden cause width change
@@ -191,10 +192,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   setTableFullSize(delay: number) {
     setTimeout(() => {
       if (this.viewport && this.cdkTableRef) {
-
         const viewportWidth = this.viewport.elementRef.nativeElement.clientWidth;
         this.tableWidth = this.columnHeaderService.getTableWidth(viewportWidth);
-        console.log(' set full size 8888888888888888888888888888tableWidth=', this.tableWidth, ' viewportWidth=', viewportWidth)
         // this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
       }
     }, delay);
@@ -389,15 +388,15 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    // const numRows = this.dataSource.data.length;
-    return true;
-    // return numSelected >= numRows;
+    return this.selection.selected.length >= this.dataSourceLength;
   }
 
   masterToggle() {
-    // this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
-    // this.selectionEventEmit();
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.columnHeaderService.columnHeaderChanged$.next('selectAll');
+    }
   }
 
   ngOnDestroy() {
