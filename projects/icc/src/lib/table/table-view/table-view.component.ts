@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../../datasource/datasource';
@@ -34,6 +35,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() columns: IccField[] = [];
   @Input() dataSourceService: IccDataSourceService<T>;
+  @Input() selection: SelectionModel<T>;
   @Input() data: T[] = [];
   private alive = true;
 
@@ -42,6 +44,9 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+
+  currentKeyEvent: MouseEvent;
+  previousSelectDataId = -1;
 
   viewportBuffer = 5;
   isViewportReady = false;
@@ -54,6 +59,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   constructor(
     private columnHeaderService: IccColumnHeaderService,
+    private platform: Platform
   ) {
   }
 
@@ -114,10 +120,71 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     this.dataSourceLength = data.length;
   }
 
-
   onViewportScroll(event: any) {
     this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
   }
+
+  // Material bug: must use the checkboxClick event and checkboxChange event to get correct select row state
+  checkboxClick(event: MouseEvent) {
+    this.currentKeyEvent = event;
+    if (!((event.shiftKey || event.ctrlKey || event.metaKey) && this.platform.FIREFOX)) {
+      event.stopPropagation();
+    }
+  }
+
+  checkboxChange(event, rowIndex: number, record: T, column) {
+    if (column.name === 'rowSelection') {
+      this.rowClick(this.currentKeyEvent, rowIndex, record);
+    }
+  }
+
+  isRowSelected(record: T): boolean {
+    if (this.selection && this.selection.isSelected(record)) {
+      return true;
+    }
+  }
+
+  rowClick(event: MouseEvent, rowIndex: number, record: T) {
+    if (this.selection) {
+      const range = this.viewport.getRenderedRange();
+      const currentDataId = range.start + rowIndex;
+      if (event.shiftKey) {
+        this.setSelectionRange(this.previousSelectDataId, currentDataId);
+      } else {
+        if (!event.ctrlKey && !event.metaKey) {
+          const isRowSelected = this.isRowSelected(record);
+          this.selection.clear();
+          if (isRowSelected) {
+            this.selection.toggle(record);
+          }
+        }
+        this.selection.toggle(record);
+      }
+      this.previousSelectDataId = currentDataId;
+      // this.selectionEventEmit();
+    }
+  }
+
+  setSelectionRange(previuosDataId: number, currentDataId: number) {
+    const currentRecord = this.dataSource.data[currentDataId];
+    const isCurrentSelected = this.isRowSelected(currentRecord);
+    if (previuosDataId < 0) {
+      previuosDataId = currentDataId;
+    }
+    if (previuosDataId > currentDataId) {
+      const t = previuosDataId;
+      previuosDataId = currentDataId;
+      currentDataId = t;
+    }
+    for (let i = previuosDataId; i <= currentDataId; i++) {
+      const row = this.dataSource.data[i];
+      this.selection.select(row);
+    }
+    if (isCurrentSelected) {
+      this.selection.deselect(currentRecord);
+    }
+  }
+
 
   ngOnDestroy() {
     this.alive = false;

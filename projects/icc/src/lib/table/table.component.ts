@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ListRange, SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 import { ColumnMenuType, IccColumnConfig, IccGroupHeader, IccTableConfigs } from '../models';
 import { IccField } from '../items';
@@ -20,7 +21,8 @@ export class IccTableComponent<T> implements OnChanges {
 
   columns: IccField[] = [];
   viewport: CdkVirtualScrollViewport;
-  dataSourceService: IccDataSourceService<T>
+  dataSourceService: IccDataSourceService<T>;
+  selection: SelectionModel<T>;
 
   expandAll: boolean;
   collapseAll: boolean;
@@ -44,14 +46,13 @@ export class IccTableComponent<T> implements OnChanges {
       this.checkTableConfigs();
     }
 
-    //  this.treeColumn = { width: 300 }; // TODO input tree column width
     if (changes.columnConfigs) {
       this.tableConfigs.enableTableHeader = true;
-      /*
       if (this.tableConfigs.enableRowSelection) {
-        this.columnsService.setupSelectionColumn(this.columnConfigs);
+        this.setupSelectionColumn(this.columnConfigs);
         this.selection = new SelectionModel<T>(this.tableConfigs.enableMultiRowSelection, []);
-      } */
+      }
+
 
       this.columns = this.getInitialColumns(this.columnConfigs, this.tableConfigs);
 
@@ -76,6 +77,8 @@ export class IccTableComponent<T> implements OnChanges {
     if (this.tableConfigs.enableMultiRowSelection) {
       this.tableConfigs.enableRowSelection = true;
     }
+
+
     if (this.tableConfigs.enableMultiColumnSort) {
       this.tableConfigs.enableColumnSort = true;
     }
@@ -148,22 +151,20 @@ export class IccTableComponent<T> implements OnChanges {
     }
   }
 
-  /*
-    public setupSelectionColumn(columnConfigs: IccColumnConfig[]) {
-      columnConfigs.unshift({
-        name: 'rowSelection',
-        title: '',
-        type: 'checkbox',
-        align: 'center',
-        width: 50,
-        filterField: false,
-        fixedWidth: true,
-        dragDisabled: true,
-        hidden: 'never'
-      });
-    }
+  public setupSelectionColumn(columnConfigs: IccColumnConfig[]) {
+    columnConfigs.unshift({
+      name: 'rowSelection',
+      title: '',
+      type: 'checkbox',
+      align: 'center',
+      width: 30, // if 30 need reduce the padding
+      filterField: false,
+      fixedWidth: true,
+      dragDisabled: true,
+      hidden: 'never'
+    });
+  }
 
-*/
   private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccMenuItem {
     const menu: IccMenuItem = {
       children: []

@@ -14,12 +14,44 @@
         *cdkCellDef="let record; let rowIndex = index"
         [attr.data-label]="column.title +': '"
         [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
-          {{record[column.name]}}
-
+        <div class="icc-cdk-table-column-cell">
+          <span *ngIf="column.name!='rowSelection'">
+            {{record[column.name]}}
+          </span>
+          <span *ngIf="column.name=='rowSelection'">
+            <mat-checkbox
+              (click)="checkboxClick($event)"
+              (change)="checkboxChange($event, rowIndex, record, column)"
+              [checked]="isRowSelected(record)">
+            </mat-checkbox>
+          </span>
+        </div>
       </cdk-cell>
     </ng-container>
 
-    <!-- icc-cdk-table-data-row icc-cdk-table-data-cell
+    <!--
+
+        <div class="icc-grid-column-renderer-item">
+          <span *ngIf="column.name!='rowSelection'" iccCellRenderer
+            [rowHeight]="gridConfigs.rowHeight"
+            [column]="column"
+            [dataKeyId]="gridConfigs.dataKeyId"
+            [field]="column.name"
+            [value]=record[column.name]
+            [record]="record"
+            [rowIndex]="rowIndex"
+            [colIndex]="colIndex"
+            [dataSource]="dataSource">
+          </span>
+          <span *ngIf="column.name=='rowSelection'">
+            <mat-checkbox
+              (click)="checkboxClick($event)"
+              (change)="checkboxChange($event, rowIndex, record, column)"
+              [checked]="isRowSelected(record)">
+            </mat-checkbox>
+          </span>
+        </div>
+      icc-cdk-table-data-row icc-cdk-table-data-cell
             <cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'flex': '1 ' + column.width + 'px'}"></cdk-header-cell>
     <cdk-header-row *cdkHeaderRowDef="displayedColumns" class="icc-grid-no-record-header"
       [ngStyle]="{'display': totalRecords > 0 ? 'none' : 'flex'}">

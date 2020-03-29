@@ -94,7 +94,9 @@ export class IccColumnHeaderService {
     let groupHeader: IccGroupHeader = {
       name: `group${column.name}`,
       index: column.index,
-      title: column.title,
+      // title: column.title,
+      // fixedWidth: column.fixedWidth,
+      width: column.width,
       colspan: 1
     };
     if (column.groupHeader) {

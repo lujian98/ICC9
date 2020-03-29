@@ -13,7 +13,7 @@ $border-color: var(--icc-cdk-table-cell-border-color);
   height: 30px; // TODO configurable
   border-bottom: 1px solid $border-color;
   border-right: 1px solid $border-color;
-  padding: 0px 10px;
+  // padding: 0px 10px; // no padding at cell level
   display: flex;
   align-items: center;
   justify-content: center;

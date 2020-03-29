@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
@@ -46,6 +47,7 @@ import { IccColumnHeaderService } from './services/column-header.service';
     MatSortModule,
     MatTableModule,
     MatProgressBarModule,
+    MatCheckboxModule,
 
     IccVirtualScrollModule,
     IccMenuModule,

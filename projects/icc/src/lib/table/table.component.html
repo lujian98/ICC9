@@ -11,7 +11,8 @@
     [tableConfigs]="tableConfigs"
     [columns]="columns"
     [dataSourceService]="dataSourceService"
-    [viewport]="viewport">
+    [viewport]="viewport"
+    [selection]="selection">
   </icc-table-header>
 
   <!-- TODO Pass events between seelctors-->
@@ -22,6 +23,7 @@
     [collapseAll]="collapseAll"
     [columns]="columns"
     [dataSourceService]="dataSourceService"
+    [selection]="selection"
     (iccViewportEvent)="onViewportEvent($event)">
   </span>
 </div>

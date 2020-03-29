@@ -49,6 +49,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @Input() tableConfigs: IccTableConfigs;
   @Input() viewport: CdkVirtualScrollViewport;
   @Input() dataSourceService: IccDataSourceService<T>;
+  @Input() selection: SelectionModel<T>;
   private alive = false;
 
   pending: boolean;
@@ -385,6 +386,18 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       // this.setColumnsMenu(column);
       this.setColumnsHide(column.name);
     }
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    // const numRows = this.dataSource.data.length;
+    return true;
+    // return numSelected >= numRows;
+  }
+
+  masterToggle() {
+    // this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    // this.selectionEventEmit();
   }
 
   ngOnDestroy() {
