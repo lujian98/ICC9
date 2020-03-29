@@ -368,7 +368,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   private isColumnVisible(column: IccField): boolean {
     let visible = false;
-    if (column && !column.hidden && column.itemConfig.hidden !== 'always') {
+    if (!column.hidden && column.itemConfig.hidden !== 'always') {
       visible = true;
     }
     return visible;
@@ -528,7 +528,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   isDragDisabled(column: IccField): boolean {
-    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || (column && column.dragDisabled); //  || column.dragDisabled
+    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || (column.dragDisabled); //  || column.dragDisabled
   }
 
   onDragStarted(event: CdkDragStart, index: number, visibleColumns) {
