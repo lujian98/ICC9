@@ -618,6 +618,8 @@ export class IccColumnHeaderService {
   resetColumnsData() {
     this.visibleColumns = null;
     this.groupHeaderColumns = null;
+    this.columnHeaderChanged$.next(false);
+    this.isColumnResized$.next(false);
     // this.isColumnResized$.complete(); // Don't turn off
   }
 }
