@@ -1,35 +1,72 @@
 
-<cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"
+<!--
+  <cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"
   cdkDropListGroup cdkDropList cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
   [cdkDropListEnterPredicate]="onDropListPredicate()"
   (cdkDropListDropped)="onDropListDropped($event, visibleColumns)"
   [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
-  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
-    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
-    <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
-      [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
-      (mousemove)="checkResizeORDnD($event, colIndex)"
-      (mousedown)="onResizeColumn($event, colIndex)"
-      cdkDrag
-      [cdkDragDisabled]="isDragDisabled(column)"
-      (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
-      (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
-      [cdkDragData]="{name: column.name, columIndex: colIndex}">
-      <div [ngClass]="'icc-cdk-table-header-title'" *ngIf="column.name!='rowSelection'">
-        <div [ngClass]="'icc-cdk-table-header-sort'"
-          (mouseenter)="setSortState(column, true)"
-          (mouseleave)="setSortState(column, false)"
-          (click)="onHeaderSort(column)">
-          {{column.title}} X3
-          <i [class]="getHeaderSortState(column)"></i>
+
+-->
+
+<cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"cdkDropListGroup
+  [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
+  <span cdkDropList
+    cdkDropListLockAxis="x"
+    cdkDropListOrientation="horizontal"
+    [cdkDropListEnterPredicate]="onDropListPredicate()"
+    (cdkDropListDropped)="onDropListDropped($event, groupHeaderColumns)">
+    <ng-container *ngFor="let header of groupHeaderColumns; let colIndex = index" cdkColumnDef="{{ header.name }}"
+      [sticky]="header.sticky" [stickyEnd]="header.stickyEnd">
+      <cdk-header-cell *cdkHeaderCellDef
+        [ngStyle]="{'flex':'0 0 '+header.width+'px','left':header.left,'right':header.right,'display':header.hidden?'none':'flex',
+          'justify-content': header.align == 'center' ? header.align : 'flex-' + header.align}"
+        (mousemove)="checkHeaderResizeORDnD($event, colIndex)"
+        (mousedown)="onResizeHeaderColumn($event, colIndex)"
+        cdkDrag
+        [cdkDragDisabled]="isDragDisabled(header)"
+        (cdkDragStarted)="onDragStarted($event, colIndex, groupHeaderColumns)"
+        (cdkDragMoved)="onDragMoved($event, colIndex, groupHeaderColumns)"
+        [cdkDragData]="{name: header.name, columIndex: colIndex}">
+        <span [ngClass]="header.titleClass">{{header.title}}</span>
+      </cdk-header-cell>
+    </ng-container>
+  </span>
+  <cdk-header-row *cdkHeaderRowDef="groupHeaderDisplay"
+    [ngStyle]="{'display': groupHeaderDisplay.length > 0 ? 'flex' : 'none'}">
+  </cdk-header-row>
+
+  <span cdkDropList
+      cdkDropListLockAxis="x"
+      cdkDropListOrientation="horizontal"
+      [cdkDropListEnterPredicate]="onDropListPredicate()"
+      (cdkDropListDropped)="onDropListDropped($event, visibleColumns)">
+    <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
+      [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
+        [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
+        (mousemove)="checkResizeORDnD($event, colIndex)"
+        (mousedown)="onResizeColumn($event, colIndex)"
+        cdkDrag
+        [cdkDragDisabled]="isDragDisabled(column)"
+        (cdkDragStarted)="onDragStarted($event, colIndex, visibleColumns)"
+        (cdkDragMoved)="onDragMoved($event, colIndex, visibleColumns)"
+        [cdkDragData]="{name: column.name, columIndex: colIndex}">
+        <div [ngClass]="'icc-cdk-table-header-title'" *ngIf="column.name!='rowSelection'">
+          <div [ngClass]="'icc-cdk-table-header-sort'"
+            (mouseenter)="setSortState(column, true)"
+            (mouseleave)="setSortState(column, false)"
+            (click)="onHeaderSort(column)">
+            {{column.title}} X3
+            <i [class]="getHeaderSortState(column)"></i>
+          </div>
+          <icc-menu *ngIf="column.menu"
+            [menuItemConfig]="column.menu"
+            (iccMenuItemClickEvent)="onColumnMenuItemClick($event, column)">
+          </icc-menu>
         </div>
-        <icc-menu *ngIf="column.menu"
-          [menuItemConfig]="column.menu"
-          (iccMenuItemClickEvent)="onColumnMenuItemClick($event, column)">
-        </icc-menu>
-      </div>
-    </cdk-header-cell>
-  </ng-container>
+      </cdk-header-cell>
+    </ng-container>
+  </span>
   <!--
 <div class="icc-grid-flex"></div>
 

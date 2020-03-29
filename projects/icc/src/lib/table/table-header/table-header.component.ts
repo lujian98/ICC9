@@ -54,6 +54,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   displayedColumns: string[] = [];
   filterColumns: string[] = [];
   groupHeaderColumns: IccGroupHeader[] = [];
+  groupHeaderDisplay: string[] = [];
 
   tableWidth: number;
 
@@ -109,15 +110,47 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     }
   }
 
-
-  protected setHeaderColumns() {
+  protected setHeaderColumns() { // columns service
+    this.groupHeaderColumns = [];
     this.columns.forEach((column, index) => {
       column.index = index;
+      if (!column.hidden && column.itemConfig.hidden !== 'always') {
+        this.setGroupHeader(column);
+      }
     });
     this.setColumnsHide();
     this.visibleColumns = this.columns.filter(column => column.hidden !== 'always');
     this.displayedColumns = this.visibleColumns.map(column => column.name);
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
+
+    const totalVisibleColumns = this.visibleColumns.length;
+    this.groupHeaderDisplay = [];
+    if (this.groupHeaderColumns.length < totalVisibleColumns) {
+      this.groupHeaderDisplay = this.groupHeaderColumns.map(header => header.name);
+      // this.setGroupHeaderSticky();
+    }
+  }
+
+  private setGroupHeader(column: IccField) { // columns service
+    let groupHeader: IccGroupHeader = {
+      name: `group${column.name}`,
+      index: column.index,
+      title: column.title,
+      colspan: 1
+    };
+    if (column.groupHeader) {
+      const header = this.groupHeaderColumns.filter(item => item.name === column.groupHeader.name);
+      if (header.length === 0) {
+        groupHeader = column.groupHeader;
+        groupHeader.colspan = 1;
+        groupHeader.index = column.index; // first grouped header column index
+        this.groupHeaderColumns.push(groupHeader);
+      } else {
+        header[0].colspan++;
+      }
+    } else {
+      this.groupHeaderColumns.push(groupHeader);
+    }
   }
 
   private initDataSourceService() {
@@ -359,7 +392,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   private getCellData(index: number) {
-    const headerRow = this.cdkTableRef.nativeElement.children[0]; // TODO if add header group
+    const headerRow = this.cdkTableRef.nativeElement.children[1]; // dnd is in 2nd row
     const cell = headerRow.children[index];
     if (cell) {
       return cell.getBoundingClientRect();
@@ -528,7 +561,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   isDragDisabled(column: IccField): boolean {
-    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || (column.dragDisabled); //  || column.dragDisabled
+    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || column.dragDisabled;
   }
 
   onDragStarted(event: CdkDragStart, index: number, visibleColumns) {
