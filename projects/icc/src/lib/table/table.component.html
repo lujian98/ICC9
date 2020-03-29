@@ -11,6 +11,7 @@
     [tableConfigs]="tableConfigs"
     [columns]="columns"
     [dataSourceService]="dataSourceService"
+    (iccColumnsChangeEvent)="onColumnsChange($event)"
     [viewport]="viewport">
   </icc-table-header>
 
@@ -21,6 +22,7 @@
     [expandAll]="expandAll"
     [collapseAll]="collapseAll"
     [columns]="columns"
+    [columnsChanged]="columnsChanged"
     [dataSourceService]="dataSourceService"
     (iccViewportEvent)="onViewportEvent($event)">
   </span>

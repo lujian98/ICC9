@@ -57,7 +57,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   tableWidth: number;
 
-  isColumnResizing: boolean;
+  private isColumnResizing: boolean;
 
   private pressed = false;
   private currentResizeIndex: number;
@@ -81,11 +81,11 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   rowGroups = new IccRowGroups();
   groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
 
-  // isColumnResized$: Subject<{}> = new Subject();
-
   @ViewChild(CdkTable, { read: ElementRef }) public cdkTableRef: ElementRef;
   @ViewChild(CdkTable) table: CdkTable<T>;
   @ViewChild(MatSort) sort: MatSort;
+
+  @Output() iccColumnsChangeEvent: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   constructor(
     private renderer: Renderer2,
@@ -107,6 +107,17 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.setTableFullSize(1);
       this.initDataSourceService();
     }
+  }
+
+
+  protected setHeaderColumns() {
+    this.columns.forEach((column, index) => {
+      column.index = index;
+    });
+    this.setColumnsHide();
+    this.visibleColumns = this.columns.filter(column => column.hidden !== 'always');
+    this.displayedColumns = this.visibleColumns.map(column => column.name);
+    this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
   }
 
   private initDataSourceService() {
@@ -215,13 +226,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     return this.tableWidth;
   }
 
-  protected setHeaderColumns() {
-    this.setColumnsHide();
-    this.visibleColumns = this.columns;
-    this.displayedColumns = this.visibleColumns.map(column => column.name);
-    this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
-  }
-
   private setColumnsHide(colName: string = null) {
     if (this.tableConfigs.enableColumnHide) {
       const columnsHideShow: IccMenuItem = {
@@ -313,26 +317,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     return ret;
   }
 
-
-
-
-
-
-  onDropListPredicate() {
-    const me = this;
-    return true;
-    // return me.columnResizeDnDService.onDropListPredicate();
-  }
-
-  onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
-    console.log(' drop llllllllllll')
-    // if (this.columnResizeDnDService.isDropListDropped(event, visibleColumns, this.columns)) {
-    //  this.setGridColumView();
-    //  this.scrollToPosition(0);
-    // }
-  }
-
-
   private getTableSize(): number {
     let width = 0;
     this.visibleColumns.forEach(column => {
@@ -384,7 +368,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   private isColumnVisible(column: IccField): boolean {
     let visible = false;
-    if (!column.hidden && column.itemConfig.hidden !== 'always') {
+    if (column && !column.hidden && column.itemConfig.hidden !== 'always') {
       visible = true;
     }
     return visible;
@@ -421,10 +405,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.currentResizeIndex = -1;
     this.startX = event.pageX;
     this.checkIsResizing(event, index);
+    this.pressed = true;
     if (this.tableConfigs.enableColumnResize && this.isColumnResizing) {
       event.preventDefault();
       event.stopPropagation();
-      this.pressed = true;
       this.mouseMove(index);
     }
   }
@@ -459,7 +443,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.resizableMouseup();
       this.resizableMouseleave();
       setTimeout(() => {
-        // this.isColumnResized$.next(true);
         this.isColumnResizing = false;
       }, 10);
     }
@@ -545,15 +528,156 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   isDragDisabled(column: IccField): boolean {
-    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || column.dragDisabled;
+    return !this.tableConfigs.enableColumnDnD || this.isColumnResizing || (column && column.dragDisabled); //  || column.dragDisabled
   }
 
   onDragStarted(event: CdkDragStart, index: number, visibleColumns) {
-    // this.columnResizeDnDService.onDragStarted(event, index, visibleColumns, this.matTableRef);
+    this.previousIndex = index;
+    this.cellData = [];
+    visibleColumns.forEach((column, i) => {
+      this.cellData.push(this.getCellData(i));
+    });
   }
 
   onDragMoved(event, index, visibleColumns) {
-    // this.columnResizeDnDService.onDragMoved(event, index, visibleColumns);
+    const dx = event.pointerPosition.x - this.startX;
+    this.currentIndex = this.getOverCellIndex(event.pointerPosition.x, dx, index, visibleColumns);
+  }
+
+  // cdk drag drop cdkDropListExited does not provide event if exit back to drag item
+  // cdk drag drop does not support variable column width
+  // drag item over more than 2 columns are not considered
+  // (cdkDropListEntered)="dropListEntered(i)"
+  // (cdkDropListExited)="dropListExited($event, i)"
+  private getOverCellIndex(x: number, dx: number, index: number, visibleColumns) {
+    let i = -1;
+    if (dx > 0) {
+      const px = dx + this.cellData[index].right;
+      for (i = index + 1; i < visibleColumns.length; i++) {
+        const cellData = this.cellData[i];
+        if (px > cellData.left && px <= cellData.right) {
+          if (px - cellData.left > this.cellData[index].width / 2) {
+            return i;
+          } else {
+            return i - 1;
+          }
+        } else if (px > cellData.right && i === visibleColumns.length - 1) {
+          return visibleColumns.length - 1;
+        }
+      }
+    } else if (dx < 0) {
+      const mx = this.cellData[index].left + dx;
+      for (i = index - 1; i >= 0; i--) {
+        const cellDatam = this.cellData[i];
+        if (mx < cellDatam.right && mx >= cellDatam.left) {
+          if (cellDatam.right - mx > this.cellData[index].width / 2) {
+            return i;
+          } else {
+            return i + 1;
+          }
+        } else if (mx < cellDatam.left && i === 0) {
+          return i;
+        }
+      }
+    }
+    return i;
+  }
+
+  onDropListPredicate() {
+    const me = this;
+    if (!me.isColumnResizing) {
+      return (drag: CdkDrag<number>): boolean => {
+        const dragedColumn = this.visibleColumns[drag.data['columIndex']];
+        return this.isColumnDroppable(dragedColumn, false);
+      };
+    }
+  }
+
+  private isColumnDroppable(dragedColumn: IccField, isDragGroupHeader: boolean): boolean {
+    let droppable = false;
+    if (this.currentIndex > -1) {
+      const column = this.visibleColumns[this.currentIndex];
+      if (!column.dragDisabled && !column.sticky && !column.stickyEnd && column.index !== dragedColumn.index) {
+        if (dragedColumn.groupHeader) {
+          if (column.groupHeader && dragedColumn.groupHeader.name === column.groupHeader.name) {
+            droppable = true;
+          } else if (isDragGroupHeader) {
+            droppable = true;
+          }
+        } else {
+          droppable = true;
+        }
+      }
+    }
+    return droppable;
+  }
+
+  onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
+    this.pressed = false;
+    if (this.isDropListDropped(event, visibleColumns, this.columns)) {
+      this.setHeaderColumns();
+      this.iccColumnsChangeEvent.emit(this.displayedColumns);
+    }
+  }
+
+  isDropListDropped(event: CdkDragDrop<string[]>, visibleColumns, columns) {
+    if (event && this.currentIndex > -1 && !this.isColumnResizing) {
+      let dragedColumn = visibleColumns[this.previousIndex];
+      let column = visibleColumns[this.currentIndex];
+      let colspan = 1;
+      let currentcolspan = 1;
+      let isDragGroupHeader = false;
+      if (this.visibleColumns.length !== visibleColumns.length) {
+        isDragGroupHeader = true;
+        const dropedColumn = dragedColumn as IccGroupHeader;
+        const currentColumn = column as IccGroupHeader;
+        colspan = dropedColumn.colspan || 1;
+        currentcolspan = currentColumn.colspan || 1;
+        dragedColumn = this.visibleColumns[dragedColumn.index];
+        column = this.visibleColumns[column.index];
+      }
+      if (this.isColumnDroppable(dragedColumn, isDragGroupHeader)) {
+        const previousIndex = dragedColumn.index;
+        let currentIndex = column.index;
+        if (this.visibleColumns.length !== visibleColumns.length) {
+          if (currentIndex > previousIndex) {
+            currentIndex += currentcolspan - 1;
+          }
+          if (colspan === 1) {
+            moveItemInArray(columns, previousIndex, currentIndex);
+          } else {
+            this.moveGroupItemInArray(columns, previousIndex, currentIndex, colspan);
+          }
+        } else {
+          if (column.groupHeader) {
+            if (currentIndex > previousIndex) {
+              currentIndex = column.groupHeader.index + column.groupHeader.colspan - 1;
+            } else if (currentIndex < previousIndex) {
+              currentIndex = column.groupHeader.index;
+            }
+          }
+          moveItemInArray(columns, previousIndex, currentIndex);
+        }
+        return true;
+      }
+    }
+  }
+
+  private moveGroupItemInArray(columns: any[], previousIndex: number, currentIndex: number, colspan: number) {
+    const moved = columns.filter(column => {
+      if (column.index >= previousIndex && column.index < previousIndex + colspan) {
+        return true;
+      }
+    });
+    columns.splice(previousIndex, colspan);
+    colspan--;
+    if (currentIndex > previousIndex) {
+      currentIndex -= colspan;
+    }
+    moved.forEach(item => {
+      columns.splice(currentIndex, 0, item);
+      currentIndex++;
+    });
   }
 
   onColumnMenuItemClick(menuItem: any, column: IccField) {

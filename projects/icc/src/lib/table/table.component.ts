@@ -19,6 +19,7 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() columnConfigs: IccColumnConfig[] = [];
 
   columns: IccField[] = [];
+  columnsChanged: string[];
   viewport: CdkVirtualScrollViewport;
   dataSourceService: IccDataSourceService<T>
 
@@ -217,17 +218,16 @@ export class IccTableComponent<T> implements OnChanges {
   }
 
   onMenuItemClick(event) {
-    console.log('table 88888 event=', event);
     const field = event.field;
     if (field.name === 'expandAll') {
       this.expandAll = !this.expandAll;
     } else if (field.name === 'collapseAll') {
       this.collapseAll = !this.collapseAll;
     }
-    /*
-      expandAll: boolean;
-  collapseAll: boolean;
-  */
+  }
+
+  onColumnsChange(columns: string[]) {
+    this.columnsChanged = columns;
   }
 }
 

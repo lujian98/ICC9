@@ -44,7 +44,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   width?: number;
   fixedWidth?: boolean | 'auto';
   minWidth?: number;
-  dragDisabled?: boolean;
+  dragDisabled: false;
   align?: string;
   priority?: number;
   sticky?: boolean;

@@ -57,17 +57,15 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   ngOnInit() {
     this.setTableColumns();
-    console.log('this.tableConfigs= ', this.tableConfigs)
-
   }
 
   ngAfterViewInit() {
   }
 
 
-  protected setTableColumns() {
+  public setTableColumns() {
     this.checkTableConfigs();
-    this.visibleColumns = this.columns;
+    this.visibleColumns = this.columns.filter(column => column.hidden !== 'always');
     this.displayedColumns = this.visibleColumns.map(column => column.name);
   }
 
@@ -80,23 +78,8 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.tableConfigs) {
-      this.checkTableConfigs();
-    }
-    /*
-    if (changes.columnConfigs) {
-      if (this.gridConfigs.enableMultiRowSelection) {
-        this.gridConfigs.enableRowSelection = true;
-      }
-      if (this.gridConfigs.enableRowSelection) {
-        this.columnsService.setupSelectionColumn(this.columnConfigs);
-        this.selection = new SelectionModel<T>(this.gridConfigs.enableMultiRowSelection, []);
-      }
-      this.columns = this.columnsService.getInitialColumns(this.columnConfigs, this.gridConfigs);
-      this.setGridColumView();
-      this.filters.setFilters(this.columns);
-    } */
+  ngOnChanges(changes: SimpleChanges) { // TODO warning is not working with directive
+    this.setTableColumns();
   }
 
   nextBatch() {
