@@ -28,10 +28,10 @@ export class CdkTableDemoComponent implements OnInit {
 
   columnConfigs: IccColumnConfig[] = [
     { name: 'index', title: '#row', type: 'number' },
-    { name: 'vin', title: 'Vin', menu: true },
-    { name: 'year', title: 'Year', type: 'number', menu: true, groupHeader: this.carGroupHeader },
-    { name: 'brand', title: 'Brand', menu: true, groupHeader: this.carGroupHeader },
-    { name: 'color', title: 'Color', menu: true }
+    { name: 'vin', title: 'Vin', menu: true, width: 300 },
+    { name: 'year', title: 'Year', type: 'number', width: 300, menu: true, groupHeader: this.carGroupHeader },
+    { name: 'brand', title: 'Brand', menu: true, width: 300, groupHeader: this.carGroupHeader },
+    { name: 'color', title: 'Color', menu: true, width: 300 }
   ];
   data: Vehicle[] = VehicleData;
 

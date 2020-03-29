@@ -77,9 +77,9 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
     if (!itemConfig.width) {
       itemConfig.width = 100;
     }
-    if (!itemConfig.fixedWidth && itemConfig.fixedWidth !== false) {
-      itemConfig.fixedWidth = 'auto';
-    }
+    // if (!itemConfig.fixedWidth && itemConfig.fixedWidth !== false) {
+    //  itemConfig.fixedWidth = 'auto';
+    // }
     if (!itemConfig.minWidth) {
       itemConfig.minWidth = 100;
     }

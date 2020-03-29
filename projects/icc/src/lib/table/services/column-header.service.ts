@@ -1,8 +1,9 @@
 import { CdkDrag, CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ElementRef, Injectable, Renderer2 } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { IccField } from '../../items';
-import { IccGroupHeader } from '../../models';
+import { IccTableConfigs, IccGroupHeader } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { IccGroupHeader } from '../../models';
 export class IccColumnHeaderService {
   private _visibleColumns: IccField[] = [];
   private _groupHeaderColumns: IccGroupHeader[] = [];
+  private tableConfigs: IccTableConfigs;
 
   tableWidth: number;
   isColumnResizing: boolean;
@@ -49,8 +51,8 @@ export class IccColumnHeaderService {
 
   constructor() { }
 
-  public setColumnChanges(columns: IccField[]) {
-    // this.setColumnSticky(columns, gridConfigs); // TODO
+  public setColumnChanges(columns: IccField[], tableConfigs: IccTableConfigs) {
+    this.setColumnSticky(columns, tableConfigs);
     this.groupHeaderColumns = [];
     columns.forEach((column, index) => {
       column.index = index;
@@ -479,6 +481,135 @@ export class IccColumnHeaderService {
     moved.forEach(item => {
       columns.splice(currentIndex, 0, item);
       currentIndex++;
+    });
+  }
+
+  // TODO (1) Sticky right vertical scroll bar width need put into right X ??? unStickyEend issue???
+  private setColumnSticky(columns: IccField[], tableConfigs: IccTableConfigs) {
+    if (tableConfigs.enableColumnSticky && this.visibleColumns) {
+      let stickyPosition = 0;
+      let lastStickyIndex = 0;
+      columns.forEach(column => {
+        if (column.sticky) {
+          if (column.index > lastStickyIndex) {
+            moveItemInArray(columns, column.index, lastStickyIndex);
+          }
+          lastStickyIndex++;
+          column.left = stickyPosition + 'px';
+          if (!column.hidden && column.itemConfig.hidden !== 'always') {
+            stickyPosition += column.width;
+          }
+        } else {
+          column.left = 'auto';
+        }
+      });
+      stickyPosition = 0;
+      lastStickyIndex = columns.length - 1;
+      columns.slice().reverse().forEach(column => {
+        if (column.stickyEnd) {
+          if (column.index < lastStickyIndex) {
+            moveItemInArray(columns, column.index, lastStickyIndex);
+          }
+          lastStickyIndex--;
+          column.right = stickyPosition + 'px';
+          if (!column.hidden && column.itemConfig.hidden !== 'always') {
+            stickyPosition += column.width;
+          }
+        } else {
+          column.right = 'auto';
+        }
+      });
+      this.setGroupHeaderSticky();
+    }
+  }
+
+  columnStickyLeft(column: IccField, columns: IccField[]) {
+    columns.filter(item => {
+      return item.name === column.name || item.name === 'rowSelection' ||
+        (column.groupHeader && item.groupHeader && column.groupHeader.name === item.groupHeader.name);
+    })
+      .forEach(item => {
+        Object.assign(item, {
+          sticky: true,
+          stickyEnd: false,
+          dragDisabled: true
+        });
+      });
+    this.setGroupHeaderSticky();
+    this.isColumnChanged$.next(true);
+  }
+
+  columnStickyRight(column: IccField, columns: IccField[]) {
+    columns.filter(item => {
+      return item.name === column.name ||
+        (column.groupHeader && item.groupHeader && column.groupHeader.name === item.groupHeader.name);
+    })
+      .forEach(item => {
+        Object.assign(item, {
+          sticky: false,
+          stickyEnd: true,
+          dragDisabled: true
+        });
+      });
+    this.checkRowSelectionSticky(columns);
+    this.setGroupHeaderSticky();
+    this.isColumnChanged$.next(true);
+  }
+
+  columnUnSticky(column: IccField, columns: IccField[], viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
+    if (column.stickyEnd) {
+      this.resetColumnLeftBorder(column, viewport, cdkTableRef);
+    }
+    columns.filter(item => {
+      return item.name === column.name ||
+        (column.groupHeader && item.groupHeader && column.groupHeader.name === item.groupHeader.name);
+    })
+      .forEach((item: IccField) => {
+        Object.assign(item, {
+          sticky: false,
+          stickyEnd: false,
+          dragDisabled: item.itemConfig.dragDisabled
+        });
+      });
+    this.checkRowSelectionSticky(columns);
+    this.setGroupHeaderSticky();
+    this.isColumnChanged$.next(true);
+  }
+
+  private checkRowSelectionSticky(columns: IccField[]) {
+    const sticky = columns.filter(item => item.sticky && item.name !== 'rowSelection').length;
+    if (sticky === 0) {
+      const rowSelection = columns.filter(item => item.name === 'rowSelection');
+      if (rowSelection.length > 0) {
+        rowSelection[0].sticky = false;
+      }
+    }
+  }
+
+  // TODO for tree grid ???
+  private getHeaderColumns(column: IccField, matTableRef: ElementRef): HTMLDivElement[] {
+    const headerColumns: HTMLDivElement[] = Array.from(matTableRef.nativeElement.getElementsByClassName('cdk-column-' + column.name));
+    let groupColumns: HTMLDivElement[] = [];
+    if (column.groupHeader) {
+      groupColumns = Array.from(matTableRef.nativeElement.getElementsByClassName('cdk-column-' + column.groupHeader.name));
+    } else {
+      groupColumns = Array.from(matTableRef.nativeElement.getElementsByClassName('cdk-column-group' + column.name));
+    }
+    return [...headerColumns.concat(groupColumns)];
+  }
+
+  public resetColumnLeftBorder(column: IccField, viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
+    if (column.groupHeader) {
+      const cols = this.visibleColumns.filter(col => col.groupHeader && col.groupHeader.name === column.groupHeader.name);
+      column = cols[0];
+    }
+    const headerColumns: HTMLDivElement[] = this.getHeaderColumns(column, cdkTableRef);
+    headerColumns.forEach((element: HTMLDivElement) => {
+      element.style.borderLeft = '';
+    });
+    const cellColumns = Array.from(viewport.elementRef.nativeElement.getElementsByClassName('cdk-column-' + column.name));
+    cellColumns.forEach((element: HTMLDivElement) => {
+      element.style.borderLeft = '';
     });
   }
 

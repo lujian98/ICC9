@@ -100,7 +100,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   protected setHeaderColumns() {
-    this.columnHeaderService.setColumnChanges(this.columns);
+    this.columnHeaderService.setColumnChanges(this.columns, this.tableConfigs);
     this.visibleColumns = this.columnHeaderService.visibleColumns;
     this.groupHeaderColumns = this.columnHeaderService.groupHeaderColumns;
     this.setColumnsHide();
@@ -333,9 +333,19 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   onColumnMenuItemClick(menuItem: any, column: IccField) {
     const field = menuItem.field as IccField;
+    console.log(' menu click', field)
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];
       this.hideColumn(col, column);
+    } else if (field.action === 'pinLeft') {
+      this.columnHeaderService.columnStickyLeft(column, this.columns);
+      this.setHeaderColumns();
+    } else if (field.action === 'pinRight') {
+      this.columnHeaderService.columnStickyRight(column, this.columns);
+      this.setHeaderColumns();
+    } else if (field.action === 'unpin') {
+      this.columnHeaderService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
+      this.setHeaderColumns();
     }
     /*
     if (option.name === ColumnMenuType.SortAscending) {

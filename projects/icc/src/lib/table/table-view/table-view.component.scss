@@ -1,4 +1,8 @@
 
+::ng-deep .cdk-virtual-scroll-content-wrapper { // need this to have horizonital scroll bar
+  contain: unset !important;
+}
+
 .icc-cdk-table-data-row {
   display: flex;
   // align-items: center;

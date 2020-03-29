@@ -195,7 +195,6 @@ export class IccTableComponent<T> implements OnChanges {
           hidden: true,
         });
     }
-    /*
     if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
       menu.children.push({
         title: 'Pin Left',
@@ -210,9 +209,7 @@ export class IccTableComponent<T> implements OnChanges {
           action: 'unpin',
           icon: 'fas fa-times'
         });
-    } */
-    // console.log( ' menu', menu)
-
+    }
     return menu;
   }
 

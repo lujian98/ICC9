@@ -17,7 +17,7 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../../datasource/datasource';
 import { DropInfo, IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
@@ -58,7 +58,11 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   ngOnInit() {
-    this.columnHeaderService.isColumnChanged$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableColumns());
+    this.columnHeaderService.isColumnChanged$.pipe(
+      takeWhile(() => this.alive),
+      delay(10)
+    )
+      .subscribe((v) => this.setTableColumns());
     this.setTableColumns();
   }
 
