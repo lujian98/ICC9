@@ -395,7 +395,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.columnHeaderService.columnHeaderChanged$.next('selectAll');
+      this.columnHeaderService.columnHeaderChanged$.next({ headerChange: 'selectAll' });
     }
   }
 

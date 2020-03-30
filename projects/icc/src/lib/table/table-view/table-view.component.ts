@@ -65,10 +65,10 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   ngOnInit() {
     this.columnHeaderService.columnHeaderChanged$.pipe(takeWhile(() => this.alive), delay(10))
-      .subscribe((change) => {
-        if (change === 'column') {
+      .subscribe((v) => {
+        if (v.headerChange === 'column') {
           this.setTableColumns();
-        } else if (change === 'selectAll') {
+        } else if (v.headerChange === 'selectAll') {
           this.selectAll();
         }
       });

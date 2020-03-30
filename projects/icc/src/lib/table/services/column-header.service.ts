@@ -5,6 +5,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
 
+export interface IccHeaderChange {
+  headerChange: {};
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +35,7 @@ export class IccColumnHeaderService {
   private currentIndex: number;
 
   isColumnResized$: Subject<{}> = new Subject();
-  columnHeaderChanged$ = new BehaviorSubject<{}>(false);
+  columnHeaderChanged$ = new BehaviorSubject<IccHeaderChange>({ headerChange: null });
 
   set visibleColumns(val: IccField[]) {
     this._visibleColumns = val;
@@ -463,7 +467,7 @@ export class IccColumnHeaderService {
           }
           moveItemInArray(columns, previousIndex, currentIndex);
         }
-        this.columnHeaderChanged$.next('column');
+        this.columnHeaderChanged$.next({ headerChange: 'column' });
         return true;
       }
     }
@@ -538,7 +542,7 @@ export class IccColumnHeaderService {
         });
       });
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next('column');
+    this.columnHeaderChanged$.next({ headerChange: 'column' });
   }
 
   columnStickyRight(column: IccField, columns: IccField[]) {
@@ -555,7 +559,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next('column');
+    this.columnHeaderChanged$.next({ headerChange: 'column' });
   }
 
   columnUnSticky(column: IccField, columns: IccField[], viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
@@ -575,7 +579,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next('column');
+    this.columnHeaderChanged$.next({ headerChange: 'column' });
   }
 
   private checkRowSelectionSticky(columns: IccField[]) {
@@ -618,7 +622,7 @@ export class IccColumnHeaderService {
   resetColumnsData() {
     this.visibleColumns = null;
     this.groupHeaderColumns = null;
-    this.columnHeaderChanged$.next(false);
+    this.columnHeaderChanged$.next({ headerChange: null });
     this.isColumnResized$.next(false);
     // this.isColumnResized$.complete(); // Don't turn off
   }
