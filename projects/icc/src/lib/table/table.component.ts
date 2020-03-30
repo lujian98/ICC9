@@ -27,8 +27,6 @@ export class IccTableComponent<T> implements OnChanges {
   expandAll: boolean;
   collapseAll: boolean;
 
-  private sub: Subscription;
-
   constructor(
     private columnService: IccItemFieldService,
     dataSourceService: IccDataSourceService<T>,

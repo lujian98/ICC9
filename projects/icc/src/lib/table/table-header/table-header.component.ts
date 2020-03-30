@@ -84,8 +84,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   ngOnInit() {
     this.sorts.multiSort = this.tableConfigs.enableMultiColumnSort;
     this.rowGroups.enableMultiRowGroup = this.tableConfigs.enableMultiRowGroup;
-    this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
-    this.columnHeaderService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
   }
 
   ngAfterViewInit() { }
@@ -127,6 +125,16 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
           // this.setPageSummary();
         }
       });
+      this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
+      this.columnHeaderService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
+      this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
+        .subscribe((v) => {
+          if (v.changes) {
+            if (v.changes['groupExpand']) {
+              this.setRowgroupExpand(v.changes['groupExpand']);
+            }
+          }
+        });
       this.fetchRecords();
     }
   }
@@ -379,7 +387,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.onGridRowGroupEvent(column, true);
     this.groupByColumns = this.rowGroups.groupByColumns;
     // this.scrollToPosition(0);
-    this.columnHeaderService.columnHeaderChanged$.next({ headerChange: { groupByColumns: this.groupByColumns } });
+    this.columnHeaderService.tableChange$.next({ changes: { groupByColumns: this.groupByColumns } });
   }
 
   onGridRowGroupEvent(column: IccField, addgroup: boolean) {
@@ -399,6 +407,14 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     }
   }
 
+  private setRowgroupExpand(group: IccRowGroup) {
+    this.rowGroups.setRowGroupExpand(group);
+    this.fetchRecords();
+    // if (!group.expanded) {
+    // this.nextBatch(); // This is need check if row collapse require to pull next page
+    // }
+  }
+
   private updateRowGroupMenu() {
     /*
     this.rowGroups.groupByColumns.forEach((group: IccGroupByColumn) => {
@@ -412,7 +428,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   unGroupBy(column: IccField) {
     this.onGridRowGroupEvent(column, false);
     this.groupByColumns = this.rowGroups.groupByColumns;
-    this.columnHeaderService.columnHeaderChanged$.next({ headerChange: { groupByColumns: this.groupByColumns } });
+    this.columnHeaderService.tableChange$.next({ changes: { groupByColumns: this.groupByColumns } });
     // this.scrollToPosition(0);
   }
 
@@ -424,7 +440,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.columnHeaderService.columnHeaderChanged$.next({ headerChange: 'selectAll' });
+      this.columnHeaderService.tableChange$.next({ changes: 'selectAll' });
     }
   }
 

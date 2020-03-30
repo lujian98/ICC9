@@ -2,30 +2,25 @@ import {
   AfterViewInit,
   Component,
   OnDestroy,
-  ElementRef,
   EventEmitter,
-  forwardRef,
-  HostListener,
   Input,
   OnChanges,
   OnInit,
   Output,
-  Renderer2,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { SelectionModel } from '@angular/cdk/collections';
-import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
-import { debounceTime, delay, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
+import { delay, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../../datasource/datasource';
-import { DropInfo, IccTableConfigs } from '../../models';
+import { IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccColumnHeaderService } from '../services/column-header.service';
 import { IccRowGroup } from '../../services';
-import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
+import { IccGroupByColumn } from '../../services/row-group/row-groups';
 
 @Component({
   selector: 'icc-table-view',
@@ -46,10 +41,9 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
 
-  // rowGroups = new IccRowGroups();
   groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
 
-  currentKeyEvent: MouseEvent;
+  currentKeyEvent: MouseEvent; // for selection
   previousSelectDataId = -1;
 
   viewportBuffer = 5;
@@ -68,15 +62,15 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   ngOnInit() {
-    this.columnHeaderService.columnHeaderChanged$.pipe(takeWhile(() => this.alive), delay(10))
+    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive), delay(10))
       .subscribe((v) => {
-        if (v.headerChange) {
-          if (v.headerChange === 'column') {
+        if (v.changes) {
+          if (v.changes === 'column') {
             this.setTableColumns();
-          } else if (v.headerChange === 'selectAll') {
+          } else if (v.changes === 'selectAll') {
             this.selectAll();
-          } else if (v.headerChange['groupByColumns']) {
-            this.groupByColumns = v.headerChange['groupByColumns'];
+          } else if (v.changes['groupByColumns']) {
+            this.groupByColumns = v.changes['groupByColumns'];
           }
         }
       });
@@ -135,13 +129,9 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     return item.level ? true : false;
   }
 
-  groupHeaderClick(group: IccRowGroup) { // TODO
+  groupHeaderClick(group: IccRowGroup) {
     group.expanded = !group.expanded;
-    // this.rowGroups.setRowGroupExpand(group);
-    // this.fetchRecords();
-    if (!group.expanded) {
-      // this.nextBatch(); // This is need check if row collapse require to pull next page
-    }
+    this.columnHeaderService.tableChange$.next({ changes: { groupExpand: group } });
   }
 
   groupByFieldName(group: IccRowGroup): string {

@@ -5,8 +5,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
 
-export interface IccHeaderChange {
-  headerChange: {};
+export interface IccTableChange {
+  changes: {};
 }
 
 @Injectable({
@@ -15,7 +15,6 @@ export interface IccHeaderChange {
 export class IccColumnHeaderService {
   private _visibleColumns: IccField[] = [];
   private _groupHeaderColumns: IccGroupHeader[] = [];
-  private tableConfigs: IccTableConfigs;
 
   tableWidth: number;
   isColumnResizing: boolean;
@@ -35,7 +34,7 @@ export class IccColumnHeaderService {
   private currentIndex: number;
 
   isColumnResized$: Subject<{}> = new Subject();
-  columnHeaderChanged$ = new BehaviorSubject<IccHeaderChange>({ headerChange: null });
+  tableChange$ = new BehaviorSubject<IccTableChange>({ changes: null });
 
   set visibleColumns(val: IccField[]) {
     this._visibleColumns = val;
@@ -94,12 +93,11 @@ export class IccColumnHeaderService {
     });
   }
 
-  private setGroupHeader(column: IccField) { // columns service
+  private setGroupHeader(column: IccField) {
     let groupHeader: IccGroupHeader = {
       name: `group${column.name}`,
       index: column.index,
       // title: column.title,
-      // fixedWidth: column.fixedWidth,
       width: column.width,
       colspan: 1
     };
@@ -467,7 +465,7 @@ export class IccColumnHeaderService {
           }
           moveItemInArray(columns, previousIndex, currentIndex);
         }
-        this.columnHeaderChanged$.next({ headerChange: 'column' });
+        this.tableChange$.next({ changes: 'column' });
         return true;
       }
     }
@@ -542,7 +540,7 @@ export class IccColumnHeaderService {
         });
       });
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next({ headerChange: 'column' });
+    this.tableChange$.next({ changes: 'column' });
   }
 
   columnStickyRight(column: IccField, columns: IccField[]) {
@@ -559,7 +557,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next({ headerChange: 'column' });
+    this.tableChange$.next({ changes: 'column' });
   }
 
   columnUnSticky(column: IccField, columns: IccField[], viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
@@ -579,7 +577,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.columnHeaderChanged$.next({ headerChange: 'column' });
+    this.tableChange$.next({ changes: 'column' });
   }
 
   private checkRowSelectionSticky(columns: IccField[]) {
@@ -622,7 +620,7 @@ export class IccColumnHeaderService {
   resetColumnsData() {
     this.visibleColumns = null;
     this.groupHeaderColumns = null;
-    this.columnHeaderChanged$.next({ headerChange: null });
+    this.tableChange$.next({ changes: null });
     this.isColumnResized$.next(false);
     // this.isColumnResized$.complete(); // Don't turn off
   }
