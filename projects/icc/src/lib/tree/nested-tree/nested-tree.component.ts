@@ -1,9 +1,10 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
+import { IccTableEventService } from '../../table/services/table-event.service';
 
 @Component({
   selector: 'icc-nested-tree',
@@ -13,8 +14,10 @@ import { IccBaseTreeComponent } from '../base-tree.component';
 export class IccNestedTreeComponent extends IccBaseTreeComponent<ItemNode> implements AfterViewInit {
   treeControl = new NestedTreeControl<ItemNode>(node => node.children);
   nodeId = 100000;
+
   constructor(
-    @Inject(DOCUMENT) document: any
+    @Inject(DOCUMENT) document: any,
+    protected tableEventService: IccTableEventService,
   ) {
     super();
     this.document = document;
@@ -47,7 +50,7 @@ export class IccNestedTreeComponent extends IccBaseTreeComponent<ItemNode> imple
   expandAll() {
     this.expandNodes(this.data, true);
     this.setTreeData();
-    console.log( ' viewport=', this.viewport);
+    console.log(' viewport=', this.viewport);
   }
 
   collapseAll() {

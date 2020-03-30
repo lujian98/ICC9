@@ -10,6 +10,8 @@ import { IccBaseTreeComponent } from './base-tree.component';
 import { IccNestedTreeComponent } from './nested-tree/nested-tree.component';
 import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
 
+import { IccTableEventService } from '../table/services/table-event.service';
+
 @NgModule({
   declarations: [
     IccBaseTreeComponent,
@@ -33,6 +35,9 @@ import { IccFlatTreeComponent } from './flat-tree/flat-tree.component';
     IccBaseTreeComponent,
     IccNestedTreeComponent,
     IccFlatTreeComponent
+  ],
+  providers: [
+    IccTableEventService
   ]
 })
 export class IccTreeModule { }

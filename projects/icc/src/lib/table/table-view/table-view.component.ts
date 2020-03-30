@@ -30,7 +30,6 @@ import { IccGroupByColumn } from '../../services/row-group/row-groups';
 export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() columns: IccField[] = [];
-  @Input() selection: SelectionModel<T>;
   @Input() data: T[] = [];
   private alive = true;
 
@@ -42,6 +41,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
 
+  private selection: SelectionModel<T>;
   currentKeyEvent: MouseEvent; // for selection
   previousSelectDataId = -1;
 
@@ -66,6 +66,8 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
         if (e.event) {
           if (e.event === 'column') {
             this.setTableColumns();
+          } else if (e.event.selection) {
+            this.selection = e.event.selection;
           } else if (e.event === 'selectAll') {
             this.selectAll();
           } else if (e.event.groupByColumns) {

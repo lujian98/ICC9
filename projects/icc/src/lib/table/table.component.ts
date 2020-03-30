@@ -1,4 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
@@ -15,10 +14,6 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
   columns: IccField[] = [];
-
-  selection: SelectionModel<T>;
-  expandAll: boolean;
-  collapseAll: boolean;
 
   constructor(
     private columnService: IccItemFieldService,
@@ -38,7 +33,6 @@ export class IccTableComponent<T> implements OnChanges {
       this.tableConfigs.enableTableHeader = true;
       if (this.tableConfigs.enableRowSelection) {
         this.setupSelectionColumn(this.columnConfigs);
-        this.selection = new SelectionModel<T>(this.tableConfigs.enableMultiRowSelection, []);
       }
 
 
@@ -78,10 +72,6 @@ export class IccTableComponent<T> implements OnChanges {
       }];
     }
     this.columns = this.getInitialColumns(this.columnConfigs, this.tableConfigs);
-  }
-
-  expandAllNode() {
-    this.expandAll = !this.expandAll;
   }
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {
@@ -193,15 +183,6 @@ export class IccTableComponent<T> implements OnChanges {
         });
     }
     return menu;
-  }
-
-  onMenuItemClick(event) {
-    const field = event.field;
-    if (field.name === 'expandAll') {
-      this.expandAll = !this.expandAll;
-    } else if (field.name === 'collapseAll') {
-      this.collapseAll = !this.collapseAll;
-    }
   }
 }
 

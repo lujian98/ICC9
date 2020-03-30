@@ -5,6 +5,7 @@ import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@ang
 import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
+import { IccTableEventService } from '../../table/services/table-event.service';
 
 @Component({
   selector: 'icc-flat-tree',
@@ -15,8 +16,10 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeControl = new FlatTreeControl<FlatTreeNode>(node => node.level, node => node.expandable);
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
+
   constructor(
-    @Inject(DOCUMENT) document: any
+    @Inject(DOCUMENT) document: any,
+    protected tableEventService: IccTableEventService,
   ) {
     super();
     this.document = document;

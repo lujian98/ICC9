@@ -48,7 +48,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
   private viewport: CdkVirtualScrollViewport;
-  @Input() selection: SelectionModel<T>;
+  private selection: SelectionModel<T>;
   private alive = true;
   dataSourceLength = 0;
 
@@ -63,7 +63,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   isWindowReszie$: Subject<{}> = new Subject();
 
   sorts = new IccSorts();
-  private hoverHeader: string;
+  private hoverSortHeader: string;
   pagination = new IccPagination();
   pageBuffer = 20;
   totalRecords = 0;
@@ -90,6 +90,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
             this.setViewport(e.event.viewport);
           } else if (e.event.groupExpand) {
             this.setRowgroupExpand(e.event.groupExpand);
+          } else if (e.event === 'columnResized') {
+            this.setTableFullSize(1);
           }
         }
       });
@@ -106,6 +108,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   private setViewport(viewport: CdkVirtualScrollViewport) {
     if (!this.viewport) {
       this.viewport = viewport;
+      if (this.tableConfigs.enableRowSelection) {
+        this.selection = new SelectionModel<T>(this.tableConfigs.enableMultiRowSelection, []);
+        this.tableEventService.tableEvent$.next({ event: { selection: this.selection } });
+      }
       this.initDataSourceService();
       this.setTableFullSize(1);
     }
@@ -138,7 +144,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
         }
       });
       this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
-      this.tableEventService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
+      // this.tableEventService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
       this.fetchRecords();
     }
   }
@@ -283,7 +289,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   setSortState(column: IccField, hover: boolean) {
-    this.hoverHeader = hover ? column.name : '';
+    this.hoverSortHeader = hover ? column.name : '';
   }
 
   getHeaderSortState(column: IccField): string {
@@ -294,7 +300,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
         if (column.sort.active) {
           ret += ' orange';
         }
-      } else if (column.name === this.hoverHeader) {
+      } else if (column.name === this.hoverSortHeader) {
         ret = 'fas fa-caret-up blue';
       }
     }
@@ -436,8 +442,16 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     // this.scrollToPosition(0);
   }
 
-  isAllSelected() {
+  isAllSelected(): boolean {
     return this.selection.selected.length >= this.dataSourceLength;
+  }
+
+  isChecked(): boolean {
+    return this.selection && this.selection.hasValue() && this.isAllSelected();
+  }
+
+  isIndeterminate(): boolean {
+    return this.selection && this.selection.hasValue() && !this.isAllSelected();
   }
 
   masterToggle() {

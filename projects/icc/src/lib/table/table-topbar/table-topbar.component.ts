@@ -1,6 +1,6 @@
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccField } from '../../items';
 import { IccMenuItem } from '../../menu/menu-item';
@@ -22,10 +22,7 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
   alive = true;
   totalRecords = 0;
   tableViewSummary: string;
-
   menuItems: IccMenuItem;
-
-  @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
   constructor(
     private dataSourceService: IccDataSourceService<T>,
@@ -75,7 +72,7 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
   }
 
   onMenuItemClick(event) {
-    this.iccMenuItemClickEvent.emit(event);
+    this.tableEventService.tableEvent$.next({ event: { menuItem: event } });
   }
 
   setTableViewSummary() {

@@ -1,17 +1,22 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
+import { delay, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../datasource/datasource';
+import { IccTableEventService } from '../table/services/table-event.service';
 import { DropInfo, IccTableConfigs } from '../models';
 import { IccField } from '../items';
 
 @Component({
   template: '',
 })
-export class IccBaseTreeComponent<T> {
+export class IccBaseTreeComponent<T> implements OnInit, OnDestroy {
   @Input() data: T[] = [];
   @Input() tableConfigs: IccTableConfigs;
   columns: IccField[] = [];
+
+  private alive = true;
+  protected tableEventService: IccTableEventService;
 
   nodeId: number; // TODO global unique node id????
 
@@ -35,12 +40,28 @@ export class IccBaseTreeComponent<T> {
     return this.visibleColumns.map(column => column.width).reduce((prev, curr) => prev + curr, 0);
   }
 
+  ngOnInit() {
+  }
+
   protected setTreeColumns() {
     if (this.columns.length) {
       this.treeColumn = this.columns[0];
     }
     this.visibleColumns = this.columns;
     this.displayedColumns = this.visibleColumns.map(column => column.name);
+    this.tableEventService.tableEvent$.pipe(takeWhile(() => this.alive), delay(10))
+      .subscribe((e: any) => {
+        if (e.event) {
+          if (e.event.menuItem) {
+            const field = e.event.menuItem.field;
+            if (field.name === 'expandAll') {
+              this.expandAll();
+            } else if (field.name === 'collapseAll') {
+              this.collapseAll();
+            }
+          }
+        }
+      });
   }
 
   nextBatch(event) {
@@ -55,6 +76,10 @@ export class IccBaseTreeComponent<T> {
   }
 
   protected setTreeData() { }
+
+  expandAll() { }
+
+  collapseAll() { }
 
   dragStart(node: T) {
     this.dragNode = node;
@@ -145,6 +170,10 @@ export class IccBaseTreeComponent<T> {
 
   onViewportScroll(event: any) {
     this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }
 

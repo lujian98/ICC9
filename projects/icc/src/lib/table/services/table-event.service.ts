@@ -33,7 +33,6 @@ export class IccTableEventService {
   private previousIndex: number;
   private currentIndex: number;
 
-  isColumnResized$: Subject<{}> = new Subject();
   tableEvent$ = new BehaviorSubject<IccTableEvent>({ event: null });
 
   set visibleColumns(val: IccField[]) {
@@ -279,7 +278,7 @@ export class IccTableEventService {
       this.resizableMouseup();
       this.resizableMouseleave();
       setTimeout(() => {
-        this.isColumnResized$.next(true);
+        this.tableEvent$.next({ event: 'columnResized' });
         this.isColumnResizing = false;
       }, 10);
     }
@@ -620,9 +619,7 @@ export class IccTableEventService {
   resetEventService() {
     this.visibleColumns = null;
     this.groupHeaderColumns = null;
-    this.tableEvent$.next({ event: null });
-    this.isColumnResized$.next(false);
-    // this.isColumnResized$.complete(); // Don't turn off
+    this.tableEvent$.next({ event: null }); // WARNING reset only, Don't turn off
   }
 }
 
