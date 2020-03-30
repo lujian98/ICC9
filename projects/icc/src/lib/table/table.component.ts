@@ -65,15 +65,12 @@ export class IccTableComponent<T> implements OnChanges {
     if (this.tableConfigs.enableMultiRowSelection) {
       this.tableConfigs.enableRowSelection = true;
     }
-
-
     if (this.tableConfigs.enableMultiColumnSort) {
       this.tableConfigs.enableColumnSort = true;
     }
     if (this.tableConfigs.enableMultiRowGroup) {
       this.tableConfigs.enableRowGroup = true;
     }
-
     if (this.columnConfigs.length === 0) {
       this.columnConfigs = [{
         name: 'name',

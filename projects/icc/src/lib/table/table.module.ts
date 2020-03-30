@@ -25,7 +25,7 @@ import { IccTableTopbarComponent } from './table-topbar/table-topbar.component';
 import { IccTableHeaderComponent } from './table-header/table-header.component';
 import { IccTableViewComponent } from './table-view/table-view.component';
 
-import { IccColumnHeaderService } from './services/column-header.service';
+import { IccTableEventService } from './services/table-event.service';
 
 
 @NgModule({
@@ -67,7 +67,7 @@ import { IccColumnHeaderService } from './services/column-header.service';
   ],
   providers: [
     IccDataSourceService,
-    IccColumnHeaderService
+    IccTableEventService
   ]
 })
 export class IccTableModule { }

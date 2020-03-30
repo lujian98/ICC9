@@ -18,7 +18,7 @@ import { IccDataSource } from '../../datasource/datasource';
 import { IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
 import { IccDataSourceService } from '../../services/data-source.service';
-import { IccColumnHeaderService } from '../services/column-header.service';
+import { IccTableEventService } from '../services/table-event.service';
 import { IccRowGroup } from '../../services';
 import { IccGroupByColumn } from '../../services/row-group/row-groups';
 
@@ -55,21 +55,21 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   constructor(
     private dataSourceService: IccDataSourceService<T>,
-    private columnHeaderService: IccColumnHeaderService,
+    private tableEventService: IccTableEventService,
     private platform: Platform
   ) {
   }
 
   ngOnInit() {
-    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive), delay(10))
-      .subscribe((v: any) => {
-        if (v.changes) {
-          if (v.changes === 'column') {
+    this.tableEventService.tableEvent$.pipe(takeWhile(() => this.alive), delay(10))
+      .subscribe((e: any) => {
+        if (e.event) {
+          if (e.event === 'column') {
             this.setTableColumns();
-          } else if (v.changes === 'selectAll') {
+          } else if (e.event === 'selectAll') {
             this.selectAll();
-          } else if (v.changes.groupByColumns) {
-            this.groupByColumns = v.changes.groupByColumns;
+          } else if (e.event.groupByColumns) {
+            this.groupByColumns = e.event.groupByColumns;
           }
         }
       });
@@ -101,7 +101,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   nextBatch() {
     if (!this.isViewportReady) {
       this.isViewportReady = true;
-      this.columnHeaderService.tableChange$.next({ changes: { viewport: this.viewport } });
+      this.tableEventService.tableEvent$.next({ event: { viewport: this.viewport } });
       this.initDataSource();
     }
   }
@@ -130,7 +130,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   groupHeaderClick(group: IccRowGroup) {
     group.expanded = !group.expanded;
-    this.columnHeaderService.tableChange$.next({ changes: { groupExpand: group } });
+    this.tableEventService.tableEvent$.next({ event: { groupExpand: group } });
   }
 
   groupByFieldName(group: IccRowGroup): string {

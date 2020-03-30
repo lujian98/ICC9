@@ -5,14 +5,14 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
 
-export interface IccTableChange {
-  changes: {};
+export interface IccTableEvent {
+  event: {};
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class IccColumnHeaderService {
+export class IccTableEventService {
   private _visibleColumns: IccField[] = [];
   private _groupHeaderColumns: IccGroupHeader[] = [];
 
@@ -34,7 +34,7 @@ export class IccColumnHeaderService {
   private currentIndex: number;
 
   isColumnResized$: Subject<{}> = new Subject();
-  tableChange$ = new BehaviorSubject<IccTableChange>({ changes: null });
+  tableEvent$ = new BehaviorSubject<IccTableEvent>({ event: null });
 
   set visibleColumns(val: IccField[]) {
     this._visibleColumns = val;
@@ -465,7 +465,7 @@ export class IccColumnHeaderService {
           }
           moveItemInArray(columns, previousIndex, currentIndex);
         }
-        this.tableChange$.next({ changes: 'column' });
+        this.tableEvent$.next({ event: 'column' });
         return true;
       }
     }
@@ -540,7 +540,7 @@ export class IccColumnHeaderService {
         });
       });
     this.setGroupHeaderSticky();
-    this.tableChange$.next({ changes: 'column' });
+    this.tableEvent$.next({ event: 'column' });
   }
 
   columnStickyRight(column: IccField, columns: IccField[]) {
@@ -557,7 +557,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.tableChange$.next({ changes: 'column' });
+    this.tableEvent$.next({ event: 'column' });
   }
 
   columnUnSticky(column: IccField, columns: IccField[], viewport: CdkVirtualScrollViewport, cdkTableRef: ElementRef) {
@@ -577,7 +577,7 @@ export class IccColumnHeaderService {
       });
     this.checkRowSelectionSticky(columns);
     this.setGroupHeaderSticky();
-    this.tableChange$.next({ changes: 'column' });
+    this.tableEvent$.next({ event: 'column' });
   }
 
   private checkRowSelectionSticky(columns: IccField[]) {
@@ -617,10 +617,10 @@ export class IccColumnHeaderService {
     });
   }
 
-  resetColumnsData() {
+  resetEventService() {
     this.visibleColumns = null;
     this.groupHeaderColumns = null;
-    this.tableChange$.next({ changes: null });
+    this.tableEvent$.next({ event: null });
     this.isColumnResized$.next(false);
     // this.isColumnResized$.complete(); // Don't turn off
   }

@@ -31,7 +31,7 @@ import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
 import { IccMenuItem } from '../../menu/menu-item';
 import { IccPagination } from '../../services/pagination/pagination';
-import { IccColumnHeaderService } from '../services/column-header.service';
+import { IccTableEventService } from '../services/table-event.service';
 
 
 export interface IccSortState {
@@ -75,7 +75,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private columnHeaderService: IccColumnHeaderService,
+    private tableEventService: IccTableEventService,
     private dataSourceService: IccDataSourceService<T>,
     private renderer: Renderer2,
   ) { }
@@ -83,13 +83,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   ngOnInit() {
     this.sorts.multiSort = this.tableConfigs.enableMultiColumnSort;
     this.rowGroups.enableMultiRowGroup = this.tableConfigs.enableMultiRowGroup;
-    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
-      .subscribe((v: any) => {
-        if (v.changes) {
-          if (v.changes.viewport) {
-            this.setViewport(v.changes.viewport);
-          } else if (v.changes.groupExpand) {
-            this.setRowgroupExpand(v.changes.groupExpand);
+    this.tableEventService.tableEvent$.pipe(takeWhile(() => this.alive))
+      .subscribe((e: any) => {
+        if (e.event) {
+          if (e.event.viewport) {
+            this.setViewport(e.event.viewport);
+          } else if (e.event.groupExpand) {
+            this.setRowgroupExpand(e.event.groupExpand);
           }
         }
       });
@@ -112,9 +112,9 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   protected setHeaderColumns() {
-    this.columnHeaderService.setColumnChanges(this.columns, this.tableConfigs);
-    this.visibleColumns = this.columnHeaderService.visibleColumns;
-    this.groupHeaderColumns = this.columnHeaderService.groupHeaderColumns;
+    this.tableEventService.setColumnChanges(this.columns, this.tableConfigs);
+    this.visibleColumns = this.tableEventService.visibleColumns;
+    this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
     this.setColumnsHide();
     this.displayedColumns = this.visibleColumns.map(column => column.name);
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
@@ -122,7 +122,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.groupHeaderDisplay = [];
     if (this.groupHeaderColumns.length < totalVisibleColumns) {
       this.groupHeaderDisplay = this.groupHeaderColumns.map(header => header.name);
-      this.columnHeaderService.setGroupHeaderSticky();
+      this.tableEventService.setGroupHeaderSticky();
     }
   }
 
@@ -138,7 +138,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
         }
       });
       this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
-      this.columnHeaderService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
+      this.tableEventService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
       this.fetchRecords();
     }
   }
@@ -204,7 +204,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     setTimeout(() => {
       if (this.viewport && this.cdkTableRef) {
         const viewportWidth = this.viewport.elementRef.nativeElement.clientWidth;
-        this.tableWidth = this.columnHeaderService.getTableWidth(viewportWidth);
+        this.tableWidth = this.tableEventService.getTableWidth(viewportWidth);
         // this.columnsService.checkStickyColumns(this.viewport, this.matTableRef);
       }
     }, delay);
@@ -302,41 +302,41 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   checkResizeORDnD(event: any, index: number) {
-    this.columnHeaderService.checkResizeORDnD(event, index, this.cdkTableRef);
+    this.tableEventService.checkResizeORDnD(event, index, this.cdkTableRef);
   }
 
   onResizeColumn(event: any, index: number) {
-    this.columnHeaderService
+    this.tableEventService
       .onResizeColumn(event, index, this.tableConfigs.enableColumnResize, this.renderer, this.cdkTableRef);
   }
 
   onResizeHeaderColumn(event: any, index: number) {
-    this.columnHeaderService
+    this.tableEventService
       .onResizeHeaderColumn(event, index, this.tableConfigs.enableColumnResize, this.renderer, this.cdkTableRef);
   }
 
   checkHeaderResizeORDnD(event: any, index: number) {
-    this.columnHeaderService.checkHeaderResizeORDnD(event, index, this.cdkTableRef);
+    this.tableEventService.checkHeaderResizeORDnD(event, index, this.cdkTableRef);
   }
 
   isDragDisabled(column: IccField): boolean {
-    return !this.tableConfigs.enableColumnDnD || this.columnHeaderService.isColumnResizing || column.dragDisabled;
+    return !this.tableConfigs.enableColumnDnD || this.tableEventService.isColumnResizing || column.dragDisabled;
   }
 
   onDragStarted(event: CdkDragStart, index: number, visibleColumns) {
-    this.columnHeaderService.onDragStarted(event, index, visibleColumns, this.cdkTableRef);
+    this.tableEventService.onDragStarted(event, index, visibleColumns, this.cdkTableRef);
   }
 
   onDragMoved(event, index, visibleColumns) {
-    this.columnHeaderService.onDragMoved(event, index, visibleColumns);
+    this.tableEventService.onDragMoved(event, index, visibleColumns);
   }
 
   onDropListPredicate() {
-    return this.columnHeaderService.onDropListPredicate();
+    return this.tableEventService.onDropListPredicate();
   }
 
   onDropListDropped(event: CdkDragDrop<string[]>, visibleColumns) {
-    if (this.columnHeaderService.isDropListDropped(event, visibleColumns, this.columns)) {
+    if (this.tableEventService.isDropListDropped(event, visibleColumns, this.columns)) {
       this.setHeaderColumns();
       // this.scrollToPosition(0);
     }
@@ -349,13 +349,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       const col = this.columns.filter(item => item.name === field.name)[0];
       this.hideColumn(col, column);
     } else if (field.action === 'pinLeft') {
-      this.columnHeaderService.columnStickyLeft(column, this.columns);
+      this.tableEventService.columnStickyLeft(column, this.columns);
       this.setHeaderColumns();
     } else if (field.action === 'pinRight') {
-      this.columnHeaderService.columnStickyRight(column, this.columns);
+      this.tableEventService.columnStickyRight(column, this.columns);
       this.setHeaderColumns();
     } else if (field.action === 'unpin') {
-      this.columnHeaderService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
+      this.tableEventService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
       this.setHeaderColumns();
     } else if (field.name === 'groupBy') {
       this.groupBy(column);
@@ -391,7 +391,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.onGridRowGroupEvent(column, true);
     this.groupByColumns = this.rowGroups.groupByColumns;
     // this.scrollToPosition(0);
-    this.columnHeaderService.tableChange$.next({ changes: { groupByColumns: this.groupByColumns } });
+    this.tableEventService.tableEvent$.next({ event: { groupByColumns: this.groupByColumns } });
   }
 
   onGridRowGroupEvent(column: IccField, addgroup: boolean) {
@@ -432,7 +432,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   unGroupBy(column: IccField) {
     this.onGridRowGroupEvent(column, false);
     this.groupByColumns = this.rowGroups.groupByColumns;
-    this.columnHeaderService.tableChange$.next({ changes: { groupByColumns: this.groupByColumns } });
+    this.tableEventService.tableEvent$.next({ event: { groupByColumns: this.groupByColumns } });
     // this.scrollToPosition(0);
   }
 
@@ -444,13 +444,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.columnHeaderService.tableChange$.next({ changes: 'selectAll' });
+      this.tableEventService.tableEvent$.next({ event: 'selectAll' });
     }
   }
 
   ngOnDestroy() {
     this.alive = false;
-    this.columnHeaderService.resetColumnsData();
+    this.tableEventService.resetEventService();
     this.isWindowReszie$.complete();
   }
 

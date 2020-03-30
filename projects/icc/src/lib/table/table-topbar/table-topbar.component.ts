@@ -6,7 +6,7 @@ import { IccField } from '../../items';
 import { IccMenuItem } from '../../menu/menu-item';
 import { IccTableConfigs } from '../../models';
 import { IccDataSourceService } from '../../services/data-source.service';
-import { IccColumnHeaderService } from '../services/column-header.service';
+import { IccTableEventService } from '../services/table-event.service';
 
 @Component({
   selector: 'icc-table-topbar',
@@ -29,15 +29,15 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
 
   constructor(
     private dataSourceService: IccDataSourceService<T>,
-    private columnHeaderService: IccColumnHeaderService
+    private tableEventService: IccTableEventService
   ) { }
 
   ngOnInit() {
-    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
-      .subscribe((v: any) => {
-        if (v.changes) {
-          if (v.changes.viewport) {
-            this.setViewport(v.changes.viewport);
+    this.tableEventService.tableEvent$.pipe(takeWhile(() => this.alive))
+      .subscribe((e: any) => {
+        if (e.event) {
+          if (e.event.viewport) {
+            this.setViewport(e.event.viewport);
           }
         }
       });
