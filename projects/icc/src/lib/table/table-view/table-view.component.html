@@ -33,6 +33,18 @@
       [ngClass]="{ 'selected': isRowSelected(record)}"
       (click)="rowClick($event, rowIndex, record)">
     </cdk-row>
+
+    <ng-container cdkColumnDef="groupHeader" [sticky]="true"> <!-- row group sticky is not working -->
+      <cdk-cell [ngClass]="'icc-grid-row-group'" colspan="999" *cdkCellDef="let group">
+        <span [ngClass]="'icc-grid-row-group-level'+group.level">
+          <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+          <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+          <strong>{{groupByFieldName(group)}} = {{groupByFieldValue(group)}} ({{group.totalCounts}})</strong>
+        </span>
+      </cdk-cell>
+    </ng-container>
+    <cdk-row *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </cdk-row>
+
   </cdk-table>
 </cdk-virtual-scroll-viewport>
 

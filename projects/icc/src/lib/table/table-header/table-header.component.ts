@@ -83,8 +83,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   ngOnInit() {
     this.sorts.multiSort = this.tableConfigs.enableMultiColumnSort;
-    // this.rowGroups.enableMultiRowGroup = this.gridConfigs.enableMultiRowGroup;
-
+    this.rowGroups.enableMultiRowGroup = this.tableConfigs.enableMultiRowGroup;
     this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
     this.columnHeaderService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
   }
@@ -346,6 +345,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     } else if (field.action === 'unpin') {
       this.columnHeaderService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
       this.setHeaderColumns();
+    } else if (field.name === 'groupBy') {
+      this.groupBy(column);
+    } else if (field.name === 'unGroupBy') {
+      this.unGroupBy(column);
     }
     /*
     if (option.name === ColumnMenuType.SortAscending) {
@@ -357,22 +360,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.sort.direction = '';
       column.sort.direction = '';
       this.sortColumn(column, '');
-    } else if (option.name === 'hideColumn') {
-      this.hideColumn(column);
-    } else if (option.name === 'groupBy') {
-      this.groupBy(column);
-    } else if (option.name === 'unGroupBy') {
-      this.unGroupBy(column);
-    } else if (option.action === 'pinLeft') {
-      this.columnsService.columnStickyLeft(column, this.columns);
-      this.setGridColumView();
-    } else if (option.action === 'pinRight') {
-      this.columnsService.columnStickyRight(column, this.columns);
-      this.setGridColumView();
-    } else if (option.action === 'unpin') {
-      this.columnsService.columnUnSticky(column, this.columns, this.viewport, this.matTableRef);
-      this.setGridColumView();
-    }
+    } else
     this.setColumnMenuHidden(option.name, column);
     */
   }
@@ -385,6 +373,47 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       // this.setColumnsMenu(column);
       this.setColumnsHide(column.name);
     }
+  }
+
+  groupBy(column: IccField) {
+    this.onGridRowGroupEvent(column, true);
+    this.groupByColumns = this.rowGroups.groupByColumns;
+    // this.scrollToPosition(0);
+    this.columnHeaderService.columnHeaderChanged$.next({ headerChange: { groupByColumns: this.groupByColumns } });
+  }
+
+  onGridRowGroupEvent(column: IccField, addgroup: boolean) {
+    this.setRowGroup(column, addgroup);
+    this.fetchRecords();
+  }
+
+  private setRowGroup(column: IccField, addgroup: boolean) {
+    this.resetDataSourceService();
+    this.pagination.page = 1;
+    this.updateRowGroupMenu();
+    this.sorts.removeOtherSortKey(this.rowGroups.groupByColumns);
+    this.rowGroups.setRowGrouping(column, addgroup);
+    this.sorts.setRowGroupSort(this.rowGroups.groupByColumns, this.columns);
+    if (column) {
+      // this.setColumnMenuHidden('groupBy', column as IccField);
+    }
+  }
+
+  private updateRowGroupMenu() {
+    /*
+    this.rowGroups.groupByColumns.forEach((group: IccGroupByColumn) => {
+      const column: IccField = IccUtils.findExactByKey(this.columns, 'name', group.column);
+      if (column) {
+        // this.setColumnMenuHidden('unGroupBy', column);
+      }
+    }); */
+  }
+
+  unGroupBy(column: IccField) {
+    this.onGridRowGroupEvent(column, false);
+    this.groupByColumns = this.rowGroups.groupByColumns;
+    this.columnHeaderService.columnHeaderChanged$.next({ headerChange: { groupByColumns: this.groupByColumns } });
+    // this.scrollToPosition(0);
   }
 
   isAllSelected() {

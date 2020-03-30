@@ -24,7 +24,8 @@ import { DropInfo, IccTableConfigs } from '../../models';
 import { IccField } from '../../items';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccColumnHeaderService } from '../services/column-header.service';
-
+import { IccRowGroup } from '../../services';
+import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
 
 @Component({
   selector: 'icc-table-view',
@@ -44,6 +45,9 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+
+  // rowGroups = new IccRowGroups();
+  groupByColumns: IccGroupByColumn[] = []; // TODO GridConfigs groupByColumns default value
 
   currentKeyEvent: MouseEvent;
   previousSelectDataId = -1;
@@ -66,10 +70,14 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   ngOnInit() {
     this.columnHeaderService.columnHeaderChanged$.pipe(takeWhile(() => this.alive), delay(10))
       .subscribe((v) => {
-        if (v.headerChange === 'column') {
-          this.setTableColumns();
-        } else if (v.headerChange === 'selectAll') {
-          this.selectAll();
+        if (v.headerChange) {
+          if (v.headerChange === 'column') {
+            this.setTableColumns();
+          } else if (v.headerChange === 'selectAll') {
+            this.selectAll();
+          } else if (v.headerChange['groupByColumns']) {
+            this.groupByColumns = v.headerChange['groupByColumns'];
+          }
         }
       });
     this.setTableColumns();
@@ -123,8 +131,38 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
     this.dataSourceLength = data.length;
   }
 
-  onViewportScroll(event: any) {
-    this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
+  isGroup(index: number, item: IccRowGroup): boolean {
+    return item.level ? true : false;
+  }
+
+  groupHeaderClick(group: IccRowGroup) { // TODO
+    group.expanded = !group.expanded;
+    // this.rowGroups.setRowGroupExpand(group);
+    // this.fetchRecords();
+    if (!group.expanded) {
+      // this.nextBatch(); // This is need check if row collapse require to pull next page
+    }
+  }
+
+  groupByFieldName(group: IccRowGroup): string {
+    const groupColumn: IccGroupByColumn = this.groupByColumns[group.level - 1];
+    if (groupColumn) {
+      const column = this.columns.filter(item => item.name === groupColumn.column);
+      if (column && column.length > 0) {
+        return column[0].title;
+      }
+    }
+  }
+
+  groupByFieldValue(group: IccRowGroup): string {
+    const groupColumn: IccGroupByColumn = this.groupByColumns[group.level - 1];
+    if (groupColumn) {
+      if (groupColumn.column === groupColumn.field) {
+        return group[group.field];
+      } else {
+        return group.value;
+      }
+    }
   }
 
   // Material bug: must use the checkboxClick event and checkboxChange event to get correct select row state
@@ -194,6 +232,10 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   private selectAll() {
     this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  onViewportScroll(event: any) {
+    this.tableConfigs.columnHeaderPosition = -event.target.scrollLeft;
   }
 
   ngOnDestroy() {
