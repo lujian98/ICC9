@@ -1,24 +1,25 @@
 import { ListRange } from '@angular/cdk/collections';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccField } from '../../items';
 import { IccMenuItem } from '../../menu/menu-item';
 import { IccTableConfigs } from '../../models';
 import { IccDataSourceService } from '../../services/data-source.service';
+import { IccColumnHeaderService } from '../services/column-header.service';
 
 @Component({
   selector: 'icc-table-topbar',
   templateUrl: './table-topbar.component.html',
   styleUrls: ['./table-topbar.component.scss'],
 })
-export class IccTableTopbarComponent<T> implements OnChanges, OnDestroy {
+export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
-  @Input() viewport: CdkVirtualScrollViewport;
-  @Input() dataSourceService: IccDataSourceService<T>;
 
-  alive = false;
+  private viewport: CdkVirtualScrollViewport;
+
+  alive = true;
   totalRecords = 0;
   tableViewSummary: string;
 
@@ -26,18 +27,29 @@ export class IccTableTopbarComponent<T> implements OnChanges, OnDestroy {
 
   @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private dataSourceService: IccDataSourceService<T>,
+    private columnHeaderService: IccColumnHeaderService
+  ) { }
+
+  ngOnInit() {
+    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
+      .subscribe((v: any) => {
+        if (v.changes) {
+          if (v.changes.viewport) {
+            this.setViewport(v.changes.viewport);
+          }
+        }
+      });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     this.setSideMenu();
-    if (changes.viewport && this.viewport) {
-      this.initTopbar();
-    }
   }
 
-  initTopbar() {
-    if (!this.alive) {
-      this.alive = true;
+  private setViewport(viewport: CdkVirtualScrollViewport) {
+    if (!this.viewport) {
+      this.viewport = viewport;
       this.viewport.scrolledIndexChange.pipe(takeWhile(() => this.alive)).subscribe(index => {
         this.setTableViewSummary();
       });

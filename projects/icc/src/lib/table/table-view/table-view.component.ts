@@ -30,7 +30,6 @@ import { IccGroupByColumn } from '../../services/row-group/row-groups';
 export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() columns: IccField[] = [];
-  @Input() dataSourceService: IccDataSourceService<T>;
   @Input() selection: SelectionModel<T>;
   @Input() data: T[] = [];
   private alive = true;
@@ -47,15 +46,15 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   previousSelectDataId = -1;
 
   viewportBuffer = 5;
-  isViewportReady = false;
-  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  @Output() iccViewportEvent: EventEmitter<CdkVirtualScrollViewport> = new EventEmitter<CdkVirtualScrollViewport>();
+  private isViewportReady = false;
+  @ViewChild(CdkVirtualScrollViewport) private viewport: CdkVirtualScrollViewport;
 
   get tableWidth(): number {
     return this.visibleColumns.map(column => column.width).reduce((prev, curr) => prev + curr, 0);
   }
 
   constructor(
+    private dataSourceService: IccDataSourceService<T>,
     private columnHeaderService: IccColumnHeaderService,
     private platform: Platform
   ) {
@@ -63,14 +62,14 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
 
   ngOnInit() {
     this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive), delay(10))
-      .subscribe((v) => {
+      .subscribe((v: any) => {
         if (v.changes) {
           if (v.changes === 'column') {
             this.setTableColumns();
           } else if (v.changes === 'selectAll') {
             this.selectAll();
-          } else if (v.changes['groupByColumns']) {
-            this.groupByColumns = v.changes['groupByColumns'];
+          } else if (v.changes.groupByColumns) {
+            this.groupByColumns = v.changes.groupByColumns;
           }
         }
       });
@@ -102,7 +101,7 @@ export class IccTableViewComponent<T> implements AfterViewInit, OnInit, OnChange
   nextBatch() {
     if (!this.isViewportReady) {
       this.isViewportReady = true;
-      this.iccViewportEvent.emit(this.viewport);
+      this.columnHeaderService.tableChange$.next({ changes: { viewport: this.viewport } });
       this.initDataSource();
     }
   }

@@ -47,10 +47,9 @@ export interface IccSortState {
 export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() columns: IccField[] = [];
   @Input() tableConfigs: IccTableConfigs;
-  @Input() viewport: CdkVirtualScrollViewport;
-  @Input() dataSourceService: IccDataSourceService<T>;
+  private viewport: CdkVirtualScrollViewport;
   @Input() selection: SelectionModel<T>;
-  private alive = false;
+  private alive = true;
   dataSourceLength = 0;
 
   pending: boolean;
@@ -77,13 +76,23 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   constructor(
     private columnHeaderService: IccColumnHeaderService,
+    private dataSourceService: IccDataSourceService<T>,
     private renderer: Renderer2,
-    private platform: Platform,
   ) { }
 
   ngOnInit() {
     this.sorts.multiSort = this.tableConfigs.enableMultiColumnSort;
     this.rowGroups.enableMultiRowGroup = this.tableConfigs.enableMultiRowGroup;
+    this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
+      .subscribe((v: any) => {
+        if (v.changes) {
+          if (v.changes.viewport) {
+            this.setViewport(v.changes.viewport);
+          } else if (v.changes.groupExpand) {
+            this.setRowgroupExpand(v.changes.groupExpand);
+          }
+        }
+      });
   }
 
   ngAfterViewInit() { }
@@ -92,9 +101,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     if (changes.columns) {
       this.setHeaderColumns();
     }
-    if (changes.viewport && this.viewport) {
-      this.setTableFullSize(1);
+  }
+
+  private setViewport(viewport: CdkVirtualScrollViewport) {
+    if (!this.viewport) {
+      this.viewport = viewport;
       this.initDataSourceService();
+      this.setTableFullSize(1);
     }
   }
 
@@ -114,8 +127,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   private initDataSourceService() {
-    if (!this.alive) {
-      this.alive = true;
+    if (this.viewport) {
       this.dataSourceService.dataSourceChanged$.pipe(takeWhile(() => this.alive))
         .subscribe((data: T[]) => this.dataRecordRefreshed(data));
       this.viewport.scrolledIndexChange.pipe(takeWhile(() => this.alive)).subscribe(index => {
@@ -127,14 +139,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       });
       this.isWindowReszie$.pipe(takeWhile(() => this.alive), debounceTime(250)).subscribe(() => this.setTableFullSize(1));
       this.columnHeaderService.isColumnResized$.pipe(takeWhile(() => this.alive)).subscribe((v) => this.setTableFullSize(1));
-      this.columnHeaderService.tableChange$.pipe(takeWhile(() => this.alive))
-        .subscribe((v) => {
-          if (v.changes) {
-            if (v.changes['groupExpand']) {
-              this.setRowgroupExpand(v.changes['groupExpand']);
-            }
-          }
-        });
       this.fetchRecords();
     }
   }
@@ -192,7 +196,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       //  this.currentScrollPosition = 0;
       // }
       // this.gridStates.setStates();
-      //this.setPageSummary();
+      // this.setPageSummary();
     }, 250);
   }
 
@@ -340,7 +344,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   onColumnMenuItemClick(menuItem: any, column: IccField) {
     const field = menuItem.field as IccField;
-    console.log(' menu click', field)
+    console.log(' menu click', field);
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];
       this.hideColumn(col, column);

@@ -1,13 +1,9 @@
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { ListRange, SelectionModel } from '@angular/cdk/collections';
-import { Subscription } from 'rxjs';
-import { ColumnMenuType, IccColumnConfig, IccGroupHeader, IccTableConfigs } from '../models';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
-import { IccDataSource } from '../datasource/datasource';
-import { IccDataSourceService } from '../services/data-source.service';
 import { IccMenuItem } from '../menu/menu-item';
+import { ColumnMenuType, IccColumnConfig, IccTableConfigs } from '../models';
 
 @Component({
   selector: 'icc-table',
@@ -18,21 +14,15 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
-
   columns: IccField[] = [];
-  viewport: CdkVirtualScrollViewport;
-  dataSourceService: IccDataSourceService<T>;
-  selection: SelectionModel<T>;
 
+  selection: SelectionModel<T>;
   expandAll: boolean;
   collapseAll: boolean;
 
   constructor(
     private columnService: IccItemFieldService,
-    dataSourceService: IccDataSourceService<T>,
   ) {
-    this.dataSourceService = dataSourceService;
-
   }
 
   ngOnInit() {
@@ -95,10 +85,6 @@ export class IccTableComponent<T> implements OnChanges {
 
   expandAllNode() {
     this.expandAll = !this.expandAll;
-  }
-
-  onViewportEvent(viewport: CdkVirtualScrollViewport) {
-    this.viewport = viewport;
   }
 
   public getInitialColumns(columnConfigs: IccColumnConfig[], tableConfigs: IccTableConfigs): IccField[] {

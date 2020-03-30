@@ -2,29 +2,28 @@
   <icc-table-topbar *ngIf="tableConfigs.enableTableTopbar"
     [tableConfigs]="tableConfigs"
     [columns]="columns"
-    [dataSourceService]="dataSourceService"
-    [viewport]="viewport"
     (iccMenuItemClickEvent)="onMenuItemClick($event)">
   </icc-table-topbar>
 
   <icc-table-header
     [tableConfigs]="tableConfigs"
     [columns]="columns"
-    [dataSourceService]="dataSourceService"
-    [viewport]="viewport"
     [selection]="selection">
   </icc-table-header>
 
-  <!-- TODO Pass events between seelctors-->
   <span iccTableView
     [tableConfigs]="tableConfigs"
     [data]="data"
+    [columns]="columns"
+
     [expandAll]="expandAll"
     [collapseAll]="collapseAll"
-    [columns]="columns"
-    [dataSourceService]="dataSourceService"
-    [selection]="selection"
-    (iccViewportEvent)="onViewportEvent($event)">
+    [selection]="selection">
   </span>
 </div>
+<!--
+  TODO
+       3: remove iccMenuItemClickEvent
+       4: remove selection ???
+-->
 
