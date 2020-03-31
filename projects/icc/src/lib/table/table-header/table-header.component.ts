@@ -120,10 +120,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   protected setHeaderColumns() {
     this.tableEventService.setColumnChanges(this.columns, this.tableConfigs);
     this.visibleColumns = this.tableEventService.visibleColumns;
-    this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
     this.setColumnsHide();
     this.displayedColumns = this.visibleColumns.map(column => column.name);
     this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
+    this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
     const totalVisibleColumns = this.visibleColumns.length;
     this.groupHeaderDisplay = [];
     if (this.groupHeaderColumns.length < totalVisibleColumns) {
@@ -356,13 +356,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.hideColumn(col, column);
     } else if (field.action === 'pinLeft') {
       this.tableEventService.columnStickyLeft(column, this.columns);
-      this.setHeaderColumns();
+      this.setHeaderColumns(); // This will refresh the column menu
     } else if (field.action === 'pinRight') {
       this.tableEventService.columnStickyRight(column, this.columns);
-      this.setHeaderColumns();
+      this.setHeaderColumns(); // bug when set header columns with group header
     } else if (field.action === 'unpin') {
       this.tableEventService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
-      this.setHeaderColumns();
+      // this.setHeaderColumns();
     } else if (field.name === 'groupBy') {
       this.groupBy(column);
     } else if (field.name === 'unGroupBy') {
@@ -386,12 +386,13 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   hideColumn(col: IccField, column: IccField) { // TODO set other column menu
     if (col.itemConfig.hidden !== 'always') {
       col.hidden = !col.hidden;
+      // this.tableEventService.setGroupHeaderColumnWidth();
       this.setTableFullSize(5);
-      // this.setGridColumView();
-      // this.setColumnsMenu(column);
       this.setColumnsHide(column.name);
     }
   }
+
+
 
   groupBy(column: IccField) {
     this.onGridRowGroupEvent(column, true);

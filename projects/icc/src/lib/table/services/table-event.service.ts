@@ -96,6 +96,7 @@ export class IccTableEventService {
     let groupHeader: IccGroupHeader = {
       name: `group${column.name}`,
       index: column.index,
+      hidden: column.hidden,
       // title: column.title,
       width: column.width,
       colspan: 1
@@ -337,8 +338,13 @@ export class IccTableEventService {
             if (column.groupHeader && column.stickyEnd && index === columns.length - 1) {
               header.right = column.right;
             }
-            header.width += column.width;
+            if (!column.hidden) {
+              header.width += column.width;
+            }
           });
+          header.hidden = header.width === 0;
+        } else {
+          header.hidden = this.visibleColumns.filter(column => header.name === `group${column.name}`)[0].hidden;
         }
       });
     }
