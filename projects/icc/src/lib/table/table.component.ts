@@ -3,6 +3,7 @@ import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
 import { IccMenuItem } from '../menu/menu-item';
 import { ColumnMenuType, IccColumnConfig, IccTableConfigs } from '../models';
+import { IccFieldViewService } from '../directives/field-view/field-view.service';
 
 @Component({
   selector: 'icc-table',
@@ -17,6 +18,7 @@ export class IccTableComponent<T> implements OnChanges {
 
   constructor(
     private columnService: IccItemFieldService,
+    private fieldViewService: IccFieldViewService,
   ) {
   }
 
@@ -88,7 +90,7 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.type = 'text';
         }
         if (columnConfig.filterField === undefined) {
-          columnConfig.filterField = true;
+          // columnConfig.filterField = true;
         }
         if (columnConfig.sortField === undefined) {
           columnConfig.sortField = true;
@@ -106,10 +108,12 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.dragDisabled = true;
         }
         const column = this.columnService.getItem(columnConfig);
-        /*
-        if (tableConfigs.enableColumnFilter && this.columnFilterService) {
-          column.columnFilter = this.columnFilterService.getColumnFilterByIndex(index, columnConfigs);
+
+        if (tableConfigs.enableColumnFilter && columnConfig.filterField) {
+          console.log(' yyyyyy=', columnConfig.name, 'columnConfig.filterField =', columnConfig.filterField)
+          column.columnFilter = this.fieldViewService.getFieldView(columnConfig);
         }
+        /*
         if (this.cellRendererService) {
           column.renderer = this.cellRendererService.getCellRenderByIndex(index, columnConfigs, tableConfigs.enableCellEdit);
         }

@@ -2,13 +2,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { IccField } from '../../items';
+import { IccDataSource } from '../../datasource/datasource';
 
 @Component({
   template: '',
 })
-export class IccFieldViewComponent implements OnInit, OnDestroy {
+export class IccFieldViewComponent<T> implements OnInit, OnDestroy {
   field: IccField;
+
   group: FormGroup;
+
+  dataSource: IccDataSource<T>;
+
+  // protected _value: T;
+  private _filteredValues: {};
 
   isFieldValueChanged$: Subject<{}> = new Subject();
 

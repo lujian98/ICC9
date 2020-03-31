@@ -73,12 +73,25 @@
     [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
     <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
       [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
-      <div *ngIf="column.name!='rowSelection'">
-        Filter...
+      <div *ngIf="tableConfigs.enableColumnFilter&&column.filterField">
+        <span iccFieldFilter
+          [field]="column"
+          ></span>
       </div>
     </cdk-header-cell>
   </ng-container>
+<!--
+            <div *ngIf="gridConfigs.enableColumnFilter&&column.filterField"
+            iccColumnFilter
+            [column]="column"
+            [dataSource]="dataSource"
+            [filteredValues]="gridConfigs.filteredValues"
+            (iccFilterChangedEvent)="onFilterChanged($event)">
 
+                  <span iccFieldView [field]="item"
+        (iccFieldValueChangedEvent)="onMenuItemClickEvent($event, item)">
+      </span>
+-->
   <cdk-header-row class="icc-cdk-table-header-filter-row" *cdkHeaderRowDef="filterColumns"
     [ngStyle]="{'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
   </cdk-header-row>

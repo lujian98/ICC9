@@ -1,0 +1,50 @@
+<mat-form-field [ngClass]="'icc-grid-form-field'">
+  <input matInput type="text"  autocomplete="off"
+    style="color:green; font-weight: bold; font-style: italic;"
+    placeholder=". . . . . . . .">
+    <button mat-button style="width: 30px; height: 30px;"
+      matSuffix>
+      <i class="fas fa-times" style="color:orange"></i>
+    </button>
+</mat-form-field>
+
+<!--
+
+  [value]="value"
+
+<mat-form-field *ngIf="filterType" [ngClass]="'icc-grid-form-field'" [ngStyle]="{'height': rowHeight+'px'}">
+  <input matInput type="text" [value]="value" autocomplete="off"
+    style="color:green; font-weight: bold; font-style: italic;"
+    (click)="$event.stopPropagation()"
+    (keyup)="applyFilter($event, $event.target.value)"
+    placeholder=". . . . . . . .">
+
+    <button mat-button *ngIf="value" style="width: 30px; height: 30px;"
+      matSuffix (click)="clearFilter($event)">
+      <i class="fas fa-times" style="color:orange"></i>
+    </button>
+
+</mat-form-field>
+
+
+italic
+    <button mat-button *ngIf="value" matSuffix
+    (click)="clearFilter($event)">
+    <i class="fas fa-times" style="color:blue"></i>
+  </button>
+
+    <i *ngIf="value" matSuffix
+    (click)="clearFilter($event)"
+    class="fas fa-times"
+    style="color:orange;">
+  </i>
+
+
+    <button mat-button *ngIf="value" style="width: 30px; height: 30px;" matSuffix
+    (click)="clearFilter($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </button>
+-->
+
+
+

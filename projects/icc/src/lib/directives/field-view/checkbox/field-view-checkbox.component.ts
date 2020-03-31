@@ -5,7 +5,7 @@ import { IccFieldViewComponent } from '../field-view.component';
   selector: 'icc-field-view-checkbox',
   templateUrl: './field-view-checkbox.component.html',
 })
-export class IccFieldViewCheckboxComponent extends IccFieldViewComponent {
+export class IccFieldViewCheckboxComponent<T> extends IccFieldViewComponent<T> {
 
   constructor() {
     super();

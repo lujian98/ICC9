@@ -28,7 +28,7 @@ export class CdkTableDemoComponent implements OnInit {
 
   columnConfigs: IccColumnConfig[] = [
     { name: 'index', title: '#row', type: 'number' },
-    { name: 'vin', title: 'Vin', menu: true, width: 300 },
+    { name: 'vin', title: 'Vin', type: 'text', menu: true, width: 300, filterField: true },
     { name: 'year', title: 'Year', type: 'number', width: 300, menu: true, groupHeader: this.carGroupHeader, groupField: true },
     { name: 'brand', title: 'Brand', menu: true, width: 300, groupHeader: this.carGroupHeader, groupField: true },
     { name: 'color', title: 'Color', menu: true, width: 300, groupField: true }

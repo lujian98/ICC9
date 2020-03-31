@@ -16,6 +16,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
 
+import { IccFieldViewModule } from '../directives/field-view/field-view.module';
+import { IccFieldViewService } from '../directives/field-view/field-view.service';
+
 import { IccMenuModule } from '../menu/menu.module';
 import { IccTreeModule } from '../tree/tree.module';
 
@@ -29,13 +32,6 @@ import { IccTableEventService } from './services/table-event.service';
 
 
 @NgModule({
-  declarations: [
-    IccTableComponent,
-    IccTableViewDirective,
-    IccTableTopbarComponent,
-    IccTableHeaderComponent,
-    IccTableViewComponent
-  ],
   imports: [
     CommonModule,
     DragDropModule,
@@ -51,7 +47,15 @@ import { IccTableEventService } from './services/table-event.service';
 
     IccVirtualScrollModule,
     IccMenuModule,
-    IccTreeModule
+    IccTreeModule,
+    IccFieldViewModule
+  ],
+  declarations: [
+    IccTableComponent,
+    IccTableViewDirective,
+    IccTableTopbarComponent,
+    IccTableHeaderComponent,
+    IccTableViewComponent
   ],
   exports: [
     IccTableComponent,
@@ -67,7 +71,8 @@ import { IccTableEventService } from './services/table-event.service';
   ],
   providers: [
     IccDataSourceService,
-    IccTableEventService
+    IccTableEventService,
+    IccFieldViewService
   ]
 })
 export class IccTableModule { }
