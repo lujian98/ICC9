@@ -108,11 +108,10 @@ export class IccTableComponent<T> implements OnChanges {
           columnConfig.dragDisabled = true;
         }
         const column = this.columnService.getItem(columnConfig);
-
         if (tableConfigs.enableColumnFilter && columnConfig.filterField) {
-          console.log(' yyyyyy=', columnConfig.name, 'columnConfig.filterField =', columnConfig.filterField)
-          column.columnFilter = this.fieldViewService.getFieldView(columnConfig);
+          column.filterField = this.fieldViewService.getFieldView(columnConfig);
         }
+
         /*
         if (this.cellRendererService) {
           column.renderer = this.cellRendererService.getCellRenderByIndex(index, columnConfigs, tableConfigs.enableCellEdit);

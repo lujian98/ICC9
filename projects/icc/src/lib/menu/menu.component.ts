@@ -120,13 +120,13 @@ export class IccMenuComponent implements OnChanges {
       config.type = 'button';
     }
     const item = this.itemService.getItem(config);
-    item.fieldView = this.fieldViewService.getFieldView(config);
+    item.menuField = this.fieldViewService.getFieldView(config);
     return item;
   }
 
   onMenuItemClick(menuItem: IccMenuItem) {
     if (!menuItem.disabled) {
-      console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
+      // console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
       this.iccMenuItemClickEvent.emit(menuItem);
     }
   }

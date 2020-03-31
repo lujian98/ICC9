@@ -74,7 +74,7 @@
     <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
       [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
       <div *ngIf="tableConfigs.enableColumnFilter&&column.filterField">
-        <span iccFieldFilter
+        <span iccFilterField
           [field]="column"
           ></span>
       </div>

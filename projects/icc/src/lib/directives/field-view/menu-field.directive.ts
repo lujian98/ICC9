@@ -11,19 +11,14 @@ import {
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IccField } from '../../items';
-import { IccDataSource } from '../../datasource/datasource';
 
 @Directive({
-  selector: '[iccFieldFilter]'
+  selector: '[iccMenuField]'
 })
-export class IccFieldFilterDirective<T> implements OnInit, OnChanges, OnDestroy {
+export class IccMenuFieldDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() field: IccField;
-  @Input() dataSource: IccDataSource<T>;
-  @Input() filteredValues = {};
-
   componentRef: any;
 
   private sub: Subscription;
@@ -40,13 +35,13 @@ export class IccFieldFilterDirective<T> implements OnInit, OnChanges, OnDestroy 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.field && changes.field.firstChange) {
       const field = changes.field.currentValue;
-      if (field.columnFilter) {
-        const factory = this.resolver.resolveComponentFactory(field.columnFilter);
+      if (field.menuField) {
+        // console.log( field.name, ' menu 55555555555555 field =', field)
+        const factory = this.resolver.resolveComponentFactory(field.menuField);
         this.componentRef = this.container.createComponent(factory);
         this.componentRef.instance.field = this.field;
-        this.componentRef.instance.dataSource = this.dataSource;
-        // this.sub = this.componentRef.instance.isFieldValueChanged$
-        //  .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
+        this.sub = this.componentRef.instance.isFieldValueChanged$
+          .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
       }
     }
   }

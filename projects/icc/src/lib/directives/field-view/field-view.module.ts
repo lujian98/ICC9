@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
-import { IccFieldViewDirective } from './field-view.directive';
-import { IccFieldFilterDirective } from './field-filter.directive';
+import { IccMenuFieldDirective } from './menu-field.directive';
+import { IccFilterFieldDirective } from './filter-field.directive';
 import { IccFieldViewComponent } from './field-view.component';
 import { IccFieldViewButtonComponent } from './button/field-view-button.component';
 import { IccFieldViewCheckboxComponent } from './checkbox/field-view-checkbox.component';
@@ -23,16 +23,17 @@ import { IccFieldViewTextComponent } from './text/field-view-text.component';
     MatCheckboxModule
   ],
   declarations: [
-    IccFieldViewDirective,
-    IccFieldFilterDirective,
+    IccMenuFieldDirective,
+    IccFilterFieldDirective,
     IccFieldViewComponent,
     IccFieldViewButtonComponent,
     IccFieldViewCheckboxComponent,
     IccFieldViewTextComponent
   ],
   exports: [
-    IccFieldViewDirective,
-    IccFieldFilterDirective,
+    IccMenuFieldDirective,
+    IccFilterFieldDirective,
+
     IccFieldViewComponent,
     IccFieldViewButtonComponent,
     IccFieldViewCheckboxComponent,

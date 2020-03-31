@@ -28,13 +28,14 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   readonly?: boolean;
   icon?: string;
   children?: IccField[];
-  fieldView?: any;
   action?: string;
   checked?: boolean; // TODO for checkbox
   // children?: IccFieldConfig[] | IccField[];
 
+  menuField?: IccField;
+  filterField?: IccFilterField | IccField;
+
   sortField?: IccSortField;
-  filterField?: IccFilterField;
   groupField: IccGroupField;
   renderer?: IccRendererType;
   style?: {};

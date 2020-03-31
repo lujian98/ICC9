@@ -14,13 +14,16 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IccField } from '../../items';
+import { IccDataSource } from '../../datasource/datasource';
 
 @Directive({
-  selector: '[iccFieldView]'
+  selector: '[iccFilterField]'
 })
-export class IccFieldViewDirective<T> implements OnInit, OnChanges, OnDestroy {
+export class IccFilterFieldDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() field: IccField;
-  @Input() group: FormGroup;
+  @Input() dataSource: IccDataSource<T>;
+  @Input() filteredValues = {};
+
   componentRef: any;
 
   private sub: Subscription;
@@ -37,14 +40,13 @@ export class IccFieldViewDirective<T> implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.field && changes.field.firstChange) {
       const field = changes.field.currentValue;
-      if (field.fieldView) {
-        console.log( field.name, ' 55555555555555 field =', field)
-        const factory = this.resolver.resolveComponentFactory(field.fieldView);
+      if (field.filterField) {
+        const factory = this.resolver.resolveComponentFactory(field.filterField);
         this.componentRef = this.container.createComponent(factory);
         this.componentRef.instance.field = this.field;
-        this.componentRef.instance.group = this.group;
-        this.sub = this.componentRef.instance.isFieldValueChanged$
-          .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
+        this.componentRef.instance.dataSource = this.dataSource;
+        // this.sub = this.componentRef.instance.isFieldValueChanged$
+        //  .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
       }
     }
   }
