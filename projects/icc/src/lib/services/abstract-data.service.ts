@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, skip, switchMap } from 'rxjs/operators';
-import { IccCellEditData } from '../grid';
+// import { IccCellEditData } from '../grid';
 import { IccSelectType } from '../models';
 import { IccLoadRecordParams } from './loadRecordParams.model';
 
@@ -69,7 +69,7 @@ export abstract class IccAbstractDataService<T> implements OnDestroy {
   abstract selectionOptionRequest(keyValue: string, fieldType: IccSelectType);
   // abstract getGridStates(gridTableID: string): Observable<IccGridState>;
   // abstract onSaveGridStates(gridTableID: string, states: IccGridState): void;
-  abstract onSaveGridCellValue(cellData: IccCellEditData<T>): Observable<T>;
+  // abstract onSaveGridCellValue(cellData: IccCellEditData<T>): Observable<T>;
   abstract getDetailData(dataKeyId: string, dataKeyValue: string | number);
   abstract onUpdateData(dataKeyId: string, dataKeyValue: string | number, values: any): Observable<T>;
   abstract deleteSelected(dataKeyId: string, selectedId: number | string): Observable<T>;

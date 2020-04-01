@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { IccSelectType } from '../../models';
-import { IccGridState, IccCellEditData } from '../../grid';
+// import { IccGridState, IccCellEditData } from '../../grid';
 import { IccAbstractDataService } from '../abstract-data.service';
 import { IccAbstractStateService } from '../abstract-state.service';
 import { IccLoadRecordParams } from '../loadRecordParams.model';
@@ -8,7 +8,9 @@ import { IccInMemeoryFilterFactory } from './filter/filter_factory';
 import { IccInMemoryDataSort } from './in-memory-data.sort';
 
 
-export class IccInMemoryDataService<T> extends IccAbstractDataService<T> implements IccAbstractStateService {
+// export class IccInMemoryDataService<T> extends IccAbstractDataService<T> implements IccAbstractStateService {
+
+export class IccInMemoryDataService<T> extends IccAbstractDataService<T> {
 
   constructor(
   ) {
@@ -57,6 +59,7 @@ export class IccInMemoryDataService<T> extends IccAbstractDataService<T> impleme
 
   selectionOptionRequest(keyValue: string, fieldType: IccSelectType) { }
 
+  /*
   onSaveGridStates(gridTableID: string, states: IccGridState): void { }
 
   getGridStates(gridTableID: string): Observable<IccGridState> {
@@ -70,7 +73,7 @@ export class IccInMemoryDataService<T> extends IccAbstractDataService<T> impleme
 
   onSaveGridCellValue(cellData: IccCellEditData<T>): Observable<T> {
     return of();
-  }
+  } */
 
   getDetailData(dataKeyId: string, dataKeyValue: string | number) { }
 
