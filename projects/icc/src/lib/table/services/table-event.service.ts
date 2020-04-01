@@ -1,7 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDragStart, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ElementRef, Injectable, Renderer2 } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { IccField } from '../../items';
 import { IccTableConfigs, IccGroupHeader } from '../../models';
 
@@ -54,7 +54,7 @@ export class IccTableEventService {
   constructor() { }
 
   public setColumnChanges(columns: IccField[], tableConfigs: IccTableConfigs) {
-    this.setColumnSticky(columns, tableConfigs);
+    // this.setColumnSticky(columns, tableConfigs);
     this.groupHeaderColumns = [];
     columns.forEach((column, index) => {
       column.index = index;
@@ -494,7 +494,7 @@ export class IccTableEventService {
   }
 
   // TODO (1) Sticky right vertical scroll bar width need put into right X ??? unStickyEend issue???
-  private setColumnSticky(columns: IccField[], tableConfigs: IccTableConfigs) {
+  public setColumnSticky(columns: IccField[], tableConfigs: IccTableConfigs) {
     if (tableConfigs.enableColumnSticky && this.visibleColumns) {
       let stickyPosition = 0;
       let lastStickyIndex = 0;

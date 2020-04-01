@@ -23,7 +23,7 @@ import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of }
 import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
-import { IccTableConfigs, IccGroupHeader } from '../../models';
+import { IccTableConfigs, ColumnMenuType, IccGroupHeader } from '../../models';
 import { IccSorts } from '../../services/sort/sorts';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
@@ -118,17 +118,21 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   }
 
   protected setHeaderColumns() {
-    this.tableEventService.setColumnChanges(this.columns, this.tableConfigs);
-    this.visibleColumns = this.tableEventService.visibleColumns;
-    this.setColumnsHide();
-    this.displayedColumns = this.visibleColumns.map(column => column.name);
-    this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
-    this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
-    const totalVisibleColumns = this.visibleColumns.length;
-    this.groupHeaderDisplay = [];
-    if (this.groupHeaderColumns.length < totalVisibleColumns) {
-      this.groupHeaderDisplay = this.groupHeaderColumns.map(header => header.name);
-      this.tableEventService.setGroupHeaderSticky();
+    this.tableEventService.setColumnSticky(this.columns, this.tableConfigs);
+    const displayedColumns = this.columns.filter(column => column.hidden !== 'always').map(column => column.name);
+    if (JSON.stringify(this.displayedColumns) !== JSON.stringify(displayedColumns)) {
+      this.tableEventService.setColumnChanges(this.columns, this.tableConfigs);
+      this.visibleColumns = this.tableEventService.visibleColumns;
+      this.setColumnsHide();
+      this.displayedColumns = this.visibleColumns.map(column => column.name);
+      this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
+      this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
+      const totalVisibleColumns = this.visibleColumns.length;
+      this.groupHeaderDisplay = [];
+      if (this.groupHeaderColumns.length < totalVisibleColumns) {
+        this.groupHeaderDisplay = this.groupHeaderColumns.map(header => header.name);
+        this.tableEventService.setGroupHeaderSticky();
+      }
     }
   }
 
@@ -348,51 +352,48 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     }
   }
 
+  private sortColumn(column: IccField, direction: string) {
+    const sort = {
+      name: column.name,
+      direction: direction
+    };
+    this.onColumnSortData(column, sort);
+  }
+
   onColumnMenuItemClick(menuItem: any, column: IccField) {
     const field = menuItem.field as IccField;
-    console.log(' menu click', field);
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];
       this.hideColumn(col, column);
-    } else if (field.action === 'pinLeft') {
+    } else if (field.name === ColumnMenuType.SortAscending) {
+      this.sortColumn(column, 'asc');
+    } else if (field.name === ColumnMenuType.SortDescending) {
+      this.sortColumn(column, 'desc');
+    } else if (field.name === ColumnMenuType.RemoveSort) {
+      this.sortColumn(column, '');
+    } else if (field.name === 'pinLeft') {
       this.tableEventService.columnStickyLeft(column, this.columns);
-      this.setHeaderColumns(); // This will refresh the column menu
-    } else if (field.action === 'pinRight') {
+      this.setHeaderColumns(); // This may refresh the column menu due to the column change
+    } else if (field.name === 'pinRight') {
       this.tableEventService.columnStickyRight(column, this.columns);
-      this.setHeaderColumns(); // bug when set header columns with group header
-    } else if (field.action === 'unpin') {
+      this.setHeaderColumns(); // This may refresh the column menu due to the column change
+    } else if (field.name === 'unpin') {
       this.tableEventService.columnUnSticky(column, this.columns, this.viewport, this.cdkTableRef);
-      // this.setHeaderColumns();
     } else if (field.name === 'groupBy') {
       this.groupBy(column);
     } else if (field.name === 'unGroupBy') {
       this.unGroupBy(column);
     }
-    /*
-    if (option.name === ColumnMenuType.SortAscending) {
-      this.sortColumn(column, 'asc');
-    } else if (option.name === ColumnMenuType.SortDescending) {
-      this.sortColumn(column, 'desc');
-    } else if (option.name === ColumnMenuType.RemoveSort) {
-      column.sort.active = false;
-      this.sort.direction = '';
-      column.sort.direction = '';
-      this.sortColumn(column, '');
-    } else
-    this.setColumnMenuHidden(option.name, column);
-    */
+    // this.setColumnMenuHidden(option.name, column);
   }
 
   hideColumn(col: IccField, column: IccField) { // TODO set other column menu
     if (col.itemConfig.hidden !== 'always') {
       col.hidden = !col.hidden;
-      // this.tableEventService.setGroupHeaderColumnWidth();
       this.setTableFullSize(5);
       this.setColumnsHide(column.name);
     }
   }
-
-
 
   groupBy(column: IccField) {
     this.onGridRowGroupEvent(column, true);

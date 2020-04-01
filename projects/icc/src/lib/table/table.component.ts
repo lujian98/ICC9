@@ -173,15 +173,15 @@ export class IccTableComponent<T> implements OnChanges {
     if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
       menu.children.push({
         title: 'Pin Left',
-        action: 'pinLeft',
+        name: 'pinLeft',
         icon: 'fas fa-chevron-left'
       }, {
           title: 'Pin Right',
-          action: 'pinRight',
+          name: 'pinRight',
           icon: 'fas fa-chevron-right'
         }, {
           title: 'Unpin',
-          action: 'unpin',
+          name: 'unpin',
           icon: 'fas fa-times'
         });
     }
