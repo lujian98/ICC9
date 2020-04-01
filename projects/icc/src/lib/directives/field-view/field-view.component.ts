@@ -40,6 +40,7 @@ export class IccFieldViewComponent<T> implements OnInit, OnDestroy {
   clearField(event) {
     event.stopPropagation();
     this.value = null;
+    this.setFieldValueChanged(this.value);
   }
 
   setFieldValueChanged(val: any) {

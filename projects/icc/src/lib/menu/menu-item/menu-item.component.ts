@@ -10,7 +10,7 @@ import { IccMenuItem } from '../menu-item';
 export class IccMenuItemComponent implements OnInit {
   @Input() menuItems: IccMenuItem[];
 
-  @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccMenuItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
   @ViewChild('childMenu', { static: true }) public childMenu: any;
 
@@ -18,16 +18,16 @@ export class IccMenuItemComponent implements OnInit {
 
   ngOnInit() { }
 
-  menuItemClick(event) {
+  onMenuItemChanged(event) {
     // event.stopPropagation();
     // console.log(' 99999 event', event)
     if (!event.disabled) {
-      this.iccMenuItemClickEvent.emit(event);
+      this.iccMenuItemChangedEvent.emit(event);
     }
   }
 
-  onMenuItemClickEvent(event, item) {
-    // console.log(' 777777777777 event=', event, ' item=', item)
-    this.iccMenuItemClickEvent.emit(event);
+  onMenuFieldChanged(event, item) {
+    console.log(' 777777777777 event=', event, ' item=', item)
+    this.iccMenuItemChangedEvent.emit(event);
   }
 }

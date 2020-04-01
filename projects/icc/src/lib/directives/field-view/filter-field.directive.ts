@@ -28,7 +28,7 @@ export class IccFilterFieldDirective<T> implements OnInit, OnChanges, OnDestroy 
 
   private sub: Subscription;
 
-  @Output() iccFieldValueChangedEvent: EventEmitter<T> = new EventEmitter<T>();
+  @Output() iccFilterFieldChangedEvent: EventEmitter<T> = new EventEmitter<T>();
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -45,8 +45,8 @@ export class IccFilterFieldDirective<T> implements OnInit, OnChanges, OnDestroy 
         this.componentRef = this.container.createComponent(factory);
         this.componentRef.instance.field = this.field;
         this.componentRef.instance.dataSource = this.dataSource;
-        // this.sub = this.componentRef.instance.isFieldValueChanged$
-        //  .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
+        this.sub = this.componentRef.instance.isFieldValueChanged$
+          .subscribe((v: T) => this.iccFilterFieldChangedEvent.emit(v));
       }
     }
   }

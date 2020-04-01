@@ -15,7 +15,7 @@ export class IccMenuComponent implements OnChanges {
     private fieldViewService: IccFieldViewService,
   ) { }
   @Input() menuItemConfig: IccMenuItem;
-  @Output() iccMenuItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccMenuItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
 
   menuItems: IccMenuItem = {};
 
@@ -124,10 +124,10 @@ export class IccMenuComponent implements OnChanges {
     return item;
   }
 
-  onMenuItemClick(menuItem: IccMenuItem) {
+  onMenuItemChanged(menuItem: IccMenuItem) {
     if (!menuItem.disabled) {
       // console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
-      this.iccMenuItemClickEvent.emit(menuItem);
+      this.iccMenuItemChangedEvent.emit(menuItem);
     }
   }
 }

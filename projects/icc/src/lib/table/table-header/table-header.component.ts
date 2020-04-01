@@ -25,6 +25,7 @@ import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, ColumnMenuType, IccGroupHeader } from '../../models';
 import { IccSorts } from '../../services/sort/sorts';
+import { IccFilters } from '../../services/filter/filters';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
 import { IccRowGroup } from '../../services';
@@ -64,6 +65,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   sorts = new IccSorts();
   private hoverSortHeader: string;
+  filters = new IccFilters();
+  filteredValues = {}; // TODO as @Input()?
   pagination = new IccPagination();
   pageBuffer = 20;
   totalRecords = 0;
@@ -101,6 +104,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.columns) {
+      this.filters.setFilters(this.columns);
       this.setHeaderColumns();
     }
   }
@@ -176,6 +180,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   private fetchRecords() {
     const loadParams: IccLoadRecordParams = this.getLoadRecordParams();
+    console.log( ' loadParams =', loadParams)
     this.dataSourceService.requestParamsChanged$.next(loadParams);
   }
 
@@ -189,7 +194,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     return {
       pagination: this.pagination,
       sorts: this.sorts,
-      // filters: this.filters,
+      filters: this.filters,
       rowGroups: this.rowGroups
     };
   }
@@ -311,6 +316,19 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     return ret;
   }
 
+  onFilterFieldChanged(event, column: IccField) {
+    this.pending = true;
+    this.pagination.page = 1;
+    this.pagination.offset = 0;
+    this.resetDataSourceService();
+    // console.log( ' event=', event)
+    // console.log( ' column=', column)
+    this.filteredValues[column.name] = event.value;
+    this.filters.update(this.filteredValues);
+    this.fetchRecords();
+    // this.scrollToPosition(0);
+  }
+
   checkResizeORDnD(event: any, index: number) {
     this.tableEventService.checkResizeORDnD(event, index, this.cdkTableRef);
   }
@@ -360,7 +378,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     this.onColumnSortData(column, sort);
   }
 
-  onColumnMenuItemClick(menuItem: any, column: IccField) {
+  onMenuItemChanged(menuItem: any, column: IccField) {
     const field = menuItem.field as IccField;
     if (field.action === 'columnHideShow') {
       const col = this.columns.filter(item => item.name === field.name)[0];

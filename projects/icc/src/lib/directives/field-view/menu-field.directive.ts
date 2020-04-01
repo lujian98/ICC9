@@ -23,7 +23,7 @@ export class IccMenuFieldDirective<T> implements OnInit, OnChanges, OnDestroy {
 
   private sub: Subscription;
 
-  @Output() iccFieldValueChangedEvent: EventEmitter<T> = new EventEmitter<T>();
+  @Output() iccMenuFieldChangedEvent: EventEmitter<T> = new EventEmitter<T>();
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -36,12 +36,11 @@ export class IccMenuFieldDirective<T> implements OnInit, OnChanges, OnDestroy {
     if (changes.field && changes.field.firstChange) {
       const field = changes.field.currentValue;
       if (field.menuField) {
-        // console.log( field.name, ' menu 55555555555555 field =', field)
         const factory = this.resolver.resolveComponentFactory(field.menuField);
         this.componentRef = this.container.createComponent(factory);
         this.componentRef.instance.field = this.field;
         this.sub = this.componentRef.instance.isFieldValueChanged$
-          .subscribe((v: T) => this.iccFieldValueChangedEvent.emit(v));
+          .subscribe((v: T) => this.iccMenuFieldChangedEvent.emit(v));
       }
     }
   }

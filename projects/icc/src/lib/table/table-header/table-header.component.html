@@ -52,7 +52,7 @@
           </div>
           <icc-menu *ngIf="column.menu"
             [menuItemConfig]="column.menu"
-            (iccMenuItemClickEvent)="onColumnMenuItemClick($event, column)">
+            (iccMenuItemChangedEvent)="onMenuItemChanged($event, column)">
           </icc-menu>
         </div>
         <div *ngIf="column.name=='rowSelection'">
@@ -76,11 +76,12 @@
       <div *ngIf="tableConfigs.enableColumnFilter&&column.filterField">
         <span iccFilterField
           [field]="column"
-          ></span>
+          (iccFilterFieldChangedEvent)="onFilterFieldChanged($event, column)">
+        </span>
       </div>
     </cdk-header-cell>
   </ng-container>
-<!--
+<!-- iccFilterFieldChangedEvent
             <div *ngIf="gridConfigs.enableColumnFilter&&column.filterField"
             iccColumnFilter
             [column]="column"
