@@ -1,12 +1,14 @@
-<mat-form-field [ngClass]="'icc-grid-form-field'">
-  <input matInput type="text"  autocomplete="off"
+<mat-form-field [ngClass]="'icc-grid-form-field'" [ngStyle]="{'height': '30px'}">
+  <input matInput type="text" [value]="value" autocomplete="off"
     style="color:green; font-weight: bold; font-style: italic;"
     placeholder=". . . . . . . .">
-    <button mat-button style="width: 30px; height: 30px;"
-      matSuffix>
-      <i class="fas fa-times" style="color:orange"></i>
-    </button>
+
+  <button *ngIf="value" mat-button style="width: 30px; height: 30px;"
+        matSuffix>
+        <i class="fas fa-times" style="color:orange"></i>
+  </button>
 </mat-form-field>
+
 
 <!--
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IccFieldViewComponent } from '../field-view.component';
-// import { IccTextField } from '../../../../items';
+import { IccTextField } from '../../../items';
 
 @Component({
   selector: 'icc-field-view-text.component',
@@ -8,7 +8,7 @@ import { IccFieldViewComponent } from '../field-view.component';
   styleUrls: ['./field-view-text.component.scss']
 })
 export class IccFieldViewTextComponent<T> extends IccFieldViewComponent<T> {
-  // column: IccTextField;
+  column: IccTextField;
 
   constructor() {
     super();

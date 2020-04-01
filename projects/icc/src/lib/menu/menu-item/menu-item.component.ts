@@ -20,14 +20,14 @@ export class IccMenuItemComponent implements OnInit {
 
   menuItemClick(event) {
     // event.stopPropagation();
-    console.log(' 99999 event', event)
+    // console.log(' 99999 event', event)
     if (!event.disabled) {
       this.iccMenuItemClickEvent.emit(event);
     }
   }
 
   onMenuItemClickEvent(event, item) {
-    console.log(' 777777777777 event=', event, ' item=', item)
+    // console.log(' 777777777777 event=', event, ' item=', item)
     this.iccMenuItemClickEvent.emit(event);
   }
 }

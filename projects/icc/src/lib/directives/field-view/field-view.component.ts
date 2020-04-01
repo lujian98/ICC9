@@ -9,6 +9,7 @@ import { IccDataSource } from '../../datasource/datasource';
 })
 export class IccFieldViewComponent<T> implements OnInit, OnDestroy {
   field: IccField;
+  protected _value: T;
 
   group: FormGroup;
 
@@ -19,8 +20,18 @@ export class IccFieldViewComponent<T> implements OnInit, OnDestroy {
 
   isFieldValueChanged$: Subject<{}> = new Subject();
 
+  set value(val: T ) {
+    this._value = val;
+  }
+
+  get value(): T {
+    return this._value;
+  }
+
   constructor() { }
-  ngOnInit() { }
+  ngOnInit() {
+    this.value = null;
+  }
 
   fieldChange(event, value: any) {
     this.setFieldValueChanged(value);
