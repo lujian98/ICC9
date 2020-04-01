@@ -37,7 +37,13 @@ export class IccFieldViewComponent<T> implements OnInit, OnDestroy {
     this.setFieldValueChanged(value);
   }
 
+  clearField(event) {
+    event.stopPropagation();
+    this.value = null;
+  }
+
   setFieldValueChanged(val: any) {
+    this.value = val;
     const change = {
       field: this.field,
       value: val
