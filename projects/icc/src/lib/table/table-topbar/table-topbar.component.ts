@@ -71,7 +71,7 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
     };
   }
 
-  onMenuItemClick(event) {
+  onMenuItemChanged(event) {
     this.tableEventService.tableEvent$.next({ event: { menuItem: event } });
   }
 
