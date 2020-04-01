@@ -21,8 +21,8 @@ export class IccCalendarOverlayService extends IccOverlayService {
     return this.componentMapper[portal];
   }
 
-  createComponentInstance(configData: {}) {
-    this.componentRef.instance.selectedDate = configData;
-  }
+  // createComponentInstance(configData: {}) { // TODO g et configData
+  //  this.componentRef.instance.selectedDate = configData;
+  // }
 
 }

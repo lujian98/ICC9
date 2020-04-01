@@ -1,0 +1,8 @@
+<div [matMenuTriggerFor]="menu.childMenu">
+  <span *ngIf="menuItems.title">{{menuItems.title}}</span>
+  <i *ngIf="menuItems.icon" [class]="menuItems.icon" style="color:green"></i>
+</div>
+<icc-menu-item #menu
+  [menuItems]="menuItems.children"
+  (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+</icc-menu-item>

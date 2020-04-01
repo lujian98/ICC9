@@ -3,11 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { IccField } from '../../items';
 
 @Component({
-  selector: 'icc-field-view',
-  templateUrl: './field-view.component.html',
-  styleUrls: ['./field-view.component.scss']
+  selector: 'icc-fields-view',
+  templateUrl: './fields-view.component.html',
+  styleUrls: ['./fields-view.component.scss']
 })
-export class IccFieldViewComponent implements OnInit {
+export class IccFieldsViewComponent implements OnInit {
   @Input() field: IccField;
   @Input() formView: FormGroup;
 

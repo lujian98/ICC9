@@ -27,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 
 
-import { IccFieldViewComponent } from './view/field-view.component';
+import { IccFieldsViewComponent } from './view/fields-view.component';
 import { IccFormCheckboxComponent } from './view/fields/checkbox/form-checkbox.component';
 import { IccFormDateComponent } from './view/fields/date/form-date.component';
 import { IccFormFieldComponent } from './view/fields/form-field.component';
@@ -73,7 +73,7 @@ import { IccFormViewComponent } from './view/form-view.component';
   declarations: [
     IccFormComponent,
     IccFormViewComponent,
-    IccFieldViewComponent,
+    IccFieldsViewComponent,
 
     IccFormFieldDirective,
     IccFormFieldComponent,
@@ -94,7 +94,7 @@ import { IccFormViewComponent } from './view/form-view.component';
   exports: [
     IccFormComponent,
     IccFormViewComponent,
-    IccFieldViewComponent,
+    IccFieldsViewComponent,
 
     IccFormFieldDirective,
     IccFormFieldComponent,

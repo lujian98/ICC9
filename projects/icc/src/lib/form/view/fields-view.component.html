@@ -6,9 +6,9 @@
 <fieldset *ngIf="field.itemtype == 'fieldset'" class="singleRow">
   <legend *ngIf="field.title">{{field.title}}</legend>
   <ng-container *ngFor="let child of field.children;">
-    <icc-field-view [field]="child"
+    <icc-fields-view [field]="child"
       [formView]="formView"
       (iccFieldValueChangedEvent)="onFieldValueChanged($event, child)">
-    </icc-field-view>
+    </icc-fields-view>
   </ng-container>
 </fieldset>

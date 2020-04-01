@@ -26,10 +26,16 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   defaultValue?: any;
   placeholder?: string;
   readonly?: boolean;
+  icon?: string;
   children?: IccField[];
+  action?: string;
+  checked?: boolean; // TODO for checkbox
+  // children?: IccFieldConfig[] | IccField[];
+
+  menuField?: IccField;
+  filterField?: IccFilterField | IccField;
 
   sortField?: IccSortField;
-  filterField?: IccFilterField;
   groupField: IccGroupField;
   renderer?: IccRendererType;
   style?: {};
@@ -72,9 +78,9 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
     if (!itemConfig.width) {
       itemConfig.width = 100;
     }
-    if (!itemConfig.fixedWidth && itemConfig.fixedWidth !== false) {
-      itemConfig.fixedWidth = 'auto';
-    }
+    // if (!itemConfig.fixedWidth && itemConfig.fixedWidth !== false) {
+    //  itemConfig.fixedWidth = 'auto';
+    // }
     if (!itemConfig.minWidth) {
       itemConfig.minWidth = 100;
     }

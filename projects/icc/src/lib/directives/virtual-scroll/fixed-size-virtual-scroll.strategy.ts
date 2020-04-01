@@ -127,7 +127,6 @@ export class FixedSizeVirtualScrollStrategy implements VirtualScrollStrategy {
   setDataLength(length: number): void {
     if (this.dataLength !== length) {
       this.dataLength = length;
-      // console.log( ' data length change=', length)
       this.onDataLengthChanged();
     }
   }

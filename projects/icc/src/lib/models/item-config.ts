@@ -19,12 +19,16 @@ export type IccRendererType = string | Function | Component;
 export type IccEditField = boolean | string;
 
 export interface IccItemConfig {
-  name: string;
+  name?: string; // TODO name is optional now, it should required at the final
   type?: string | IccType | IccTextType | IccNumberType | IccSelectType | IccRadioType;
   title?: string;
   titleClass?: string;
+  icon?: string;
   index?: number; // auto generated
   hidden?: boolean | string; // column hidden: 'always' will hide always, 'never' will visible always
+  disabled?: boolean;
+  action?: string;
+  checked?: boolean; // for checkbox
 }
 
 export interface IccFieldConfig extends IccItemConfig {
@@ -41,6 +45,7 @@ export interface IccFieldConfig extends IccItemConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccFieldConfig[] | IccField[];
+
   // allowBlank?: boolean;
 }
 
@@ -58,7 +63,7 @@ export interface IccColumnConfig extends IccFieldConfig {
   stickyable?: boolean;
   sticky?: boolean;
   stickyEnd?: boolean;
-  menu?: boolean | IccMenuItem;
+  menu?: boolean | IccMenuItem,
   cellMenu?: boolean | IccMenuItem;
   groupHeader?: IccGroupHeader;
   left?: string | 'auto';

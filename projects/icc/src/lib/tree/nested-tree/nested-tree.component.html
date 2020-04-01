@@ -1,0 +1,89 @@
+<cdk-virtual-scroll-viewport
+  iccVirtualScroll
+  [dataSourceLength]="dataSourceLength"
+  [minBufferPx]='30'
+  [maxBufferPx]='30'
+  (scroll)="onViewportScroll($event)"
+  (scrolledIndexChange)="nextBatch($event)">
+
+  <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl"
+    cdkDropList
+    [cdkDropListSortingDisabled]="true"
+    (cdkDropListDropped)="drop($event)">
+    <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node"
+      cdkDrag
+      (cdkDragStarted)="dragStart(node)"
+      (cdkDragMoved)="dragMoved($event)"
+      [cdkDragData]="node">
+      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
+        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
+        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          {{ node.name }} - A1
+        </span>
+      </div>
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
+        {{ node[column.name] }} - X2
+      </div>
+    </cdk-tree-node>
+    <cdk-nested-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node; when: hasChild"
+      cdkDrag
+      (cdkDragStarted)="dragStart(node)"
+      (cdkDragMoved)="dragMoved($event)"
+      [cdkDragData]="node">
+
+      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
+        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
+        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          <span [attr.aria-label]="'toggle ' + node.name" [ngStyle]="{'padding-left': '5px'}"
+            (click)="nodeExpandCollapse(node)">
+            <i [class]="node.isExpanded ? 'fas fa-caret-down' : 'fas fa-caret-right' "></i>
+            {{ node.name }} - B1
+        </span>
+
+        </span> <!-- <i class="fas fa-caret-right"></i> <i class="fas fa-caret-down"></i> -->
+      </div>
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
+        {{ node[column.name] }} - Y2
+      </div>
+
+      <div [class.icc-tree-invisible]="!node.isExpanded">
+        <ng-container cdkTreeNodeOutlet></ng-container>
+      </div>
+    </cdk-nested-tree-node>
+  </cdk-tree>
+
+</cdk-virtual-scroll-viewport>
+
+  <!--
+
+    <cdk-nested-tree-node *cdkTreeNodeDef="let node; depth as level">
+  <div [style.padding-left.px]="20 * level">
+    {{node.filename}}: {{node.type}}
+  </div>
+  <div [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+    <ng-container cdkTreeNodeOutlet></ng-container>
+  </div>
+</cdk-nested-tree-node>
+
+
+    <ng-container *cdkVirtualFor="let item of dataSource"></ng-container>
+
+          <button mat-icon-button [attr.aria-label]="'toggle ' + node.name" cdkTreeNodeToggle
+        (click)="nodeExpandCollapse(node)">
+        <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
+      </button>
+
+
+  -->

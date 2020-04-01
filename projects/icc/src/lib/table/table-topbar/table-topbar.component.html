@@ -1,0 +1,10 @@
+<div class="icc-table-topbar">
+  <div *ngIf="tableConfigs.enableTableViewSummary">{{ tableViewSummary }}</div>
+  <div class="icc-flex"></div>
+  <div *ngIf="tableConfigs.enableTableSideMenu">
+    <icc-menu *ngIf="menuItems" [menuItemConfig]="menuItems"
+      (iccMenuItemClickEvent)="onMenuItemClick($event)">
+    </icc-menu>
+  </div>
+</div>
+

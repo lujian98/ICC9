@@ -2,13 +2,13 @@ import { CollectionViewer, DataSource, ListRange } from '@angular/cdk/collection
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map, shareReplay, startWith } from 'rxjs/operators';
-import { IccAbstractDataService } from '../../services';
+import { IccAbstractDataService } from '../services';
 
-export class IccBaseGridDataSource<T> extends DataSource<T> {
-  private recordsSubject = new BehaviorSubject<T[]>([]);
+export class IccDataSource<T> extends DataSource<T> {
+  protected recordsSubject = new BehaviorSubject<T[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  private visibleData$: Observable<T[]>;
-  private _data: T[];
+  protected visibleData$: Observable<T[]>;
+  _data: T[];
   readonly queryData$: Observable<T[]>;
   public loading$ = this.loadingSubject.asObservable();
 
@@ -30,18 +30,6 @@ export class IccBaseGridDataSource<T> extends DataSource<T> {
     return data;
   }
 
-  set viewport(viewport: CdkVirtualScrollViewport) {
-    const sliced = combineLatest(
-      this.recordsSubject,
-      viewport.renderedRangeStream.pipe(startWith({} as ListRange))
-    ).pipe(
-      map(([data, { start, end }]) =>
-        start == null || end == null ? data : data.slice(start, end)
-      )
-    );
-    this.visibleData$ = sliced.pipe(shareReplay(1));
-  }
-
   set dataSourceService(val: IccAbstractDataService<T>) {
     this._dataSourceService = val;
     this.subDataSourceService = this._dataSourceService.dataSourceChanged$
@@ -53,8 +41,22 @@ export class IccBaseGridDataSource<T> extends DataSource<T> {
   }
 
   constructor(
+    protected viewport: CdkVirtualScrollViewport,
   ) {
     super();
+    const sliced = combineLatest(
+      this.recordsSubject,
+      this.viewport.renderedRangeStream.pipe(startWith({} as ListRange))
+    ).pipe(
+      map(([data, range]) => {
+        if (!range.end) {
+          range = this.viewport.getRenderedRange();
+        }
+        console.log(' start=', range.start, ' end =', range.end, ' datalength=', data.length);
+        return data.slice(range.start, range.end);
+      })
+    );
+    this.visibleData$ = sliced.pipe(shareReplay(1));
     this.queryData$ = this.recordsSubject.asObservable();
   }
 

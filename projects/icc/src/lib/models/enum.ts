@@ -14,5 +14,5 @@ export enum ColumnMenuType {
   SortAscending = 'sortAscending',
   SortDescending = 'sortDescending',
   RemoveSort = 'removeSort',
-  HideColumn = 'hideColumn'
+  HideColumn = 'hideColumn' // TODO remove this
 }

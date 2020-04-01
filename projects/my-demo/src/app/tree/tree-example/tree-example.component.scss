@@ -1,0 +1,13 @@
+
+.app-tree-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: block;
+  position: relative;
+  height: calc(100vh - 200px);
+}
+
+.tooltip-demo {
+  width: 200px;
+  height: 30px;
+}

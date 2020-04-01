@@ -1,0 +1,11 @@
+<mat-form-field class="icc-form-field">
+  <input matInput type="text" [value]="value" autocomplete="off"
+    style="color:green; font-style: italic;"
+    (click)="$event.stopPropagation()"
+    (keyup)="fieldChange($event, $event.target.value)"
+    placeholder=". . . . . . . .">
+
+  <div *ngIf="value" matSuffix (click)="clearField($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+</mat-form-field>

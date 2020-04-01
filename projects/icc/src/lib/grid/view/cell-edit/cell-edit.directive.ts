@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, share } from 'rxjs/operators';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
+import { IccDataSource } from '../../../datasource/datasource';
 import { IccField } from '../../../items';
 import { IccCellEditData } from './cell-edit.service';
 
@@ -27,7 +27,7 @@ export class IccCellEditDirective<T> implements OnChanges, OnDestroy {
   @Input() rowIndex: number;
   @Input() colIndex: number;
   @Input() record: T;
-  @Input() dataSource: IccBaseGridDataSource<T>;
+  @Input() dataSource: IccDataSource<T>;
 
   @Output() iccSaveCellEditValueEvent: EventEmitter<IccCellEditData<T>> = new EventEmitter<IccCellEditData<T>>();
   @Output() iccCellEditSpecialKeyEvent: EventEmitter<T> = new EventEmitter<T>();

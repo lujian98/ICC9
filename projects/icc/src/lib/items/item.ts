@@ -36,6 +36,9 @@ export abstract class IccItem implements IccItemConfig {
   }
 
   constructor(itemConfig: IccItemConfig | IccColumnConfig, itemtype: string) {
+    if (!itemConfig.title) {
+      itemConfig.title = itemConfig.name;
+    }
     this.itemConfig = itemConfig;
     this.itemtype = itemtype;
     Object.assign(this, itemConfig);

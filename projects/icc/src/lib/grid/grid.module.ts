@@ -40,7 +40,7 @@ import { IccDatePickerModule } from '../date-picker/date-picker.module';
 import { IccBaseGridComponent } from './grid.component';
 import { IccGridViewComponent } from './view/grid-view.component';
 
-import { IccBaseGridDataSource } from './datasource/grid-datasource';
+import { IccDataSource } from '../datasource/datasource';
 
 import { IccColumnFilterComponent } from './view/column-filter/column-filter.component';
 import { IccColumnFilterDirective } from './view/column-filter/column-filter.directive';
@@ -222,7 +222,7 @@ import { IccColumnResizeDnDService } from './services/column-resize-dnd.service'
     IccCellMenuFormComponent,
   ],
   providers: [
-    IccBaseGridDataSource,
+    // IccDataSource,
     IccDataSourceService,
     IccColumnsService,
     IccColumnResizeDnDService,

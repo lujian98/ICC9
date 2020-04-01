@@ -7,6 +7,7 @@ import { IccRadioField } from './fields/radio_field';
 import { IccSelectField } from './fields/select_field';
 import { IccTextField } from './fields/text_field';
 import { IccFieldSetItem } from './items/fieldset_item';
+import { IccButtonField } from './fields/button_field';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class IccItemFieldService {
     this.componentMapper = {
       fieldset: IccFieldSetItem,
       date: IccDateField,
+      button: IccButtonField,
       checkbox: IccCheckboxField,
       number: IccNumberField,
       radio: IccRadioField,

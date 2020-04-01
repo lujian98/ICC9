@@ -1,5 +1,5 @@
 import { IccField } from '../../items';
-import { IccSortState } from '../../grid';
+// import { IccSortState } from '../../grid';
 import { IccSort } from './sort';
 import { IccUtils } from '../../utils/utils';
 import { IccGroupByColumn } from '../row-group/row-groups';
@@ -53,10 +53,12 @@ export class IccSorts {
   }
 
   update(column: IccField, key: string, direction: string, active: boolean) {
+    // column.sort = null;
     this.remove(key, true);
     if (active) {
       this.add(column, key, direction, active);
     } else if (this.sorts && this.sorts.length > 0) {
+
       this.sorts[this.sorts.length - 1].active = true;
     }
   }
@@ -68,6 +70,7 @@ export class IccSorts {
     } else {
       this.sorts.push(sort);
     }
+    // column.sort = sort;
   }
 
   private remove(key: string, setInactive: boolean) {
@@ -76,6 +79,7 @@ export class IccSorts {
       for (const aSort of this.sorts) {
         if (aSort.key === key) {
           found = this.sorts.indexOf(aSort, 0);
+          aSort.remove();
         } else if (setInactive) {
           aSort.active = false;
         }
@@ -128,17 +132,17 @@ export class IccSorts {
       });
     }
     if (!this.multiSort) {
-      // const sorts = this.sorts.filter(sort => groups.indexOf(sort.key) >= 0 || sort.active);
-      // this.sorts = [...sorts];
       const sorts = this.sorts.filter(sort => {
         const groupFields = groups.map(group => group.column);
         return groupFields.indexOf(sort.key) >= 0 || sort.active;
       });
+      const removedSorts = this.sorts.filter(aSort => sorts.indexOf(aSort) < 0);
+      removedSorts.forEach(aSort => aSort.remove());
       this.sorts = [...sorts];
     }
     console.log(' this.sorts=', this.sorts);
   }
-
+  /*
   getSortStates(): IccSortState[] {
     if (this.sorts && this.sorts.length > 0) {
       const sorts = this.sorts.map(aSort => {
@@ -153,7 +157,7 @@ export class IccSorts {
     }
   }
 
-  /*
+
   applySortStates(sorts: IccSortState[], gridColumns: IccColumns) {
     if (sorts && sorts.length > 0) {
       sorts.forEach((sort, index) => {

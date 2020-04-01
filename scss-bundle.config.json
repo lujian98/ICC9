@@ -1,0 +1,9 @@
+{
+  "bundlerOptions": {
+    "entryFile": "./projects/icc/src/lib/theme/_theming.scss",
+    "outFile": "./dist/icc/_theming.scss",
+    "rootDir": "",
+    "ignoreImports": ["~@angular/.*"],
+    "logLevel": "debug"
+  }
+}

@@ -1,6 +1,6 @@
 import { IccAbstractDataService } from '../services';
 
-export type itemType = 'text' | 'number' | 'select' | 'radio' | 'fieldset';
+export type itemType = 'text' | 'number' | 'select' | 'radio' | 'fieldset' | 'checkbox' | 'button';
 
 export interface IccSelectOption {
   label: string;
@@ -22,6 +22,10 @@ export interface IccNumberType extends IccType {
   minValue?: number;
   maxValue?: number;
 }
+
+// export interface IccCheckboxType extends IccType {
+//  checked?: boolean;
+// }
 
 export interface IccSelectType extends IccType {
   multiSelect?: boolean;
@@ -67,4 +71,36 @@ export interface IccGridConfigs {
   defaultSortDir?: string;
   filteredValues?: {};
   rowHeight?: number;
+
+}
+
+export interface IccTableConfigs {
+  tableId?: string;
+  tableType?: string;
+  enableCellEdit?: boolean;
+  enableColumnDnD?: boolean;
+  enableColumnFilter?: boolean;
+  enableColumnHide?: boolean;
+  enableColumnResize?: boolean;
+  enableColumnSort?: boolean;
+  enableColumnSticky?: boolean;
+  enableMultiColumnSort?: boolean;
+  enableMultiRowGroup?: boolean;
+  enableMultiRowSelection?: boolean;
+  enableRowGroup?: boolean;
+  enableRowSelection?: boolean;
+  enableTableTopbar?: boolean;
+  enableTableHeader?: boolean;
+  enableTableSideMenu?: boolean;
+  enableTableViewSummary?: boolean;
+
+  dataKeyId?: string;
+  defaultSort?: string;
+  defaultSortDir?: string;
+  filteredValues?: {};
+  rowHeight?: number;
+
+  isNestedData?: boolean;
+  width?: number; // if tree panel without table header
+  columnHeaderPosition?: number;
 }

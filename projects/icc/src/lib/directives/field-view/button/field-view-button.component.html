@@ -1,0 +1,27 @@
+<div>
+  <button [ngStyle]="{'width': '100%', 'height': '30px', 'text-align': 'left'}"
+    (click)="fieldChange($event, field)">
+    <i *ngIf="field.icon" [class]="field.icon"></i>
+    {{field.title}}
+  </button>
+</div>
+
+<!--
+      (click)="$event.stopPropagation()"
+
+  mat-menu-item
+  [hidden]="field.hidden"
+  <div [formGroup]="group" [hidden]="field.hidden"
+  [ngStyle]="{'width': field.width+'px', 'text-align': field.align}">
+  <mat-checkbox
+    [formControlName]="field.name"
+    [labelPosition]="field.labelPosition"
+    (change)="fieldChange($event, $event.checked)"
+    [checked]="field.value">
+    {{field.title}}
+  </mat-checkbox>
+
+    <button mat-menu-item (click)="menuItemClick($event, item)">
+    <span>{{item.title}}</span>
+  </button>
+-->

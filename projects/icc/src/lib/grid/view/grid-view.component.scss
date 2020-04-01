@@ -10,6 +10,7 @@ cdk-virtual-scroll-viewport {
 @mixin base {
   .mat-table {
     width: 100%;
+    // background: unset !important;
     // overflow: hidden; // WARNING  this will provent pin left and right with sticky
     // position: relative; // WARNING  this will provent pin left and right with sticky
   }
@@ -125,22 +126,22 @@ cdk-virtual-scroll-viewport {
 
 .mat-header-row {
   position: sticky;
-  background: white;
+  // background: white;
   border-top: 1px solid rgba(0,0,0,.12);
 }
 
-.mat-row:nth-child(even){
-  background-color: white;
+.mat-row:nth-child(even){ // TODO theme
+  // background-color: white;
 }
 
-.mat-row:nth-child(odd){
-  background-color: whitesmoke;
+.mat-row:nth-child(odd){ // TODO theme
+  // background-color: whitesmoke;
 }
 
-.mat-row {
+.mat-row { // TODO theme
   // min-height: 65px;
   &.selected {
-      background: #dddddd;
+      // background: #dddddd;
       // background: green;
   }
 }
@@ -445,13 +446,13 @@ cdk-virtual-scroll-viewport {
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color:white;
+  // background-color:white;
   border-radius: 0px;
   border: solid 2px black;
 }
 
 ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color:white;
+  // background-color:white;
   border-radius: 0px;
   border: solid 2px black;
 }
@@ -461,7 +462,7 @@ cdk-virtual-scroll-viewport {
 }
 
 ::ng-deep .mat-checkbox-mixedmark {
-  background-color: black;
+  // background-color: black;
 }
 
 .icc-grid-no-record-header {

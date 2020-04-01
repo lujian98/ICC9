@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, share } from 'rxjs/operators';
 import { IccUtils } from '../../../utils/utils';
 import { IccField } from '../../../items';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
+import { IccDataSource } from '../../../datasource/datasource';
 import { IccCellEditData } from './cell-edit.service';
 
 
@@ -19,7 +19,7 @@ export class IccCellEditComponent<T> implements OnInit, OnDestroy {
   rowIndex: number;
   colIndex: number;
   record: T;
-  dataSource: IccBaseGridDataSource<T>;
+  dataSource: IccDataSource<T>;
   saveDebounceTime = 2500;
 
   private _column: IccField;

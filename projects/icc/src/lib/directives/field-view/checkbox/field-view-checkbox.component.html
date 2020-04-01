@@ -1,0 +1,14 @@
+<div>
+  <mat-checkbox
+    [labelPosition]="field.labelPosition"
+    (click)="$event.stopPropagation()"
+    (change)="fieldChange($event, $event.checked)"
+    [checked]="field.checked">
+    {{field.title}}
+  </mat-checkbox>
+</div>
+
+<!--
+      [formControlName]="field.name"
+  <div [formGroup]="group" [hidden]="field.hidden"
+-->

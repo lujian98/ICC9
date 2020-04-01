@@ -1,4 +1,5 @@
 import { IccItemConfig } from '../models';
+import { IccButtonField } from './fields/button_field';
 import { IccCheckboxField } from './fields/checkbox_field';
 import { IccDateField } from './fields/date_field';
 import { IccNumberField } from './fields/number_field';
@@ -15,6 +16,7 @@ export class IccItemFactory {
     this.componentMapper = {
       fieldset: IccFieldSetItem,
       date: IccDateField,
+      button: IccButtonField,
       checkbox: IccCheckboxField,
       number: IccNumberField,
       radio: IccRadioField,

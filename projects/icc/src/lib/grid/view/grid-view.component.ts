@@ -32,7 +32,7 @@ import { IccGridConfigs } from '../../models';
 import { IccMenuItem } from '../../menu/menu-item';
 import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
-import { IccBaseGridDataSource } from '../datasource/grid-datasource';
+import { IccDataSource } from '../../datasource/datasource';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccColumnsService } from '../services/columns.service';
 import { IccGridStatesService } from '../services/grid-states.service';
@@ -58,7 +58,7 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
   @Input() data: T[] = [];
 
   columns: IccField[] = [];
-  dataSource: IccBaseGridDataSource<T>;
+  dataSource: IccDataSource<T>;
   dataSourceLength = 0;
   totalRecords = 0;
   visibleColumns: IccField[] = [];
@@ -172,8 +172,8 @@ export class IccGridViewComponent<T> implements OnInit, OnChanges, AfterViewInit
       return;
     }
     this.filters.update(this.gridConfigs.filteredValues);
-    this.dataSource = new IccBaseGridDataSource();
-    this.dataSource.viewport = this.viewport;
+    this.dataSource = new IccDataSource(this.viewport);
+    // this.dataSource.viewport = this.viewport;
     this.dataSource.loadRecords(this.data);
     this.dataSource.dataSourceService = this.dataSourceService;
     this.dataSourceService.queuedData = this.data;

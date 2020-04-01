@@ -1,0 +1,19 @@
+@import '~@angular/material/theming.scss';
+@include mat-core();
+
+.orange {
+  color: orange;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+
+.icc-flex {
+  flex: 1;
+}
+

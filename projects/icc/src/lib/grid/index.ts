@@ -12,7 +12,7 @@ export * from './view/grid-view.component';
 export * from './view/inner-html-route.directive';
 export * from './view/cell-menu-form/cell-menu-form.component';
 
-export * from './datasource/grid-datasource';
+// export * from './datasource/grid-datasource';
 
 export * from './view/column-filter/column-filter.directive';
 export * from './view/column-filter/column-filter.service';

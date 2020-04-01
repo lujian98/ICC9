@@ -4,6 +4,7 @@ export interface IccGroupHeader {
   titleClass?: string;
   align?: 'start' | 'center' | 'end';
   dragDisabled?: boolean;
+  hidden?: boolean | string;
   index?: number; // auto assigned the first grouped header column index
   width?: number;       // auto calculated width based
   colspan?: number;     // auto calculated

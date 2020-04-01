@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import './assets/css/icc-date-range-picker.css';
+@import '../../../dist/icc/theming';
+
 /* // Set box-sizing globally to handle padding and border widths */
 *,
 *:after, *:before {

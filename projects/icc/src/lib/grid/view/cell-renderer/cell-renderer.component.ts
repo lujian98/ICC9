@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IccBaseGridDataSource } from '../../datasource/grid-datasource';
+import { IccDataSource } from '../../../datasource/datasource';
 import { IccField } from '../../../items';
 
 @Component({
@@ -14,7 +14,7 @@ export class IccCellRendererComponent<T> {
   rowIndex: number;
   colIndex: number;
   record: T;
-  dataSource: IccBaseGridDataSource<T>;
+  dataSource: IccDataSource<T>;
 
   constructor() { }
 

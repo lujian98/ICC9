@@ -1,0 +1,53 @@
+<cdk-virtual-scroll-viewport
+  iccVirtualScroll
+  [rowHeight]="tableConfigs.rowHeight"
+  [dataSourceLength]="dataSourceLength"
+  [viewportBuffer]="viewportBuffer"
+  (scroll)="onViewportScroll($event)"
+  (scrolledIndexChange)="nextBatch()">
+  <cdk-table
+    [ngStyle]="{'width': tableWidth + 'px'}"
+    [dataSource]="dataSource">
+    <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
+      [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <cdk-cell class="icc-cdk-table-data-cell"
+        *cdkCellDef="let record; let rowIndex = index"
+        [attr.data-label]="column.title +': '"
+        [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+        <div class="icc-cdk-table-column-cell">
+          <span *ngIf="column.name!='rowSelection'">
+            {{record[column.name]}}
+          </span>
+          <span *ngIf="column.name=='rowSelection'">
+            <mat-checkbox
+              (click)="checkboxClick($event)"
+              (change)="checkboxChange($event, rowIndex, record, column)"
+              [checked]="isRowSelected(record)">
+            </mat-checkbox>
+          </span>
+        </div>
+      </cdk-cell>
+    </ng-container>
+
+    <cdk-row class="icc-cdk-table-data-row" *cdkRowDef="let record; let rowIndex = index; columns: displayedColumns"
+      [ngClass]="{ 'selected': isRowSelected(record)}"
+      (click)="rowClick($event, rowIndex, record)">
+    </cdk-row>
+
+    <ng-container cdkColumnDef="groupHeader" [sticky]="true"> <!-- row group sticky is not working -->
+      <cdk-cell [ngClass]="'icc-table-row-group'" colspan="999" *cdkCellDef="let group">
+        <span [ngClass]="'icc-table-row-group-level'+group.level">
+          <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+          <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+          <strong>{{groupByFieldName(group)}} = {{groupByFieldValue(group)}} ({{group.totalCounts}})</strong>
+        </span>
+      </cdk-cell>
+    </ng-container>
+    <cdk-row *cdkRowDef="let row; columns: ['groupHeader']; when: isGroup" (click)="groupHeaderClick(row)"> </cdk-row>
+
+  </cdk-table>
+</cdk-virtual-scroll-viewport>
+
+<!--
+  TODO selected class
+-->
