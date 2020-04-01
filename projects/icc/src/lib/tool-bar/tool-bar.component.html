@@ -4,9 +4,11 @@
       <button *ngIf="item.type=='button'" mat-button [disabled]="item.disabled"
         (click)="toolBarItemClick(item)"> {{item.title}}
       </button>
+      <!--
       <icc-active-menu *ngIf="item.children" [menuItem]="item"
         (iccMenuOptionClickEvent)="toolBarItemClick($event)">
       </icc-active-menu>
+            -->
     </span>
   </div>
 </div>

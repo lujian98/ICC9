@@ -12,8 +12,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IccFieldViewModule } from '../directives/field-view/field-view.module';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
 
-
-import { IccActiveMenuComponent } from './active-menu.component';
 import { IccMenuComponent } from './menu.component';
 import { IccMenuItemComponent } from './menu-item/menu-item.component';
 export { IccMenuItem } from './menu-item';
@@ -32,17 +30,14 @@ export { IccMenuItem } from './menu-item';
     IccFieldViewModule,
   ],
   declarations: [
-    IccActiveMenuComponent,
     IccMenuComponent,
     IccMenuItemComponent
   ],
   exports: [
-    IccActiveMenuComponent,
     IccMenuComponent,
     IccMenuItemComponent
   ],
   entryComponents: [
-    IccActiveMenuComponent,
     IccMenuComponent,
     IccMenuItemComponent
   ],
