@@ -140,14 +140,9 @@ export class IccTableComponent<T> implements OnChanges {
   }
 
   private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccFieldConfig {
-    const menu: IccFieldConfig = {
-      children: []
-    };
-    // TODO if use input column menu
-    menu.icon = 'fas fa-ellipsis-v';
-    /*
+    const menus = [];
     if (tableConfigs.enableColumnSort && column.sortField) {
-      menu.children.push({
+      menus.push({
         title: 'Sort Ascending',
         icon: 'fas fa-sort-amount-down',
         name: ColumnMenuType.SortAscending,
@@ -162,7 +157,7 @@ export class IccTableComponent<T> implements OnChanges {
         });
     }
     if (tableConfigs.enableRowGroup && column.groupField) {
-      menu.children.push({
+      menus.push({
         title: 'Group By this field',
         name: 'groupBy',
       }, {
@@ -172,7 +167,7 @@ export class IccTableComponent<T> implements OnChanges {
         });
     }
     if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
-      menu.children.push({
+      menus.push({
         title: 'Pin Left',
         name: 'pinLeft',
         icon: 'fas fa-chevron-left'
@@ -185,7 +180,13 @@ export class IccTableComponent<T> implements OnChanges {
           name: 'unpin',
           icon: 'fas fa-times'
         });
-    } */
+    }
+
+    const menu: IccFieldConfig = {
+      icon: 'fas fa-ellipsis-v',
+      children: menus
+    };
+    // TODO if use input column menu
     return menu;
   }
 }
