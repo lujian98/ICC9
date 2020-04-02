@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
-import { IccMenuItem } from '../menu/menu-item';
 import { ColumnMenuType, IccColumnConfig, IccTableConfigs } from '../models';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
+import { IccFieldConfig } from '../models/item-config';
 
 @Component({
   selector: 'icc-table',
@@ -139,12 +139,13 @@ export class IccTableComponent<T> implements OnChanges {
     });
   }
 
-  private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccMenuItem {
-    const menu: IccMenuItem = {
+  private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccFieldConfig {
+    const menu: IccFieldConfig = {
       children: []
     };
     // TODO if use input column menu
     menu.icon = 'fas fa-ellipsis-v';
+    /*
     if (tableConfigs.enableColumnSort && column.sortField) {
       menu.children.push({
         title: 'Sort Ascending',
@@ -184,7 +185,7 @@ export class IccTableComponent<T> implements OnChanges {
           name: 'unpin',
           icon: 'fas fa-times'
         });
-    }
+    } */
     return menu;
   }
 }

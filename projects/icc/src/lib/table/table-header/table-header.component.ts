@@ -30,10 +30,9 @@ import { IccDataSourceService } from '../../services/data-source.service';
 import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
 import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
-import { IccMenuItem } from '../../menu/menu-item';
 import { IccPagination } from '../../services/pagination/pagination';
 import { IccTableEventService } from '../services/table-event.service';
-
+import { IccFieldConfig } from '../../models/item-config';
 
 export interface IccSortState {
   name: string;
@@ -227,7 +226,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   private setColumnsHide(colName: string = null) {
     if (this.tableConfigs.enableColumnHide) {
-      const columnsHideShow: IccMenuItem = {
+      const columnsHideShow: IccFieldConfig = {
         title: 'Columns',
         name: 'columns',
         children: this.columns.map((column: IccField) => {

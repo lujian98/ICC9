@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IccMenuItem } from '../menu-item';
+import { IccField } from '../../items';
 
 @Component({
   selector: 'icc-menu-item',
@@ -8,9 +8,9 @@ import { IccMenuItem } from '../menu-item';
   styleUrls: ['./menu-item.component.scss']
 })
 export class IccMenuItemComponent implements OnInit {
-  @Input() menuItems: IccMenuItem[];
+  @Input() menuItems: IccField[];
 
-  @Output() iccMenuItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccMenuItemChangedEvent: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('childMenu', { static: true }) public childMenu: any;
 

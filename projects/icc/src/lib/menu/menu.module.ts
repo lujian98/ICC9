@@ -14,7 +14,6 @@ import { IccFieldViewService } from '../directives/field-view/field-view.service
 
 import { IccMenuComponent } from './menu.component';
 import { IccMenuItemComponent } from './menu-item/menu-item.component';
-export { IccMenuItem } from './menu-item';
 
 @NgModule({
   imports: [

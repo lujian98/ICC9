@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IccMenuItem } from '../menu/menu-item';
 
 @Component({
   selector: 'icc-tool-bar',
@@ -7,9 +6,9 @@ import { IccMenuItem } from '../menu/menu-item';
   // styleUrls: ['./tool-bar.component.scss']
 })
 export class IccToolBarComponent implements OnInit {
-  @Input() toolBarItems: IccMenuItem[];
+  @Input() toolBarItems: any[];
 
-  @Output() iccToolBarItemClickEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Output() iccToolBarItemClickEvent: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -17,7 +16,7 @@ export class IccToolBarComponent implements OnInit {
     console.log( ' tool bar is ok')
   }
 
-  toolBarItemClick(item: IccMenuItem) {
+  toolBarItemClick(item: any) {
     this.iccToolBarItemClickEvent.emit(item);
   }
 }

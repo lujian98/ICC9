@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IccMenuItem } from './menu-item';
 import { IccItemFieldService } from '../items/item_field.service';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
 import { IccField } from '../items';
+import { IccFieldConfig } from '../models/item-config';
 
 @Component({
   selector: 'icc-menu',
@@ -14,12 +14,12 @@ export class IccMenuComponent implements OnChanges {
     private itemService: IccItemFieldService,
     private fieldViewService: IccFieldViewService,
   ) { }
-  @Input() menuItemConfig: IccMenuItem;
-  @Output() iccMenuItemChangedEvent: EventEmitter<IccMenuItem> = new EventEmitter();
+  @Input() menuItemConfig: IccFieldConfig;
+  @Output() iccMenuItemChangedEvent: EventEmitter<any> = new EventEmitter();
 
-  menuItems: IccMenuItem = {};
+  menuItems: IccField;
 
-  testMenuItems: IccMenuItem =
+  testMenuItems: IccFieldConfig =
     {
       icon: 'fas fa-ellipsis-v',
       // name: 'close',
@@ -101,12 +101,12 @@ export class IccMenuComponent implements OnChanges {
     }
   }
 
-  private getMenuItems(configs: IccMenuItem): IccField {
+  private getMenuItems(configs: IccFieldConfig): IccField {
     if (configs) {
       const menuItems: IccField = this.getMenuItem(configs);
       if (configs.children && configs.children.length > 0) {
         const items = [];
-        configs.children.forEach((config: IccMenuItem) => {
+        configs.children.forEach((config: IccFieldConfig) => {
           items.push(this.getMenuItems(config));
         });
         menuItems.children = items;
@@ -115,7 +115,7 @@ export class IccMenuComponent implements OnChanges {
     }
   }
 
-  private getMenuItem(config: IccMenuItem): IccField {
+  private getMenuItem(config: IccFieldConfig): IccField {
     if (!config.type) {
       config.type = 'button';
     }
@@ -124,7 +124,7 @@ export class IccMenuComponent implements OnChanges {
     return item;
   }
 
-  onMenuItemChanged(menuItem: IccMenuItem) {
+  onMenuItemChanged(menuItem: any) {
     if (!menuItem.disabled) {
       // console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
       this.iccMenuItemChangedEvent.emit(menuItem);

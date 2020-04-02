@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 
 import { IccFormFieldService } from './view/fields/form-field.service';
 import { IccAbstractDataService } from '../services';
-import { IccMenuItem } from '../menu/menu-item';
 import { IccUtils } from '../utils/utils';
 
 import { IccFieldConfig } from '../models';
@@ -52,7 +51,7 @@ export class IccFormComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   omittedFields: any[]; // not sure for this now
 
-  toolBarItems: IccMenuItem[] = [];
+  toolBarItems: any[] = [];
 
   private subToolBarItemClick: Subscription;
   private subDetailDataSourceChanged: Subscription;
