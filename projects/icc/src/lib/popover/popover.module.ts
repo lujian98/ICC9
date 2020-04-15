@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { IccPopoverDirective } from './popover.directive';
-import { IccPopoverComponent } from './popover/popover.component';
 
 @NgModule({
   imports: [
@@ -13,11 +12,8 @@ import { IccPopoverComponent } from './popover/popover.component';
   ],
   declarations: [
     IccPopoverDirective,
-    IccPopoverComponent,
   ],
-  entryComponents: [
-    IccPopoverComponent
-  ],
+  entryComponents: [],
   exports: [
     IccPopoverDirective,
   ],

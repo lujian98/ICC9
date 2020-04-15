@@ -1,4 +1,5 @@
-<div class="icc-portal-content">
+<div class="icc-portal-content"
+  [ngClass]="(portalType!='component'&&!this.withBackground)?'icc-portal-text':''">
   <div *ngIf="portalType=='text'" [innerHTML]="content"></div>
   <ng-template cdkPortalOutlet></ng-template>
 </div>

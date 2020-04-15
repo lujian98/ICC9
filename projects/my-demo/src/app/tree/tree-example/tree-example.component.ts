@@ -98,5 +98,9 @@ export class TreeExampleComponent implements OnInit {
 
 
   }
+
+  close() {
+    console.log( ' template close')
+  }
 }
 

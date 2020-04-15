@@ -1,7 +1,8 @@
 import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { AfterViewInit, Component, Input, OnDestroy, OnInit, TemplateRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
-
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, TemplateRef, Type, ViewChild } from '@angular/core';
 import { IccPortalContent } from './model';
+// import { IccOverlayService } from '../services/overlay/overlay.service';
+import { IccOverlayComponentRef } from '../services/overlay/overlay-component-ref';
 
 @Component({
   selector: 'icc-portal',
@@ -11,19 +12,22 @@ import { IccPortalContent } from './model';
 export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() content: IccPortalContent<T>;
   @Input() context: {};
+  @Input() withBackground: boolean;
   portalType: string;
+  overlayComponentRef: IccOverlayComponentRef<T>;
 
   @ViewChild(CdkPortalOutlet) portalOutlet: CdkPortalOutlet;
 
-  constructor(
-    // private popoverRef: IccOverlayComponentRef<T>,
-    private viewContainerRef: ViewContainerRef
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    // this.content = this.popoverRef.componentContent;
-    this.portalType = (typeof this.content === 'string') ? 'text' : '';
-
+    if (this.content instanceof Type) {
+      this.portalType = 'component';
+    } else if (this.content instanceof TemplateRef) {
+      this.portalType = 'template';
+    } else {
+      this.portalType = 'text';
+    }
   }
 
   ngAfterViewInit() {
@@ -40,9 +44,11 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         componentRef.changeDetectorRef.detectChanges();
       }
     } else if (this.content instanceof TemplateRef) {
-      this.context = {
-        // lose: this.popoverRef.close.bind(this.popoverRef)
+      console.log( ' this.overlayComponentRef =', this.overlayComponentRef)
+      this.context = { // TODO bind not working???
+        close: this.overlayComponentRef.close
       };
+      // close: this.popoverRef.close.bind(this.popoverRef)
       const portal = new TemplatePortal(this.content, null, { $implicit: this.context } as any);
       const templateRef = this.portalOutlet.attachTemplatePortal(portal);
       templateRef.detectChanges();
