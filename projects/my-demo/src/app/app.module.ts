@@ -20,6 +20,7 @@ import { CdkTableDemoModule } from './table/cdk-table-demo/cdk-table-demo.module
 
 
 import { SchoolModule } from './school/school.module';
+import { DocDashboardModule } from './dashboard/dashboard.module';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -46,6 +47,8 @@ import { AppRoutingModule } from './app-routing.module';
     TreeExampleModule,
     CdkTableDemoModule,
     SchoolModule,
+    DocDashboardModule,
+
     AppRoutingModule
   ],
   providers: [],

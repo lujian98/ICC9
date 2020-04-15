@@ -1,0 +1,31 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+
+  .dashboard-side-menu {
+    width: 200px;
+    height: calc(100vh - 105px);
+    border: 1px solid blue;
+  }
+
+  .dashboard-main-panel {
+    width: 100%;
+    height: calc(100vh - 105px);
+    border: 1px solid blue;
+  }
+}
+
+.dashboard-footer {
+  // background-color: #f1f1f1;
+  height: 32px;
+  text-align: center;
+}
+
+/*
+
+.icc-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+*/

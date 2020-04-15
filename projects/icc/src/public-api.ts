@@ -2,6 +2,9 @@
  * Public API Surface of icc-grid
  */
 
+export * from './lib/dashboard/index';
+export * from './lib/portal/index';
+
 export * from './lib/models';
 
 export * from './lib/items';
