@@ -36,7 +36,7 @@ import { IccDateField } from '../../../../items';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IccFormDateComponent extends IccFormFieldComponent implements OnInit, OnDestroy {
+export class IccFormDateComponent<T> extends IccFormFieldComponent implements OnInit, OnDestroy {
   field: IccDateField;
   selectedDate = '';
   private dateUpdate$: Subscription;
@@ -46,7 +46,7 @@ export class IccFormDateComponent extends IccFormFieldComponent implements OnIni
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService,
+    private calendarOverlayService: IccCalendarOverlayService<T>,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,

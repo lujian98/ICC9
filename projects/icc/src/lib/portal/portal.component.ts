@@ -1,7 +1,6 @@
 import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, TemplateRef, Type, ViewChild } from '@angular/core';
 import { IccPortalContent } from './model';
-// import { IccOverlayService } from '../services/overlay/overlay.service';
 import { IccOverlayComponentRef } from '../services/overlay/overlay-component-ref';
 
 @Component({
@@ -14,7 +13,7 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   @Input() context: {};
   @Input() withBackground: boolean;
   portalType: string;
-  overlayComponentRef: IccOverlayComponentRef<T>;
+  overlayComponentRef: IccOverlayComponentRef<T>; // WARNING need this to bind TemplateRef close
 
   @ViewChild(CdkPortalOutlet) portalOutlet: CdkPortalOutlet;
 
@@ -44,12 +43,12 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         componentRef.changeDetectorRef.detectChanges();
       }
     } else if (this.content instanceof TemplateRef) {
-      console.log( ' this.overlayComponentRef =', this.overlayComponentRef)
-      this.context = { // TODO bind not working???
-        close: this.overlayComponentRef.close
-      };
-      // close: this.popoverRef.close.bind(this.popoverRef)
-      const portal = new TemplatePortal(this.content, null, { $implicit: this.context } as any);
+      if (this.overlayComponentRef) {
+        this.context = { // Using { $implicit: this.context } will not work bind close
+          close: this.overlayComponentRef.close.bind(this.overlayComponentRef)
+        };
+      }
+      const portal = new TemplatePortal(this.content, null, this.context);
       const templateRef = this.portalOutlet.attachTemplatePortal(portal);
       templateRef.detectChanges();
     }

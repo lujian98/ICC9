@@ -5,7 +5,7 @@ import { IccOverlayService } from './overlay.service';
 
 
 @Injectable()
-export class IccFormOverlayService extends IccOverlayService {
+export class IccFormOverlayService<T> extends IccOverlayService<T> {
   componentMapper: {} = {};
 
   constructor(overlay: Overlay, injector: Injector) {

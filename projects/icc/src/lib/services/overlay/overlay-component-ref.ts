@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { IccOverlayComponentCloseEvent } from './overlay.model';
 import { IccPortalContent } from '../../portal/model';
 
-export class IccOverlayComponentRef<T> { // TODO not used as overlay component ref
+export class IccOverlayComponentRef<T> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();
   afterClosed$ = this.afterClosed.asObservable();
 

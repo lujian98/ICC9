@@ -29,7 +29,7 @@ import { IccLocaleService } from '../services/locale.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IccDatePickerComponent implements OnInit, OnDestroy {
+export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
   @Input() options: IccDateRangeOptions;
 
   @ViewChild('calendarInput') calendarInput;
@@ -40,7 +40,7 @@ export class IccDatePickerComponent implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService,
+    private calendarOverlayService: IccCalendarOverlayService<T>,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,

@@ -6,7 +6,7 @@ import { IccDateRangePickerOverlayComponent } from '../picker-overlay/date-range
 
 
 @Injectable()
-export class IccCalendarOverlayService extends IccOverlayService {
+export class IccCalendarOverlayService<T> extends IccOverlayService<T> {
 
   componentMapper = {
     datepicker: IccDatePickerOverlayComponent,

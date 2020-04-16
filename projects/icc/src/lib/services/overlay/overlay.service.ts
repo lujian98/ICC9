@@ -9,14 +9,14 @@ import { IccPortalContent } from '../../portal/model';
 @Injectable({
   providedIn: 'root'
 })
-export class IccOverlayService {
+export class IccOverlayService<T> {
+  overlayComponentRef: IccOverlayComponentRef<T>;
   protected overlayRef: OverlayRef;
-
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
-  open<T, C>(
+  open<G>(
     origin: HTMLElement,
-    component: Type<C>,
+    component: Type<G>,
     config: IccOverlayConfig = {},
     componentContent: IccPortalContent<T> = '',
     componentContext: {} = {}
@@ -24,16 +24,15 @@ export class IccOverlayService {
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     this.overlayRef = this.overlay.create(overlayConfig);
-    const overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
-    const componentInjector = this.createInjector(overlayComponentRef);
+    this.overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
+    const componentInjector = this.createInjector(this.overlayComponentRef);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
     const containerRef = this.overlayRef.attach(componentPortal);
     Object.assign(containerRef.instance, {
       content: componentContent,
       context: componentContext,
-      overlayComponentRef: overlayComponentRef
+      overlayComponentRef: this.overlayComponentRef
     });
-    // containerRef.changeDetectorRef.detectChanges();
     this.overlayRef
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))
@@ -56,7 +55,7 @@ export class IccOverlayService {
     return overlayConfig;
   }
 
-  private createInjector<T>(overlayComponentRef: IccOverlayComponentRef<T>) {
+  private createInjector(overlayComponentRef: IccOverlayComponentRef<T>) {
     const injectionTokens = new WeakMap();
     injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
     return new PortalInjector(this.injector, injectionTokens);
@@ -102,14 +101,7 @@ export class IccOverlayService {
     ];
   }
 
-  close() { // TODO if multiple overlay open need id to close one???
-    console.log( ' ooooooo closed 3333333333333333333 ')
-    this.destroy();
-  }
-
   destroy() {
-    console.log( ' eeeeeeeeeeeeeeeeeeeeeee this.overlayRef=', this.overlayRef)
-
     if (this.overlayRef) {
       this.overlayRef.dispose();
     }

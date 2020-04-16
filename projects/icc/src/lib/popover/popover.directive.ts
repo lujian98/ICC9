@@ -1,5 +1,7 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { debounceTime, filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
+
 import { IccOverlayConfig } from '../services/overlay/overlay.model';
 import { IccPortalContent } from '../portal/model';
 // import { IccPopoverService } from './popover.service';
@@ -22,12 +24,12 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   private isOpened = false;
 
   constructor(
-    private overlayService: IccOverlayService,
+    private overlayService: IccOverlayService<T>,
     private elementRef: ElementRef,
   ) { }
 
   ngOnInit() {
-    if (!this.disabled) {
+    if (!this.disabled) { // afterClosed$
       this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
       this.popoverStrategy.show$.subscribe(() => this.openPopover());
       this.popoverStrategy.hide$.subscribe(() => this.closePopover());
@@ -50,6 +52,9 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       );
       this.popoverStrategy.isOpened = this.isOpened;
       this.popoverStrategy.overlayRef = this.overlayRef;
+      this.overlayService.overlayComponentRef.afterClosed$.
+        pipe(takeWhile(() => this.isOpened))
+        .subscribe(() => this.closePopover());
     }
   }
 
