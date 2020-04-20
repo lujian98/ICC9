@@ -94,7 +94,14 @@
   }
 
   .icc-cdk-table-header-sort {
-    width: 100%
+    width: 100%;
+    // padding-right: 20px; // no need for this
+    box-sizing: border-box;
+    white-space: nowrap; // this will support text ellipsis
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100%;
   }
 
   /*

@@ -34,7 +34,8 @@
     <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
       <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
-        [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
+        [ngStyle]="{'flex':'0 0 '+column.width+'px', 'width': column.width+'px',
+          'left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
         (mousemove)="checkResizeORDnD($event, colIndex)"
         (mousedown)="onResizeColumn($event, colIndex)"
         cdkDrag
@@ -47,7 +48,7 @@
             (mouseenter)="setSortState(column, true)"
             (mouseleave)="setSortState(column, false)"
             (click)="onHeaderSort(column)">
-            {{column.title}} X3
+            {{column.title}} X3 title test
             <i [class]="getHeaderSortState(column)"></i>
           </div>
           <icc-menu *ngIf="column.menu"

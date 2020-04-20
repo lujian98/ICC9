@@ -1,11 +1,15 @@
-// this is theme test
+// this is theme test //mat-color($primary);
 @mixin test-component-theme($theme) {
   $primary: map-get($theme, primary);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  --icc-background-color: mat-color($primary); // test  // test not working
+
   .test {
-    background: mat-color($primary);
+    background: mat-color($foreground, foreground);
   }
   .test1 {
-    background: orange;
+    background-color: mat-color($foreground, foreground);
   }
 }
 
