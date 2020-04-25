@@ -16,8 +16,10 @@
       <li class="hidden-sm"><a routerLink="school/simple-date" routerLinkActive="active">Setup</a></li>
 
       <mat-radio-group (change)='changeTheme($event)'>
-        <mat-radio-button value="light" [checked]='true'>Light</mat-radio-button> &nbsp; &nbsp;
-        <mat-radio-button value="dark">Dark</mat-radio-button>
+        <mat-radio-button value="light" [checked]='true'>Light</mat-radio-button> &nbsp;
+        <mat-radio-button value="dark">Drak</mat-radio-button> &nbsp;
+        <mat-radio-button value="red">Red</mat-radio-button> &nbsp;
+        <mat-radio-button value="blue">Blue</mat-radio-button>
       </mat-radio-group>
 
       <li class="hidden-sm"><a class="navbar-item "  (click)="onLoggedout()">

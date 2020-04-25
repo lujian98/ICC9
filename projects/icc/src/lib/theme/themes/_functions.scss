@@ -1,0 +1,109 @@
+@import './mapping';
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+@function icc-register-theme($theme, $name) {
+  $theme: map-merge($icc-mapping, $theme);
+  $new: ($name: $theme);
+  $icc-themes: map-merge($icc-themes, $new) !global;
+
+  @return $icc-themes;
+}
+
+@function icc-theme($key) {
+  $value: ();
+
+  @if ($icc-enable-css-custom-properties) {
+    $value: var(--#{$key});
+  } @else {
+    $value: map-get($icc-processed-theme, $key);
+  }
+
+  @if ($value == null) {
+    @warn 'Theme: `icc-theme()` cannot find value for key `' + $key +'`';
+  }
+
+  @return $value;
+}
+
+@function icc-deep-find-value($theme, $key, $value) {
+  $parent-value: map-get($theme, $value);
+
+  @if ($parent-value != null) {
+    @return icc-deep-find-value($theme, $value, $parent-value);
+  }
+
+  @return $value;
+}
+
+@function icc-process-theme($theme-name, $theme) {
+  $processed-theme: ();
+  @each $key, $value in $theme {
+    $new: ($key: icc-deep-find-value($theme, $key, $value));
+    $processed-theme: map-merge($processed-theme, $new);
+  }
+  @return $processed-theme;
+}
+
+@mixin icc-pre-process-context($theme-name, $theme) {
+  $icc-processed-theme: icc-process-theme($theme-name, $theme) !global;
+}
+
+@mixin icc-install-css-properties($theme-name, $theme) {
+  .icc-theme-#{$theme-name} {
+
+    @each $var, $value in $theme {
+      @if (type-of($value) == 'string' and map-get($theme, $value)) {
+        --#{$var}: var(--#{$value});
+      } @else {
+        --#{$var}: #{$value};
+      }
+    }
+  }
+}
+
+@mixin icc-install-with-css-props() {
+  @content;
+
+  @each $theme-name, $theme in $icc-themes {
+    @include icc-install-css-properties($theme-name, $theme);
+  }
+}
+
+@mixin icc-install-with-scss-vars() {
+  @each $theme-name, $theme in $icc-themes {
+    @include icc-pre-process-context($theme-name, $theme);
+
+    .icc-theme-#{$theme-name} {
+      @content;
+    }
+  }
+}
+
+@mixin icc-install() {
+  @if ($icc-enable-css-custom-properties) {
+    @include icc-install-with-css-props() {
+      @content;
+    }
+  } @else {
+    @include icc-install-with-scss-vars() {
+      @content;
+    }
+  }
+}

@@ -6,7 +6,7 @@
   --icc-background-color: mat-color($primary); // test  // test not working
 
   .test {
-    background: mat-color($foreground, foreground);
+    background: orange; // icc-theme(background-basic-color); // orange; //mat-color($foreground, foreground);
   }
   .test1 {
     background-color: mat-color($foreground, foreground);

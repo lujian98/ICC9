@@ -2,3 +2,16 @@
 .icc-light-theme {
   --icc-cdk-table-cell-border-color: rgba(0,0,0,.12);
 }
+
+$theme: (
+  color-primary-100: #f2f6ff,
+
+  color-basic-100: #ffffff,
+  color-basic-200: #fbfbfb,
+
+  background-basic-color-1: color-basic-100,
+  background-basic-color-2: color-basic-200,
+  background-basic-color: green
+);
+
+$icc-themes: icc-register-theme($theme, icc-light-theme);

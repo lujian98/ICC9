@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../../../dist/icc/theming';
 
+.app-container {
+  @include themify($themes) {
+    color: themed('textColor');
+    background-color: themed('backgroundColor');
+  }
+}
+
 /* // Set box-sizing globally to handle padding and border widths */
 *,
 *:after, *:before {

@@ -19,12 +19,18 @@ export class NavComponent {
   }
 
   changeTheme(data) {
-    document.querySelector('.app-container').classList.remove('icc-dark-theme');
-    document.querySelector('.app-container').classList.remove('icc-light-theme');
+    document.querySelector('.app-theme').classList.remove('theme-light');
+    document.querySelector('.app-theme').classList.remove('theme-dark');
+    document.querySelector('.app-theme').classList.remove('theme-red');
+    document.querySelector('.app-theme').classList.remove('theme-blue');
     if (data.value === 'light') {
-      document.querySelector('.app-container').classList.add('icc-light-theme');
+      document.querySelector('.app-theme').classList.add('theme-light');
     } else if (data.value === 'dark') {
-      document.querySelector('.app-container').classList.add('icc-dark-theme');
+      document.querySelector('.app-theme').classList.add('theme-dark');
+    } else if (data.value === 'red') {
+      document.querySelector('.app-theme').classList.add('theme-red');
+    } else if (data.value === 'blue') {
+      document.querySelector('.app-theme').classList.add('theme-blue');
     }
   }
 
