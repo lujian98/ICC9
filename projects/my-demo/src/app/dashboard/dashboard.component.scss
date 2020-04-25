@@ -4,13 +4,13 @@
 
   .dashboard-side-menu {
     width: 200px;
-    height: calc(100vh - 105px);
+    height: calc(100vh - 82px);
     border: 1px solid blue;
   }
 
   .dashboard-main-panel {
     width: 100%;
-    height: calc(100vh - 105px);
+    height: calc(100vh - 82px);
     border: 1px solid blue;
   }
 }
@@ -29,3 +29,10 @@
   height: 100%;
 }
 */
+
+@mixin dashboard-component-theme() {
+  .dashboard-container, .dashboard-footer {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}

@@ -1,6 +1,9 @@
 $theme: (
 
   icc-table-cell-border-color: rgba(255, 255, 255, 0.12),
+  icc-background-color: #000,
+  icc-text-color: white,
+
 
   backgroundColor: #000,
   textColor: #ddd,
@@ -8,7 +11,7 @@ $theme: (
   color-primary-100: #f2f6ff,
   color-basic-100: #0f0f0f,
   color-basic-200: #191919,
-
+// background-color: #303030;
   background-basic-color-1: color-basic-100,
   background-basic-color-2: color-basic-200,
   background-basic-color: red

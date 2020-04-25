@@ -1,18 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../../../dist/icc/theming';
-
-/*
-.app-container {
-  @include themify($icc-themes) {
-    color: themed('textColor');
-    background-color: themed('backgroundColor');
-  }
-} */
+@import './app/nav/nav.component.scss';
+@import './app/dashboard/dashboard.component.scss';
 
 @include icc-configure-theme() {
   @include icc-theme-components();
+  @include nav-component-theme();
+  @include dashboard-component-theme();
 };
-
 
 /* // Set box-sizing globally to handle padding and border widths */
 *,
@@ -24,6 +19,6 @@ html {
 }
 
 body {
-  margin: 0;
+  margin: 0px;
 }
 
