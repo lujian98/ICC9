@@ -4,6 +4,9 @@
 }
 
 $theme: (
+  backgroundColor: #CCC,
+  textColor: #0488e0,
+
   color-primary-100: #f2f6ff,
 
   color-basic-100: #ffffff,
@@ -14,4 +17,4 @@ $theme: (
   background-basic-color: green
 );
 
-$icc-themes: icc-register-theme($theme, icc-light-theme);
+$icc-themes: icc-register-theme($theme, light);

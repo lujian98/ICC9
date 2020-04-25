@@ -3,6 +3,9 @@
 }
 
 $theme: (
+  backgroundColor: #000,
+  textColor: #ddd,
+
   color-primary-100: #f2f6ff,
   color-basic-100: #0f0f0f,
   color-basic-200: #191919,
@@ -12,5 +15,5 @@ $theme: (
   background-basic-color: red
 );
 
-$icc-themes: icc-register-theme($theme, icc-dark-theme);
+$icc-themes: icc-register-theme($theme, dark);
 

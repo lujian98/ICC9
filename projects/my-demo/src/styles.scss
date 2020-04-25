@@ -1,12 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../../../dist/icc/theming';
 
+/*
 .app-container {
-  @include themify($themes) {
+  @include themify($icc-themes) {
     color: themed('textColor');
     background-color: themed('backgroundColor');
   }
-}
+} */
+
+@include icc-install() {
+  @include icc-theme-components();
+};
+
 
 /* // Set box-sizing globally to handle padding and border widths */
 *,

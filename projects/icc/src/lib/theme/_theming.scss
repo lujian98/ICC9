@@ -2,17 +2,10 @@
 // @import './variables/colors'; icc-light-theme
 $icc-enable-css-custom-properties: false !default;
 
-$themes: (
-  light: (
-    backgroundColor: #CCC,
-    textColor: #0488e0
-  ),
-  dark: (
-    backgroundColor: #000,
-    textColor: #ddd
-  ),
+$icc-themes: ();
+$icc-themes: (
   red: (
-    backgroundColor: #ff3d3d,
+    backgroundColor: green,
     textColor: #ffffff
   ),
   blue: (
@@ -21,12 +14,12 @@ $themes: (
   )
 );
 
-$icc-themes: ();
 $icc-processed-theme: ();
 
 @import './themes/functions';
 
 @import './themes/light';
+
 @import './themes/dark';
 
 @import './components';
@@ -34,18 +27,3 @@ $icc-processed-theme: ();
 @import './material/core';
 @import './material/light';
 @import './material/dark';
-
-
-.app-container-header {
-  @include themify($themes) {
-    color: themed('textColor');
-    background-color: themed('backgroundColor');
-  }
-  // background-color: red;
-}
-
-
-/*
-@include icc-install() {
-  @include icc-mat-theme($icc-themes);
-}; */

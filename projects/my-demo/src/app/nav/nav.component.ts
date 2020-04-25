@@ -19,18 +19,18 @@ export class NavComponent {
   }
 
   changeTheme(data) {
-    document.querySelector('.app-theme').classList.remove('theme-light');
-    document.querySelector('.app-theme').classList.remove('theme-dark');
-    document.querySelector('.app-theme').classList.remove('theme-red');
-    document.querySelector('.app-theme').classList.remove('theme-blue');
+    document.querySelector('.app-theme').classList.remove('icc-theme-light');
+    document.querySelector('.app-theme').classList.remove('icc-theme-dark');
+    document.querySelector('.app-theme').classList.remove('icc-theme-red');
+    document.querySelector('.app-theme').classList.remove('icc-theme-blue');
     if (data.value === 'light') {
-      document.querySelector('.app-theme').classList.add('theme-light');
+      document.querySelector('.app-theme').classList.add('icc-theme-light');
     } else if (data.value === 'dark') {
-      document.querySelector('.app-theme').classList.add('theme-dark');
+      document.querySelector('.app-theme').classList.add('icc-theme-dark');
     } else if (data.value === 'red') {
-      document.querySelector('.app-theme').classList.add('theme-red');
+      document.querySelector('.app-theme').classList.add('icc-theme-red');
     } else if (data.value === 'blue') {
-      document.querySelector('.app-theme').classList.add('theme-blue');
+      document.querySelector('.app-theme').classList.add('icc-theme-blue');
     }
   }
 

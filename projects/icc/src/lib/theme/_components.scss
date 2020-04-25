@@ -1,7 +1,8 @@
 @import '../table/table-header/table-header.theme';
 
-@mixin icc-mat-theme($icc-themes) {
-  $background: map-get($icc-themes, background); // test not working
+// @mixin icc-mat-theme($icc-themes) {
+@mixin icc-theme-components() {
+  // $background: map-get($icc-themes, background); // test not working
   // --icc-background-color:  grey; //map-get($background, background); // test not working
-  @include test-component-theme($icc-themes);
+  @include test-component-theme();
 }
