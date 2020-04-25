@@ -1,29 +1,14 @@
 
 // @import './variables/colors'; icc-light-theme
-$icc-enable-css-custom-properties: false !default;
-
 $icc-themes: ();
-$icc-themes: (
-  red: (
-    backgroundColor: green,
-    textColor: #ffffff
-  ),
-  blue: (
-    backgroundColor: rgb(0, 110, 255),
-    textColor: #f8f8f8
-  )
-);
-
-$icc-processed-theme: ();
+$icc-current-theme: ();
 
 @import './themes/functions';
-
 @import './themes/light';
-
 @import './themes/dark';
-
 @import './components';
 
 @import './material/core';
 @import './material/light';
 @import './material/dark';
+

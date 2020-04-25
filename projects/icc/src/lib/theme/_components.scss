@@ -1,8 +1,11 @@
 @import '../table/table-header/table-header.theme';
+@import '../table/table-header/table-header.component.scss';
+@import '../table/table-view/table-view.component.scss';
+@import '../tree/tree.component.scss';
 
-// @mixin icc-mat-theme($icc-themes) {
 @mixin icc-theme-components() {
-  // $background: map-get($icc-themes, background); // test not working
-  // --icc-background-color:  grey; //map-get($background, background); // test not working
   @include test-component-theme();
+  @include table-header-component-theme();
+  @include table-view-component-theme();
+  @include tree-view-component-theme();
 }

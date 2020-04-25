@@ -1,8 +1,7 @@
-.icc-dark-theme {
-  --icc-cdk-table-cell-border-color: rgba(255, 255, 255, 0.12);
-}
-
 $theme: (
+
+  icc-table-cell-border-color: rgba(255, 255, 255, 0.12),
+
   backgroundColor: #000,
   textColor: #ddd,
 
@@ -15,5 +14,5 @@ $theme: (
   background-basic-color: red
 );
 
-$icc-themes: icc-register-theme($theme, dark);
+$icc-themes: icc-add-theme($theme, dark);
 

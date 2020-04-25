@@ -9,7 +9,7 @@
   }
 } */
 
-@include icc-install() {
+@include icc-configure-theme() {
   @include icc-theme-components();
 };
 

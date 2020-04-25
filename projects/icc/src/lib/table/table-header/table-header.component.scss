@@ -42,83 +42,85 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.icc-cdk-table-header {
-  $border-color: var(--icc-cdk-table-cell-border-color);
+@mixin table-header-component-theme() {
+  .icc-cdk-table-header {
+    $border-color: icc-theme(icc-table-cell-border-color);
 
-  position: relative;
-  .icc-cdk-table-header-row {
-    display: flex;
-    align-items: center;
+    position: relative;
+    .icc-cdk-table-header-row {
+      display: flex;
+      align-items: center;
+    }
+
+    .icc-cdk-table-header-filter-row {
+      display: flex;
+      align-items: center;
+      // width: 100%
+    }
+
+    .icc-cdk-table-header-row:first-child {
+      border-top: 1px solid $border-color;;
+    }
+
+    .icc-cdk-table-header-cell, .icc-cdk-table-filter-cell {
+      text-align: center; // TODO configurable
+      // border-top: 1px solid $border-color;
+      border-bottom: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      // width: 100% // no need here
+    }
+
+    .icc-cdk-table-header-cell {
+      height: 40px; // TODO configurable
+      cursor: col-resize;
+      // padding: 0px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icc-cdk-table-filter-cell {
+      height: 32px; // TODO configurable
+      // padding: 0px 10px;
+    }
+
+    .icc-cdk-table-filter-field {
+      width: 100%
+    }
+
+    .icc-cdk-table-header-cell:first-child, .icc-cdk-table-filter-cell:first-child {
+      border-left: 1px solid $border-color;
+    }
+
+    .icc-cdk-table-header-title {
+      display: flex;
+      cursor: pointer;
+      width: 100%
+    }
+
+    .icc-cdk-table-header-sort {
+      width: 100%;
+      // padding-right: 20px; // no need for this
+      box-sizing: border-box;
+      white-space: nowrap; // this will support text ellipsis
+      -ms-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    /*
+    .icc-cdk-table-filter-selection {
+      display: flex;
+      width: 100%;
+    }
+
+    .icc-cdk-table-row-selection-checkbox {
+      // padding: 0px 5px;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    } */
   }
-
-  .icc-cdk-table-header-filter-row {
-    display: flex;
-    align-items: center;
-    // width: 100%
-  }
-
-  .icc-cdk-table-header-row:first-child {
-    border-top: 1px solid $border-color;;
-  }
-
-  .icc-cdk-table-header-cell, .icc-cdk-table-filter-cell {
-    text-align: center; // TODO configurable
-    // border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
-    border-right: 1px solid $border-color;
-    // width: 100% // no need here
-  }
-
-  .icc-cdk-table-header-cell {
-    height: 40px; // TODO configurable
-    cursor: col-resize;
-    // padding: 0px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .icc-cdk-table-filter-cell {
-    height: 32px; // TODO configurable
-    // padding: 0px 10px;
-  }
-
-  .icc-cdk-table-filter-field {
-    width: 100%
-  }
-
-  .icc-cdk-table-header-cell:first-child, .icc-cdk-table-filter-cell:first-child {
-    border-left: 1px solid $border-color;
-  }
-
-  .icc-cdk-table-header-title {
-    display: flex;
-    cursor: pointer;
-    width: 100%
-  }
-
-  .icc-cdk-table-header-sort {
-    width: 100%;
-    // padding-right: 20px; // no need for this
-    box-sizing: border-box;
-    white-space: nowrap; // this will support text ellipsis
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    height: 100%;
-  }
-
-  /*
-  .icc-cdk-table-filter-selection {
-    display: flex;
-    width: 100%;
-  }
-
-  .icc-cdk-table-row-selection-checkbox {
-    // padding: 0px 5px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  } */
 }
 
