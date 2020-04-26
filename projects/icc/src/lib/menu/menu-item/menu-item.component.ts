@@ -5,7 +5,7 @@ import { IccField } from '../../items';
 @Component({
   selector: 'icc-menu-item',
   templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.scss']
+  // styleUrls: ['./menu-item.component.scss']
 })
 export class IccMenuItemComponent implements OnInit {
   @Input() menuItems: IccField[];
