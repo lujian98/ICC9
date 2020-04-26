@@ -63,12 +63,31 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
 
   private setupGrid() {
     // TODO should this be this.elementRef.nativeElement.parentNode or this.elementRef.nativeElement???
-    const width = this.elementRef.nativeElement.parentNode.clientWidth;
-    const height = this.elementRef.nativeElement.parentNode.clientHeight;
-    this.gridWidth = (width - this.cols * this.gridGap) / this.cols;
-    this.gridHeight = (height - this.cols * this.gridGap) / this.rows;
+    console.log(' this =', this);
+    const size = this.getDashboardSize();
+    console.log(' 3333333333 size =', size);
+    this.gridWidth = (size.width - this.cols * this.gridGap) / this.cols;
+    this.gridHeight = (size.height - this.cols * this.gridGap) / this.rows;
     this.setGridTemplate();
     this.cd.detectChanges();
+  }
+
+  private getDashboardSize() { // TODO return correct size
+    const el = this.elementRef.nativeElement;
+    let node = null;
+    if (el.clientWidth) {
+      node = el;
+    } else if (el.parentNode.clientWidth) {
+      node = el.parentNode;
+    } else if (el.parentNode.parentNode.clientWidth) {
+      node = el.parentNode.parentNode;
+    }
+    if (node) {
+      return {
+        width: node.clientWidth,
+        height: node.clientHeight
+      };
+    }
   }
 
   private setGridTemplate() {
@@ -120,6 +139,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   onResizeTile(resizeInfo: ResizeInfo, tile: Tile<T>) {
+    console.log(' resizeInfo=', resizeInfo);
     const element = resizeInfo.element;
     if (!resizeInfo.isResized) {
       element.style['transform-origin'] = resizeInfo.origin;
