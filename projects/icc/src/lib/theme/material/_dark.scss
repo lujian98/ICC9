@@ -5,9 +5,7 @@
   $theme:   mat-dark-theme($primary, $accent, $warn);
   @include angular-material-theme($theme);
   .mat-table, .mat-drawer {
-    background: #000000 !important;
+    background: #303030 !important;
   }
 }
-
-// mat-menu-panel ng-trigger ng-trigger-transformMenu ng-tns-c86-2 mat-menu-after mat-menu-below ng-star-inserted mat-elevation-z4
 

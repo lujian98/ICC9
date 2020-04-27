@@ -2,11 +2,13 @@
 @import '../../../dist/icc/theming';
 @import './app/nav/nav.component.scss';
 @import './app/dashboard/dashboard.component.scss';
+@import './app/school/school.component.scss';
 
 @include icc-configure-theme() {
   @include icc-theme-components();
   @include nav-component-theme();
   @include dashboard-component-theme();
+  @include school-side-component-theme();
 };
 
 /* // Set box-sizing globally to handle padding and border widths */

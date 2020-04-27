@@ -1,10 +1,11 @@
-<div class="icc-portal-content"
-  [ngClass]="(portalType!='component'&&!this.withBackground)?'icc-portal-text':''">
+<div class="icc-portal-content" [ngClass]="!this.withBackground?'icc-portal-text':''">
   <div *ngIf="portalType=='text'" [innerHTML]="content"></div>
   <ng-template cdkPortalOutlet></ng-template>
 </div>
 
 <!--
+
+    [ngClass]="(portalType!='component'&&!this.withBackground)?'icc-portal-text':''">
   <ng-container *ngIf="portalType=='template'">
     <ng-container *ngTemplateOutlet="content; context: context"></ng-container>
   </ng-container>

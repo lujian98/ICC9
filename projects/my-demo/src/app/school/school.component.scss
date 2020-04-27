@@ -1,25 +1,35 @@
-.sidenav-container {
-  flex: 1;
-  .main-container {
-    padding: 5px;
+@mixin school-side-component-theme() {
+  .sidenav-container {
+    flex: 1;
+    .main-container {
+      padding: 5px;
+    }
+    height: calc(100vh - 50px);
+
   }
-  // min-height: 600px;
-  height: calc(100vh - 50px);
-}
 
-.sidenav{
-  padding: 5px;
-  width: 250px;
-}
+  .sidenav{
+    padding: 5px;
+    width: 250px;
+    a {
+      text-decoration: none;
+      color:icc-theme(icc-text-color);
+    }
 
-.content {
-  padding:5px;
-}
+    .mat-list-base .mat-list-item {
+      height: 30px;
+    }
+  }
 
-.mat-sidenav {
-  height: -webkit-fill-available;
-}
+  .content {
+    padding:5px;
+  }
 
-:host ::ng-deep .mat-drawer-content {
-  overflow: hidden;
+  .mat-sidenav {
+    height: -webkit-fill-available;
+  }
+
+  :host ::ng-deep .mat-drawer-content {
+    overflow: hidden;
+  }
 }

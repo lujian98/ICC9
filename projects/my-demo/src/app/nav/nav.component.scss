@@ -1,5 +1,7 @@
+@mixin nav-component-theme() {
   header {
     height: 50px;
+
   }
 
   .nav {
@@ -20,7 +22,7 @@
     display: block;
     transition: .3s background-color;
     margin: 0 13px;
-    color: #4b4f54;
+    color:icc-theme(icc-text-color);
     font-weight: 500;
   }
 
@@ -30,7 +32,7 @@
 
   .nav a.active {
     // background-color: #fff;
-    color: #444;
+    color:icc-theme(icc-text-color);
     cursor: default;
     border-bottom: 2px solid darkgreen;
     font-weight: 700;
@@ -56,9 +58,8 @@
     }
   }
 
-  @mixin nav-component-theme() {
-    .app-nav-header {
-      background-color: icc-theme(icc-background-color);
-      color: icc-theme(icc-text-color);
-    }
+  .app-nav-header {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
   }
+}
