@@ -1,38 +1,56 @@
+
 .dashboard-container {
+  flex: 1;
   display: flex;
   flex-direction: row;
-
   .dashboard-side-menu {
     width: 200px;
-    height: calc(100vh - 82px);
     border: 1px solid blue;
   }
-
   .dashboard-main-panel {
     width: 100%;
-    height: calc(100vh - 82px);
     border: 1px solid blue;
   }
 }
-
 .dashboard-footer {
-  // background-color: #f1f1f1;
   height: 32px;
   text-align: center;
 }
 
 /*
 
-.icc-dashboard {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-*/
+<header class="header">Header</header>
+<main class="main">Main</main>
+<aside class="sidebar">Sidebar</aside>
+<footer class="footer">Footer</footer>
 
+
+*/
 @mixin dashboard-component-theme() {
   .dashboard-container, .dashboard-footer {
     background-color: icc-theme(icc-background-color);
     color: icc-theme(icc-text-color);
   }
 }
+
+/*
+  .dashboard-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    .dashboard-side-menu {
+      width: 200px;
+      border: 1px solid blue;
+    }
+    .dashboard-main-panel {
+      width: 100%;
+      border: 1px solid blue;
+    }
+  }
+  .dashboard-footer {
+    height: 32px;
+    text-align: center;
+  }
+
+
+*/

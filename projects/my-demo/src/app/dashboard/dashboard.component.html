@@ -1,21 +1,37 @@
 
-<div class="dashboard-container">
-  <div class="dashboard-side-menu">
-    <h2>Side Menu</h2>
-  </div>
-  <div class="dashboard-main-panel">
-    <icc-dashboard class="icc-dashboard"
-      [tiles]="tiles">
-    </icc-dashboard>
-  </div>
-</div>
+<icc-panel>
+  <div>Test</div>
+  <icc-panel-content class="dashboard-container">
+    <div class="dashboard-side-menu">
+      <h2>Side Menu</h2>
+    </div>
+    <div class="dashboard-main-panel">
+      <icc-dashboard class="icc-dashboard"
+        [tiles]="tiles">
+      </icc-dashboard>
+    </div>
+  </icc-panel-content>
 
-<div class="dashboard-footer">
-  <div>Footer</div>
-</div>
+  <div class="dashboard-footer">
+    <div>Footer</div>
+  </div>
+</icc-panel>
 
 <!--
+<div class="app-main-panel">
+  <div class="dashboard-container">
+    <div class="dashboard-side-menu">
+      <h2>Side Menu</h2>
+    </div>
+    <div class="dashboard-main-panel">
       <icc-dashboard class="icc-dashboard"
-      [tiles]="tiles">
-    </icc-dashboard>
+        [tiles]="tiles">
+      </icc-dashboard>
+    </div>
+  </div>
+
+  <div class="dashboard-footer">
+    <div>Footer</div>
+  </div>
+</div>
 -->

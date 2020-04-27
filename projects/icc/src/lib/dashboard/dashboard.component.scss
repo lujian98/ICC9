@@ -1,6 +1,12 @@
+.icc-dashbard-menu {
+  position: absolute;
+  right: 5px;
+}
+
 .icc-tile-list {
   display: grid;
   position: absolute;
+  border: 1px solid orange;
 }
 
 .icc-tile-item {

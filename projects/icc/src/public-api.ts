@@ -4,6 +4,7 @@
 
 export * from './lib/dashboard/index';
 export * from './lib/portal/index';
+export * from './lib/panel/index';
 
 export * from './lib/models';
 

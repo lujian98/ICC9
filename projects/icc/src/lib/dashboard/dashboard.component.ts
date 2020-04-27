@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { DxyPosition, Tile, TileInfo, ResizeInfo, ResizeMap } from './model';
+import { IccFieldConfig } from '../models/item-config';
 
 @Component({
   selector: 'icc-dashboard',
@@ -31,6 +32,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
   @Input() gridHeight = 100;
   @Input() cols = 10;
   @Input() rows = 6;
+  menuItems: IccFieldConfig;
+
 
   gridTemplateColumns: string;
   gridTemplateRows: string;
@@ -53,12 +56,24 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
   }
 
   ngAfterViewInit() {
+    this.setSideMenu();
     this.setupGrid();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.tiles) {
     }
+  }
+
+  setSideMenu() {
+    const sideMenu = [];
+    sideMenu.push({ title: 'Refresh', name: 'Refresh', icon: 'fas fa-sync-alt' });
+
+    this.menuItems = {
+      type: 'menu',
+      icon: 'fas fa-ellipsis-v',
+      children: sideMenu
+    };
   }
 
   private setupGrid() {
@@ -344,12 +359,14 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     const x = Math.min(Math.max(draggedTile.colStart + dx, 1), this.cols);
     const y = Math.min(Math.max(draggedTile.rowStart + dy, 1), this.rows);
     const xyState = this.gridMap[y - 1][x - 1];
+    // if drop into empty space check if tile will cover any other tile
     if (e.item.data === tile.index || xyState < 0) {
-      if (this.isDroppable(x, y, draggedTile, tile.index)) {
+      if (this.isDroppable(x, y, draggedTile, tile.index) && this.isDroppable(x, y, draggedTile, -1)) {
         draggedTile.colStart = x;
         draggedTile.rowStart = y;
       }
     } else {
+      // if drop into other tile(s)
       tile = this.tiles[xyState];
       if (this.isDroppable(tile.colStart + draggedTile.colWidth, tile.rowStart, tile, draggedTile.index)
         && this.isDroppable(tile.colStart, tile.rowStart, draggedTile, tile.index)) {
@@ -366,8 +383,10 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
       const gridMap = this.gridMap.slice(y - 1, y - 1 + tile.rowHeight).map(i => i.slice(x - 1, x - 1 + tile.colWidth));
       const gmap = gridMap.map((items, i) => {
         return items.map(item => {
-          if (item >= 0 && item !== tile.index && item !== index) {
-            return item;
+          if (item >= 0 && item !== tile.index) {
+            if ((index !== -1 && item !== index) || index === -1) {
+              return item;
+            }
           }
         }).filter(item => item !== undefined).concat();
       });
