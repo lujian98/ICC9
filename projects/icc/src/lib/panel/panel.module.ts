@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { IccPanelComponent } from './panel.component';
-import { IccPanelContentComponent } from './panel-content.component';
-
+import {
+  IccPanelHeaderComponent,
+  IccPanelContentComponent,
+  IccPanelFooterComponent,
+  IccPanelComponent
+} from './panel.component';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
   declarations: [
-    IccPanelComponent,
-    IccPanelContentComponent
+    IccPanelHeaderComponent,
+    IccPanelContentComponent,
+    IccPanelFooterComponent,
+    IccPanelComponent
   ],
   exports: [
-    IccPanelComponent,
-    IccPanelContentComponent
-  ],
+    IccPanelHeaderComponent,
+    IccPanelContentComponent,
+    IccPanelFooterComponent,
+    IccPanelComponent
+  ]
 })
-export class IccPanelModule { }
+export class IccPanelModule {}
