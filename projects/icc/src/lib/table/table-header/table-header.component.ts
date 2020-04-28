@@ -21,7 +21,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ListRange, SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
-import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, ColumnMenuType, IccGroupHeader } from '../../models';
 import { IccSorts } from '../../services/sort/sorts';
@@ -74,7 +73,6 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   @ViewChild(CdkTable, { read: ElementRef }) public cdkTableRef: ElementRef;
   @ViewChild(CdkTable) table: CdkTable<T>;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private tableEventService: IccTableEventService,
