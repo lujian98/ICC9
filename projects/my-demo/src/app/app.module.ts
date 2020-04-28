@@ -17,6 +17,7 @@ import { LoginModule } from './login/login.module';
 import { TreeExampleModule } from './tree/tree-example/tree-example.module';
 
 import { CdkTableDemoModule } from './table/cdk-table-demo/cdk-table-demo.module';
+import { TableModule } from './table/table.module';
 
 
 import { SchoolModule } from './school/school.module';
@@ -46,6 +47,7 @@ import { AppRoutingModule } from './app-routing.module';
     LoginModule,
     TreeExampleModule,
     CdkTableDemoModule,
+    TableModule,
     SchoolModule,
     DocDashboardModule,
 

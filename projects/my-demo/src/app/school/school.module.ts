@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { IccPanelModule } from 'icc';
 
 import { SchoolRoutingModule } from './school-routing.module';
 
@@ -24,6 +25,7 @@ import { SchoolComponent } from './school.component';
     // BrowserAnimationsModule,
     FormsModule,
     // HttpClientModule,
+    IccPanelModule,
     MatSidenavModule,
     MatListModule,
     MatMenuModule,

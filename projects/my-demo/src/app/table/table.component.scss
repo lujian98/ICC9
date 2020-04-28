@@ -1,0 +1,19 @@
+.dashboard-container {
+  flex-direction: row;
+  overflow: hidden;
+  .dashboard-side-menu {
+    // flex: 0 0 200px;
+    width: 250px;
+    // min-width: 200px;
+    border: 1px solid blue;
+  }
+  .dashboard-main-panel {
+    // width: 90%;
+    flex: 1;
+    border: 1px solid blue;
+  }
+}
+
+
+
+
