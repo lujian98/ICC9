@@ -1,19 +1,19 @@
-.dashboard-container {
+.app-table-container {
   flex-direction: row;
   overflow: hidden;
-  .dashboard-side-menu {
-    // flex: 0 0 200px;
-    width: 250px;
-    // min-width: 200px;
-    border: 1px solid blue;
+  .app-table-side-menu {
+    flex: 0 0 200px;
   }
-  .dashboard-main-panel {
-    // width: 90%;
-    flex: 1;
-    border: 1px solid blue;
+  .app-table-panel {
+    width: 200px; // need this make sure initial width is correct
+    flex: 1 1 auto;
   }
 }
 
-
-
+@mixin table-component-theme() {
+  .app-table-container {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}
 

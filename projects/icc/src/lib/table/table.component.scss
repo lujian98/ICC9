@@ -1,15 +1,10 @@
+
+::ng-deep icc-table-view, ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
+  flex: 1;
+}
+
 ::ng-deep cdk-virtual-scroll-viewport {
   min-height: 200px;
   // flex: 1; // this is due to the dynamic load the this view the flex will be it's parent selector
   height: 100%;
-}
-
-.icc-cdk-table {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-::ng-deep icc-table-view, ::ng-deep icc-flat-tree, ::ng-deep icc-nested-tree {
-  flex: 1;
 }

@@ -32,7 +32,7 @@ export class IccPanelComponent implements AfterViewInit, OnInit {
 
   ngOnInit() { // TODO input height default is calc(100vh - 50px) -> 50px is top nav bar height
     const el = this.elementRef.nativeElement;
-    el.style.height = 'calc(100vh - 50px)';
+    el.style.height = 'calc(100vh - 60px)';
   }
 
   ngAfterViewInit() {

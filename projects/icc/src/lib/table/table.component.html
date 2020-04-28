@@ -1,4 +1,4 @@
-<div class="icc-cdk-table">
+<icc-panel>
   <icc-table-topbar *ngIf="tableConfigs.enableTableTopbar"
     [tableConfigs]="tableConfigs"
     [columns]="columns">
@@ -9,10 +9,12 @@
     [columns]="columns">
   </icc-table-header>
 
-  <span iccTableView
-    [tableConfigs]="tableConfigs"
-    [columns]="columns"
-    [data]="data">
-  </span>
-</div>
+  <icc-panel-content>
+    <span iccTableView
+      [tableConfigs]="tableConfigs"
+      [columns]="columns"
+      [data]="data">
+    </span>
+  </icc-panel-content>
+</icc-panel>
 

@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { CdkTableModule } from '@angular/cdk/table';
 
+
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -15,6 +16,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
+
+import { IccPanelModule } from '../panel/panel.module';
 
 import { IccFieldViewModule } from '../directives/field-view/field-view.module';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
@@ -46,6 +49,7 @@ import { IccTableEventService } from './services/table-event.service';
     MatCheckboxModule,
 
     IccVirtualScrollModule,
+    IccPanelModule,
     IccMenuModule,
     IccTreeModule,
     IccFieldViewModule
