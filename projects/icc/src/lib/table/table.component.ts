@@ -14,6 +14,7 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
+  @Input() height: string;
   columns: IccField[] = [];
 
   constructor(
