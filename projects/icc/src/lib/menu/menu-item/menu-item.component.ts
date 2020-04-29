@@ -14,7 +14,9 @@ export class IccMenuItemComponent implements OnInit {
 
   @ViewChild('childMenu', { static: true }) public childMenu: any;
 
-  constructor(public router: Router) { }
+  constructor(public router: Router) {
+    // console.log( ' 99999999999999999999999999 9999999999', this)
+  }
 
   ngOnInit() { }
 

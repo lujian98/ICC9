@@ -48,7 +48,7 @@
             (mouseenter)="setSortState(column, true)"
             (mouseleave)="setSortState(column, false)"
             (click)="onHeaderSort(column)">
-            {{column.title}} X3 title test
+            {{column.title}}
             <i [class]="getHeaderSortState(column)"></i>
           </div>
           <icc-menu *ngIf="column.menu"

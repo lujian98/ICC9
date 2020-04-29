@@ -4,6 +4,7 @@ import { IccFieldViewService } from '../directives/field-view/field-view.service
 import { IccField } from '../items';
 import { IccFieldConfig } from '../models/item-config';
 
+
 @Component({
   selector: 'icc-menu',
   templateUrl: 'menu.component.html',
@@ -93,6 +94,7 @@ export class IccMenuComponent implements OnChanges {
         }
       ]
     };
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.menuItemConfig) {

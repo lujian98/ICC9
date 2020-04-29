@@ -1,12 +1,14 @@
 import { OverlayRef } from '@angular/cdk/overlay';
+import { ComponentRef } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
-import { debounceTime, filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
+import { debounceTime, filter, map, share, startWith, switchMap, takeWhile } from 'rxjs/operators';
 
 export interface IccPopoverStrategy {
   show$: Observable<never | Event>;
   hide$: Observable<never | Event>;
   isOpened: boolean;
   overlayRef: OverlayRef;
+  containerRef: ComponentRef<any>;
   destroy();
 }
 
@@ -14,6 +16,7 @@ export abstract class IccBasePopoverStrategy implements IccPopoverStrategy {
   protected alive = true;
   isOpened: boolean;
   overlayRef: OverlayRef;
+  containerRef: ComponentRef<any>;
   abstract show$: Observable<Event>;
   abstract hide$: Observable<Event>;
   constructor(
@@ -52,5 +55,28 @@ export class IccPopoverHoverStrategy extends IccBasePopoverStrategy {
     return !(this.host.contains(event.target as Node) ||
       (this.overlayRef && this.overlayRef.overlayElement && this.overlayRef.overlayElement.contains(event.target as Node)));
   }
+}
+
+export class IccPopoverClickStrategy extends IccBasePopoverStrategy {
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    share(),
+    takeWhile(() => this.alive)
+  );
+
+  show$ = this.click$.pipe(
+    filter(([shouldShow]) => shouldShow),
+    map(([, event]) => event),
+    takeWhile(() => this.alive)
+  );
+
+  hide$ = this.click$.pipe(
+    filter(
+      ([shouldShow, event]) =>
+        !shouldShow && !(this.containerRef && this.containerRef.location.nativeElement.contains(event.target))
+    ),
+    map(([, event]) => event),
+    takeWhile(() => this.alive)
+  );
 }
 

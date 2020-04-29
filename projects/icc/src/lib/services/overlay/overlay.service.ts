@@ -12,6 +12,7 @@ import { IccPortalContent } from '../../portal/model';
 export class IccOverlayService<T> {
   overlayComponentRef: IccOverlayComponentRef<T>;
   protected overlayRef: OverlayRef;
+  containerRef: ComponentRef<{}>;
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
   open<G>(
@@ -27,8 +28,8 @@ export class IccOverlayService<T> {
     this.overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
     const componentInjector = this.createInjector(this.overlayComponentRef);
     const componentPortal = new ComponentPortal(component, null, componentInjector);
-    const containerRef = this.overlayRef.attach(componentPortal);
-    Object.assign(containerRef.instance, {
+    this.containerRef = this.overlayRef.attach(componentPortal);
+    Object.assign(this.containerRef.instance, {
       content: componentContent,
       context: componentContext,
       overlayComponentRef: this.overlayComponentRef

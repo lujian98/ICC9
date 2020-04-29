@@ -6,7 +6,7 @@ import { IccOverlayConfig } from '../services/overlay/overlay.model';
 import { IccPortalContent } from '../portal/model';
 // import { IccPopoverService } from './popover.service';
 import { IccOverlayService } from '../services/overlay/overlay.service';
-import { IccBasePopoverStrategy, IccPopoverHoverStrategy } from './popover.strategy';
+import { IccBasePopoverStrategy, IccPopoverHoverStrategy, IccPopoverClickStrategy } from './popover.strategy';
 import { IccPortalComponent } from '../portal/portal.component';
 
 @Directive({
@@ -17,7 +17,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input('iccPopoverContext') context = {};
   @Input() width: string | number = 200;
   @Input() height: string | number;
-  @Input() disabled = false;
+  @Input() popoverType: 'over' | 'click' | 'disabled' = 'over';
 
   private popoverStrategy: IccBasePopoverStrategy;
   private overlayRef: OverlayRef;
@@ -29,8 +29,12 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if (!this.disabled) { // afterClosed$
-      this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
+    if (this.popoverType !== 'disabled') { // afterClosed$
+      if (this.popoverType === 'click') {
+        this.popoverStrategy = new IccPopoverClickStrategy(document, this.elementRef.nativeElement);
+      } else {
+        this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
+      }
       this.popoverStrategy.show$.subscribe(() => this.openPopover());
       this.popoverStrategy.hide$.subscribe(() => this.closePopover());
     }
@@ -52,6 +56,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       );
       this.popoverStrategy.isOpened = this.isOpened;
       this.popoverStrategy.overlayRef = this.overlayRef;
+      this.popoverStrategy.containerRef = this.overlayService.containerRef;
       this.overlayService.overlayComponentRef.afterClosed$.
         pipe(takeWhile(() => this.isOpened))
         .subscribe(() => this.closePopover());
@@ -65,6 +70,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     }
     this.popoverStrategy.isOpened = this.isOpened;
     this.popoverStrategy.overlayRef = null;
+    this.popoverStrategy.containerRef = null;
   }
 
   ngOnDestroy() {

@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   ElementRef,
@@ -78,6 +79,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
     private tableEventService: IccTableEventService,
     private dataSourceService: IccDataSourceService<T>,
     private renderer: Renderer2,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -227,6 +229,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       const columnsHideShow: IccFieldConfig = {
         title: 'Columns',
         name: 'columns',
+        icon: 'fas fa-columns',
         children: this.columns.map((column: IccField) => {
           return {
             type: 'checkbox',
@@ -247,6 +250,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
           column.menu = menu;
         }
       });
+      console.log( ' this.columns=', this.columns)
+      this.cd.detectChanges();
     }
   }
 
