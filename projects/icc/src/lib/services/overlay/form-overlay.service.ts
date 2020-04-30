@@ -4,7 +4,7 @@ import { IccOverlayService } from './overlay.service';
 // import { IccCellMenuFormComponent } from '../../grid';
 
 
-@Injectable()
+@Injectable() // TODO this will not needed any more
 export class IccFormOverlayService<T> extends IccOverlayService<T> {
   componentMapper: {} = {};
 
@@ -18,12 +18,12 @@ export class IccFormOverlayService<T> extends IccOverlayService<T> {
     return this.componentMapper[portal];
   }
 
-
+/*
   getPositionStrategy(origin: HTMLElement): PositionStrategy {
     return this.overlay.position()
     .global()
     .centerHorizontally()
     .centerVertically();
-  }
+  } */
 }
 

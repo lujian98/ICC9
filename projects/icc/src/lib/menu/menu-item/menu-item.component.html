@@ -1,7 +1,7 @@
 <div class="icc-menu-panel">
   <span *ngFor="let item of menuItems">
     <span *ngIf="item.children && item.children.length > 0">
-      <button class="icc-menu-item icc-button" [iccPopover]="menu">
+      <button class="icc-menu-item icc-button" [iccPopover]="menu" popoverPosition="bottomRight">
         <i *ngIf="item.icon" [class]="item.icon"></i>
         <span class="icc-menu-item-title"> {{item.title}}</span>
         <span class="icc-flex"></span>

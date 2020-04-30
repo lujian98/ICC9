@@ -1,13 +1,12 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { debounceTime, filter, startWith, switchMap, takeWhile } from 'rxjs/operators';
-
-import { IccOverlayConfig } from '../services/overlay/overlay.model';
+import { takeWhile } from 'rxjs/operators';
 import { IccPortalContent } from '../portal/model';
-// import { IccPopoverService } from './popover.service';
-import { IccOverlayService } from '../services/overlay/overlay.service';
-import { IccBasePopoverStrategy, IccPopoverHoverStrategy, IccPopoverClickStrategy } from './popover.strategy';
 import { IccPortalComponent } from '../portal/portal.component';
+import { IccOverlayConfig } from '../services/overlay/overlay.model';
+import { IccOverlayService } from '../services/overlay/overlay.service';
+import { IccBasePopoverStrategy, IccPopoverClickStrategy, IccPopoverHoverStrategy } from './popover.strategy';
+
 
 @Directive({
   selector: '[iccPopover]'
@@ -15,7 +14,8 @@ import { IccPortalComponent } from '../portal/portal.component';
 export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input('iccPopover') content: IccPortalContent<T>;
   @Input('iccPopoverContext') context = {};
-  @Input() width: string | number = 200;
+  @Input() popoverPosition: string;
+  @Input() width: string | number;
   @Input() height: string | number;
   @Input() popoverType: 'over' | 'click' | 'disabled' = 'over';
 
@@ -44,6 +44,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     if (!this.isOpened) {
       this.isOpened = true;
       const overlayConfig: IccOverlayConfig = {
+        position: this.popoverPosition,
         width: this.width,
         height: this.height
       };

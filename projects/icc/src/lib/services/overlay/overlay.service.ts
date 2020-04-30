@@ -1,4 +1,4 @@
-import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
+import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy, GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, Injector, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class IccOverlayService<T> {
   }
 
   private getOverlayConfig(config: IccOverlayConfig, origin: HTMLElement): OverlayConfig {
-    const positionStrategy = this.getPositionStrategy(origin);
+    const positionStrategy = this.getPositionStrategy(config, origin);
     const overlayConfig = new OverlayConfig({
       hasBackdrop: config.hasBackdrop,
       width: config.width,
@@ -62,44 +62,37 @@ export class IccOverlayService<T> {
     return new PortalInjector(this.injector, injectionTokens);
   }
 
-  getPositionStrategy(origin: HTMLElement): PositionStrategy {
+  getPositionStrategy(config: IccOverlayConfig, origin: HTMLElement): PositionStrategy {
+    const positions = this.getPositions(config.position);
+    // TODO define the position from the config.position and offset.
     return this.overlay
       .position()
       .flexibleConnectedTo(origin)
-      .withPositions(this.getPositions())
+      .withPositions(positions)
       .withFlexibleDimensions(false)
       .withPush(false);
     // .withViewportMargin(8)
     // .withDefaultOffsetY(10)
   }
 
-  getPositions(): ConnectionPositionPair[] {
-    return [
-      {
-        originX: 'start',
-        originY: 'bottom',
-        overlayX: 'start',
-        overlayY: 'top'
-      },
-      {
-        originX: 'start',
-        originY: 'top',
-        overlayX: 'start',
-        overlayY: 'bottom'
-      },
-      {
-        originX: 'end',
-        originY: 'bottom',
-        overlayX: 'end',
-        overlayY: 'top'
-      },
-      {
-        originX: 'end',
-        originY: 'top',
-        overlayX: 'end',
-        overlayY: 'bottom'
-      }
+  getPositions(position: string): ConnectionPositionPair[] {
+    const keys = ['bottomLeft', 'bottomRight', 'bottom'];
+    let postions: ConnectionPositionPair[] = [
+      { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetX: -5, offsetY: null }, // bottomLeft most popover
+      { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetX: null, offsetY: -30 }, // bottomRight nested menu
+      { originX: 'start', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetX: null, offsetY: -30 }, // leftBottom
+      { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetX: null, offsetY: null }, // bottom
+
+      { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetX: null, offsetY: null }, // topLeft
+      { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetX: null, offsetY: null }, // Not sure this Bottom
+      { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom', offsetX: null, offsetY: null },  // rightTop
+
     ];
+    const index = keys.indexOf(position);
+    if (index !== -1) {
+      postions = postions.slice(index).concat(postions.slice(0,index));
+    }
+    return postions;
   }
 
   destroy() {

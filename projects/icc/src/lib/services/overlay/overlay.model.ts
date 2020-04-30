@@ -9,6 +9,7 @@ export interface IccOverlayConfig {
   hasBackdrop?: boolean;
   backdropClass?: string;
   shouldCloseOnBackdropClick?: boolean;
+  position?: string;
 }
 
 export const DEFAULT_CONFIG: IccOverlayConfig = {
