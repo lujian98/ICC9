@@ -19,11 +19,10 @@
             {{record[column.name]}}
           </span>
           <span *ngIf="column.name=='rowSelection'">
-            <mat-checkbox
+            <input type="checkbox"
               (click)="checkboxClick($event)"
               (change)="checkboxChange($event, rowIndex, record, column)"
               [checked]="isRowSelected(record)">
-            </mat-checkbox>
           </span>
         </div>
       </cdk-cell>

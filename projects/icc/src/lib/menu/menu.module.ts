@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
 
 import { IccPopoverModule } from '../popover/popover.module';
 import { IccFieldViewModule } from '../directives/field-view/field-view.module';
@@ -13,7 +12,6 @@ import { IccMenuItemComponent } from './menu-item/menu-item.component';
 @NgModule({
   imports: [
     CommonModule,
-    MatMenuModule,
     IccPopoverModule,
     IccFieldViewModule,
   ],

@@ -6,7 +6,6 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { CdkTableModule } from '@angular/cdk/table';
 
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
@@ -35,10 +34,7 @@ import { IccTableEventService } from './services/table-event.service';
     ScrollingModule,
     CdkTreeModule,
     CdkTableModule,
-
     MatProgressBarModule,
-    MatCheckboxModule,
-
     IccVirtualScrollModule,
     IccPanelModule,
     IccMenuModule,

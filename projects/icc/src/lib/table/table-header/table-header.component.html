@@ -57,11 +57,10 @@
           </icc-menu>
         </div>
         <div *ngIf="column.name=='rowSelection'">
-          <mat-checkbox *ngIf="tableConfigs.enableMultiRowSelection"
+          <input type="checkbox" *ngIf="tableConfigs.enableMultiRowSelection"
             (change)="$event ? masterToggle() : null"
             [checked]="isChecked()"
             [indeterminate]="isIndeterminate()">
-          </mat-checkbox>
         </div>
       </cdk-header-cell>
     </ng-container>

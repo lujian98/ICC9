@@ -90,7 +90,7 @@ export class IccOverlayService<T> {
     ];
     const index = keys.indexOf(position);
     if (index !== -1) {
-      postions = postions.slice(index).concat(postions.slice(0,index));
+      postions = postions.slice(index).concat(postions.slice(0, index));
     }
     return postions;
   }
