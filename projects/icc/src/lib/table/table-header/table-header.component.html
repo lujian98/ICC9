@@ -1,7 +1,17 @@
 
-<cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"cdkDropListGroup
+<cdk-table class="icc-cdk-table-header" cdkDropListGroup
   [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
-  <span cdkDropList
+
+  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="header{{ column.name }}"
+    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+    <cdk-header-cell class="icc-table-header-first-row-cell" *cdkHeaderCellDef
+      [ngStyle]="{'flex':'0 0 '+column.width+'px', 'width': column.width+'px',
+        'left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+    </cdk-header-cell>
+  </ng-container>
+  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="headerColumns"></cdk-header-row>
+
+  <span *ngIf="tableConfigs.enableTableHeader" cdkDropList
     cdkDropListLockAxis="x"
     cdkDropListOrientation="horizontal"
     [cdkDropListEnterPredicate]="onDropListPredicate()"
@@ -26,7 +36,7 @@
     [ngStyle]="{'display': groupHeaderDisplay.length > 0 ? 'flex' : 'none'}">
   </cdk-header-row>
 
-  <span cdkDropList
+  <span *ngIf="tableConfigs.enableTableHeader" cdkDropList
       cdkDropListLockAxis="x"
       cdkDropListOrientation="horizontal"
       [cdkDropListEnterPredicate]="onDropListPredicate()"

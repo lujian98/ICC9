@@ -55,6 +55,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   pending: boolean;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+  headerColumns: string[] = []; // for top header line
   filterColumns: string[] = [];
   groupHeaderColumns: IccGroupHeader[] = [];
   groupHeaderDisplay: string[] = [];
@@ -128,6 +129,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.visibleColumns = this.tableEventService.visibleColumns;
       this.setColumnsHide();
       this.displayedColumns = this.visibleColumns.map(column => column.name);
+      this.headerColumns = this.visibleColumns.map(column => `header${column.name}`);
       this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
       this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
       const totalVisibleColumns = this.visibleColumns.length;

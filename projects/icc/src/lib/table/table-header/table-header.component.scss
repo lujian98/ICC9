@@ -55,11 +55,10 @@
     .icc-cdk-table-header-filter-row {
       display: flex;
       align-items: center;
-      // width: 100%
     }
 
-    .icc-cdk-table-header-row:first-child {
-      border-top: 1px solid $border-color;;
+    .icc-table-header-first-row-cell {
+      border-bottom: 1px solid $border-color;
     }
 
     .icc-cdk-table-header-cell, .icc-cdk-table-filter-cell {
