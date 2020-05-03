@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IccField } from '../../items';
+import { IccField } from '../../../items';
 
 @Component({
   selector: 'icc-menu-item',

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IccItemFieldService } from '../items/item_field.service';
-import { IccFieldViewService } from '../directives/field-view/field-view.service';
-import { IccField } from '../items';
-import { IccFieldConfig } from '../models/item-config';
+import { IccItemFieldService } from '../../items/item_field.service';
+import { IccFieldViewService } from '../../directives/field-view/field-view.service';
+import { IccField } from '../../items';
+import { IccFieldConfig } from '../../models/item-config';
 
 
 @Component({

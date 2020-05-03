@@ -1,7 +1,7 @@
 import { CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, TemplateRef, Type, ViewChild } from '@angular/core';
 import { IccPortalContent } from './model';
-import { IccOverlayComponentRef } from '../services/overlay/overlay-component-ref';
+import { IccOverlayComponentRef } from '../../services/overlay/overlay-component-ref';
 
 @Component({
   selector: 'icc-portal',

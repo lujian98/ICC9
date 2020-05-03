@@ -1,5 +1,5 @@
 
-import { IccPortalContent } from '../portal/model';
+import { IccPortalContent } from '../components/portal/model';
 
 export interface Tile <T> {
   name: string;
@@ -22,21 +22,6 @@ export interface TileInfo {
   colStart: number;
   rowHeight: number;
   colWidth: number;
-}
-
-export interface ResizeInfo {
-  direction: string;
-  element: HTMLDivElement;
-  isResized: boolean;
-  origin: string;
-  width: number;
-  height: number;
-  dx: number;
-  dy: number;
-  scaleX: number;
-  scaleY: number;
-  signX: number;
-  signY: number;
 }
 
 export interface ResizeMap {

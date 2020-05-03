@@ -4,7 +4,7 @@ import { ComponentRef, Injectable, Injector, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccOverlayComponentRef } from './overlay-component-ref';
 import { IccOverlayConfig, DEFAULT_CONFIG } from './overlay.model';
-import { IccPortalContent } from '../../portal/model';
+import { IccPortalContent } from '../../components/portal/model';
 
 @Injectable({
   providedIn: 'root'

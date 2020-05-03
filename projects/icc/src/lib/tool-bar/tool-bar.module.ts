@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { IccToolBarComponent } from './tool-bar.component';
-import { IccMenuModule } from '../menu/menu.module';
+import { IccMenuModule } from '../components/menu/menu.module';
 
 @NgModule({
   imports: [

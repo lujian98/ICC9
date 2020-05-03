@@ -1,7 +1,7 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject } from 'rxjs';
 import { IccOverlayComponentCloseEvent } from './overlay.model';
-import { IccPortalContent } from '../../portal/model';
+import { IccPortalContent } from '../../components/portal/model';
 
 export class IccOverlayComponentRef<T> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();

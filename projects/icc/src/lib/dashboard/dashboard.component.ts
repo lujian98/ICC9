@@ -16,7 +16,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { DxyPosition, Tile, TileInfo, ResizeInfo, ResizeMap } from './model';
+import { DxyPosition, Tile, TileInfo, ResizeMap } from './model';
+import { ResizeInfo } from '../directives/resize/model';
 import { IccFieldConfig } from '../models/item-config';
 
 @Component({

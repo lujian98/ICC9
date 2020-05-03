@@ -1,10 +1,10 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
-import { IccPortalContent } from '../portal/model';
-import { IccPortalComponent } from '../portal/portal.component';
-import { IccOverlayConfig } from '../services/overlay/overlay.model';
-import { IccOverlayService } from '../services/overlay/overlay.service';
+import { IccPortalContent } from '../../components/portal/model';
+import { IccPortalComponent } from '../../components/portal/portal.component';
+import { IccOverlayConfig } from '../../services/overlay/overlay.model';
+import { IccOverlayService } from '../../services/overlay/overlay.service';
 import { IccBasePopoverStrategy, IccPopoverClickStrategy, IccPopoverHoverStrategy } from './popover.strategy';
 
 

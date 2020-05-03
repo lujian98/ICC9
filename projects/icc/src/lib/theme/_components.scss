@@ -1,10 +1,13 @@
 @import '../table/table-header/table-header.component.scss';
 @import '../table/table-view/table-view.component.scss';
 @import '../tree/tree.component.scss';
-@import '../menu/menu.component.scss';
-@import '../menu/menu-item/menu-item.component.scss';
+
+@import '../components/menu/menu.component.scss';
+@import '../components/menu/menu-item/menu-item.component.scss';
+@import '../components/portal/portal.component.scss';
+
 @import '../directives/field-view/button/field-view-button.component.scss';
-@import '../portal/portal.component.scss';
+@import '../directives/resize/resize.directive.scss';
 
 @mixin icc-theme-components() {
   @include table-header-component-theme();
@@ -14,4 +17,6 @@
   @include menu-item-component-theme();
   @include field-view-button-component-theme();
   @include portal-component-theme();
+
+  @include resize-directive-theme();
 }

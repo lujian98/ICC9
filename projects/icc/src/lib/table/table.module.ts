@@ -10,12 +10,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
 
-import { IccPanelModule } from '../panel/panel.module';
+import { IccPanelModule } from '../components/panel/panel.module';
 
 import { IccFieldViewModule } from '../directives/field-view/field-view.module';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
 
-import { IccMenuModule } from '../menu/menu.module';
+import { IccMenuModule } from '../components/menu/menu.module';
 import { IccTreeModule } from '../tree/tree.module';
 
 import { IccTableComponent } from './table.component';
