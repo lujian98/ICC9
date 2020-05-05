@@ -19,11 +19,14 @@
 *:after, *:before {
   box-sizing: inherit;
 }
+
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
 body {
   margin: 0px;
+  height: 100%;
 }
 
