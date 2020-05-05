@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IccResizeModule } from '../../directives/resize/resize.module';
 
 import {
   IccPanelHeaderComponent,
@@ -8,6 +10,10 @@ import {
 } from './panel.component';
 
 @NgModule({
+  imports: [
+    CommonModule,
+    IccResizeModule,
+  ],
   declarations: [
     IccPanelHeaderComponent,
     IccPanelContentComponent,

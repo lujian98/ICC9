@@ -8,6 +8,7 @@ import { IccTableModule } from 'icc';
 import { IccPanelModule } from 'icc';
 
 import { TableComponent } from './table.component';
+import { PanelExampleModule } from '../panel/panel-example.module';
 
 import { TableRoutingModule } from './table-routing.module';
 
@@ -19,6 +20,7 @@ import { TableRoutingModule } from './table-routing.module';
     MatMenuModule,
     IccTableModule,
     IccPanelModule,
+    PanelExampleModule,
     TableRoutingModule
   ],
   declarations: [

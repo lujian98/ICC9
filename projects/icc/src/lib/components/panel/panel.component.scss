@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  // position: absolute; // for resize handle
   flex-direction: column;
   // height: calc(100vh - 50px); // TODO configure height???
   ::ng-deep {

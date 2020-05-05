@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ResizeInfo } from '../../directives/resize/model';
 
 @Component({
   selector: 'icc-panel-header',
@@ -25,6 +26,8 @@ export class IccPanelFooterComponent { }
 })
 export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() height: string;
+  @Input() width: string;
+  @Input() resizeable: boolean;
 
   constructor(
     private elementRef: ElementRef,
@@ -48,6 +51,20 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
       this.height = 'calc(100vh - 60px)'; // default is calc(100vh - 60px) -> 60px is top nav bar height + 10px
     }
     el.style.height = this.height;
+    if (this.width) {
+      el.style.width = this.width;
+    }
+    if (this.resizeable) {
+      el.style.position = 'absolute';
+    }
+  }
+
+  onResizePanel(resizeInfo: ResizeInfo) {
+    if (resizeInfo.isResized) {
+      const el = this.elementRef.nativeElement;
+      el.style.height = resizeInfo.height * resizeInfo.scaleY + 'px';
+      el.style.width = resizeInfo.width * resizeInfo.scaleX + 'px';
+    }
   }
 }
 

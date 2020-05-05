@@ -38,7 +38,10 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private setElementResize(e: MouseEvent) {
-    const el = this.el.nativeElement.parentNode.firstChild.firstChild;
+    console.log( ' this.el.nativeElement =', this.el)
+    // const el = this.el.nativeElement.parentNode.firstChild.firstChild;
+    const el = this.el.nativeElement.parentNode;
+
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
       direction: this.direction,
@@ -62,12 +65,16 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.scaleY = (box.height + this.resizeInfo.signY * this.resizeInfo.dy) / box.height;
         this.elementTransform();
         if (this.resizeInfo.origin) {
-          this.iccResizeEvent.emit(this.resizeInfo);
+          // this.iccResizeEvent.emit(this.resizeInfo);
+          el.style['transform-origin'] = this.resizeInfo.origin;
+          el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
         }
       }
     });
     this.resizableMouseup = this.renderer.listen(document, 'mouseup', (event: MouseEvent) => {
       if (this.isResizing && this.resizeInfo.origin) {
+        el.style['transform-origin'] = '';
+        el.style.transform = '';
         this.resizeInfo.isResized = true;
         this.iccResizeEvent.emit(this.resizeInfo);
         this.resizeInfo = null;

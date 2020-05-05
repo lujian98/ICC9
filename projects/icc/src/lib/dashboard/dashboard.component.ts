@@ -156,7 +156,15 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
 
   onResizeTile(resizeInfo: ResizeInfo, tile: Tile<T>) {
     console.log(' resizeInfo=', resizeInfo);
-    const element = resizeInfo.element;
+    if (resizeInfo.isResized) {
+      // const element = resizeInfo.element;
+      // element.style.transform = '';
+      // element.style['transform-origin'] = '';
+      const tileInfo = this.getResizeTileInfo(resizeInfo, tile);
+      Object.assign(tile, tileInfo);
+      this.setTileLayouts();
+    }
+    /*
     if (!resizeInfo.isResized) {
       element.style['transform-origin'] = resizeInfo.origin;
       element.style.transform = `scale(${resizeInfo.scaleX}, ${resizeInfo.scaleY})`;
@@ -165,7 +173,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
       const tileInfo = this.getResizeTileInfo(resizeInfo, tile);
       Object.assign(tile, tileInfo);
       this.setTileLayouts();
-    }
+    } */
   }
 
   private getResizeTileInfo(resizeInfo: ResizeInfo, tile: Tile<T>): TileInfo {
