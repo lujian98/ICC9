@@ -1,0 +1,13 @@
+.app-table-container {
+  flex-direction: row;
+  overflow: hidden;
+  .app-table-side-menu {
+    flex: 0 0 200px;
+  }
+  .app-table-panel {
+    width: 200px; // need this make sure initial width is correct
+    flex: 1 1 auto;
+  }
+}
+
+

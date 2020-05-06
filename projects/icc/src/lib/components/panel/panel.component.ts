@@ -48,12 +48,13 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
 
   private setPanelHeight() {
     const el = this.elementRef.nativeElement;
+    console.log(' eeeeeeeeeeee el =', this.elementRef)
     if (this.layout === 'fit') {
       this.height = null;
       this.width = null;
       this.resizeable = null;
       this.setFitLayout();
-    } else if (!this.height) {
+    } else if (!this.height) { // TODO remove with auto fit layout???
       this.height = 'calc(100vh - 50px)'; // default is calc(100vh - 50px) -> 50px is top nav bar height
     }
     if (this.height) {
@@ -66,6 +67,13 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
       el.style.position = 'absolute';
     }
   }
+
+  /*
+  var size = {
+  width: window.innerWidth || document.body.clientWidth,
+  height: window.innerHeight || document.body.clientHeight
+}
+*/
 
   private setFitLayout() { // TODO fit width if width is set
     const el = this.elementRef.nativeElement;

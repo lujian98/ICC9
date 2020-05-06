@@ -18,6 +18,7 @@ import { TreeExampleModule } from './tree/tree-example/tree-example.module';
 
 import { CdkTableDemoModule } from './table/cdk-table-demo/cdk-table-demo.module';
 import { TableModule } from './table/table.module';
+import { LayoutsModule } from './layouts/layouts.module';
 
 
 import { SchoolModule } from './school/school.module';
@@ -50,6 +51,7 @@ import { AppRoutingModule } from './app-routing.module';
     TableModule,
     SchoolModule,
     DocDashboardModule,
+    LayoutsModule,
 
     AppRoutingModule
   ],
