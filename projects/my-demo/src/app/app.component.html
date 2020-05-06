@@ -1,11 +1,33 @@
+<icc-panel class="app-theme icc-theme-light" layout="viewport">
+  <icc-panel-header>
+    <icc-demo-header-nav (sideMenuNavIconClickEvent)="onSideMenuNavIconClick($event)">
+    </icc-demo-header-nav>
+  </icc-panel-header>
+  <icc-panel-content>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </icc-panel-content>
+</icc-panel>
+
+<!--
+
+  <icc-panel>
+  <icc-panel-content class="app-table-container">
+    <div class="app-table-side-menu">
+      <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo</a></div>
+    </div>
+    <div class="app-table-panel">
+      <router-outlet></router-outlet>
+    </div>
+  </icc-panel-content>
+</icc-panel>
+
+
 <div class="app-theme icc-theme-light">
   <icc-demo-header-nav
     (sideMenuNavIconClickEvent)="onSideMenuNavIconClick($event)">
   </icc-demo-header-nav>
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
-
-<!--
 
   <div class="app-theme icc-theme-light">
   <div class="app-container">

@@ -13,6 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MatRadioModule } from '@angular/material/radio';
 
+import { IccPanelModule } from 'icc';
+
 import { LoginModule } from './login/login.module';
 import { TreeExampleModule } from './tree/tree-example/tree-example.module';
 
@@ -44,6 +46,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatListModule,
     MatMenuModule,
     MatRadioModule,
+
+    IccPanelModule,
 
     LoginModule,
     TreeExampleModule,

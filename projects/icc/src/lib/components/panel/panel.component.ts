@@ -28,34 +28,34 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() height: string;
   @Input() width: string;
   @Input() resizeable: boolean;
-  @Input() layout: string;
+  @Input() layout = 'fit'; // fit | viewport
 
   constructor(
     private elementRef: ElementRef,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.setPanelHeight();
   }
 
-  ngOnInit() { }
-
-  ngAfterViewInit() { }
+  ngAfterViewInit() {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.height) {
-      this.setPanelHeight();
-    }
+    // this.setPanelHeight();
   }
 
   private setPanelHeight() {
     const el = this.elementRef.nativeElement;
-    console.log(' eeeeeeeeeeee el =', this.elementRef)
-    if (this.layout === 'fit') {
+    if (this.layout === 'viewport') {
+      this.setFitLayout();
+    } else if (this.layout === 'fit') {
       this.height = null;
       this.width = null;
       this.resizeable = null;
       this.setFitLayout();
-    } else if (!this.height) { // TODO remove with auto fit layout???
-      this.height = 'calc(100vh - 50px)'; // default is calc(100vh - 50px) -> 50px is top nav bar height
+      // } else if (!this.height) { // TODO remove with auto fit layout???
+      //  this.height = 'calc(100vh - 50px)'; // default is calc(100vh - 50px) -> 50px is top nav bar height
     }
     if (this.height) {
       el.style.height = this.height;
@@ -68,30 +68,35 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
     }
   }
 
-  /*
-  var size = {
-  width: window.innerWidth || document.body.clientWidth,
-  height: window.innerHeight || document.body.clientHeight
-}
-*/
-
   private setFitLayout() { // TODO fit width if width is set
     const el = this.elementRef.nativeElement;
-    // console.log(' el =', this.elementRef)
-    const ownerCt = this.getParentElement();
-    console.log(' ownerCt =', ownerCt, ' height =', ownerCt.clientHeight);
-    if (ownerCt) {
-      el.style.height = `${ownerCt.clientHeight}px`;
+    const size = this.getParentSize();
+    if (size) {
+      el.style.height = `${size.height}px`;
+      if (this.layout === 'viewport') {
+        el.style.width = `${size.width}px`;
+      }
     }
   }
 
-  private getParentElement() {
-    const el = this.elementRef.nativeElement;
-    let ownerCt = el.parentNode.parentNode;
-    if (!ownerCt || ownerCt.clientHeight <= 0) {
-      ownerCt = ownerCt.parentNode;
+  private getParentSize() {
+    let size = null;
+    if (this.layout === 'viewport') {
+      size = {
+        width: window.innerWidth || document.body.clientWidth,
+        height: window.innerHeight || document.body.clientHeight
+      };
+    } else {
+      const el = this.elementRef.nativeElement;
+      let ownerCt = el.parentNode.parentNode;
+      if (!ownerCt || ownerCt.clientHeight <= 0) {
+        ownerCt = ownerCt.parentNode;
+      }
+      if (ownerCt) {
+        size = { width: ownerCt.clientWidth, height: ownerCt.clientHeight };
+      }
     }
-    return ownerCt;
+    return size;
   }
 
   onResizePanel(resizeInfo: ResizeInfo) {
@@ -104,7 +109,7 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
-    if (this.layout === 'fit') {
+    if (this.layout === 'fit' || this.layout === 'viewport') {
       this.setFitLayout();
     }
   }
