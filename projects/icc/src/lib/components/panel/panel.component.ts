@@ -35,33 +35,25 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.setPanelHeight();
+    this.initPanelSize();
   }
 
   ngAfterViewInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // this.setPanelHeight();
   }
 
-  private setPanelHeight() {
+  private initPanelSize() {
     const el = this.elementRef.nativeElement;
-    if (this.layout === 'viewport') {
+    if (this.layout === 'viewport' || this.layout === 'fit') {
       this.setFitLayout();
-    } else if (this.layout === 'fit') {
-      // this.height = null;
-      // this.width = null;
-      // this.resizeable = null;
-      this.setFitLayout();
-      // } else if (!this.height) { // TODO remove with auto fit layout???
-      //  this.height = 'calc(100vh - 50px)'; // default is calc(100vh - 50px) -> 50px is top nav bar height
     }
     if (this.height) {
-      el.style.height = this.height;
+      this.setHeight(this.height);
     }
     if (this.width) {
-      el.style.width = this.width;
+      this.setWidth(this.width);
     }
     if (this.resizeable) {
       el.style.position = 'absolute';
@@ -69,14 +61,24 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   private setFitLayout() { // TODO fit width if width is set
-    const el = this.elementRef.nativeElement;
     const size = this.getParentSize();
     if (size) {
-      el.style.height = `${size.height}px`;
+      this.setHeight(`${size.height}px`);
       if (this.layout === 'viewport') {
-        el.style.width = `${size.width}px`;
+        this.setWidth(`${size.width}px`);
       }
     }
+  }
+
+  private setHeight(height: string) {
+    const el = this.elementRef.nativeElement;
+    el.style.height = height;
+  }
+
+  private setWidth(width: string) {
+    const el = this.elementRef.nativeElement;
+    el.style.width = width;
+    el.parentNode.style.width = width;
   }
 
   private getParentSize() {
@@ -101,11 +103,13 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
 
   onResizePanel(resizeInfo: ResizeInfo) {
     if (resizeInfo.isResized) {
-      const el = this.elementRef.nativeElement;
-      el.style.height = resizeInfo.height * resizeInfo.scaleY + 'px';
-      el.style.width = resizeInfo.width * resizeInfo.scaleX + 'px';
+      const height = resizeInfo.height * resizeInfo.scaleY;
+      const width = resizeInfo.width * resizeInfo.scaleX;
+      this.setHeight(`${height}px`);
+      this.setWidth(`${width}px`);
     }
   }
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {
