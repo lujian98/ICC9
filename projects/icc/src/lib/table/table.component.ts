@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
 import { ColumnMenuType, IccColumnConfig, IccTableConfigs } from '../models';
@@ -15,15 +15,18 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
   @Input() height: string;
+  @Input() width: string;
   columns: IccField[] = [];
 
   constructor(
+    private elementRef: ElementRef,
     private columnService: IccItemFieldService,
     private fieldViewService: IccFieldViewService,
   ) {
   }
 
   ngOnInit() {
+    this.setTableWidth();
     this.checkTableConfigs();
   }
 
@@ -43,6 +46,14 @@ export class IccTableComponent<T> implements OnChanges {
 
       // this.setGridColumView();
       // this.filters.setFilters(this.columns);
+    }
+  }
+
+  setTableWidth() {
+    // this.width = '900px';
+    if(this.width) {
+      const el = this.elementRef.nativeElement;
+      el.style.width = this.width;
     }
   }
 

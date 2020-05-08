@@ -50,9 +50,9 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
     if (this.layout === 'viewport') {
       this.setFitLayout();
     } else if (this.layout === 'fit') {
-      this.height = null;
-      this.width = null;
-      this.resizeable = null;
+      // this.height = null;
+      // this.width = null;
+      // this.resizeable = null;
       this.setFitLayout();
       // } else if (!this.height) { // TODO remove with auto fit layout???
       //  this.height = 'calc(100vh - 50px)'; // default is calc(100vh - 50px) -> 50px is top nav bar height
