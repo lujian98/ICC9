@@ -1,6 +1,6 @@
 
 .dashboard-container {
-  flex-direction: row;
+  flex-direction: row !important;
   .dashboard-side-menu {
     width: 200px;
     border: 1px solid blue;

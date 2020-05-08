@@ -1,5 +1,5 @@
 .app-table-container {
-  flex-direction: row;
+  flex-direction: row !important;
   overflow: hidden;
   .app-table-side-menu {
     flex: 0 0 200px;

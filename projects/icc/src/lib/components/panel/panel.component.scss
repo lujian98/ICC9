@@ -1,23 +1,25 @@
 :host {
-  display: flex;
-  // position: absolute; // for resize handle
-  flex-direction: column;
-  // height: calc(100vh - 50px); // TODO configure height???
-  ::ng-deep {
-    icc-panel-header {
-      flex: 0 1 auto;
-    }
-    icc-panel-content {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      overflow: auto;
-    }
-    icc-panel-footer {
-      display: flex;
-      flex: 0 1 auto;
-      align-items: center;
-      flex-flow: row wrap;
+  .icc-panel {
+    display: flex;
+    // position: absolute; // for resize handle
+    flex-direction: column;
+    // height: calc(100vh - 50px); // TODO configure height???
+    ::ng-deep {
+      icc-panel-header {
+        flex: 0 1 auto;
+      }
+      icc-panel-content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+      }
+      icc-panel-footer {
+        display: flex;
+        flex: 0 1 auto;
+        align-items: center;
+        flex-flow: row wrap;
+      }
     }
   }
 }
