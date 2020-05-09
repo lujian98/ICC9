@@ -4,6 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IccPortalModule } from '../components/portal/portal.module';
 import { IccMenuModule } from '../components/menu/menu.module';
 import { IccResizeModule } from '../directives/resize/resize.module';
+import { IccPanelModule } from '../components/panel/panel.module';
 
 import { IccDashboardComponent } from './dashboard.component';
 
@@ -12,6 +13,7 @@ import { IccDashboardComponent } from './dashboard.component';
   imports: [
     CommonModule,
     DragDropModule,
+    IccPanelModule,
     IccPortalModule,
     IccMenuModule,
     IccResizeModule

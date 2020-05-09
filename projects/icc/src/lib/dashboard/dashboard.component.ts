@@ -91,13 +91,20 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
   private getDashboardSize() { // TODO return correct size
     const el = this.elementRef.nativeElement;
     let node = null;
+    console.log( ' this.elementRef=', this.elementRef)
+    console.log( ' el.clientWidth=', el.clientWidth)
+    console.log( ' el.firstChild.clientWidth=', el.firstChild.clientWidth)
+    console.log( ' el.parentNode.parentNode.clientWidth=', el.parentNode.parentNode.clientWidth)
+
+    /*
     if (el.clientWidth) {
       node = el;
     } else if (el.parentNode.clientWidth) {
       node = el.parentNode;
     } else if (el.parentNode.parentNode.clientWidth) {
       node = el.parentNode.parentNode;
-    }
+    } */
+    node = el.firstChild;
     if (node) {
       return {
         width: node.clientWidth,

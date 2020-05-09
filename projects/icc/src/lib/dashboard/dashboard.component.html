@@ -1,25 +1,41 @@
-<div class="icc-tile-list" cdkDropListGroup
-  [ngStyle]="{'grid-gap': gridGap +'px', 'grid-template-columns': gridTemplateColumns, 'grid-template-rows': gridTemplateRows}">
-  <div class="icc-tile-item" *ngFor="let tile of tiles; let i = index;"
-    [ngStyle]="{'grid-column': tile.gridColumn, 'grid-row': tile.gridRow}">
-    <cdk-drop-list class="icc-drag-tile" [cdkDropListData]="i" cdkDragHandle (cdkDropListDropped)="onDropListDropped($event, tile)">
-      <div class="icc-drag-tile" [style.backgroundColor]="tile.color" cdkDrag [cdkDragDisabled]="isDragDisabled(tile)" [cdkDragData]="i">
-        <icc-portal [content]="tile.content" [context]="tile.context" withBackground="true"></icc-portal>
+<icc-panel>
+  <icc-panel-content>
+    <div class="icc-tile-list" cdkDropListGroup
+      [ngStyle]="{'grid-gap': gridGap +'px', 'grid-template-columns': gridTemplateColumns, 'grid-template-rows': gridTemplateRows}">
+      <div class="icc-tile-item" *ngFor="let tile of tiles; let i = index;"
+        [ngStyle]="{'grid-column': tile.gridColumn, 'grid-row': tile.gridRow}">
+        <cdk-drop-list class="icc-drag-tile" [cdkDropListData]="i" cdkDragHandle
+          (cdkDropListDropped)="onDropListDropped($event, tile)">
+          <div class="icc-drag-tile" [style.backgroundColor]="tile.color" cdkDrag
+            [cdkDragDisabled]="isDragDisabled(tile)" [cdkDragData]="i">
+            <icc-portal [content]="tile.content" [context]="tile.context" withBackground="true"></icc-portal>
+          </div>
+        </cdk-drop-list>
+        <div IccResizeTop iccResize direction="top" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeRight iccResize direction="right" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeBottom iccResize direction="bottom" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeLeft iccResize direction="left" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeTopLeft iccResize direction="topLeft" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeTopRight iccResize direction="topRight" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeBottomRight iccResize direction="bottomRight" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
+        <div IccResizeBottomLeft iccResize direction="bottomLeft" [elementKey]="'tile'+i"
+          (iccResizeEvent)="onResizeTile($event, tile)"></div>
       </div>
-    </cdk-drop-list>
-    <div IccResizeTop iccResize direction="top" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeRight iccResize direction="right" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeBottom iccResize direction="bottom" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeLeft iccResize direction="left" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeTopLeft iccResize direction="topLeft" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeTopRight iccResize direction="topRight" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeBottomRight iccResize direction="bottomRight" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-    <div IccResizeBottomLeft iccResize direction="bottomLeft" [elementKey]="'tile'+i" (iccResizeEvent)="onResizeTile($event, tile)"></div>
-  </div>
-</div>
+    </div>
+    <div class="icc-dashbard-menu">
+      <icc-menu *ngIf="menuItems" [menuItemConfig]="menuItems">
+      </icc-menu>
+    </div>
+  </icc-panel-content>
+</icc-panel>
 
-<div class="icc-dashbard-menu">
-  <icc-menu *ngIf="menuItems" [menuItemConfig]="menuItems">
-  </icc-menu>
-</div>
-
+<!--
+   width="800px"
+-->
