@@ -24,6 +24,8 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log( ' 22222222222 this.el.nativeElement =', this.el)
+
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
@@ -65,7 +67,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.scaleY = (box.height + this.resizeInfo.signY * this.resizeInfo.dy) / box.height;
         this.elementTransform();
         if (this.resizeInfo.origin) {
-          // this.iccResizeEvent.emit(this.resizeInfo);
+          this.iccResizeEvent.emit(this.resizeInfo);
           el.style['transform-origin'] = this.resizeInfo.origin;
           el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
         }

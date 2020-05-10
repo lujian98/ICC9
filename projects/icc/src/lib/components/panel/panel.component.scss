@@ -1,8 +1,7 @@
 :host {
   display: flex;
-  // position: absolute; // for resize handle
+  position: relative;  // for resize handle position
   flex-direction: column;
-  // height: calc(100vh - 50px); // TODO configure height???
   ::ng-deep {
     icc-panel-header {
       flex: 0 1 auto;

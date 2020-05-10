@@ -16,5 +16,9 @@ export class LayoutsComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
   }
+
+  onResizePanel(event) {
+    console.log(' 44444event=', event);
+  }
 }
 

@@ -45,7 +45,6 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   private initPanelSize() {
-    const el = this.elementRef.nativeElement;
     if (this.layout === 'viewport' || this.layout === 'fit') {
       this.setFitLayout();
     }
@@ -54,9 +53,6 @@ export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
     }
     if (this.width) {
       this.setWidth(this.width);
-    }
-    if (this.resizeable) {
-      el.style.position = 'absolute';
     }
   }
 

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IccPanelModule } from 'icc';
+import { IccPanelModule, IccResizeModule } from 'icc';
+
 import { LayoutsComponent } from './layouts.component';
 import { PanelExampleModule } from '../panel/panel-example.module';
 
@@ -11,6 +12,7 @@ import { LayoutsRoutingModule } from './layouts-routing.module';
   imports: [
     CommonModule,
     IccPanelModule,
+    IccResizeModule,
     PanelExampleModule,
     LayoutsRoutingModule
   ],

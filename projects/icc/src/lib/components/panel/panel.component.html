@@ -3,6 +3,8 @@
 <ng-content select="icc-panel-content"></ng-content>
 <ng-content select="icc-panel-footer"></ng-content>
 
+<div *ngIf="resizeable" IccResizeLeft iccResize direction="left" elementKey="left"
+  (iccResizeEvent)="onResizePanel($event)"></div>
 <div *ngIf="resizeable" IccResizeRight iccResize direction="right" elementKey="right"
   (iccResizeEvent)="onResizePanel($event)"></div>
 <div *ngIf="resizeable" IccResizeBottom iccResize direction="bottom" elementKey="bottom"
