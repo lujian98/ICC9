@@ -8,12 +8,10 @@ import { ResizeInfo } from '../../directives/resize/model';
 })
 export class IccPanelContentComponent implements AfterContentInit, AfterViewInit {
   @Input() resizeable: boolean;
-
   @ViewChild('tplLeftRightResize', { static: true }) tplLeftRightResize: TemplateRef<any>;
-  @ViewChild('contentResize', { read: ViewContainerRef }) contentResize: ViewContainerRef;
-
-  // @ViewChildren(IccPanelContentComponent) viewChildren: QueryList<IccPanelContentComponent>;
-  // @ContentChildren(IccPanelContentComponent) contentChildren: QueryList<IccPanelContentComponent>;
+  @ViewChild('contentLeftRightResize', { read: ViewContainerRef }) contentLeftRightResize: ViewContainerRef;
+  @ViewChild('tplRightLeftResize', { static: true }) tplRightLeftResize: TemplateRef<any>;
+  @ViewChild('contentRightLeftResize', { read: ViewContainerRef }) contentRightLeftResize: ViewContainerRef;
 
   constructor(
     private elementRef: ElementRef,
@@ -28,12 +26,27 @@ export class IccPanelContentComponent implements AfterContentInit, AfterViewInit
 
   private checkResizeCondition() {
     const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
+    let start = null;
+    let middle = null;
+    let end = null;
     elements.forEach((el: HTMLDivElement) => {
-      const start = el.getAttribute('start'); // TODO add more conditions
-      if (start !== null) {
-        this.contentResize.createEmbeddedView(this.tplLeftRightResize);
+      if (start === null) {
+        start = el.getAttribute('start');
+      }
+      if (middle === null) {
+        middle = el.getAttribute('middle');
+      }
+      if (end === null) {
+        end = el.getAttribute('end');
       }
     });
+    // console.log(' start =', start, ' middle=', middle, ' end=', end);
+    if (start !== null && (middle !== null || end !== null)) {
+      this.contentLeftRightResize.createEmbeddedView(this.tplLeftRightResize);
+    }
+    if (end !== null && middle !== null) {
+      this.contentRightLeftResize.createEmbeddedView(this.tplRightLeftResize);
+    }
   }
 
   ngAfterContentInit() {

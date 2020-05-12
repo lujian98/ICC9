@@ -24,9 +24,9 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.direction === 'leftRight') {
-      console.log(' 0000000000000 this.el.nativeElement =', this.el, ' this.direction=', this.direction);
-    }
+    // if (this.direction === 'leftRight') {
+      // console.log(' 0000000000000 this.el.nativeElement =', this.el, ' this.direction=', this.direction);
+    // }
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
@@ -41,12 +41,15 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private setElementResize(e: MouseEvent) {
-    console.log(' this.el.nativeElement =', this.el)
-    // const el = this.el.nativeElement.parentNode.firstChild.firstChild;
+    // console.log(' ddddd dddd333333 this.el.nativeElement =', this.el, ' this.direction=', this.direction)
     let el = this.el.nativeElement.parentNode;
     if (this.direction === 'leftRight') {
-      el = this.el.nativeElement.previousSibling;
+      el = this.el.nativeElement.previousElementSibling;
+    } else if (this.direction === 'rightLeft') {
+      el = this.el.nativeElement.nextElementSibling;
     }
+    // console.log('ddddddddddddddddddd resize el =', el);
+
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
       direction: this.direction,
@@ -72,6 +75,9 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         if (this.resizeInfo.origin) {
           this.iccResizeEvent.emit(this.resizeInfo);
           if (this.direction === 'leftRight') {
+            const width = this.resizeInfo.width * this.resizeInfo.scaleX;
+            el.style.flex = `0 0 ${width}px`;
+          } else if (this.direction === 'rightLeft') {
             const width = this.resizeInfo.width * this.resizeInfo.scaleX;
             el.style.flex = `0 0 ${width}px`;
           } else {
@@ -114,6 +120,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.scaleX = 1;
         break;
       case 'left':
+      case 'rightLeft':
         this.resizeInfo.origin = 'right';
         this.resizeInfo.scaleY = 1;
         break;
