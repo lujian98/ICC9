@@ -48,14 +48,14 @@ export class IccPanelContentComponent implements AfterViewInit {
       if (style.flexDirection === 'row') {
         this.contentResizeLeftRight.createEmbeddedView(this.tplResizeLeftRight);
       } else if (style.flexDirection === 'column') {
-        // this.contentResizeLeftRight.createEmbeddedView(this.tplResizeTopBottom);
+        this.contentResizeLeftRight.createEmbeddedView(this.tplResizeTopBottom);
       }
     }
     if (end !== null && middle !== null) {
       if (style.flexDirection === 'row') {
-        // this.contentResizeRightLeft.createEmbeddedView(this.tplResizeRightLeft);
+        this.contentResizeRightLeft.createEmbeddedView(this.tplResizeRightLeft);
       } else if (style.flexDirection === 'column') {
-        // this.contentResizeRightLeft.createEmbeddedView(this.tplResizeBottomTop);
+        this.contentResizeRightLeft.createEmbeddedView(this.tplResizeBottomTop);
       }
     }
   }

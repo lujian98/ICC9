@@ -8,6 +8,9 @@
     width: 200px; // need this make sure initial width is correct
     flex: 1 1 auto;
   }
+  .app-right-container {
+    flex: 0 0 200px;
+  }
 }
 
 @mixin table-component-theme() {
