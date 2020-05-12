@@ -1,9 +1,8 @@
 import {
   AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges,
-  OnInit, SimpleChanges, ContentChildren, ViewContainerRef, QueryList, ViewChild, TemplateRef
+  OnInit, SimpleChanges, ViewChild, ContentChildren, ViewChildren, QueryList, ViewContainerRef
 } from '@angular/core';
 import { ResizeInfo } from '../../directives/resize/model';
-import { IccPanelContentComponent } from './panel-content.component';
 
 @Component({
   selector: 'icc-panel-header',
@@ -28,9 +27,10 @@ export class IccPanelComponent implements AfterViewInit, AfterContentInit, OnIni
   @Input() resizeable: boolean;
   @Input() layout = 'fit'; // fit | viewport
 
-  @ViewChild('templateToAppend', { static: true }) templateToAppend: TemplateRef<any>;
-  @ContentChildren(IccPanelContentComponent, { descendants: true, read: ViewContainerRef })
-  contentComponents: QueryList<ViewContainerRef>;
+  // @ContentChildren(IccPanelContentComponent, { descendants: true, read: ViewContainerRef })
+  // contentComponents: QueryList<ViewContainerRef>;
+
+  // @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
 
   constructor(
     private elementRef: ElementRef,
@@ -42,17 +42,13 @@ export class IccPanelComponent implements AfterViewInit, AfterContentInit, OnIni
   }
 
   ngAfterContentInit() {
-    // if (this.resizeable) {
-      console.log(' 3322222222222222222 this.contentComponents=', this.contentComponents)
-      this.contentComponents.forEach(ap => { // TODO this only works without ivy
-        console.log(' ap=', ap);
-        ap.createEmbeddedView(this.templateToAppend);
-      });
-      // this.viewContainerRef.createEmbeddedView(this.templateToAppend);
-    // }
+    // console.log(' 111111 viewChildren=', this.viewChildren);
+    // console.log(' 222222 contentChildren=', this.contentChildren);
   }
 
   ngAfterViewInit() {
+    // console.log(' 3333333 viewChildren=', this.viewChildren);
+    // console.log(' 4444444444 contentChildren=', this.contentChildren);
   }
 
   ngOnChanges(changes: SimpleChanges) {

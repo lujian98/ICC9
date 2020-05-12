@@ -1,20 +1,19 @@
 <icc-panel>
-  <icc-panel-content class="app-table-container">
-    <div start class="app-table-side-menu">
-      <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo2</a></div>
-
-      <div class="app-table-side-panel" IccResizeRight iccResize direction="right" elementKey="right"
-        (iccResizeEvent)="onResizePanel($event)">
-      </div>
-    </div>
+  <icc-panel-content class="app-table-container" resizeable="true">
     <div end class="app-table-panel">
       <router-outlet></router-outlet>
     </div>
+    <div start class="app-table-side-menu">
+      <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo2</a></div>
+    </div>
+
   </icc-panel-content>
 </icc-panel>
 
 <!--
-
+      <div class="app-table-side-panel" IccResizeRight iccResize direction="right" elementKey="right"
+        (iccResizeEvent)="onResizePanel($event)">
+      </div>
 <app-example>
   <app-some-other-component>blablabla</app-some-other-component>
   <app-some-other-component>hello world</app-some-other-component>
