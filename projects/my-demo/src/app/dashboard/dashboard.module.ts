@@ -7,6 +7,8 @@ import { IccDashboardModule } from 'icc';
 import { DocDashboardComponent } from './dashboard.component';
 import { DocDashboardDemo1Component } from './dashboards/dashboard-demo1.component';
 import { DocDashboardRoutingModule } from './dashboard-routing.module';
+import { PortalDemoComponent } from './portal-demo/portal-demo.component';
+import { PortalDemo2Component } from './portal-demo2/portal-demo2.component';
 
 @NgModule({
   imports: [
@@ -17,11 +19,15 @@ import { DocDashboardRoutingModule } from './dashboard-routing.module';
   ],
   declarations: [
     DocDashboardComponent,
-    DocDashboardDemo1Component
+    DocDashboardDemo1Component,
+    PortalDemoComponent,
+    PortalDemo2Component
   ],
   exports: [
     DocDashboardComponent,
-    DocDashboardDemo1Component
+    DocDashboardDemo1Component,
+    PortalDemoComponent,
+    PortalDemo2Component
   ]
 })
 export class DocDashboardModule { }

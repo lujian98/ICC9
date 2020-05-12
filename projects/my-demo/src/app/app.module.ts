@@ -29,12 +29,18 @@ import { DocDashboardModule } from './dashboard/dashboard.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 
+import { SomeOtherComponent } from './layouts/some-other-component/some-other-component.component';
+import { ExampleComponent } from './layouts/example/example.component';
+
+
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
+    SomeOtherComponent,
+    ExampleComponent
   ],
   imports: [
     BrowserModule,

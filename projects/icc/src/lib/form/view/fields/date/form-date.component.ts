@@ -11,13 +11,14 @@ import {
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
 
+/*
 import {
   IccCalendarOverlayService,
   IccDateRangeStoreService,
   IccDatePresetItem,
   IccDateConfigStoreService,
   IccLocaleService,
-} from '../../../../date-picker';
+} from '../../../../date-picker'; */
 
 import { IccLocaleDatePipe } from '../../../../pipes/locale-date.pipe';
 import { IccFormFieldComponent } from '../form-field.component';
@@ -28,12 +29,13 @@ import { IccDateField } from '../../../../items';
   selector: 'app-form-date',
   templateUrl: './form-date.component.html',
   styleUrls: ['./form-date.component.scss'],
+  /*
   providers: [
     IccCalendarOverlayService,
     IccDateRangeStoreService,
     IccDateConfigStoreService,
     IccLocaleDatePipe
-  ],
+  ], */
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IccFormDateComponent<T> extends IccFormFieldComponent implements OnInit, OnDestroy {
@@ -46,15 +48,17 @@ export class IccFormDateComponent<T> extends IccFormFieldComponent implements On
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
+    /*
     private calendarOverlayService: IccCalendarOverlayService<T>,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
-    private localeService: IccLocaleService,
+    private localeService: IccLocaleService, */
   ) {
     super();
   }
 
   ngOnInit() {
+    /*
     this.dateUpdate$ = this.rangeStoreService.updateSelected$.subscribe(selectedDate => {
       if (selectedDate) {
         const selected: string = this.getFormatedDate(selectedDate);
@@ -98,7 +102,7 @@ export class IccFormDateComponent<T> extends IccFormFieldComponent implements On
       };
       this.rangeStoreService.updateSelected(selected);
       this.changeDetectionRef.detectChanges();
-    }, 10);
+    }, 10); */
   }
 
   private get1stDayOfWeek(date: Date) {
@@ -129,7 +133,7 @@ export class IccFormDateComponent<T> extends IccFormFieldComponent implements On
   }
 
   public resetSelectedDate(selectedDate: Date) {
-    this.rangeStoreService.updateSelected(selectedDate);
+    // this.rangeStoreService.updateSelected(selectedDate);
   }
 
   clearSelectedDate(event) {
@@ -137,7 +141,7 @@ export class IccFormDateComponent<T> extends IccFormFieldComponent implements On
   }
 
   private getFormatedDate(date: any) {
-    return new IccLocaleDatePipe(this.localeService).transform(date, this.field.dateFormat);
+    // return new IccLocaleDatePipe(this.localeService).transform(date, this.field.dateFormat);
   }
 
   isValueChanged(): boolean {
