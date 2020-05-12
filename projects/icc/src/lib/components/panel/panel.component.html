@@ -5,9 +5,13 @@
 
 <div *ngIf="resizeable" IccResizeLeft iccResize direction="left" elementKey="left"
   (iccResizeEvent)="onResizePanel($event)"></div>
-<div *ngIf="resizeable" IccResizeRight iccResize direction="right" elementKey="right"
-  (iccResizeEvent)="onResizePanel($event)"></div>
+
 <div *ngIf="resizeable" IccResizeBottom iccResize direction="bottom" elementKey="bottom"
   (iccResizeEvent)="onResizePanel($event)"></div>
 <div *ngIf="resizeable" IccResizeBottomRight iccResize direction="bottomRight" elementKey="bottomRight"
   (iccResizeEvent)="onResizePanel($event)"></div>
+
+<ng-template #templateToAppend>
+  <div IccResizeRight iccResize direction="right" elementKey="right"
+    (iccResizeEvent)="onResizePanel($event)"></div>
+</ng-template>

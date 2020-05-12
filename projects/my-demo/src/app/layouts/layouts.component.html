@@ -1,13 +1,13 @@
 <icc-panel>
   <icc-panel-content class="app-table-container">
-    <div class="app-table-side-menu">
+    <div start class="app-table-side-menu">
       <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo2</a></div>
 
       <div class="app-table-side-panel" IccResizeRight iccResize direction="right" elementKey="right"
         (iccResizeEvent)="onResizePanel($event)">
       </div>
     </div>
-    <div class="app-table-panel">
+    <div end class="app-table-panel">
       <router-outlet></router-outlet>
     </div>
   </icc-panel-content>

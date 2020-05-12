@@ -4,10 +4,12 @@ import { IccResizeModule } from '../../directives/resize/resize.module';
 
 import {
   IccPanelHeaderComponent,
-  IccPanelContentComponent,
   IccPanelFooterComponent,
   IccPanelComponent
 } from './panel.component';
+
+import { IccPanelContentComponent } from './panel-content.component';
+
 
 @NgModule({
   imports: [

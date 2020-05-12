@@ -1,17 +1,15 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges,
+  OnInit, SimpleChanges, ContentChildren, ViewContainerRef, QueryList, ViewChild, TemplateRef
+} from '@angular/core';
 import { ResizeInfo } from '../../directives/resize/model';
+import { IccPanelContentComponent } from './panel-content.component';
 
 @Component({
   selector: 'icc-panel-header',
   template: `<ng-content></ng-content>`
 })
 export class IccPanelHeaderComponent { }
-
-@Component({
-  selector: 'icc-panel-content',
-  template: `<ng-content></ng-content>`
-})
-export class IccPanelContentComponent { }
 
 @Component({
   selector: 'icc-panel-footer',
@@ -24,18 +22,34 @@ export class IccPanelFooterComponent { }
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class IccPanelComponent implements AfterViewInit, OnInit, OnChanges {
+export class IccPanelComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
   @Input() height: string;
   @Input() width: string;
   @Input() resizeable: boolean;
   @Input() layout = 'fit'; // fit | viewport
 
+  @ViewChild('templateToAppend', { static: true }) templateToAppend: TemplateRef<any>;
+  @ContentChildren(IccPanelContentComponent, { descendants: true, read: ViewContainerRef })
+  contentComponents: QueryList<ViewContainerRef>;
+
   constructor(
     private elementRef: ElementRef,
+    private viewContainerRef: ViewContainerRef,
   ) { }
 
   ngOnInit() {
     this.initPanelSize();
+  }
+
+  ngAfterContentInit() {
+    // if (this.resizeable) {
+      console.log(' 3322222222222222222 this.contentComponents=', this.contentComponents)
+      this.contentComponents.forEach(ap => { // TODO this only works without ivy
+        console.log(' ap=', ap);
+        ap.createEmbeddedView(this.templateToAppend);
+      });
+      // this.viewContainerRef.createEmbeddedView(this.templateToAppend);
+    // }
   }
 
   ngAfterViewInit() {
