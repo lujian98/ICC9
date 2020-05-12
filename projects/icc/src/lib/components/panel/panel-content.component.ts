@@ -39,7 +39,7 @@ export class IccPanelContentComponent implements AfterContentInit, AfterViewInit
   ngAfterContentInit() {
   }
 
-  onResizePanel(resizeInfo: ResizeInfo) {
+  onResizePanel(resizeInfo: ResizeInfo) { // TODO not used ???
     if (resizeInfo.isResized) {
       const height = resizeInfo.height * resizeInfo.scaleY;
       const width = resizeInfo.width * resizeInfo.scaleX;

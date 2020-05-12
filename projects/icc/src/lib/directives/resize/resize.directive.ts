@@ -24,8 +24,9 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log( ' 22222222222 this.el.nativeElement =', this.el)
-
+    if (this.direction === 'leftRight') {
+      console.log(' 0000000000000 this.el.nativeElement =', this.el, ' this.direction=', this.direction);
+    }
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
       event.preventDefault();
       event.stopPropagation();
@@ -40,10 +41,12 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private setElementResize(e: MouseEvent) {
-    console.log( ' this.el.nativeElement =', this.el)
+    console.log(' this.el.nativeElement =', this.el)
     // const el = this.el.nativeElement.parentNode.firstChild.firstChild;
-    const el = this.el.nativeElement.parentNode;
-
+    let el = this.el.nativeElement.parentNode;
+    if (this.direction === 'leftRight') {
+      el = this.el.nativeElement.previousSibling;
+    }
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
       direction: this.direction,
@@ -68,8 +71,13 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.elementTransform();
         if (this.resizeInfo.origin) {
           this.iccResizeEvent.emit(this.resizeInfo);
-          el.style['transform-origin'] = this.resizeInfo.origin;
-          el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
+          if (this.direction === 'leftRight') {
+            const width = this.resizeInfo.width * this.resizeInfo.scaleX;
+            el.style.flex = `0 0 ${width}px`;
+          } else {
+            el.style['transform-origin'] = this.resizeInfo.origin;
+            el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
+          }
         }
       }
     });
@@ -97,6 +105,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.scaleX = 1;
         break;
       case 'right':
+      case 'leftRight':
         this.resizeInfo.origin = 'left';
         this.resizeInfo.scaleY = 1;
         break;
