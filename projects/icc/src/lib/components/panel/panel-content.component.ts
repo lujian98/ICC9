@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ResizeInfo } from '../../directives/resize/model';
 
 @Component({
@@ -6,12 +6,14 @@ import { ResizeInfo } from '../../directives/resize/model';
   templateUrl: './panel-content.component.html',
   styleUrls: ['./panel-content.component.scss']
 })
-export class IccPanelContentComponent implements AfterContentInit, AfterViewInit {
+export class IccPanelContentComponent implements AfterViewInit {
   @Input() resizeable: boolean;
-  @ViewChild('tplLeftRightResize', { static: true }) tplLeftRightResize: TemplateRef<any>;
-  @ViewChild('contentLeftRightResize', { read: ViewContainerRef }) contentLeftRightResize: ViewContainerRef;
-  @ViewChild('tplRightLeftResize', { static: true }) tplRightLeftResize: TemplateRef<any>;
-  @ViewChild('contentRightLeftResize', { read: ViewContainerRef }) contentRightLeftResize: ViewContainerRef;
+  @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight: TemplateRef<any>;
+  @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft: TemplateRef<any>;
+  @ViewChild('tplResizeTopBottom', { static: true }) tplResizeTopBottom: TemplateRef<any>;
+  @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop: TemplateRef<any>;
+  @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight: ViewContainerRef;
+  @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft: ViewContainerRef;
 
   constructor(
     private elementRef: ElementRef,
@@ -40,16 +42,22 @@ export class IccPanelContentComponent implements AfterContentInit, AfterViewInit
         end = el.getAttribute('end');
       }
     });
-    // console.log(' start =', start, ' middle=', middle, ' end=', end);
+    const style = window.getComputedStyle(this.elementRef.nativeElement);
+    // console.log(' start =', start, ' middle=', middle, ' end=', end); // column
     if (start !== null && (middle !== null || end !== null)) {
-      this.contentLeftRightResize.createEmbeddedView(this.tplLeftRightResize);
+      if (style.flexDirection === 'row') {
+        this.contentResizeLeftRight.createEmbeddedView(this.tplResizeLeftRight);
+      } else if (style.flexDirection === 'column') {
+        // this.contentResizeLeftRight.createEmbeddedView(this.tplResizeTopBottom);
+      }
     }
     if (end !== null && middle !== null) {
-      this.contentRightLeftResize.createEmbeddedView(this.tplRightLeftResize);
+      if (style.flexDirection === 'row') {
+        // this.contentResizeRightLeft.createEmbeddedView(this.tplResizeRightLeft);
+      } else if (style.flexDirection === 'column') {
+        // this.contentResizeRightLeft.createEmbeddedView(this.tplResizeBottomTop);
+      }
     }
-  }
-
-  ngAfterContentInit() {
   }
 
   onResizePanel(resizeInfo: ResizeInfo) { // TODO not used ???

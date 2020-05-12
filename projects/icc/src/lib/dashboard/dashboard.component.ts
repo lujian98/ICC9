@@ -82,8 +82,8 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     console.log(' this =', this);
     const size = this.getDashboardSize();
     console.log(' 3333333333 size =', size);
-    this.gridWidth = (size.width - this.cols * this.gridGap) / this.cols;
-    this.gridHeight = (size.height - this.cols * this.gridGap) / this.rows;
+    this.gridWidth = (size.width - this.cols * this.gridGap - 4 ) / this.cols;
+    this.gridHeight = (size.height - this.cols * this.gridGap - 4) / this.rows;
     this.setGridTemplate();
     this.cd.detectChanges();
   }

@@ -43,9 +43,9 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   private setElementResize(e: MouseEvent) {
     // console.log(' ddddd dddd333333 this.el.nativeElement =', this.el, ' this.direction=', this.direction)
     let el = this.el.nativeElement.parentNode;
-    if (this.direction === 'leftRight') {
+    if (this.direction === 'leftRight' || this.direction === 'topBottom') {
       el = this.el.nativeElement.previousElementSibling;
-    } else if (this.direction === 'rightLeft') {
+    } else if (this.direction === 'rightLeft' || this.direction === 'bottomTop') {
       el = this.el.nativeElement.nextElementSibling;
     }
     // console.log('ddddddddddddddddddd resize el =', el);
@@ -74,12 +74,12 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.elementTransform();
         if (this.resizeInfo.origin) {
           this.iccResizeEvent.emit(this.resizeInfo);
-          if (this.direction === 'leftRight') {
+          if (this.direction === 'leftRight' || this.direction === 'rightLeft') {
             const width = this.resizeInfo.width * this.resizeInfo.scaleX;
             el.style.flex = `0 0 ${width}px`;
-          } else if (this.direction === 'rightLeft') {
-            const width = this.resizeInfo.width * this.resizeInfo.scaleX;
-            el.style.flex = `0 0 ${width}px`;
+          } else if (this.direction === 'topBottom' || this.direction === 'bottomTop') {
+            const height = this.resizeInfo.height * this.resizeInfo.scaleY;
+            el.style.height = `${height}px`; // TODO test case
           } else {
             el.style['transform-origin'] = this.resizeInfo.origin;
             el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
@@ -107,6 +107,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
     this.resizeInfo.origin = null;
     switch (this.direction) {
       case 'top':
+      case 'topBottom':
         this.resizeInfo.origin = 'bottom';
         this.resizeInfo.scaleX = 1;
         break;
@@ -116,6 +117,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         this.resizeInfo.scaleY = 1;
         break;
       case 'bottom':
+      case 'bottomTop':
         this.resizeInfo.origin = 'top';
         this.resizeInfo.scaleX = 1;
         break;
