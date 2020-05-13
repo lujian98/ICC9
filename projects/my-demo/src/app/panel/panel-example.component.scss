@@ -5,3 +5,10 @@
 .panel-demo-container {
   border: 1px solid green;
 }
+
+:host {
+  icc-panel {
+    flex: 1 1 auto;
+    display: flex;
+  }
+}
