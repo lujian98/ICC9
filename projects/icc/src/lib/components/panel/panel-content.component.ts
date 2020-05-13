@@ -16,13 +16,14 @@ export class IccPanelContentComponent implements AfterViewInit {
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft: ViewContainerRef;
 
   constructor(
-    private elementRef: ElementRef,
-    private viewContainerRef: ViewContainerRef,
+    private elementRef: ElementRef
   ) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { // TODO check if the child content changes
     if (this.resizeable) {
       this.checkResizeCondition();
+      this.checkPanelHeight();
+      window.dispatchEvent(new Event('resize'));
     }
   }
 
@@ -43,7 +44,6 @@ export class IccPanelContentComponent implements AfterViewInit {
       }
     });
     const style = window.getComputedStyle(this.elementRef.nativeElement);
-    // console.log(' start =', start, ' middle=', middle, ' end=', end); // column
     if (start !== null && (middle !== null || end !== null)) {
       if (style.flexDirection === 'row') {
         this.contentResizeLeftRight.createEmbeddedView(this.tplResizeLeftRight);
@@ -60,12 +60,24 @@ export class IccPanelContentComponent implements AfterViewInit {
     }
   }
 
-  onResizePanel(resizeInfo: ResizeInfo) { // TODO not used ???
+  onResizePanel(resizeInfo: ResizeInfo) {
     if (resizeInfo.isResized) {
-      const height = resizeInfo.height * resizeInfo.scaleY;
-      const width = resizeInfo.width * resizeInfo.scaleX;
-      // this.setHeight(`${height}px`);
-      // this.setWidth(`${width}px`);
+      this.checkPanelHeight();
+    }
+  }
+
+  private checkPanelHeight() {
+    const natEl = this.elementRef.nativeElement;
+    const style = window.getComputedStyle(natEl);
+    if (style.flexDirection === 'column' && natEl.scrollHeight !== natEl.clientHeight) {
+      const dh = natEl.scrollHeight - natEl.clientHeight;
+      const elements: HTMLDivElement[] = Array.from(natEl.children);
+      // console.log(' mmmmmm dh =', dh, ' scrollHeight= ', natEl.scrollHeight, ' clientHeight=', natEl.clientHeight);
+      const els = elements.filter((element: HTMLDivElement) => element.getAttribute('middle') !== null);
+      if (els.length === 1) {
+        const height = els[0].clientHeight - dh;
+        els[0].style.height = `${height}px`;
+      }
     }
   }
 }
