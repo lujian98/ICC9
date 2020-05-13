@@ -94,6 +94,10 @@ export class IccResizeDirective implements OnInit, OnDestroy {
         el.style.transform = '';
         this.resizeInfo.isResized = true;
         this.iccResizeEvent.emit(this.resizeInfo);
+        if (this.direction === 'leftRight' || this.direction === 'rightLeft' || // WARNING IE not supported
+          this.direction === 'topBottom' || this.direction === 'bottomTop') {
+          window.dispatchEvent(new Event('resize'));
+        }
         this.resizeInfo = null;
       }
       this.isResizing = false;
