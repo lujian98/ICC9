@@ -5,7 +5,7 @@
   overflow: auto;
 
   .icc-content-resize-left, .icc-content-resize-right {
-    cursor: col-resize;
+    // cursor: col-resize;
     height: 100%;
     // border-left: 1px solid darkgreen; // no need border
   }
@@ -15,8 +15,9 @@
   }
 
   .icc-content-resize-top, .icc-content-resize-bottom {
-    cursor: col-resize;
+    // cursor: row-resize;
     width: 100%;
+    border-top: 1px solid darkgreen; // no need border
   }
 
   .icc-content-resize-bottom {

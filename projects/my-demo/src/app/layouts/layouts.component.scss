@@ -1,20 +1,40 @@
 .app-table-container {
-  flex-direction: row;
+  // flex-direction: row;
   overflow: hidden;
   .app-table-side-menu {
-    flex: 0 0 250px;
+    flex: 0 0 150px;
     position: relative;
     .app-table-side-panel {
       border: 1px solid red;
     }
   }
   .app-table-panel {
-    width: 200px; // need this make sure initial width is correct
+    // width: 200px; // need this make sure initial width is correct
     flex: 1 1 auto;
+    justify-content: center;
   }
   .app-right-container {
-    flex: 0 0 200px;
+    flex: 0 0 160px;
   }
 }
 
-
+/* row panel resize
+.app-table-container {
+  flex-direction: row;
+  overflow: hidden;
+  .app-table-side-menu {
+    flex: 0 0 150px;
+    position: relative;
+    .app-table-side-panel {
+      border: 1px solid red;
+    }
+  }
+  .app-table-panel {
+    // width: 200px; // need this make sure initial width is correct
+    flex: 1 1 auto;
+  }
+  .app-right-container {
+    flex: 0 0 160px;
+  }
+}
+*/

@@ -41,14 +41,14 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private setElementResize(e: MouseEvent) {
-    // console.log(' ddddd dddd333333 this.el.nativeElement =', this.el, ' this.direction=', this.direction)
+    console.log(' ddddd dddd333333 this.el.nativeElement =', this.el, ' this.direction=', this.direction)
     let el = this.el.nativeElement.parentNode;
     if (this.direction === 'leftRight' || this.direction === 'topBottom') {
       el = this.el.nativeElement.previousElementSibling;
     } else if (this.direction === 'rightLeft' || this.direction === 'bottomTop') {
       el = this.el.nativeElement.nextElementSibling;
     }
-    // console.log('ddddddddddddddddddd resize el =', el);
+     console.log('ddddddddddddddddddd resize el =', el);
 
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
@@ -79,7 +79,8 @@ export class IccResizeDirective implements OnInit, OnDestroy {
             el.style.flex = `0 0 ${width}px`;
           } else if (this.direction === 'topBottom' || this.direction === 'bottomTop') {
             const height = this.resizeInfo.height * this.resizeInfo.scaleY;
-            el.style.height = `${height}px`; // TODO test case
+            // console.log(' 2222 height=', height)
+            el.style.flex = `0 0 ${height}px`; // TODO test case
           } else {
             el.style['transform-origin'] = this.resizeInfo.origin;
             el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;
