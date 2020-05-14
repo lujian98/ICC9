@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, AfterContentInit, Component, ElementRef, OnDestroy, Input, QueryList, ContentChildren,
+  TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeWhile } from 'rxjs/operators';
 import { ResizeInfo } from '../../directives/resize/model';
@@ -13,7 +14,7 @@ export interface IccSize {
   templateUrl: './panel-content.component.html',
   styleUrls: ['./panel-content.component.scss']
 })
-export class IccPanelContentComponent implements AfterViewInit, OnDestroy {
+export class IccPanelContentComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input() resizeable: boolean;
   @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight: TemplateRef<any>;
   @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft: TemplateRef<any>;
@@ -21,6 +22,9 @@ export class IccPanelContentComponent implements AfterViewInit, OnDestroy {
   @ViewChild('tplResizeBottomTop', { static: true }) tplResizeBottomTop: TemplateRef<any>;
   @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight: ViewContainerRef;
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft: ViewContainerRef;
+
+  @ContentChildren('divContainer', { read: ViewContainerRef }) divContainer: QueryList<ViewContainerRef>;
+
 
   private alive = true;
 
@@ -34,6 +38,11 @@ export class IccPanelContentComponent implements AfterViewInit, OnDestroy {
       this.checkResizeCondition();
     }
   }
+
+  ngAfterContentInit() {
+    // console.log( ' 5555555555 this.divContainer=', this.divContainer)
+  }
+
 
   private setupPanelSizeObserver() {
     new Observable<IccSize>(observer => {
@@ -60,6 +69,7 @@ export class IccPanelContentComponent implements AfterViewInit, OnDestroy {
   }
 
   private checkResizeCondition() {
+    console.log( ' 111111111111 this.divContainer=', this.divContainer, ' this.elementRef=', this.elementRef)
     const elements: HTMLDivElement[] = Array.from(this.elementRef.nativeElement.children);
     let start = null;
     let middle = null;

@@ -1,12 +1,12 @@
 <icc-panel class="app-panel-container">
   <icc-panel-content class="app-content-container" resizeable="true">
-    <div middle class="app-content-middle">
+    <div #divContainer middle class="app-content-middle">
       <router-outlet></router-outlet>
     </div>
-    <div start class="app-content-start">
+    <div #divContainer start class="app-content-start">
       <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo2</a></div>
     </div>
-    <div class="app-content-end" end>Left Container</div>
+    <div #divContainer class="app-content-end" end>Left Container</div>
   </icc-panel-content>
 </icc-panel>
 
