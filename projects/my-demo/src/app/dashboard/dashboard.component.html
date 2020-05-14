@@ -1,19 +1,15 @@
-<icc-panel>
-  <icc-panel-content class="dashboard-container" resizeable="true">
-    <div start class="dashboard-side-menu">
+<icc-panel class="app-panel-container">
+  <icc-panel-content class="app-content-container" resizeable="true">
+    <div start class="app-content-start">
       <div><a routerLink="dashboard-demo1" routerLinkActive="active">Dashboard Demo 1</a></div>
     </div>
-    <div middle class="dashboard-main-panel">
+    <div middle class="app-content-middle">
       <router-outlet></router-outlet>
     </div>
-    <div class="app-right-container" end>Left Container</div>
+    <div class="app-content-end" end>Left Container</div>
   </icc-panel-content>
 
-  <icc-panel-footer class="dashboard-footer">
+  <icc-panel-footer class="app-footer-container">
     Footer
   </icc-panel-footer>
 </icc-panel>
-
-<!--
-
--->

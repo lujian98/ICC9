@@ -1,12 +1,19 @@
-import { AfterViewInit, Component, ElementRef, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeWhile } from 'rxjs/operators';
 import { ResizeInfo } from '../../directives/resize/model';
+
+export interface IccSize {
+  height: number;
+  width: number;
+}
 
 @Component({
   selector: 'icc-panel-content',
   templateUrl: './panel-content.component.html',
   styleUrls: ['./panel-content.component.scss']
 })
-export class IccPanelContentComponent implements AfterViewInit {
+export class IccPanelContentComponent implements AfterViewInit, OnDestroy {
   @Input() resizeable: boolean;
   @ViewChild('tplResizeLeftRight', { static: true }) tplResizeLeftRight: TemplateRef<any>;
   @ViewChild('tplResizeRightLeft', { static: true }) tplResizeRightLeft: TemplateRef<any>;
@@ -15,16 +22,41 @@ export class IccPanelContentComponent implements AfterViewInit {
   @ViewChild('contentResizeLeftRight', { read: ViewContainerRef }) contentResizeLeftRight: ViewContainerRef;
   @ViewChild('contentResizeRightLeft', { read: ViewContainerRef }) contentResizeRightLeft: ViewContainerRef;
 
+  private alive = true;
+
   constructor(
     private elementRef: ElementRef
   ) { }
 
-  ngAfterViewInit() { // TODO check if the child content changes
+  ngAfterViewInit() {
     if (this.resizeable) {
+      this.setupPanelSizeObserver();
       this.checkResizeCondition();
-      this.checkPanelHeight();
-      window.dispatchEvent(new Event('resize'));
     }
+  }
+
+  private setupPanelSizeObserver() {
+    new Observable<IccSize>(observer => {
+      const config = { attributes: true, childList: true, subtree: true };
+      new MutationObserver(() => observer.next(this.getPanelSize())
+      ).observe(this.elementRef.nativeElement, config);
+    }).pipe(
+      debounceTime(50),
+      distinctUntilChanged(),
+      takeWhile(() => this.alive)
+    ).subscribe((size => this.initPanelSize()));
+  }
+
+  getPanelSize(): IccSize {
+    return {
+      height: this.elementRef.nativeElement.offsetHeight,
+      width: this.elementRef.nativeElement.offsetWidth
+    };
+  }
+
+  private initPanelSize() {
+    this.checkPanelHeight();
+    window.dispatchEvent(new Event('resize'));
   }
 
   private checkResizeCondition() {
@@ -79,6 +111,10 @@ export class IccPanelContentComponent implements AfterViewInit {
         els[0].style.height = `${height}px`;
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }
 

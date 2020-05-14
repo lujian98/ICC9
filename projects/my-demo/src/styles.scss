@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../../../dist/icc/theming';
 @import './app/nav/nav.component.scss';
-@import './app/dashboard/dashboard.component.scss';
 @import './app/table/table.component.scss';
 @import './app/school/school.component.scss';
 
@@ -9,7 +8,6 @@
 @include icc-configure-theme() {
   @include icc-theme-components();
   @include nav-component-theme();
-  @include dashboard-component-theme();
   @include table-component-theme();
   @include school-side-component-theme();
 };

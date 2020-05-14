@@ -1,13 +1,13 @@
-<icc-panel>
-  <icc-panel-content class="app-table-container" resizeable="true">
-    <div start class="app-table-side-menu">
+<icc-panel class="app-panel-container">
+  <icc-panel-content class="app-content-container" resizeable="true">
+    <div start class="app-content-start">
       <div><a routerLink="cdk-table-demo" routerLinkActive="active">Cdk Table Demo</a></div>
       <div><a routerLink="icc-tree-example" routerLinkActive="active">Tree Demo</a></div>
       <div><a routerLink="panel-example" routerLinkActive="active">Panel Demo</a></div>
     </div>
-    <div middle class="app-table-panel">
+    <div middle class="app-content-middle">
       <router-outlet></router-outlet>
     </div>
-    <div class="app-right-container" end>Left Container</div>
+    <div class="app-content-end" end>Left Container</div>
   </icc-panel-content>
 </icc-panel>

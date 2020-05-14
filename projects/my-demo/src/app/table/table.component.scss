@@ -1,20 +1,20 @@
-.app-table-container {
+.app-content-container {
   flex-direction: row;
   overflow: hidden;
-  .app-table-side-menu {
+  .app-content-start {
     flex: 0 0 200px;
   }
-  .app-table-panel {
-    width: 200px; // need this make sure initial width is correct
+  .app-content-middle {
+    width: 200px; // need this for table make sure initial width is correct
     flex: 1 1 auto;
   }
-  .app-right-container {
+  .app-content-end {
     flex: 0 0 200px;
   }
 }
 
 @mixin table-component-theme() {
-  .app-table-container {
+  .app-panel-container {
     background-color: icc-theme(icc-background-color);
     color: icc-theme(icc-text-color);
   }

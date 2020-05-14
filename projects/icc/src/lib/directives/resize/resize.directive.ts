@@ -19,7 +19,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef
+    private elementRef: ElementRef
   ) {
   }
 
@@ -38,11 +38,11 @@ export class IccResizeDirective implements OnInit, OnDestroy {
   }
 
   private setElementResize(e: MouseEvent) {
-    let el = this.el.nativeElement.parentNode;
+    let el = this.elementRef.nativeElement.parentNode;
     if (this.direction === 'leftRight' || this.direction === 'topBottom') {
-      el = this.el.nativeElement.previousElementSibling;
+      el = this.elementRef.nativeElement.previousElementSibling;
     } else if (this.direction === 'rightLeft' || this.direction === 'bottomTop') {
-      el = this.el.nativeElement.nextElementSibling;
+      el = this.elementRef.nativeElement.nextElementSibling;
     }
     const box = el.getBoundingClientRect();
     this.resizeInfo = {
@@ -73,7 +73,7 @@ export class IccResizeDirective implements OnInit, OnDestroy {
             el.style.flex = `0 0 ${width}px`;
           } else if (this.direction === 'topBottom' || this.direction === 'bottomTop') {
             const height = this.resizeInfo.height * this.resizeInfo.scaleY;
-            el.style.flex = `0 0 ${height}px`; // TODO test case
+            el.style.flex = `0 0 ${height}px`;
           } else {
             el.style['transform-origin'] = this.resizeInfo.origin;
             el.style.transform = `scale(${this.resizeInfo.scaleX}, ${this.resizeInfo.scaleY})`;

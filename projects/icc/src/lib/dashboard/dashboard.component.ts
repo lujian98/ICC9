@@ -410,7 +410,7 @@ export class IccDashboardComponent<T> implements AfterViewInit, OnInit, OnChange
     }
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy() { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: MouseEvent) {

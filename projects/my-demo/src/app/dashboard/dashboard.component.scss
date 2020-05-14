@@ -1,50 +1,21 @@
 
-.dashboard-container {
+.app-content-container {
   flex-direction: row;
   overflow: hidden;
-  .dashboard-side-menu {
+  .app-content-start {
     flex: 0 0 150px;
     border: 1px solid blue;
   }
-  .dashboard-main-panel {
-    // width: 100%;
+  .app-content-middle {
     flex: 1 1 auto;
     border: 1px solid blue;
   }
-  .app-right-container {
+  .app-content-end {
     flex: 0 0 200px;
   }
 }
-.dashboard-footer {
+.app-footer-container {
   height: 30px;
 }
 
-/*
-.app-table-container {
-  // flex-direction: row;
-  overflow: hidden;
-  .app-table-side-menu {
-    flex: 0 0 150px;
-    position: relative;
-    .app-table-side-panel {
-      border: 1px solid red;
-    }
-  }
-  .app-table-panel {
-    // width: 200px; // need this make sure initial width is correct
-    flex: 1 1 auto;
-    justify-content: center;
-  }
-  .app-right-container {
-    flex: 0 0 160px;
-  }
-}
-*/
-
-@mixin dashboard-component-theme() {
-  .dashboard-container, .dashboard-footer {
-    background-color: icc-theme(icc-background-color);
-    color: icc-theme(icc-text-color);
-  }
-}
 
