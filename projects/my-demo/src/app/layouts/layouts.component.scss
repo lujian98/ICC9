@@ -1,51 +1,12 @@
 .app-content-container {
-  // flex-direction: column;
-  // overflow: hidden;
-  .app-content-start {
-    border: 1px solid blue;
-    flex: 0 0 150px;
-  }
-  .app-content-middle {
-    flex: 1 1 auto;
-    // justify-content: center;
-    border: 1px solid red;
-    width: 100%
-  }
-  .app-content-end {
-    flex: 0 0 300px;
-    border: 1px solid orange;
-  }
-}
-
-/* row panel resize
-.app-content-container {
   flex-direction: row;
   overflow: hidden;
   .app-content-start {
-    flex: 0 0 250px;
-    border: 1px solid blue;
-  }
-  .app-content-middle {
-    flex: 1 1 auto;
-    border: 1px solid red;
-  }
-  .app-content-end {
-    flex: 0 0 300px;
-    border: 1px solid orange;
-  }
-}
-
-// resize column fit
-.app-content-container {
-  // flex-direction: row;
-  // overflow: hidden;
-  .app-content-start {
     border: 1px solid blue;
     flex: 0 0 150px;
   }
   .app-content-middle {
     flex: 1 1 auto;
-    justify-content: center;
     border: 1px solid red;
     width: 100%
   }
@@ -54,4 +15,3 @@
     border: 1px solid orange;
   }
 }
-*/
