@@ -25,6 +25,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   defaultValue?: any;
   placeholder?: string;
   readonly?: boolean;
+  disabled?: boolean;
   icon?: string;
   children?: IccField[];
   action?: string;
@@ -33,6 +34,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
 
   menuField?: IccField;
   filterField?: IccFilterField | IccField;
+  toolbarField?: IccField;
 
   sortField?: IccSortField;
   groupField: IccGroupField;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'icc-tool-bar',
+  selector: 'icc-tool-bar2', // TODO remove this
   templateUrl: './tool-bar.component.html',
   // styleUrls: ['./tool-bar.component.scss']
 })
