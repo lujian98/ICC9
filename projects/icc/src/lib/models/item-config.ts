@@ -43,6 +43,7 @@ export interface IccFieldConfig extends IccItemConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccFieldConfig[] | IccField[];
+  fieldConfig?: IccFieldConfig, // for toolbar menu conffig
 
   // allowBlank?: boolean;
 }

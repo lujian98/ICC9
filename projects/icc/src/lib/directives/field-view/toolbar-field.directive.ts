@@ -20,7 +20,7 @@ import { IccField } from '../../items';
 })
 export class IccToolbarFieldDirective<T> implements OnInit, OnChanges, OnDestroy {
   @Input() field: IccField;
-  @Output() toolbarFieldClickEvent: EventEmitter<T> = new EventEmitter<T>();
+  @Output() toolbarFieldChangedEvent: EventEmitter<T> = new EventEmitter<T>();
 
   componentRef: any;
   private sub: Subscription;
@@ -40,7 +40,7 @@ export class IccToolbarFieldDirective<T> implements OnInit, OnChanges, OnDestroy
         this.componentRef = this.container.createComponent(factory);
         this.componentRef.instance.field = this.field;
         this.sub = this.componentRef.instance.isFieldValueChanged$
-          .subscribe((v: T) => this.toolbarFieldClickEvent.emit(v));
+          .subscribe((v: T) => this.toolbarFieldChangedEvent.emit(v));
       }
     }
   }

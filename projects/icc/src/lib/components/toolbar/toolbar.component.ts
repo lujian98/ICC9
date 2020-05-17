@@ -13,7 +13,7 @@ export class IccToolbarComponent implements OnInit, OnChanges {
   @Input() toolbarItemConfig: IccFieldConfig[];
   toolbarItems: IccField[];
 
-  @Output() menuItemClickEvent: EventEmitter<IccField> = new EventEmitter();
+  @Output() toolbarFieldChangedEvent: EventEmitter<IccField> = new EventEmitter();
 
   constructor(
     private itemService: IccItemFieldService,
@@ -25,7 +25,7 @@ export class IccToolbarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.toolbarItemConfig) {
       this.toolbarItems = this.getToolbarItems(this.toolbarItemConfig);
-      console.log( ' this.toolbarItems =', this.toolbarItems);
+      console.log(' this.toolbarItems =', this.toolbarItems);
     }
   }
 
@@ -48,9 +48,9 @@ export class IccToolbarComponent implements OnInit, OnChanges {
     return item;
   }
 
-  toolbarFieldClickEvent(item: IccField) {
-    console.log( ' tool bar click22222222 =', item);
-    this.menuItemClickEvent.emit(item);
+  onToolbarFieldChangedEvent(item: IccField) {
+    console.log(' 0000000000 tool bar toolbarFieldChangedEvent  =', item);
+    this.toolbarFieldChangedEvent.emit(item);
   }
 }
 

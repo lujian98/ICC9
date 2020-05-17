@@ -67,12 +67,91 @@ export class TreeExampleComponent implements OnInit {
     width: 100
   }];
 
+  testMenuItems: IccFieldConfig =
+    {
+      icon: 'fas fa-ellipsis-v',
+      title: 'Group',
+      children: [
+        {
+          title: 'Speakers',
+          name: 'group',
+          children: [
+            {
+              title: 'Michael Prentice',
+              name: 'person',
+              children: [
+                {
+                  title: 'Delight your Organization',
+                  name: 'star_rate',
+                  type: 'checkbox'
+                }
+              ],
+            },
+            {
+              title: 'Stephen Fluin',
+              name: 'person',
+              children: [
+                {
+                  title: 'What\'s up with the Web?',
+                  name: 'star_rate',
+                }
+              ]
+            },
+            {
+              title: 'Mike Brocchi',
+              name: 'person',
+              children: [
+                {
+                  title: 'My ally, the CLI',
+                  name: 'star_rate',
+                },
+                {
+                  title: 'Become an Angular Tailor',
+                  name: 'star_rate',
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: 'Sessions',
+          name: 'speaker_notes',
+          children: [
+            {
+              title: 'Delight your Organization',
+              name: 'star_rate',
+            },
+            {
+              title: 'What\'s up with the Web?',
+              name: 'star_rate',
+            },
+            {
+              title: 'My ally, the CLI',
+              name: 'star_rate',
+            },
+            {
+              title: 'Become an Angular Tailor',
+              name: 'star_rate',
+            }
+          ]
+        },
+        {
+          title: 'Feedback',
+          name: 'feedback',
+        }
+      ]
+    };
+
+
   toolbarItemConfig: IccFieldConfig[] = [{
     title: 'Add',
     name: 'add',
   }, {
     title: 'Edit',
     name: 'edit',
+  }, {
+    type: 'menu',
+    fieldConfig: this.testMenuItems
   }];
 
   ngOnInit() {

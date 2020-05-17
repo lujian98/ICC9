@@ -1,11 +1,18 @@
 <span class="icc-toolbar" *ngFor="let item of toolbarItems">
-  <span *ngIf="!item.hidden" class="icc-toolbar-item"
+  <span *ngIf="!item.hidden&&item.type!='menu'"  class="icc-toolbar-item"
     iccToolbarField [field]="item"
-    (toolbarFieldClickEvent)="toolbarFieldClickEvent($event)">
+    (toolbarFieldChangedEvent)="onToolbarFieldChangedEvent($event)">
   </span>
+  <icc-menu *ngIf="item.type=='menu'" class="icc-toolbar-item"
+    [menuItemConfig]="item.fieldConfig"
+    (iccMenuItemChangedEvent)="onToolbarFieldChangedEvent($event)">
+  </icc-menu>
 </span>
 
 <!--
+
+        <icc-menu *ngIf="menuItems" [menuItemConfig]="menuItems">
+      </icc-menu>
 
   <div class="hidden-sm">
   <div class="tool-bar">

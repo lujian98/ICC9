@@ -28,6 +28,7 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   disabled?: boolean;
   icon?: string;
   children?: IccField[];
+  fieldConfig?: IccFieldConfig; // for toolbar menu conffig
   action?: string;
   checked?: boolean; // TODO for checkbox
   // children?: IccFieldConfig[] | IccField[];
