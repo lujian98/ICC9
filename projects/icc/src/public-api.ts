@@ -16,7 +16,6 @@ export * from './lib/services/index';
 
 export * from './lib/utils/utils';
 
-export * from './lib/tool-bar/index';
 
 export * from './lib/pipes/index';
 

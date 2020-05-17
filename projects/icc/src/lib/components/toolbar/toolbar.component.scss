@@ -1,3 +1,59 @@
 .icc-toolbar {
   display: inline-block;
 }
+
+/*
+.tool-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 10px;
+  background: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 9050; // defined z-index could create problem 1050 is good for menu item hover open and close
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid #adadad;
+    z-index: -1;
+  }
+
+  .navbar-logo {
+    width: 90px;
+    height: 30px;
+  }
+
+  .brand {
+    font-weight: 300;
+    font-size: 16px;
+    color: #797979;
+    display: inline-block;
+    margin-left: 14px;
+    margin-right: 30px;
+    padding-right: 30px;
+    border-right: 1px solid #ebe5e0;
+    line-height: 30px;
+  }
+
+  .toolbar-item {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .flex-spacer {
+    flex-grow: 3;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .hidden-sm {
+      display: none;
+  }
+}
+*/
