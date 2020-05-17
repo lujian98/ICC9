@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemNode, FlatTreeNode  } from 'icc';
+import { ItemNode, FlatTreeNode, IccFieldConfig } from 'icc';
 
 import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component';
 
@@ -67,6 +67,14 @@ export class TreeExampleComponent implements OnInit {
     width: 100
   }];
 
+  toolbarItemConfig: IccFieldConfig[] = [{
+    title: 'Add',
+    name: 'add',
+  }, {
+    title: 'Edit',
+    name: 'edit',
+  }];
+
   ngOnInit() {
 
     // console.log('data =', this.data)
@@ -100,7 +108,7 @@ export class TreeExampleComponent implements OnInit {
   }
 
   close() {
-    console.log( ' template close')
+    console.log(' template close')
   }
 }
 

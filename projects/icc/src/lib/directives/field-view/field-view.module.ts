@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 import { IccMenuFieldDirective } from './menu-field.directive';
+import { IccToolbarFieldDirective } from './toolbar-field.directive';
 import { IccFilterFieldDirective } from './filter-field.directive';
 import { IccFieldViewComponent } from './field-view.component';
 import { IccFieldViewButtonComponent } from './button/field-view-button.component';
@@ -24,6 +25,7 @@ import { IccFieldViewTextComponent } from './text/field-view-text.component';
   ],
   declarations: [
     IccMenuFieldDirective,
+    IccToolbarFieldDirective,
     IccFilterFieldDirective,
     IccFieldViewComponent,
     IccFieldViewButtonComponent,
@@ -32,6 +34,7 @@ import { IccFieldViewTextComponent } from './text/field-view-text.component';
   ],
   exports: [
     IccMenuFieldDirective,
+    IccToolbarFieldDirective,
     IccFilterFieldDirective,
 
     IccFieldViewComponent,

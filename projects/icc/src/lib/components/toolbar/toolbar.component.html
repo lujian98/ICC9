@@ -1,5 +1,5 @@
 <span class="icc-toolbar" *ngFor="let item of toolbarItems">
-  <span *ngIf="!item.hidden"
+  <span *ngIf="!item.hidden" class="icc-toolbar-item"
     iccToolbarField [field]="item"
     (toolbarFieldClickEvent)="toolbarFieldClickEvent($event)">
   </span>
