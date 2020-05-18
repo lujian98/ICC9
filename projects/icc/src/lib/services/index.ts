@@ -43,5 +43,4 @@ export * from './loadRecordParams.model';
 export * from './overlay/overlay.model';
 export * from './overlay/overlay-component-ref';
 export * from './overlay/overlay.service';
-export * from './overlay/form-overlay.service';
 

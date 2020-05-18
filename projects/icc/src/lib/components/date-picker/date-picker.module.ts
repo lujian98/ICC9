@@ -5,12 +5,6 @@ import { IccDateRangePickerComponent } from './date-range-picker/date-range-pick
 import { IccDatePickerOverlayComponent } from './picker-overlay/date-picker-overlay.component';
 import { IccDateRangePickerOverlayComponent } from './picker-overlay/date-range-picker-overlay.component';
 
-import { IccOverlayService } from '../../services/overlay/overlay.service';
-import { IccBaseOverlayService } from './services/overlay.service';
-
-import { IccDateRangeStoreService } from './services/date-range-store.service';
-import { IccDateConfigStoreService } from './services/date-config-store.service';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -60,11 +54,7 @@ import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
     IccLocaleDatePipe
   ],
   providers: [
-    IccOverlayService,
-    IccBaseOverlayService,  // TODO remove this
     IccLocaleDatePipe,
-    IccDateRangeStoreService,
-    IccDateConfigStoreService,
     { provide: DATE, useValue: new Date() },
     // { provide: MAT_DATE_LOCALE, useValue: 'en-US' } TODOv9
   ],

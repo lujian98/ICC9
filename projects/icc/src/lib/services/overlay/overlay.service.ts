@@ -25,8 +25,11 @@ export class IccOverlayService<T> {
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     this.overlayRef = this.overlay.create(overlayConfig);
-    this.overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
-    const componentInjector = this.createInjector(this.overlayComponentRef);
+    if (componentContent) {
+      this.overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
+    }
+    const componentInjector = this.createInjector(this.overlayRef, this.overlayComponentRef);
+
     const componentPortal = new ComponentPortal(component, null, componentInjector);
     this.containerRef = this.overlayRef.attach(componentPortal);
     Object.assign(this.containerRef.instance, {
@@ -56,9 +59,13 @@ export class IccOverlayService<T> {
     return overlayConfig;
   }
 
-  private createInjector(overlayComponentRef: IccOverlayComponentRef<T>) {
+  private createInjector(overlayRef: OverlayRef, overlayComponentRef: IccOverlayComponentRef<T>) {
     const injectionTokens = new WeakMap();
-    injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
+    if (overlayComponentRef) {
+      injectionTokens.set(IccOverlayComponentRef, overlayComponentRef);
+    } else {
+      injectionTokens.set(OverlayRef, overlayRef);
+    }
     return new PortalInjector(this.injector, injectionTokens);
   }
 

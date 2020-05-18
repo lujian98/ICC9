@@ -10,13 +10,8 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { OverlayRef } from '@angular/cdk/overlay';
-
 import { IccDatePickerOverlayComponent } from '../picker-overlay/date-picker-overlay.component';
-// import { IccCalendarOverlayService } from '../services/calendar-overlay.service';
-
-import { IccBaseOverlayService } from '../services/overlay.service';
-
+import { IccOverlayService } from '../../../services/overlay/overlay.service';
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccDateRangeOptions } from '../model/model';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
@@ -28,8 +23,7 @@ import { IccLocaleService } from '../services/locale.service';
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
   providers: [
-    // IccCalendarOverlayService,
-    IccBaseOverlayService,
+    IccOverlayService,
     IccDateRangeStoreService,
     IccDateConfigStoreService,
     DatePipe
@@ -38,7 +32,6 @@ import { IccLocaleService } from '../services/locale.service';
 })
 export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
   @Input() options: IccDateRangeOptions;
-
   @ViewChild('calendarInput') calendarInput;
   @Output() readonly selectedDateChanged: EventEmitter<Date> = new EventEmitter<Date>();
 
@@ -47,7 +40,7 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccBaseOverlayService,
+    private overlayService: IccOverlayService<T>,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,
@@ -75,19 +68,10 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
   }
 
   openCalendar(event) {
-    // const overlayRef: OverlayRef = this.calendarOverlayService.open(
-            /* TODO open(config: IccOverlayConfig = {}, hostElemRef: ElementRef, portal: string, configData?: {}):
-      this.calendarOverlayService.open(
-        this.calendarInput,
-        'datepicker',
-        {}, // TODO pass inpot data overlayParams: IccOverlayParams
-        this.options.calendarOverlayConfig,
-      ); */
-
-    this.calendarOverlayService.open(
-      this.options.calendarOverlayConfig,
+    this.overlayService.open(
       this.calendarInput,
-      IccDatePickerOverlayComponent
+      IccDatePickerOverlayComponent,
+      this.options.calendarOverlayConfig,
     );
   }
 
