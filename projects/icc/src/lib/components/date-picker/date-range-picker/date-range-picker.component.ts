@@ -41,7 +41,7 @@ export class IccDateRangePickerComponent<T> implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService<T>,
+    private calendarOverlayService: IccCalendarOverlayService,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,
@@ -90,14 +90,14 @@ export class IccDateRangePickerComponent<T> implements OnInit, OnDestroy {
         'daterangepicker',
         {}, // TODO pass inpot data overlayParams: IccOverlayParams
         this.options.calendarOverlayConfig,
-      );
+      );  */
 
 
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,
       'daterangepicker'
-    ); */
+    );
   }
 
   public resetDates(range: IccDateRange) {

@@ -40,7 +40,7 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService<T>,
+    private calendarOverlayService: IccCalendarOverlayService,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,
@@ -69,19 +69,19 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
 
   openCalendar(event) {
     // const overlayRef: OverlayRef = this.calendarOverlayService.open(
-            /* TODO
+            /* TODO open(config: IccOverlayConfig = {}, hostElemRef: ElementRef, portal: string, configData?: {}):
       this.calendarOverlayService.open(
         this.calendarInput,
         'datepicker',
         {}, // TODO pass inpot data overlayParams: IccOverlayParams
         this.options.calendarOverlayConfig,
-      );
+      ); */
 
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,
       'datepicker'
-    ); */
+    );
   }
 
   public resetSelectedDate(selectedDate: Date) {
