@@ -1,0 +1,34 @@
+.icc-date-range-calendar-container {
+  display: flex;
+  justify-content: space-around;
+  min-width: 750px;
+  height: 400px;
+
+  .icc-date-range-calendar-presets {
+    flex-basis: 20%;
+    min-width: 150px;
+    padding: 1em;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.icc-date-range-calendar-item {
+  flex-basis: 40%;
+  min-width: 300px;
+  padding: 1em;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.icc-date-range-menu {
+  height: 100%;
+}
+
+.icc-date-range-controls {
+  display: flex;
+  justify-content: space-around;
+  margin: 10% auto;
+}

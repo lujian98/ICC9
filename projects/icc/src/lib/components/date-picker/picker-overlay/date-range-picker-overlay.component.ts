@@ -8,6 +8,7 @@ import { IccPickerOverlayAnimations } from './picker-overlay.animations';
 @Component({
   selector: 'icc-date-range-picker-overlay',
   templateUrl: './date-range-picker-overlay.component.html',
+  styleUrls: ['./date-range-picker-overlay.component.scss'],
   animations: [IccPickerOverlayAnimations.transformPanel],
   encapsulation: ViewEncapsulation.None
 })

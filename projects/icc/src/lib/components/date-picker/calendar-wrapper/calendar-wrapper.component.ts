@@ -18,6 +18,7 @@ import { IccDateConfigStoreService } from '../services/date-config-store.service
 @Component({
   selector: 'icc-calendar-wrapper',
   templateUrl: './calendar-wrapper.component.html',
+  styleUrls: ['./calendar-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IccCalendarWrapperComponent implements AfterViewInit, OnChanges, OnDestroy {

@@ -11,6 +11,7 @@ import { IccDatePresetItem } from '../model/model';
 @Component({
   selector: 'icc-calendar-presets',
   templateUrl: './calendar-presets.component.html',
+  styleUrls: ['./calendar-presets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IccCalendarPresetsComponent implements OnInit {

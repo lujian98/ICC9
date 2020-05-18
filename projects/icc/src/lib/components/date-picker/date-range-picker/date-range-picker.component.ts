@@ -21,6 +21,7 @@ import { IccLocaleService } from '../services/locale.service';
 @Component({
   selector: 'icc-date-range-picker',
   templateUrl: './date-range-picker.component.html',
+  styleUrls: ['./date-range-picker.component.scss'],
   providers: [
     IccCalendarOverlayService,
     IccDateRangeStoreService,
