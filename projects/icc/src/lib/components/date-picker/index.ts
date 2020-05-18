@@ -8,5 +8,4 @@ export * from './picker-overlay/picker-overlay.animations';
 export * from './calendar-presets/calendar-presets.component';
 export * from './services/date-config-store.service';
 export * from './services/date-range-store.service';
-export * from './services/locale.service';
 export * from './date-picker/date-picker.component';

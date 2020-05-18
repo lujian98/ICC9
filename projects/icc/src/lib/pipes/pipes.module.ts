@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IccEscapeHtmlPipe } from '../pipes/escape_html.pipe';
-// import { IccLocaleDatePipe } from '../pipes/locale-date.pipe';
+import { IccLocaleDatePipe } from '../pipes/locale-date.pipe';
 
 @NgModule({
   imports: [
@@ -9,11 +9,11 @@ import { IccEscapeHtmlPipe } from '../pipes/escape_html.pipe';
   ],
   declarations: [
     IccEscapeHtmlPipe,
-    // IccLocaleDatePipe,
+    IccLocaleDatePipe,
   ],
   exports: [
     IccEscapeHtmlPipe,
-    // IccLocaleDatePipe,
+    IccLocaleDatePipe,
   ],
   entryComponents: [
   ],

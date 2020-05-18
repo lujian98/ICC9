@@ -31,7 +31,7 @@ import { IccCalendarWrapperComponent } from './calendar-wrapper/calendar-wrapper
 import { IccCalendarPresetsComponent } from './calendar-presets/calendar-presets.component';
 import { DATE } from './services/date-range-store.service';
 
-import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
+import { IccPipesModule, IccLocaleDatePipe } from '../../pipes/index';
 
 @NgModule({
   imports: [
@@ -43,6 +43,7 @@ import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
     MatButtonModule,
     MatTooltipModule,
     OverlayModule,
+    IccPipesModule,
   ],
   declarations: [
     IccDateRangePickerComponent,
@@ -51,7 +52,6 @@ import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
     IccDatePickerOverlayComponent,
     IccDateRangePickerOverlayComponent,
     IccCalendarPresetsComponent,
-    IccLocaleDatePipe
   ],
   providers: [
     IccLocaleDatePipe,
@@ -65,7 +65,6 @@ import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
   exports: [
     IccDateRangePickerComponent,
     IccDatePickerComponent,
-    IccLocaleDatePipe
   ]
 })
 export class IccDatePickerModule { }

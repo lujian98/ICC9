@@ -16,7 +16,7 @@ import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccDateRangeOptions } from '../model/model';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
 import { Subscription } from 'rxjs';
-import { IccLocaleService } from '../services/locale.service';
+import { IccLocaleService } from '../../../services/locale/locale.service';
 
 @Component({
   selector: 'icc-date-picker',
