@@ -83,10 +83,18 @@ export class IccDateRangePickerComponent<T> implements OnInit, OnDestroy {
   }
 
   openCalendar(event) {
+    const config = {
+      panelClass: 'icc-date-picker-overlay',
+      hasBackdrop: true,
+      backdropClass: 'icc-date-picker-overlay-backdrop',
+      shouldCloseOnBackdropClick: true
+    };
+
     this.overlayService.open(
       this.calendarInput,
       IccDateRangePickerOverlayComponent,
-      this.options.calendarOverlayConfig,
+      config
+      // this.options.calendarOverlayConfig, // TODO config from option???
     );
   }
 
