@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IccDatePickerModule } from '../date-picker/date-picker.module';
+import { IccDatePickerModule } from '../components/date-picker/date-picker.module';
 // import { ButtonComponent } from './fields/button/button.component'
 // import { AutocompleteComponent } from "./fields/autocomplete/autocomplete.component"
 // import { MulticheckboxComponent } from "./fields/multicheckbox/multicheckbox.component"

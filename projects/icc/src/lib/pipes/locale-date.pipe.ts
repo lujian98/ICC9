@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { IccLocaleService } from '../date-picker/services/locale.service';
+import { IccLocaleService } from '../components/date-picker/services/locale.service';
 
 @Pipe({
   name: 'localeDate'

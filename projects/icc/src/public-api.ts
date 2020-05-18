@@ -19,7 +19,6 @@ export * from './lib/utils/utils';
 
 export * from './lib/pipes/index';
 
-export * from './lib/date-picker/index';
 
 export * from './lib/dialog/index';
 export * from './lib/form/index';

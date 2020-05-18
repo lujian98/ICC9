@@ -31,7 +31,7 @@ import { IccCalendarWrapperComponent } from './calendar-wrapper/calendar-wrapper
 import { IccCalendarPresetsComponent } from './calendar-presets/calendar-presets.component';
 import { DATE } from './services/date-range-store.service';
 
-import { IccLocaleDatePipe } from '../pipes/locale-date.pipe';
+import { IccLocaleDatePipe } from '../../pipes/locale-date.pipe';
 
 @NgModule({
   imports: [
