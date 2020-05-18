@@ -1,4 +1,4 @@
-import { Injectable, ComponentRef, ElementRef, Injector, InjectionToken } from '@angular/core';
+import { Injectable, ComponentRef, ElementRef, Injector, InjectionToken, Type } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { takeWhile } from 'rxjs/operators';
@@ -13,20 +13,32 @@ const DEFAULT_CONFIG: IccOverlayConfig = {
 };
 
 @Injectable()
-export abstract class IccBaseOverlayService {
+export class IccBaseOverlayService {
   private hostElemRef: ElementRef;
   componentRef: any;
 
   constructor(protected overlay: Overlay, private injector: Injector) { }
 
-  abstract getPortalComponent(portal: string);
 
-  open(config: IccOverlayConfig = {}, hostElemRef: ElementRef, portal: string, configData?: {}): OverlayRef {
+  /*
+      origin: HTMLElement,
+    component: Type<G>,
+    config: IccOverlayConfig = {},
+    componentContent: IccPortalContent<T> = '',
+    componentContext: {} = {}
+
+    */
+  open<G>(
+    config: IccOverlayConfig = {},
+    hostElemRef: ElementRef,
+    component?: Type<G>,
+    configData?: {}
+  ): OverlayRef {
     this.hostElemRef = hostElemRef;
     const overlayConfig = { ...DEFAULT_CONFIG, ...config };
     const overlayRef = this.createOverlay(overlayConfig);
     const portalInjector = this.createInjector(overlayRef);
-    const component = this.getPortalComponent(portal);
+
     const componentPortal = new ComponentPortal(
       component,
       null,

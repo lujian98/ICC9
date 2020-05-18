@@ -6,7 +6,6 @@ export * from './picker-overlay/date-picker-overlay.component';
 export * from './picker-overlay/date-range-picker-overlay.component';
 export * from './picker-overlay/picker-overlay.animations';
 export * from './calendar-presets/calendar-presets.component';
-export * from './services/calendar-overlay.service';
 export * from './services/date-config-store.service';
 export * from './services/date-range-store.service';
 export * from './services/locale.service';

@@ -11,7 +11,12 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { IccCalendarOverlayService } from '../services/calendar-overlay.service';
+
+import { IccDatePickerOverlayComponent } from '../picker-overlay/date-picker-overlay.component';
+// import { IccCalendarOverlayService } from '../services/calendar-overlay.service';
+
+import { IccBaseOverlayService } from '../services/overlay.service';
+
 import { IccDateRangeStoreService } from '../services/date-range-store.service';
 import { IccDateRangeOptions } from '../model/model';
 import { IccDateConfigStoreService } from '../services/date-config-store.service';
@@ -23,7 +28,8 @@ import { IccLocaleService } from '../services/locale.service';
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
   providers: [
-    IccCalendarOverlayService,
+    // IccCalendarOverlayService,
+    IccBaseOverlayService,
     IccDateRangeStoreService,
     IccDateConfigStoreService,
     DatePipe
@@ -41,7 +47,7 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
-    private calendarOverlayService: IccCalendarOverlayService,
+    private calendarOverlayService: IccBaseOverlayService,
     public rangeStoreService: IccDateRangeStoreService,
     public configStoreService: IccDateConfigStoreService,
     private localeService: IccLocaleService,
@@ -81,7 +87,7 @@ export class IccDatePickerComponent<T> implements OnInit, OnDestroy {
     this.calendarOverlayService.open(
       this.options.calendarOverlayConfig,
       this.calendarInput,
-      'datepicker'
+      IccDatePickerOverlayComponent
     );
   }
 
