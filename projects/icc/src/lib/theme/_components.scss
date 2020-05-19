@@ -18,6 +18,7 @@
   @include menu-item-component-theme();
   @include field-view-button-component-theme();
   @include portal-component-theme();
+  @include date-picker-component-theme();
 
   @include resize-directive-theme();
 }
