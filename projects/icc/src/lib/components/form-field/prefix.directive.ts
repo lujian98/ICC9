@@ -4,3 +4,4 @@ import {Directive} from '@angular/core';
   selector: '[iccPrefix]',
 })
 export class IccPrefixDirective {}
+

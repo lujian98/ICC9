@@ -1,6 +1,6 @@
 <div class="icc-form-field">
   <div class="icc-form-field-flex">
-    <label class="icc-form-field-label" #label>
+    <label class="icc-form-field-label" *ngIf="_hasLabel">
       <ng-content select="icc-label"></ng-content>
     </label>
     <div class="icc-form-field-prefix" *ngIf="_prefixChildren.length">

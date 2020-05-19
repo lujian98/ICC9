@@ -1,11 +1,10 @@
 import {
-  AfterContentInit, AfterViewInit, Component, ChangeDetectionStrategy, ElementRef, HostListener, Input, OnChanges,
-  OnInit, SimpleChanges, ViewEncapsulation, ViewChild, ContentChildren, ViewChildren, QueryList, ViewContainerRef
+  AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef,
+  OnChanges, OnInit, QueryList, SimpleChanges, ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
-
+import { IccLabelDirective } from './label.directive';
 import { IccPrefixDirective } from './prefix.directive';
 import { IccSuffixDirective } from './suffix.directive';
-
 
 @Component({
   selector: 'icc-form-field',
@@ -16,6 +15,12 @@ import { IccSuffixDirective } from './suffix.directive';
 })
 export class IccFormFieldComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
 
+  @ContentChild(IccLabelDirective) _labelChildNonStatic: IccLabelDirective;
+  @ContentChild(IccLabelDirective, { static: true }) _labelChildStatic: IccLabelDirective;
+  get _labelChild() {
+    return this._labelChildNonStatic || this._labelChildStatic;
+  }
+
   @ContentChildren(IccPrefixDirective, { descendants: true }) _prefixChildren: QueryList<IccPrefixDirective>;
   @ContentChildren(IccSuffixDirective, { descendants: true }) _suffixChildren: QueryList<IccSuffixDirective>;
 
@@ -25,6 +30,10 @@ export class IccFormFieldComponent implements AfterViewInit, AfterContentInit, O
   ) { }
 
   ngOnInit() {
+  }
+
+  _hasLabel() {
+    return !!this._labelChild;
   }
 
   ngAfterContentInit() {

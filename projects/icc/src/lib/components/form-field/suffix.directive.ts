@@ -4,3 +4,4 @@ import {Directive} from '@angular/core';
   selector: '[iccSuffix]',
 })
 export class IccSuffixDirective {}
+
