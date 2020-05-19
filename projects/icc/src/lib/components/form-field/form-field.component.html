@@ -1,0 +1,23 @@
+<div class="icc-form-field">
+  <div class="icc-form-field-flex">
+    <label class="icc-form-field-label" #label>
+      <ng-content select="icc-label"></ng-content>
+    </label>
+    <div class="icc-form-field-prefix" *ngIf="_prefixChildren.length">
+      <ng-content select="[iccPrefix]"></ng-content>
+    </div>
+    <div class="icc-form-field-infix" #inputContainer>
+      <ng-content></ng-content>
+    </div>
+    <div class="icc-form-field-suffix" *ngIf="_suffixChildren.length">
+      <ng-content select="[iccSuffix]"></ng-content>
+    </div>
+  </div>
+
+  <!-- TODO error and hint
+    <div class="icc-form-field-hint">
+    <ng-content select="icc-hint"></ng-content>
+    <ng-content select="icc-error"></ng-content>
+  </div>
+  -->
+</div>
