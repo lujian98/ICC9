@@ -1,18 +1,8 @@
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-/*
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatToolbarModule,
-  MatCardModule,
-  MatGridListModule,
-  MatInputModule,
-  MatSelectModule
-} from '@angular/material'; */
 
-import { IccDatePickerModule } from 'icc';
+import { IccDatePickerModule, IccFormFieldModule } from 'icc';
 
 import { DocDatePickerComponent } from './date-picker.component';
 
@@ -26,6 +16,7 @@ import { DocDatePickerComponent } from './date-picker.component';
     FormsModule,
     ReactiveFormsModule,
     IccDatePickerModule,
+    IccFormFieldModule,
   ],
   providers: [],
 })

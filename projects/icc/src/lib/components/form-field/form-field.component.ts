@@ -1,6 +1,6 @@
 import {
   AfterContentInit, AfterViewInit, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef,
-  OnChanges, OnInit, QueryList, SimpleChanges, ViewContainerRef, ViewEncapsulation
+  Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import { IccLabelDirective } from './label.directive';
 import { IccPrefixDirective } from './prefix.directive';
@@ -14,6 +14,7 @@ import { IccSuffixDirective } from './suffix.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccFormFieldComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
+  @Input() labelWidth: string;
 
   @ContentChild(IccLabelDirective) _labelChildNonStatic: IccLabelDirective;
   @ContentChild(IccLabelDirective, { static: true }) _labelChildStatic: IccLabelDirective;
@@ -34,6 +35,14 @@ export class IccFormFieldComponent implements AfterViewInit, AfterContentInit, O
 
   _hasLabel() {
     return !!this._labelChild;
+  }
+
+  _labelWidth() {
+    let width = '0';
+    if (this._hasLabel()) {
+      width = this.labelWidth ? this.labelWidth : '100px';
+    }
+    return width;
   }
 
   ngAfterContentInit() {

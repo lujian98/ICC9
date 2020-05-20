@@ -14,8 +14,8 @@
     <div class="icc-date-range-menu">
       <icc-calendar-presets *ngIf="presets" [presets]="presets" (presetChanged)="updateSelectDateByPreset($event)"></icc-calendar-presets>
       <div class="icc-date-range-controls">
-        <button *ngIf="!selectApply" mat-button color="primary" (click)="applyNewDates($event)">{{applyLabel}}</button>
-        <button mat-button (click)="discardNewDates($event)">{{cancelLabel}}</button>
+        <button *ngIf="!selectApply" color="primary" (click)="applyNewDates($event)">{{applyLabel}}</button>
+        <button (click)="discardNewDates($event)">{{cancelLabel}}</button>
       </div>
     </div>
   </div>

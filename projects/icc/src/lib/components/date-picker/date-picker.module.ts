@@ -1,20 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IccDatePickerComponent } from './date-picker/date-picker.component';
-import { IccDateRangePickerComponent } from './date-range-picker/date-range-picker.component';
-import { IccDatePickerOverlayComponent } from './picker-overlay/date-picker-overlay.component';
-import { IccDateRangePickerOverlayComponent } from './picker-overlay/date-range-picker-overlay.component';
-
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 // import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/'; TODOv9
 
 import { OverlayModule } from '@angular/cdk/overlay';
-
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeJa from '@angular/common/locales/ja';
@@ -27,22 +18,25 @@ registerLocaleData(localeDe, 'de');
 registerLocaleData(localeZh, 'zh');
 registerLocaleData(localeFr, 'fr');
 
+import { IccDatePickerComponent } from './date-picker/date-picker.component';
+import { IccDateRangePickerComponent } from './date-range-picker/date-range-picker.component';
+import { IccDatePickerOverlayComponent } from './picker-overlay/date-picker-overlay.component';
+import { IccDateRangePickerOverlayComponent } from './picker-overlay/date-range-picker-overlay.component';
+
 import { IccCalendarWrapperComponent } from './calendar-wrapper/calendar-wrapper.component';
 import { IccCalendarPresetsComponent } from './calendar-presets/calendar-presets.component';
 import { DATE } from './services/date-range-store.service';
 
+import { IccFormFieldModule } from '../form-field/form-field.module';
 import { IccPipesModule, IccLocaleDatePipe } from '../../pipes/index';
 
 @NgModule({
   imports: [
     CommonModule,
-    MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTooltipModule,
     OverlayModule,
+    IccFormFieldModule,
     IccPipesModule,
   ],
   declarations: [
