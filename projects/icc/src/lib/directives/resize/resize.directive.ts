@@ -25,8 +25,8 @@ export class IccResizeDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.resizableMousedown = this.renderer.listen(document, 'mousedown', (event: MouseEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
+      // event.preventDefault(); // WARNING DONOT do global event.preventDefault and event.stopPropagation
+      // event.stopPropagation();
       const el = document.elementFromPoint(event.x, event.y);
       const direction = el.getAttribute('direction');
       const elementKey = el.getAttribute('ng-reflect-element-key');
