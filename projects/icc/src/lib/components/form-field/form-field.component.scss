@@ -7,3 +7,9 @@
   }
 }
 
+@mixin form-field-component-theme() {
+  input {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}

@@ -1,6 +1,5 @@
-<icc-form-field class="icc-form-field">
+<icc-form-field>
   <input class="icc-form-input-field" type="text" [value]="value" autocomplete="off"
-    style="color:green; font-style: italic;"
     (click)="$event.stopPropagation()"
     (keyup)="fieldChange($event, $event.target.value)"
     placeholder=". . . . . . . .">

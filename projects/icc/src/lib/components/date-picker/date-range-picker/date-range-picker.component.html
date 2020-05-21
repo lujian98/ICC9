@@ -1,16 +1,14 @@
-<div>
-  <icc-form-field class="icc-date-range-date-display">
-    <input #calendarInput class="icc-date-range-picker-input"
-      [value]="selectedDateRange"
-      (click)="openCalendar($event)"
-      readonly>
-    <span iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
-    </span>
-    <div *ngIf="selectedDateRange" iccSuffix (click)="clearDateRange($event)">
-      <i class="fas fa-times" style="color:orange"></i>
-    </div>
-  </icc-form-field>
-</div>
+<icc-form-field class="icc-date-range-date-display">
+  <input #calendarInput class="icc-date-range-picker-input"
+    [value]="selectedDateRange"
+    (click)="openCalendar($event)"
+    readonly>
+  <span iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
+  </span>
+  <div *ngIf="selectedDateRange" iccSuffix (click)="clearDateRange($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+</icc-form-field>
 
 <!--
   <div>

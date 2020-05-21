@@ -6,6 +6,7 @@
 @import '../components/menu/menu-item/menu-item.component.scss';
 @import '../components/portal/portal.component.scss';
 @import '../components/date-picker/date-picker.component.scss';
+@import '../components/form-field/form-field.component.scss';
 
 @import '../directives/field-view/button/field-view-button.component.scss';
 @import '../directives/resize/resize.directive.scss';
@@ -19,6 +20,7 @@
   @include field-view-button-component-theme();
   @include portal-component-theme();
   @include date-picker-component-theme();
+  @include form-field-component-theme();
 
   @include resize-directive-theme();
 }
