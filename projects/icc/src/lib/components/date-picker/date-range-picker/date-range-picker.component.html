@@ -4,10 +4,11 @@
       [value]="selectedDateRange"
       (click)="openCalendar($event)"
       readonly>
-    <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
+    <span iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
+    </span>
+    <div *ngIf="selectedDateRange" iccSuffix (click)="clearDateRange($event)">
+      <i class="fas fa-times" style="color:orange"></i>
     </div>
-    <button *ngIf="selectedDateRange" iccSuffix class="icc-menu remove" (click)="clearDateRange($event)">
-    </button>
   </icc-form-field>
 </div>
 

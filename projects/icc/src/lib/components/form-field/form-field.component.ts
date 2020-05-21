@@ -10,8 +10,8 @@ import { IccSuffixDirective } from './suffix.directive';
   selector: 'icc-form-field',
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // encapsulation: ViewEncapsulation.None, // WARNING not put here will cause ngif not wroking
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IccFormFieldComponent implements AfterViewInit, AfterContentInit, OnInit, OnChanges {
   @Input() labelWidth: string;

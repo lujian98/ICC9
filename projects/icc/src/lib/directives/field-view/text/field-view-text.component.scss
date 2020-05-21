@@ -13,6 +13,10 @@
   height: 0 !important;
 } */
 
+*:focus {
+  outline: none;
+}
+
 .icc-form-field {
   .icc-form-input-field {
     height: 30px;

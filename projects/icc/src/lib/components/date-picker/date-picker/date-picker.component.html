@@ -6,12 +6,19 @@
       readonly>
     <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
     </div>
-    <button *ngIf="selectedDate" iccSuffix class="icc-menu remove" (click)="clearSelectedDate($event)">
-    </button>
+    <div *ngIf="selectedDate" iccSuffix (click)="clearSelectedDate($event)">
+      <i class="fas fa-times" style="color:orange"></i>
+    </div>
   </icc-form-field>
 </div>
 
 <!--
+
+    <div iccSuffix>
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+
+
   <div>
   <mat-form-field class="icc-date-range-date-display">
     <input #calendarInput class="icc-date-range-date-input"

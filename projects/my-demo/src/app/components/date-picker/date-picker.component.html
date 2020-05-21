@@ -12,16 +12,21 @@
 <div><br></div>
 <icc-form-field labelWidth="120px">
   <icc-label>Text Field Label</icc-label>
-  <input type="text" id="fname" name="fname" [ngStyle]="{'width': '100%'}">
+  <input type="text" [ngStyle]="{'width': '100%'}">
+  <div iccSuffix>
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
 </icc-form-field>
 
-<h1>This is a form</h1>
 
-
-
-<input type="text" >
 
 <!--
+
+    <div *ngIf="value" iccSuffix (click)="clearField($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+
+
       <icc-label>Text Field Label</icc-label>
     <i iccPrefix class="fas fa-edit" style="color:green"></i>
   <i class="fas fa-times" style="color:orange" iccSuffix></i>
