@@ -222,19 +222,22 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
 
   // tree node selection
   descendantsAllSelected(node: FlatTreeNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
+    // const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.getDescendants(node);
     return descendants.every(child => this.selection.isSelected(child));
   }
 
   descendantsPartiallySelected(node: FlatTreeNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
+    // const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.getDescendants(node);
     const result = descendants.some(child => this.selection.isSelected(child));
     return result && !this.descendantsAllSelected(node);
   }
 
   selectionToggle(node: FlatTreeNode): void {
     this.selection.toggle(node);
-    const descendants = this.treeControl.getDescendants(node);
+    // const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.getDescendants(node);
     console.log(' descendants=', descendants)
     this.selection.isSelected(node)
       ? this.selection.select(...descendants)
@@ -242,8 +245,34 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
     // this._selectedItems = this.selection.selected.map(s => s.item);
   }
 
-  checkDescendants(node) {
-    const startIndex = this.treeControl.dataNodes.indexOf(node);
+  getDescendants(node: FlatTreeNode): FlatTreeNode[] {
+    const startIndex = this.data.indexOf(node);
+    const results: FlatTreeNode[] = [];
+    for (let i = startIndex + 1; i < this.data.length && node.level < this.data[i].level; i++) {
+      results.push(this.data[i]);
+    }
+
+
+    return results;
   }
 }
 
+/*
+  getDescendants(dataNode: T): T[] {
+    const startIndex = this.dataNodes.indexOf(dataNode);
+    const results: T[] = [];
+
+    // Goes through flattened tree nodes in the `dataNodes` array, and get all descendants.
+    // The level of descendants of a tree node must be greater than the level of the given
+    // tree node.
+    // If we reach a node whose level is equal to the level of the tree node, we hit a sibling.
+    // If we reach a node whose level is greater than the level of the tree node, we hit a
+    // sibling of an ancestor.
+    for (let i = startIndex + 1;
+        i < this.dataNodes.length && this.getLevel(dataNode) < this.getLevel(this.dataNodes[i]);
+        i++) {
+      results.push(this.dataNodes[i]);
+    }
+    return results;
+  }
+  */

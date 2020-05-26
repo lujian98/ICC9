@@ -41,10 +41,10 @@
       [cdkDragData]="node">
       <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
         [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
-        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+        <span [ngStyle]="{'padding-left': (node.level*20+5) + 'px'}">
           <span cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
             (click)="nodeExpand(node)">
-            <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
+            <i [class]="node.isExpanded ? 'fas fa-caret-down' : 'fas fa-caret-right' "></i>
         </span>
           <input type="checkbox"
             [checked]="descendantsAllSelected(node)"
