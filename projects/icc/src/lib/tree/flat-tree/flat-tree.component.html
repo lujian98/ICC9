@@ -18,6 +18,9 @@
       <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
         [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
         <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          <input type="checkbox"
+          [checked]="selection.isSelected(node)"
+          (change)="selection.toggle(node)">
           {{ node.name }} - A1
         </span>
       </div>
@@ -39,11 +42,15 @@
       <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
         [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
         <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
-          <button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+          <span cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
             (click)="nodeExpand(node)">
             <i [class]="node.isExpanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right' "></i>
-          </button>
-          {{ node.name }} - flat tree B1
+        </span>
+          <input type="checkbox"
+            [checked]="descendantsAllSelected(node)"
+            [indeterminate]="descendantsPartiallySelected(node)"
+            (change)="selectionToggle(node)">
+            {{ node.name }} - flat tree B1
         </span>
       </div>
 
@@ -63,6 +70,13 @@
 </cdk-virtual-scroll-viewport>
 
 <!--
+
+
+
+
+    <mat-checkbox [checked]="descendantsAllSelected(node)"
+                  [indeterminate]="descendantsPartiallySelected(node)"
+                  (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
 
         <button mat-icon-button cdkTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename"
         (click)="nodeExpand(node)">

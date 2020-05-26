@@ -46,6 +46,8 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       }
     });
     this.dataSource.data = [...treeData];
+    this.treeControl.dataNodes = this.dataSource.data;
+    console.log(' this.treeControl=', this.treeControl)
   }
 
   hasChild = (_: number, node: FlatTreeNode) => node.expandable;
@@ -216,6 +218,32 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       }
     }
     super.drop(event);
+  }
+
+  // tree node selection
+  descendantsAllSelected(node: FlatTreeNode): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    return descendants.every(child => this.selection.isSelected(child));
+  }
+
+  descendantsPartiallySelected(node: FlatTreeNode): boolean {
+    const descendants = this.treeControl.getDescendants(node);
+    const result = descendants.some(child => this.selection.isSelected(child));
+    return result && !this.descendantsAllSelected(node);
+  }
+
+  selectionToggle(node: FlatTreeNode): void {
+    this.selection.toggle(node);
+    const descendants = this.treeControl.getDescendants(node);
+    console.log(' descendants=', descendants)
+    this.selection.isSelected(node)
+      ? this.selection.select(...descendants)
+      : this.selection.deselect(...descendants);
+    // this._selectedItems = this.selection.selected.map(s => s.item);
+  }
+
+  checkDescendants(node) {
+    const startIndex = this.treeControl.dataNodes.indexOf(node);
   }
 }
 

@@ -14,6 +14,23 @@
 <icc-toolbar [toolbarItemConfig]="toolbarItemConfig"></icc-toolbar>
 
 <div class="app-tree-container">
+  <icc-table
+    [tableConfigs]="{
+      'tableType': 'flatTree',
+      'enableMultiColumnSort': true,
+      'enableColumnResize': true,
+      'enableColumnFilter': true,
+      'enableColumnDnD': true,
+      'enableColumnHide': true,
+      'isNestedData': true
+    }"
+    [data]="data"
+    [columnConfigs]="columnConfigs">
+  </icc-table>
+</div>
+
+<!--
+  <div class="app-tree-container">
     <icc-table
       [tableConfigs]="{
         'tableType': 'nestedTree',
@@ -28,9 +45,6 @@
       [columnConfigs]="columnConfigs">
     </icc-table>
   </div>
-
-<!--
-
 
 
 <div class="app-tree-container">

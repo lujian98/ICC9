@@ -1,5 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Input, ViewChild, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { delay, takeWhile } from 'rxjs/operators';
 import { IccDataSource } from '../datasource/datasource';
@@ -26,6 +27,8 @@ export class IccBaseTreeComponent<T> implements OnInit, OnDestroy {
   treeColumn: any;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+
+  selection: SelectionModel<T>;
 
   isViewportReady = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
@@ -70,6 +73,7 @@ export class IccBaseTreeComponent<T> implements OnInit, OnDestroy {
       this.iccViewportEvent.emit(this.viewport);
       this.dataSource = new IccDataSource(this.viewport);
       this.setTreeData();
+      this.selection = new SelectionModel<T>(true, []); // this.tableConfigs.enableMultiRowSelection
     }
     const treeRows = this.viewport.elementRef.nativeElement.getElementsByTagName('cdk-nested-tree-node');
     console.log(' next batch ange changesevent treeRows.length=', treeRows.length, ' data length =', this.dataSourceLength);
