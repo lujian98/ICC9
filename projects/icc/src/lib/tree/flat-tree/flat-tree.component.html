@@ -20,7 +20,7 @@
         <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
           <input type="checkbox"
           [checked]="selection.isSelected(node)"
-          (change)="selection.toggle(node)">
+          (change)="leafNodeSelectionToggle(node)">
           {{ node.name }} - A1
         </span>
       </div>
@@ -70,9 +70,6 @@
 </cdk-virtual-scroll-viewport>
 
 <!--
-
-
-
 
     <mat-checkbox [checked]="descendantsAllSelected(node)"
                   [indeterminate]="descendantsPartiallySelected(node)"

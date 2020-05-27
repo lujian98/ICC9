@@ -17,6 +17,10 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
 
+  getLevel = (node: FlatTreeNode) => node.level;
+
+  hasChild = (_: number, node: FlatTreeNode) => node.expandable;
+
   constructor(
     @Inject(DOCUMENT) document: any,
     protected tableEventService: IccTableEventService,
@@ -46,11 +50,7 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       }
     });
     this.dataSource.data = [...treeData];
-    this.treeControl.dataNodes = this.dataSource.data;
-    console.log(' this.treeControl=', this.treeControl)
   }
-
-  hasChild = (_: number, node: FlatTreeNode) => node.expandable;
 
   nodeExpand(node: FlatTreeNode) {
     node.isExpanded = !node.isExpanded;
@@ -95,10 +95,14 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
     }
   }
 
-  private getParentNode(node: FlatTreeNode, nodes: FlatTreeNode[]) {
+  private getParentNode(node: FlatTreeNode, nodes: FlatTreeNode[]): FlatTreeNode | null {
+    const currentLevel = this.getLevel(node);
+    if (currentLevel < 1) {
+      return null;
+    }
     const nodeIndex = nodes.indexOf(node);
     for (let i = nodeIndex - 1; i >= 0; i--) {
-      if (nodes[i].level === node.level - 1) {
+      if (nodes[i].level === currentLevel - 1) {
         return nodes[i];
       }
     }
@@ -220,29 +224,52 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
     super.drop(event);
   }
 
-  // tree node selection
-  descendantsAllSelected(node: FlatTreeNode): boolean {
-    // const descendants = this.treeControl.getDescendants(node);
+  leafNodeSelectionToggle(node: FlatTreeNode) {
+    this.selection.toggle(node);
+    this.checkAllParentsSelection(node);
+  }
+
+  private checkAllParentsSelection(node: FlatTreeNode) {
+    let parent: FlatTreeNode | null = this.getParentNode(node, this.data);
+    while (parent) {
+      this.checkRootNodeSelection(parent);
+      parent = this.getParentNode(parent, this.data);
+    }
+  }
+
+  private checkRootNodeSelection(node: FlatTreeNode) {
+    const nodeSelected = this.selection.isSelected(node);
     const descendants = this.getDescendants(node);
-    return descendants.every(child => this.selection.isSelected(child));
+    const descAllSelected = descendants.every(child =>
+      this.selection.isSelected(child)
+    );
+    if (nodeSelected && !descAllSelected) {
+      this.selection.deselect(node);
+    } else if (!nodeSelected && descAllSelected) {
+      this.selection.select(node);
+    }
+  }
+
+  descendantsAllSelected(node: FlatTreeNode): boolean {
+    const descendants = this.getDescendants(node);
+    const descAllSelected = descendants.every(child => this.selection.isSelected(child));
+    return descAllSelected;
   }
 
   descendantsPartiallySelected(node: FlatTreeNode): boolean {
-    // const descendants = this.treeControl.getDescendants(node);
     const descendants = this.getDescendants(node);
     const result = descendants.some(child => this.selection.isSelected(child));
     return result && !this.descendantsAllSelected(node);
   }
 
-  selectionToggle(node: FlatTreeNode): void {
+  selectionToggle(node: FlatTreeNode) {
     this.selection.toggle(node);
-    // const descendants = this.treeControl.getDescendants(node);
     const descendants = this.getDescendants(node);
-    console.log(' descendants=', descendants)
-    this.selection.isSelected(node)
-      ? this.selection.select(...descendants)
-      : this.selection.deselect(...descendants);
-    // this._selectedItems = this.selection.selected.map(s => s.item);
+    this.selection.isSelected(node) ? this.selection.select(...descendants) : this.selection.deselect(...descendants);
+
+    // Force update for the parent
+    descendants.every(child => this.selection.isSelected(child));
+    this.checkAllParentsSelection(node);
   }
 
   getDescendants(node: FlatTreeNode): FlatTreeNode[] {
@@ -251,28 +278,7 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
     for (let i = startIndex + 1; i < this.data.length && node.level < this.data[i].level; i++) {
       results.push(this.data[i]);
     }
-
-
     return results;
   }
 }
 
-/*
-  getDescendants(dataNode: T): T[] {
-    const startIndex = this.dataNodes.indexOf(dataNode);
-    const results: T[] = [];
-
-    // Goes through flattened tree nodes in the `dataNodes` array, and get all descendants.
-    // The level of descendants of a tree node must be greater than the level of the given
-    // tree node.
-    // If we reach a node whose level is equal to the level of the tree node, we hit a sibling.
-    // If we reach a node whose level is greater than the level of the tree node, we hit a
-    // sibling of an ancestor.
-    for (let i = startIndex + 1;
-        i < this.dataNodes.length && this.getLevel(dataNode) < this.getLevel(this.dataNodes[i]);
-        i++) {
-      results.push(this.dataNodes[i]);
-    }
-    return results;
-  }
-  */
