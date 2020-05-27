@@ -65,7 +65,7 @@ export class IccPanelContentComponent implements AfterViewInit, AfterContentInit
 
   private initPanelSize() {
     this.checkPanelHeight();
-    window.dispatchEvent(new Event('resize'));
+    // window.dispatchEvent(new Event('resize')); // TODO this could casue grid menu without parent
   }
 
   private checkResizeCondition() { // TODO createEmbeddedView will disable the html input???
