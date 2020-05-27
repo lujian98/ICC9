@@ -1,0 +1,58 @@
+<div class="icc-menu-panel">
+  <span *ngFor="let item of menuItems">
+    <span *ngIf="item.children && item.children.length > 0">
+      <button class="icc-menu-item icc-button" [iccPopover]="menu" popoverPosition="bottomRight">
+        <i *ngIf="item.icon" [class]="item.icon"></i>
+        <span class="icc-menu-item-title"> {{item.title}}</span>
+        <span class="icc-flex"></span>
+        <i class="fas fa-caret-right"></i>
+      </button>
+      <ng-template #menu>
+        <icc-menu-item [menuItems]="item.children" (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+        </icc-menu-item>
+      </ng-template>
+    </span>
+    <span *ngIf="!item.children || item.children.length === 0">
+      <span iccMenuField [field]="item" (iccMenuFieldChangedEvent)="onMenuFieldChanged($event, item)">
+      </span>
+    </span>
+  </span>
+</div>
+
+
+
+<!--
+<mat-menu class="icc-menu-item" #childMenu="matMenu" [overlapTrigger]="false">
+  <span *ngFor="let item of menuItems">
+    <span *ngIf="item.children && item.children.length > 0">
+      <button class="icc-menu-item-title" mat-menu-item [matMenuTriggerFor]="menu.childMenu" (click)="$event.stopPropagation()">
+        <span>{{item.title}}</span>
+      </button>
+      <icc-menu-item #menu [menuItems]="item.children"
+        (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+      </icc-menu-item>
+    </span>
+    <span *ngIf="!item.children || item.children.length === 0">
+      <span iccMenuField [field]="item"
+        (iccMenuFieldChangedEvent)="onMenuFieldChanged($event, item)">
+      </span>
+    </span>
+  </span>
+</mat-menu>
+
+
+
+        <button mat-menu-item (click)="menuItemClick($event, item)">
+        <span>{{item.title}}</span>
+      </button>
+
+        <button mat-menu-item (click)="menuItemClick($event, item)">
+        <span>{{item.title}}</span>
+      </button>
+  iccFieldView
+<span *ngIf="field.itemtype != 'fieldset'"
+  iccFormField [field]="field"
+  (iccFieldValueChangedEvent)="onFieldValueChanged($event, field)"
+  [group]="formView">
+</span>
+-->

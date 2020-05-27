@@ -8,12 +8,13 @@ import { IccOverlayComponentRef } from 'icc';
 export class TooltipDemoComponent implements OnInit {
   skills = [];
   constructor(
-    private popoverRef: IccOverlayComponentRef<any>
+    private overlayComponentRef: IccOverlayComponentRef<any>
   ) { }
 
   ngOnInit() { }
 
   close() {
-    this.popoverRef.close({ id: 1 });
+    this.overlayComponentRef.close({ id: 1 });
+      // TODO this may not be enough to close tooltip need add close events subject to popover directive
   }
 }

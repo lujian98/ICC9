@@ -1,0 +1,59 @@
+<div [iccPopover]="menu" popoverType='click'>
+  <span *ngIf="menuItems.title">{{menuItems.title}}</span>
+  <i *ngIf="menuItems.icon" [class]="menuItems.icon" style="color:green"></i>
+</div>
+
+<ng-template #menu>
+  <icc-menu-item
+    [menuItems]="menuItems.children"
+    (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+  </icc-menu-item>
+</ng-template>
+
+<!--
+
+  <icc-menu-item #menu
+  [menuItems]="menuItems.children"
+  (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+</icc-menu-item>
+
+  <div [iccPopover]="menusComponent" [iccPopoverContext]="menusdata">
+  <span *ngIf="menuItems.title">{{menuItems.title}}</span>
+  <i *ngIf="menuItems.icon" [class]="menuItems.icon" style="color:green"></i>
+</div>
+
+
+<ng-template #menu let-close="close">
+    And here's some amazing content 55555. It's very engaging. Right? And here's some amazing content. It's very engaging. Right?
+    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+      <a class="button is-danger is-small" (click)="close({id: 2})">Close</a>
+    </div>
+  <icc-menu-item
+    [menuItems]="menuItems.children"
+    (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+  </icc-menu-item>
+</ng-template>
+
+
+
+  <ng-template #tpl let-close="close">
+  And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right?
+  <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+    <a class="button is-danger is-small" (click)="close({id: 2})">Close</a>
+  </div>
+</ng-template>
+
+
+  <div class="test1 tooltip-demo" [iccPopover]="tpl">Template Tooltip</div>
+
+<div [matMenuTriggerFor]="menu.childMenu">
+  <span *ngIf="menuItems.title">{{menuItems.title}}</span>
+  <i *ngIf="menuItems.icon" [class]="menuItems.icon" style="color:green"></i>
+</div>
+<icc-menu-item #menu
+  [menuItems]="menuItems.children"
+  (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+</icc-menu-item>
+
+
+-->

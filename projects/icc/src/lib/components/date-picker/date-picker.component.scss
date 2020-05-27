@@ -1,0 +1,51 @@
+@mixin date-picker-component-theme() {
+  .icc-date-picker, .icc-date-range-picker {
+    background-color: icc-theme(icc-portal-background-color);
+    color: icc-theme(icc-text-color);
+  }
+
+  .icc-date-picker-overlay {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    border-radius: 2px;
+  }
+
+  .icc-date-picker-overlay-backdrop {
+    // background-color: rgba(0,0,0,.2);
+    // opacity: 0.2;
+  }
+}
+
+
+.icc-date-range-calendar-item {
+  flex-basis: 40%;
+  min-width: 300px;
+  padding: 1em;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.icc-date-range-menu {
+  height: 100%;
+}
+
+.icc-date-range-controls {
+  display: flex;
+  justify-content: space-around;
+  margin: 10% auto;
+}
+
+.mat-calendar-body-cell-content.mat-calendar-body-selected{
+  background-color: orange !important;
+  color: black !important;
+}
+
+.icc-date-range-dates {
+  background: lightgray;
+  border-radius: 100%;
+}
+
+.icc-date-range-selected-date {
+  background-color: orange !important;
+  border-radius: 100%;
+}

@@ -1,14 +1,26 @@
 <div>
-  <mat-checkbox
+  <label class="icc-checkbox" (click)="$event.stopPropagation()">
+    <input type="checkbox" (change)="fieldChange($event, $event.checked)" [checked]="field.checked">
+    {{field.title}}
+    <span class="icc-flex"></span>
+    <span> </span>
+  </label>
+</div>
+
+<!--
+    <i class="fas fa-caret-right"></i>
+  style="width: 100%"
+      [formControlName]="field.name"
+  <div [formGroup]="group" [hidden]="field.hidden"
+<label><input type="checkbox" /> some text</label>
+
+    <mat-checkbox class="icc-checkbox"
     [labelPosition]="field.labelPosition"
     (click)="$event.stopPropagation()"
     (change)="fieldChange($event, $event.checked)"
     [checked]="field.checked">
     {{field.title}}
+    <span class="icc-flex"></span>
+    <i class="fas fa-caret-right"></i>
   </mat-checkbox>
-</div>
-
-<!--
-      [formControlName]="field.name"
-  <div [formGroup]="group" [hidden]="field.hidden"
 -->

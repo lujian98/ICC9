@@ -1,6 +1,6 @@
 import { IccDateFilter } from '../../filter/date_filter';
 import { IccRansackFilter } from './filter';
-import { IccDateRange } from '../../../date-picker/model/model';
+import { IccDateRange } from '../../../components/date-picker/model/model';
 
 export class IccRansackDateFilter<T> extends IccRansackFilter<T> {
   private _filter: IccDateFilter;

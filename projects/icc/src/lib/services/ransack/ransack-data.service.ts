@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IccCellEditData } from '../../grid';
+// import { IccCellEditData } from '../../grid';
 import { IccSelectOption, IccSelectType } from '../../models';
 import { IccAbstractDataService } from '../abstract-data.service';
 import { IccFilters } from '../filter/filters';
@@ -243,7 +243,7 @@ export class IccRansackDataService<T> extends IccAbstractDataService<T> {
 
   onSaveGridCellValue(cellData: IccCellEditData<T>): Observable<T> {
     return of();
-  } */
+  }
 
   onSaveGridCellValue(cellData: IccCellEditData<T>): Observable<T> {
     const url = this.dataSourceUrl + '/updateRecord';
@@ -260,7 +260,7 @@ export class IccRansackDataService<T> extends IccAbstractDataService<T> {
           return data;
         })
       );
-  }
+  } */
 
   getDetailData(dataKeyId: string, dataKeyValue: string | number) {
     let params = new HttpParams();

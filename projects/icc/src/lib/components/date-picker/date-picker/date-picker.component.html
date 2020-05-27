@@ -1,0 +1,33 @@
+<icc-form-field class="icc-date-range-date-display">
+  <input #calendarInput class="icc-date-picker-input"
+    [value]="selectedDate"
+    (click)="openCalendar($event)" readonly>
+  <div iccSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
+  </div>
+  <div *ngIf="selectedDate" iccSuffix (click)="clearSelectedDate($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+</icc-form-field>
+
+<!--
+
+    <div iccSuffix>
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+
+
+  <div>
+  <mat-form-field class="icc-date-range-date-display">
+    <input #calendarInput class="icc-date-range-date-input"
+      matInput [placeholder]="options.placeholder"
+      [value]="selectedDate"
+      [matTooltip]="selectedDate"
+      (click)="openCalendar($event)"
+      readonly>
+    <div matSuffix class="icc-date-range-calendar" (click)="openCalendar($event)">
+    </div>
+    <button mat-button *ngIf="selectedDate" matSuffix class="icc-menu remove" (click)="clearSelectedDate($event)">
+    </button>
+  </mat-form-field>
+</div>
+-->

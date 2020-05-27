@@ -1,0 +1,17 @@
+.app-content-container {
+  flex-direction: row;
+  overflow: hidden;
+  .app-content-start {
+    border: 1px solid blue;
+    flex: 0 0 150px;
+  }
+  .app-content-middle {
+    flex: 1 1 auto;
+    border: 1px solid red;
+    width: 100%
+  }
+  .app-content-end {
+    flex: 0 0 300px;
+    border: 1px solid orange;
+  }
+}

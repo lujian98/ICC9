@@ -1,9 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IccField } from '../items';
 import { IccItemFieldService } from '../items/item_field.service';
-import { IccMenuItem } from '../menu/menu-item';
 import { ColumnMenuType, IccColumnConfig, IccTableConfigs } from '../models';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
+import { IccFieldConfig } from '../models/item-config';
 
 @Component({
   selector: 'icc-table',
@@ -14,15 +14,19 @@ export class IccTableComponent<T> implements OnChanges {
   @Input() tableConfigs: IccTableConfigs = {};
   @Input() data: T[] = [];
   @Input() columnConfigs: IccColumnConfig[] = [];
+  @Input() height: string;
+  @Input() width: string;
   columns: IccField[] = [];
 
   constructor(
+    private elementRef: ElementRef,
     private columnService: IccItemFieldService,
     private fieldViewService: IccFieldViewService,
   ) {
   }
 
   ngOnInit() {
+    this.setTableWidth();
     this.checkTableConfigs();
   }
 
@@ -42,6 +46,14 @@ export class IccTableComponent<T> implements OnChanges {
 
       // this.setGridColumView();
       // this.filters.setFilters(this.columns);
+    }
+  }
+
+  setTableWidth() {
+    // this.width = '900px';
+    if(this.width) {
+      const el = this.elementRef.nativeElement;
+      el.style.width = this.width;
     }
   }
 
@@ -139,14 +151,10 @@ export class IccTableComponent<T> implements OnChanges {
     });
   }
 
-  private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccMenuItem {
-    const menu: IccMenuItem = {
-      children: []
-    };
-    // TODO if use input column menu
-    menu.icon = 'fas fa-ellipsis-v';
+  private getColumnMenu(column: any, tableConfigs: IccTableConfigs): IccFieldConfig {
+    const menus = [];
     if (tableConfigs.enableColumnSort && column.sortField) {
-      menu.children.push({
+      menus.push({
         title: 'Sort Ascending',
         icon: 'fas fa-sort-amount-down',
         name: ColumnMenuType.SortAscending,
@@ -161,7 +169,7 @@ export class IccTableComponent<T> implements OnChanges {
         });
     }
     if (tableConfigs.enableRowGroup && column.groupField) {
-      menu.children.push({
+      menus.push({
         title: 'Group By this field',
         name: 'groupBy',
       }, {
@@ -171,7 +179,7 @@ export class IccTableComponent<T> implements OnChanges {
         });
     }
     if (tableConfigs.enableColumnSticky && column.stickyable !== false) {
-      menu.children.push({
+      menus.push({
         title: 'Pin Left',
         name: 'pinLeft',
         icon: 'fas fa-chevron-left'
@@ -185,6 +193,12 @@ export class IccTableComponent<T> implements OnChanges {
           icon: 'fas fa-times'
         });
     }
+
+    const menu: IccFieldConfig = {
+      icon: 'fas fa-ellipsis-v',
+      children: menus
+    };
+    // TODO if use input column menu
     return menu;
   }
 }

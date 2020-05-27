@@ -3,64 +3,66 @@ cdk-tree-node, cdk-nested-tree-node {
   display: block;
 }
 
-$border-color: var(--icc-cdk-table-cell-border-color);
-.icc-tree-node, .icc-table-column {
-  display: inline-block; // TODO need inline block here, but the text is not valign in the cell
-  height: 30px;
-  border-bottom: 1px solid $border-color;
-  border-right: 1px solid $border-color;
-  text-align: center;
-}
-
-/*
-.icc-table-column {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
-
-.icc-tree-node {
-  border-left: 1px solid $border-color;
-}
-
-// for drag and drop
-.icc-tree-node {
-  // background-color: rgb(66, 157, 253);
-  // color: white;
-  user-select: none;
-  cursor: move;
-  text-align: left;
-
-  // &.cdk-drag-preview { // while dragging
-    // @include mat-elevation(12);
-  // }
-
-  &.cdk-drag-placeholder { // potential drop area
-    opacity: 0;
+@mixin tree-view-component-theme() {
+  $border-color: icc-theme(icc-table-cell-border-color);
+  .icc-tree-node, .icc-table-column {
+    display: inline-block; // TODO need inline block here, but the text is not valign in the cell
+    height: 30px;
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    text-align: center;
   }
-}
 
-// items moving away to make room for drop
-.cdk-drop-list-dragging .mat-tree-node:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-// item being dropped
-.cdk-drag-animating {
-  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
-}
+  /*
+  .icc-table-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  } */
 
-.icc-tree-drop-inside {
-  background-color: orange;
-  opacity: 0.4;
-}
+  .icc-tree-node {
+    border-left: 1px solid $border-color;
+  }
 
-.icc-tree-drop-before {
-  border-top: 5px solid #00f;
-  margin-top: 5px;
-}
+  // for drag and drop
+  .icc-tree-node {
+    // background-color: rgb(66, 157, 253);
+    // color: white;
+    user-select: none;
+    cursor: move;
+    text-align: left;
 
-.icc-tree-drop-after {
-  border-bottom: 5px solid red;
-  margin-bottom: 5px;
+    // &.cdk-drag-preview { // while dragging
+      // @include mat-elevation(12);
+    // }
+
+    &.cdk-drag-placeholder { // potential drop area
+      opacity: 0;
+    }
+  }
+
+  // items moving away to make room for drop
+  .cdk-drop-list-dragging .mat-tree-node:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  // item being dropped
+  .cdk-drag-animating {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .icc-tree-drop-inside {
+    background-color: orange;
+    opacity: 0.4;
+  }
+
+  .icc-tree-drop-before {
+    border-top: 5px solid #00f;
+    margin-top: 5px;
+  }
+
+  .icc-tree-drop-after {
+    border-bottom: 5px solid red;
+    margin-bottom: 5px;
+  }
 }
 

@@ -1,0 +1,21 @@
+
+.app-content-container {
+  flex-direction: row;
+  overflow: hidden;
+  .app-content-start {
+    flex: 0 0 150px;
+    border: 1px solid blue;
+  }
+  .app-content-middle {
+    flex: 1 1 auto;
+    border: 1px solid blue;
+  }
+  .app-content-end {
+    flex: 0 0 200px;
+  }
+}
+.app-footer-container {
+  height: 30px;
+}
+
+

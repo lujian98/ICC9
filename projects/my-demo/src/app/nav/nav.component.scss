@@ -1,20 +1,19 @@
+@mixin nav-component-theme() {
   header {
-    border-bottom: 1px solid #adadad;
-    // background-color: #fff;
+    height: 50px;
+
   }
-  nav ul {
-    list-style: none;
-    // background-color: #444;
-    text-align: center;
-    padding: 0;
-    margin: 0;
+
+  .nav {
+    padding-left: 20px;
   }
+
   .nav li {
     font-family: 'Roboto';
     font-size: 12px;
     line-height: 40px;
     height: 44px;
-    border-bottom: 1px solid #888;
+    // border-bottom: 1px solid #888;
     padding-bottom: 3px;
   }
 
@@ -23,7 +22,7 @@
     display: block;
     transition: .3s background-color;
     margin: 0 13px;
-    color: #4b4f54;
+    color:icc-theme(icc-text-color);
     font-weight: 500;
   }
 
@@ -33,9 +32,9 @@
 
   .nav a.active {
     // background-color: #fff;
-    color: #444;
+    color:icc-theme(icc-text-color);
     cursor: default;
-    border-bottom: 2px solid #f18a20;
+    border-bottom: 2px solid darkgreen;
     font-weight: 700;
   }
 
@@ -58,3 +57,9 @@
         display: none;
     }
   }
+
+  .app-nav-header {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}

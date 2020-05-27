@@ -1,0 +1,16 @@
+
+.app-panel-container {
+  overflow: hidden;
+  .app-content-start{
+    flex: 0 0 100px;
+    overflow: auto;
+  }
+  .app-content-middle {
+    overflow: auto;
+    width: 100%;
+  }
+  .app-content-end{
+    flex: 0 0 200px;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  position: relative;  // for resize handle position
+  flex-direction: column;
+  ::ng-deep {
+    icc-panel-header {
+      flex: 0 1 auto;
+    }
+    icc-panel-footer {
+      display: flex;
+      flex: 0 1 auto;
+      align-items: center;
+      flex-flow: row wrap;
+    }
+  }
+}

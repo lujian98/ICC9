@@ -13,17 +13,25 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { MatRadioModule } from '@angular/material/radio';
 
+import { IccPanelModule } from 'icc';
+
 import { LoginModule } from './login/login.module';
-import { IccBaseGridExampleModule } from './table/icc-base-grid-example/icc-base-grid-example.module';
 import { TreeExampleModule } from './tree/tree-example/tree-example.module';
 
 import { CdkTableDemoModule } from './table/cdk-table-demo/cdk-table-demo.module';
+import { TableModule } from './table/table.module';
+import { LayoutsModule } from './layouts/layouts.module';
 
 
 import { SchoolModule } from './school/school.module';
+import { DocDashboardModule } from './dashboard/dashboard.module';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
+
+import { SomeOtherComponent } from './layouts/some-other-component/some-other-component.component';
+import { ExampleComponent } from './layouts/example/example.component';
+
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,6 +39,8 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     NavComponent,
+    SomeOtherComponent,
+    ExampleComponent
   ],
   imports: [
     BrowserModule,
@@ -43,11 +53,16 @@ import { AppRoutingModule } from './app-routing.module';
     MatMenuModule,
     MatRadioModule,
 
+    IccPanelModule,
+
     LoginModule,
-    IccBaseGridExampleModule,
     TreeExampleModule,
     CdkTableDemoModule,
+    TableModule,
     SchoolModule,
+    DocDashboardModule,
+    LayoutsModule,
+
     AppRoutingModule
   ],
   providers: [],

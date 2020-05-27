@@ -8,26 +8,28 @@
   // align-items: center;
 }
 
-$border-color: var(--icc-cdk-table-cell-border-color);
-.icc-cdk-table-data-cell {
-  height: 30px; // TODO configurable
-  border-bottom: 1px solid $border-color;
-  border-right: 1px solid $border-color;
-  // padding: 0px 10px; // no padding at cell level
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@mixin table-view-component-theme() {
+  $border-color: icc-theme(icc-table-cell-border-color);
+  .icc-cdk-table-data-cell {
+    height: 30px; // TODO configurable
+    border-bottom: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    // padding: 0px 10px; // no padding at cell level
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.icc-cdk-table-data-cell:first-child {
-  border-left: 1px solid $border-color;
-}
+  .icc-cdk-table-data-cell:first-child {
+    border-left: 1px solid $border-color;
+  }
 
-.icc-table-row-group {
-  flex: 0 0 100%;
-  justify-content: left;
-  border-bottom: 1px solid $border-color;
-  display: block;
+  .icc-table-row-group {
+    flex: 0 0 100%;
+    justify-content: left;
+    border-bottom: 1px solid $border-color;
+    display: block;
+  }
 }
 
 .icc-table-row-group-level2 {

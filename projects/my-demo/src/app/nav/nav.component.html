@@ -1,12 +1,45 @@
-  <header>
+<header class="app-nav-header">
   <div class="nav">
-    <ul>
       <li>
           <button (click)="toggleSideMenuNav()">
               <i class="fas fa-bars"></i>
             </button>
       </li>
-      <li class="hidden-sm"><a href="/">Dashboard</a></li>
+
+      <li class="hidden-sm"><a routerLink="dashboard-doc/dashboard-demo1" routerLinkActive="active">Dashboard</a></li>
+      <li class="hidden-sm"><a routerLink="school/icc-base-grid-example" routerLinkActive="active">Grid Demo</a></li>
+      <li class="hidden-sm"><a routerLink="table-doc/cdk-table-demo" routerLinkActive="active">Table</a></li>
+      <li class="hidden-sm"><a routerLink="layouts" routerLinkActive="active">Layouts</a></li>
+      <li class="hidden-sm"><a routerLink="school" routerLinkActive="active">School</a></li>
+      <li class="hidden-sm"><a routerLink="browser" routerLinkActive="active">Data Centers</a></li>
+      <li class="hidden-sm"><a routerLink="events" routerLinkActive="active">Events</a></li>
+      <li class="hidden-sm"><a routerLink="school/simple-date" routerLinkActive="active">Setup</a></li>
+
+      <mat-radio-group (change)='changeTheme($event)'>
+        <mat-radio-button value="light" [checked]='true'>Light</mat-radio-button> &nbsp;
+        <mat-radio-button value="dark">Drak</mat-radio-button> &nbsp;
+      </mat-radio-group>
+
+      <li class="hidden-sm"><a class="navbar-item "  (click)="onLoggedout()">
+        <span class="icon has-text-danger">
+          <i class="fas fa-ban"></i>
+        </span> Logout
+      </a></li>
+  </div>
+</header>
+<!--
+
+
+<header class="app-nav-header">
+
+
+      <li>
+          <button (click)="toggleSideMenuNav()">
+              <i class="fas fa-bars"></i>
+            </button>
+      </li>
+
+      <li class="hidden-sm"><a routerLink="dashboard-doc" routerLinkActive="active">Dashboard</a></li>
       <li class="hidden-sm"><a routerLink="school/icc-base-grid-example" routerLinkActive="active">Grid Demo</a></li>
       <li class="hidden-sm"><a routerLink="school/outlets" routerLinkActive="active">Outlets</a></li>
       <li class="hidden-sm"><a routerLink="school" routerLinkActive="active">Test</a></li>
@@ -15,8 +48,10 @@
       <li class="hidden-sm"><a routerLink="school/simple-date" routerLinkActive="active">Setup</a></li>
 
       <mat-radio-group (change)='changeTheme($event)'>
-        <mat-radio-button value="light" [checked]='true'>Light</mat-radio-button> &nbsp; &nbsp;
-        <mat-radio-button value="dark">Dark</mat-radio-button>
+        <mat-radio-button value="light" [checked]='true'>Light</mat-radio-button> &nbsp;
+        <mat-radio-button value="dark">Drak</mat-radio-button> &nbsp;
+        <mat-radio-button value="red">Red</mat-radio-button> &nbsp;
+        <mat-radio-button value="blue">Blue</mat-radio-button>
       </mat-radio-group>
 
       <li class="hidden-sm"><a class="navbar-item "  (click)="onLoggedout()">
@@ -25,22 +60,7 @@
         </span> Logout
       </a></li>
 
-    </ul>
-  </div>
-</header>
 
-<!--
-        <li class="hidden-sm"><a href="/devices">IT Devices</a></li>
-      <li class="hidden-sm"><a href="/sensors">Sensors</a></li>
-      <li><a routerLink="admin" routerLinkActive="active">Settings</a></li>
-    <ul class="hidden-sm">
 
-            <i class="fas fa-bars"></i>
 
-  <i class="fas fa-bars"></i>
-
-      <button icc-navbar-item icon="far fa-user">
-      Admin
-      <i class="fas fa-angle-down"></i>
-    </button>
 -->

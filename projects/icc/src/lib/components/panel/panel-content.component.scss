@@ -1,0 +1,26 @@
+:host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  .icc-content-resize-left, .icc-content-resize-right {
+    // cursor: col-resize;
+    height: 100%;
+    // border-left: 1px solid darkgreen; // no need border
+  }
+
+  .icc-content-resize-right {
+    padding-left: 5px;
+  }
+
+  .icc-content-resize-top, .icc-content-resize-bottom {
+    // cursor: row-resize;
+    width: 100%;
+    border-top: 1px solid darkgreen; // no need border
+  }
+
+  .icc-content-resize-bottom {
+    padding-top: 5px;
+  }
+}

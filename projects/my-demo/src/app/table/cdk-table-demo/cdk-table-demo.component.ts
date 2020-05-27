@@ -8,7 +8,7 @@ import { IccCdkTableDemoDataService } from './cdk-table-demo-data.service';
 @Component({
   selector: 'icc-cdk-table-demo',
   templateUrl: './cdk-table-demo.component.html',
-  styleUrls: ['./cdk-table-demo.component.scss'],
+  // styleUrls: ['./cdk-table-demo.component.scss'],
   providers: [
     {
       provide: IccDataSourceService,

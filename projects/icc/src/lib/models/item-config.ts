@@ -10,8 +10,6 @@ import {
 } from './type';
 import { IccField } from '../items';
 
-import { IccMenuItem } from '../menu/menu-item';
-
 export type IccSortField = boolean | string;
 export type IccFilterField = boolean | string;
 export type IccGroupField = boolean | string;
@@ -45,6 +43,7 @@ export interface IccFieldConfig extends IccItemConfig {
   placeholder?: string;
   readonly?: boolean;
   children?: IccFieldConfig[] | IccField[];
+  fieldConfig?: IccFieldConfig, // for toolbar menu conffig
 
   // allowBlank?: boolean;
 }
@@ -63,8 +62,8 @@ export interface IccColumnConfig extends IccFieldConfig {
   stickyable?: boolean;
   sticky?: boolean;
   stickyEnd?: boolean;
-  menu?: boolean | IccMenuItem,
-  cellMenu?: boolean | IccMenuItem;
+  menu?: boolean | IccFieldConfig,
+  cellMenu?: boolean | IccFieldConfig;
   groupHeader?: IccGroupHeader;
   left?: string | 'auto';
   right?: string | 'auto';

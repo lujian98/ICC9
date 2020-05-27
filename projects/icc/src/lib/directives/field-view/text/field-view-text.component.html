@@ -1,3 +1,16 @@
+<icc-form-field>
+  <input class="icc-form-input-field" type="text" [value]="value" autocomplete="off"
+    (click)="$event.stopPropagation()"
+    (keyup)="fieldChange($event, $event.target.value)"
+    placeholder=". . . . . . . .">
+
+  <div *ngIf="value" iccSuffix (click)="clearField($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+</icc-form-field>
+
+<!--
+
 <mat-form-field class="icc-form-field">
   <input matInput type="text" [value]="value" autocomplete="off"
     style="color:green; font-style: italic;"
@@ -9,3 +22,5 @@
     <i class="fas fa-times" style="color:orange"></i>
   </div>
 </mat-form-field>
+
+-->

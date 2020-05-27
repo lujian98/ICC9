@@ -1,0 +1,52 @@
+@import './mapping';
+
+@function icc-add-theme($theme, $name) {
+  $theme: map-merge($icc-mapping, $theme);
+  $new: ($name: $theme);
+  $icc-themes: map-merge($icc-themes, $new) !global;
+  @return $icc-themes;
+}
+
+@function icc-theme($key) {
+  $value: map-get($icc-current-theme, $key);
+  @if ($value == null) {
+    @warn 'Theme: icc-theme cannot find value for key `' + $key +'`';
+  }
+  @return $value;
+}
+
+@function icc-get-key-value($theme, $key, $value) {
+  $parent: map-get($theme, $value);
+  @if ($parent != null) {
+    @return icc-get-key-value($theme, $value, $parent);
+  }
+  @return $value;
+}
+
+@function icc-get-current-theme($theme-name, $theme) {
+  $current-theme: ();
+  @each $key, $value in $theme {
+    $new: ($key: icc-get-key-value($theme, $key, $value));
+    $current-theme: map-merge($current-theme, $new);
+  }
+  @return $current-theme;
+}
+
+@mixin icc-setup-current-context($theme-name, $theme) {
+  $icc-current-theme: icc-get-current-theme($theme-name, $theme) !global;
+}
+
+@mixin icc-setup-scss-vars() {
+  @each $theme-name, $theme in $icc-themes {
+    @include icc-setup-current-context($theme-name, $theme);
+    .icc-theme-#{$theme-name} {
+      @content;
+    }
+  }
+}
+
+@mixin icc-configure-theme() {
+  @include icc-setup-scss-vars() {
+    @content;
+  }
+}

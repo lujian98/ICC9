@@ -3,10 +3,10 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccField } from '../../items';
-import { IccMenuItem } from '../../menu/menu-item';
 import { IccTableConfigs } from '../../models';
 import { IccDataSourceService } from '../../services/data-source.service';
 import { IccTableEventService } from '../services/table-event.service';
+import { IccFieldConfig } from '../../models/item-config';
 
 @Component({
   selector: 'icc-table-topbar',
@@ -22,7 +22,7 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
   alive = true;
   totalRecords = 0;
   tableViewSummary: string;
-  menuItems: IccMenuItem;
+  menuItems: IccFieldConfig;
 
   constructor(
     private dataSourceService: IccDataSourceService<T>,
@@ -71,7 +71,7 @@ export class IccTableTopbarComponent<T> implements OnInit, OnChanges, OnDestroy 
     };
   }
 
-  onMenuItemClick(event) {
+  onMenuItemChanged(event) {
     this.tableEventService.tableEvent$.next({ event: { menuItem: event } });
   }
 

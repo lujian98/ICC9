@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { OverlayContainer } from '@angular/cdk/overlay';
 // import { MatDrawer } from '@angular/material/sidenav';
 
 
@@ -9,22 +10,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent {
-  // @Input() sidemenunav: MatDrawer;
+  // @Input() sidemenunav: MatDrawer; constructor(public overlayContainer: OverlayContainer){}
 
   @Output() sideMenuNavIconClickEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
-    private readonly router: Router
+    private readonly router: Router,
+    public overlayContainer: OverlayContainer
   ) {
+    this.overlayContainer.getContainerElement().classList.add('icc-theme-light');
   }
 
   changeTheme(data) {
-    document.querySelector('.app-container').classList.remove('icc-dark-theme');
-    document.querySelector('.app-container').classList.remove('icc-light-theme');
+    document.querySelector('.app-theme').classList.remove('icc-theme-light');
+    document.querySelector('.app-theme').classList.remove('icc-theme-dark');
+    this.overlayContainer.getContainerElement().classList.remove('icc-theme-light');
+    this.overlayContainer.getContainerElement().classList.remove('icc-theme-dark');
     if (data.value === 'light') {
-      document.querySelector('.app-container').classList.add('icc-light-theme');
+      document.querySelector('.app-theme').classList.add('icc-theme-light');
+      this.overlayContainer.getContainerElement().classList.add('icc-theme-light');
     } else if (data.value === 'dark') {
-      document.querySelector('.app-container').classList.add('icc-dark-theme');
+      document.querySelector('.app-theme').classList.add('icc-theme-dark');
+      this.overlayContainer.getContainerElement().classList.add('icc-theme-dark');
     }
   }
 

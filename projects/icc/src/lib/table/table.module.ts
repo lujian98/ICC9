@@ -3,23 +3,19 @@ import { NgModule } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { MatIconModule } from '@angular/material/icon';
-
 import { CdkTableModule } from '@angular/cdk/table';
 
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
 import { IccDataSourceService } from '../services/data-source.service';
 
+import { IccPanelModule } from '../components/panel/panel.module';
+
 import { IccFieldViewModule } from '../directives/field-view/field-view.module';
 import { IccFieldViewService } from '../directives/field-view/field-view.service';
 
-import { IccMenuModule } from '../menu/menu.module';
+import { IccMenuModule } from '../components/menu/menu.module';
 import { IccTreeModule } from '../tree/tree.module';
 
 import { IccTableComponent } from './table.component';
@@ -38,14 +34,9 @@ import { IccTableEventService } from './services/table-event.service';
     ScrollingModule,
     CdkTreeModule,
     CdkTableModule,
-    MatIconModule,
-    MatDividerModule,
-    MatSortModule,
-    MatTableModule,
     MatProgressBarModule,
-    MatCheckboxModule,
-
     IccVirtualScrollModule,
+    IccPanelModule,
     IccMenuModule,
     IccTreeModule,
     IccFieldViewModule

@@ -4,6 +4,7 @@ import { IccFieldViewComponent } from '../field-view.component';
 @Component({
   selector: 'icc-field-view-button',
   templateUrl: './field-view-button.component.html',
+  styleUrls: ['./field-view-button.component.scss']
 })
 export class IccFieldViewButtonComponent<T> extends IccFieldViewComponent<T> {
 

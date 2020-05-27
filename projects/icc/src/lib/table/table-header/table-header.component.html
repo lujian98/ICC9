@@ -1,7 +1,17 @@
 
-<cdk-table class="icc-cdk-table-header" *ngIf="tableConfigs.enableTableHeader"cdkDropListGroup
+<cdk-table class="icc-cdk-table-header" cdkDropListGroup
   [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
-  <span cdkDropList
+
+  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="header{{ column.name }}"
+    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+    <cdk-header-cell class="icc-table-header-first-row-cell" *cdkHeaderCellDef
+      [ngStyle]="{'flex':'0 0 '+column.width+'px', 'width': column.width+'px',
+        'left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+    </cdk-header-cell>
+  </ng-container>
+  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="headerColumns"></cdk-header-row>
+
+  <span *ngIf="tableConfigs.enableTableHeader" cdkDropList
     cdkDropListLockAxis="x"
     cdkDropListOrientation="horizontal"
     [cdkDropListEnterPredicate]="onDropListPredicate()"
@@ -21,12 +31,12 @@
         <span [ngClass]="header.titleClass">{{header.title}}</span>
       </cdk-header-cell>
     </ng-container>
+    <cdk-header-row *cdkHeaderRowDef="groupHeaderDisplay"
+      [ngStyle]="{'display': groupHeaderDisplay.length > 0 ? 'flex' : 'none'}">
+    </cdk-header-row>
   </span>
-  <cdk-header-row *cdkHeaderRowDef="groupHeaderDisplay"
-    [ngStyle]="{'display': groupHeaderDisplay.length > 0 ? 'flex' : 'none'}">
-  </cdk-header-row>
 
-  <span cdkDropList
+  <span *ngIf="tableConfigs.enableTableHeader" cdkDropList
       cdkDropListLockAxis="x"
       cdkDropListOrientation="horizontal"
       [cdkDropListEnterPredicate]="onDropListPredicate()"
@@ -34,7 +44,8 @@
     <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="{{ column.name }}"
       [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
       <cdk-header-cell class="icc-cdk-table-header-cell" *cdkHeaderCellDef
-        [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
+        [ngStyle]="{'flex':'0 0 '+column.width+'px', 'width': column.width+'px',
+          'left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}"
         (mousemove)="checkResizeORDnD($event, colIndex)"
         (mousedown)="onResizeColumn($event, colIndex)"
         cdkDrag
@@ -47,7 +58,7 @@
             (mouseenter)="setSortState(column, true)"
             (mouseleave)="setSortState(column, false)"
             (click)="onHeaderSort(column)">
-            {{column.title}} X3
+            {{column.title}}
             <i [class]="getHeaderSortState(column)"></i>
           </div>
           <icc-menu *ngIf="column.menu"
@@ -56,46 +67,47 @@
           </icc-menu>
         </div>
         <div *ngIf="column.name=='rowSelection'">
-          <mat-checkbox *ngIf="tableConfigs.enableMultiRowSelection"
+          <input type="checkbox" *ngIf="tableConfigs.enableMultiRowSelection"
             (change)="$event ? masterToggle() : null"
             [checked]="isChecked()"
             [indeterminate]="isIndeterminate()">
-          </mat-checkbox>
         </div>
       </cdk-header-cell>
     </ng-container>
+    <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"
+      [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
+    </cdk-header-row>
   </span>
-  <cdk-header-row class="icc-cdk-table-header-row" *cdkHeaderRowDef="displayedColumns; sticky: true"
-    [ngStyle]="{'width': tableWidth + 'px', 'left': tableConfigs.columnHeaderPosition + 'px'}">
-  </cdk-header-row>
 
-  <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
-    [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
-    <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
-      [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
-      <div *ngIf="tableConfigs.enableColumnFilter&&column.filterField">
-        <span iccFilterField
-          [field]="column"
-          (iccFilterFieldChangedEvent)="onFilterFieldChanged($event, column)">
+  <span *ngIf="tableConfigs.enableTableHeader">
+    <ng-container *ngFor="let column of visibleColumns; let colIndex = index" cdkColumnDef="filter{{ column.name }}"
+      [sticky]="column.sticky" [stickyEnd]="column.stickyEnd">
+      <cdk-header-cell class="icc-cdk-table-filter-cell" *cdkHeaderCellDef
+        [ngStyle]="{'flex':'0 0 '+column.width+'px','left':column.left,'right':column.right,'display':column.hidden?'none':'flex'}">
+        <div class="icc-cdk-table-filter-field" *ngIf="tableConfigs.enableColumnFilter&&column.filterField">
+          <span iccFilterField
+            [field]="column"
+            (iccFilterFieldChangedEvent)="onFilterFieldChanged($event, column)">
+          </span>
+        </div>
+      </cdk-header-cell>
+    </ng-container>
+  <!-- iccFilterFieldChangedEvent
+              <div *ngIf="gridConfigs.enableColumnFilter&&column.filterField"
+              iccColumnFilter
+              [column]="column"
+              [dataSource]="dataSource"
+              [filteredValues]="gridConfigs.filteredValues"
+              (iccFilterChangedEvent)="onFilterChanged($event)">
+
+                    <span iccFieldView [field]="item"
+          (iccFieldValueChangedEvent)="onMenuItemClickEvent($event, item)">
         </span>
-      </div>
-    </cdk-header-cell>
-  </ng-container>
-<!-- iccFilterFieldChangedEvent
-            <div *ngIf="gridConfigs.enableColumnFilter&&column.filterField"
-            iccColumnFilter
-            [column]="column"
-            [dataSource]="dataSource"
-            [filteredValues]="gridConfigs.filteredValues"
-            (iccFilterChangedEvent)="onFilterChanged($event)">
-
-                  <span iccFieldView [field]="item"
-        (iccFieldValueChangedEvent)="onMenuItemClickEvent($event, item)">
-      </span>
--->
-  <cdk-header-row class="icc-cdk-table-header-filter-row" *cdkHeaderRowDef="filterColumns"
-    [ngStyle]="{'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
-  </cdk-header-row>
+  -->
+    <cdk-header-row class="icc-cdk-table-header-filter-row" *cdkHeaderRowDef="filterColumns"
+      [ngStyle]="{'display': tableConfigs.enableColumnFilter ? 'flex' : 'none'}">
+    </cdk-header-row>
+  </span>
 
   <ng-container cdkColumnDef="progress">
     <cdk-header-cell *cdkHeaderCellDef [attr.colspan]="displayedColumns.length" style="width: 99%;">

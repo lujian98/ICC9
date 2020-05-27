@@ -1,0 +1,45 @@
+<icc-date-range-picker
+  (selectedDateRangeChanged)="updateRange($event)"
+  [options]="options"
+  #pickerOne>
+</icc-date-range-picker>
+
+<icc-date-picker
+  (selectedDateChanged)="updateDate($event)"
+  [options]="dateoptions">
+</icc-date-picker>
+
+<div><br></div>
+<icc-form-field labelWidth="120px">
+  <icc-label>Text Field Label</icc-label>
+  <input type="text" [ngStyle]="{'width': '100%'}">
+  <div iccSuffix>
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+</icc-form-field>
+
+
+
+<!--
+
+    <div *ngIf="value" iccSuffix (click)="clearField($event)">
+    <i class="fas fa-times" style="color:orange"></i>
+  </div>
+
+
+      <icc-label>Text Field Label</icc-label>
+    <i iccPrefix class="fas fa-edit" style="color:green"></i>
+  <i class="fas fa-times" style="color:orange" iccSuffix></i>
+type="text" id="fname" name="fname"
+
+[ngStyle]="{'width': '120px'}"
+flex: 0 0 150px;
+<div> Test
+    <mat-form-field>
+      <input value="text8888">
+      <i  matPrefix class="fas fa-edit" style="color:green"></i>
+      <i class="fas fa-times" style="color:orange" matSuffix ></i>
+
+    </mat-form-field>
+  </div>
+  -->

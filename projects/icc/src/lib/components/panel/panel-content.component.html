@@ -1,0 +1,30 @@
+<ng-content select="[start]"></ng-content>
+<ng-content></ng-content>
+<ng-container #contentResizeLeftRight *ngIf="resizeable"></ng-container>
+<ng-content select="[middle]"></ng-content>
+<ng-container #contentResizeRightLeft *ngIf="resizeable"></ng-container>
+<ng-content select="[end]"></ng-content>
+
+<ng-template #tplResizeLeftRight>
+  <div class="icc-content-resize-left" IccResizeLeftRight iccResize direction="leftRight" elementKey="leftRight"
+    (iccResizeEvent)="onResizePanel($event)">
+  </div>
+</ng-template>
+
+<ng-template #tplResizeRightLeft>
+  <div class="icc-content-resize-right" IccResizeRightLeft iccResize direction="rightLeft" elementKey="rightLeft"
+    (iccResizeEvent)="onResizePanel($event)">
+  </div>
+</ng-template>
+
+<ng-template #tplResizeTopBottom>
+  <div class="icc-content-resize-top" IccResizeTopBottom iccResize direction="topBottom" elementKey="topBottom"
+    (iccResizeEvent)="onResizePanel($event)">
+  </div>
+</ng-template>
+
+<ng-template #tplResizeBottomTop>
+  <div class="icc-content-resize-bottom" IccResizeBottomTop iccResize direction="bottomTop" elementKey="bottomTop"
+    (iccResizeEvent)="onResizePanel($event)">
+  </div>
+</ng-template>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IccTableModule, IccTreeModule, IccPopoverModule } from 'icc';
+import { IccTableModule, IccTreeModule, IccPopoverModule, IccToolbarModule } from 'icc';
 import { TreeExampleComponent } from './tree-example.component';
 import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component';
 
@@ -14,7 +14,8 @@ import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component'
     CommonModule,
     IccTableModule,
     IccTreeModule,
-    IccPopoverModule
+    IccPopoverModule,
+    IccToolbarModule
   ],
   exports: [
     TreeExampleComponent,

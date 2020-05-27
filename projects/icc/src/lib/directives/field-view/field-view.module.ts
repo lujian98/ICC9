@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { IccFormFieldModule } from '../../components/form-field/form-field.module';
 
 import { IccMenuFieldDirective } from './menu-field.directive';
+import { IccToolbarFieldDirective } from './toolbar-field.directive';
 import { IccFilterFieldDirective } from './filter-field.directive';
 import { IccFieldViewComponent } from './field-view.component';
 import { IccFieldViewButtonComponent } from './button/field-view-button.component';
@@ -20,13 +17,11 @@ import { IccFieldViewTextComponent } from './text/field-view-text.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCheckboxModule
+    IccFormFieldModule,
   ],
   declarations: [
     IccMenuFieldDirective,
+    IccToolbarFieldDirective,
     IccFilterFieldDirective,
     IccFieldViewComponent,
     IccFieldViewButtonComponent,
@@ -35,6 +30,7 @@ import { IccFieldViewTextComponent } from './text/field-view-text.component';
   ],
   exports: [
     IccMenuFieldDirective,
+    IccToolbarFieldDirective,
     IccFilterFieldDirective,
 
     IccFieldViewComponent,

@@ -1,4 +1,5 @@
 
+/*
 :host ::ng-deep .mat-form-field-wrapper, ::ng-deep .mat-form-field-flex, ::ng-deep .mat-form-field-infix {
   height: 30px;
 }
@@ -10,9 +11,15 @@
 
 :host ::ng-deep .mat-form-field-underline, ::ng-deep .mat-form-field-ripple {
   height: 0 !important;
+} */
+
+*:focus {
+  outline: none;
 }
 
-.icc-form-field {
-  padding: 0 10px;
+.icc-form-input-field {
+  height: 30px;
   text-align: center;
+  width: 100%;
+  border: none;
 }

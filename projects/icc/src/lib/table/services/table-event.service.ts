@@ -208,7 +208,7 @@ export class IccTableEventService {
   }
 
   private getCellData(index: number, cdkTableRef: ElementRef) {
-    const headerRow = cdkTableRef.nativeElement.children[1]; // dnd is in 2nd row
+    const headerRow = cdkTableRef.nativeElement.children[2]; // dnd is in 3nd row
     const cell = headerRow.children[index];
     if (cell) {
       return cell.getBoundingClientRect();

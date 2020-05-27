@@ -1,0 +1,15 @@
+.icc-form-field-flex {
+  display: flex;
+  flex: 1 1 auto;
+
+  .icc-form-field-infix {
+    flex: 1 1 auto;
+  }
+}
+
+@mixin form-field-component-theme() {
+  input {
+    background-color: icc-theme(icc-background-color);
+    color: icc-theme(icc-text-color);
+  }
+}

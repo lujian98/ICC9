@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   ElementRef,
@@ -21,7 +22,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ListRange, SelectionModel } from '@angular/cdk/collections';
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, share, switchMap, takeWhile } from 'rxjs/operators';
-import { MatSort, SortDirection } from '@angular/material/sort';
 import { IccField } from '../../items';
 import { IccTableConfigs, ColumnMenuType, IccGroupHeader } from '../../models';
 import { IccSorts } from '../../services/sort/sorts';
@@ -30,10 +30,9 @@ import { IccDataSourceService } from '../../services/data-source.service';
 import { IccLoadRecordParams } from '../../services/loadRecordParams.model';
 import { IccRowGroup } from '../../services';
 import { IccRowGroups, IccGroupByColumn } from '../../services/row-group/row-groups';
-import { IccMenuItem } from '../../menu/menu-item';
 import { IccPagination } from '../../services/pagination/pagination';
 import { IccTableEventService } from '../services/table-event.service';
-
+import { IccFieldConfig } from '../../models/item-config';
 
 export interface IccSortState {
   name: string;
@@ -56,6 +55,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
   pending: boolean;
   visibleColumns: IccField[] = [];
   displayedColumns: string[] = [];
+  headerColumns: string[] = []; // for top header line
   filterColumns: string[] = [];
   groupHeaderColumns: IccGroupHeader[] = [];
   groupHeaderDisplay: string[] = [];
@@ -75,12 +75,12 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   @ViewChild(CdkTable, { read: ElementRef }) public cdkTableRef: ElementRef;
   @ViewChild(CdkTable) table: CdkTable<T>;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private tableEventService: IccTableEventService,
     private dataSourceService: IccDataSourceService<T>,
     private renderer: Renderer2,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -129,6 +129,7 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
       this.visibleColumns = this.tableEventService.visibleColumns;
       this.setColumnsHide();
       this.displayedColumns = this.visibleColumns.map(column => column.name);
+      this.headerColumns = this.visibleColumns.map(column => `header${column.name}`);
       this.filterColumns = this.visibleColumns.map(column => `filter${column.name}`);
       this.groupHeaderColumns = this.tableEventService.groupHeaderColumns;
       const totalVisibleColumns = this.visibleColumns.length;
@@ -227,9 +228,10 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
 
   private setColumnsHide(colName: string = null) {
     if (this.tableConfigs.enableColumnHide) {
-      const columnsHideShow: IccMenuItem = {
+      const columnsHideShow: IccFieldConfig = {
         title: 'Columns',
         name: 'columns',
+        icon: 'fas fa-columns',
         children: this.columns.map((column: IccField) => {
           return {
             type: 'checkbox',
@@ -250,6 +252,8 @@ export class IccTableHeaderComponent<T> implements OnInit, OnChanges, AfterViewI
           column.menu = menu;
         }
       });
+      console.log( ' this.columns=', this.columns)
+      this.cd.detectChanges();
     }
   }
 

@@ -1,20 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../../../dist/icc/theming';
+@import './app/nav/nav.component.scss';
+@import './app/table/table.component.scss';
+@import './app/school/school.component.scss';
+
+
+@include icc-configure-theme() {
+  @include icc-theme-components();
+  @include nav-component-theme();
+  @include table-component-theme();
+  @include school-side-component-theme();
+};
 
 /* // Set box-sizing globally to handle padding and border widths */
 *,
 *:after, *:before {
   box-sizing: inherit;
 }
+
 html {
   box-sizing: border-box;
+  height: 100%;
 }
 
-/* // Default body styles */
 body {
-	letter-spacing: .01em;
+  margin: 0px;
+  height: 100%;
 }
 
-.myPanelClass{
-  margin-top: 30px !important;
-}

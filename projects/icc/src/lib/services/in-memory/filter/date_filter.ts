@@ -1,6 +1,6 @@
 import { IccInMemeoryFilter } from './filter';
 import { IccDateFilter } from '../../filter/date_filter';
-import { IccDateRange } from '../../../date-picker/model/model';
+import { IccDateRange } from '../../../components/date-picker/model/model';
 
 export class IccInMemeoryDateFilter<T> extends IccInMemeoryFilter {
   private _filter: IccDateFilter;

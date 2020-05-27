@@ -1,11 +1,13 @@
 
-// @import './variables/colors';
-@import './components';
+// @import './variables/colors'; icc-light-theme
+$icc-themes: ();
+$icc-current-theme: ();
 
 @import './material/core';
 @import './material/light';
 @import './material/dark';
 
-
+@import './themes/functions';
 @import './themes/light';
 @import './themes/dark';
+@import './components';

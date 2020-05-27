@@ -14,7 +14,6 @@ import {
 import { IccItem } from '../item';
 
 import { IccSort } from '../../services';
-import { IccMenuItem } from '../../menu/menu-item';
 import { IccUtils } from '../../utils/utils';
 
 export abstract class IccField extends IccItem implements IccFieldConfig {
@@ -26,14 +25,17 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   defaultValue?: any;
   placeholder?: string;
   readonly?: boolean;
+  disabled?: boolean;
   icon?: string;
   children?: IccField[];
+  fieldConfig?: IccFieldConfig; // for toolbar menu conffig
   action?: string;
   checked?: boolean; // TODO for checkbox
   // children?: IccFieldConfig[] | IccField[];
 
   menuField?: IccField;
   filterField?: IccFilterField | IccField;
+  toolbarField?: IccField;
 
   sortField?: IccSortField;
   groupField: IccGroupField;
@@ -50,8 +52,8 @@ export abstract class IccField extends IccItem implements IccFieldConfig {
   priority?: number;
   sticky?: boolean;
   stickyEnd?: boolean;
-  menu?: boolean | IccMenuItem;
-  cellMenu?: boolean | IccMenuItem;
+  menu?: boolean | IccFieldConfig;
+  cellMenu?: boolean | IccFieldConfig;
   dateFormat?: string;
   groupHeader?: IccGroupHeader;
 

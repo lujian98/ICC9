@@ -1,0 +1,18 @@
+.icc-date-picker {
+  display: flex;
+  justify-content: space-around;
+  min-width: 500px;
+  height: 400px;
+
+  .icc-date-calendar-presets {
+    flex-basis: 20%;
+    min-width: 200px;
+    padding: 1em;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+
+
