@@ -1,20 +1,20 @@
 <div [iccPopover]="menu" popoverType='click'>
-  <span *ngIf="menuItems.title">{{menuItems.title}}</span>
-  <i *ngIf="menuItems.icon" [class]="menuItems.icon" style="color:green"></i>
+  <span *ngIf="menuItemConfig.title">{{menuItemConfig.title}}</span>
+  <i *ngIf="menuItemConfig.icon" [class]="menuItemConfig.icon" style="color:green"></i>
 </div>
 
 <ng-template #menu>
   <icc-menu-item
-    [menuItems]="menuItems.children"
-    (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+    [menuItemConfigs]="menuItemConfig.children"
+    (iccItemChangedEvent)="onMenuItemChanged($event)">
   </icc-menu-item>
 </ng-template>
 
 <!--
-
+    [menuItems]="menuItems.children"
   <icc-menu-item #menu
   [menuItems]="menuItems.children"
-  (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+  (iccItemChangedEvent)="onMenuItemChanged($event)">
 </icc-menu-item>
 
   <div [iccPopover]="menusComponent" [iccPopoverContext]="menusdata">
@@ -30,7 +30,7 @@
     </div>
   <icc-menu-item
     [menuItems]="menuItems.children"
-    (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+    (iccItemChangedEvent)="onMenuItemChanged($event)">
   </icc-menu-item>
 </ng-template>
 
@@ -52,7 +52,7 @@
 </div>
 <icc-menu-item #menu
   [menuItems]="menuItems.children"
-  (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+  (iccItemChangedEvent)="onMenuItemChanged($event)">
 </icc-menu-item>
 
 

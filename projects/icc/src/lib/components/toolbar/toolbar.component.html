@@ -5,7 +5,7 @@
   </span>
   <icc-menu *ngIf="item.type=='menu'" class="icc-toolbar-item"
     [menuItemConfig]="item.fieldConfig"
-    (iccMenuItemChangedEvent)="onToolbarFieldChangedEvent($event)">
+    (iccItemChangedEvent)="onToolbarFieldChangedEvent($event)">
   </icc-menu>
 </span>
 

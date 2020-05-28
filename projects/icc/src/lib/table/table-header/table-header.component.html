@@ -63,7 +63,7 @@
           </div>
           <icc-menu *ngIf="column.menu"
             [menuItemConfig]="column.menu"
-            (iccMenuItemChangedEvent)="onMenuItemChanged($event, column)">
+            (iccItemChangedEvent)="onMenuItemChanged($event, column)">
           </icc-menu>
         </div>
         <div *ngIf="column.name=='rowSelection'">

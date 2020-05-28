@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemNode, FlatTreeNode, IccFieldConfig } from 'icc';
+import { ItemNode, FlatTreeNode, IccFieldConfig, IccField, IccOverlayComponentRef,
+  IccItemFieldService, IccFieldViewService, IccMenuItemComponent } from 'icc';
 
 import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component';
 
@@ -154,7 +155,19 @@ export class TreeExampleComponent implements OnInit {
     fieldConfig: this.testMenuItems
   }];
 
+  menuItems: IccField;
+  menuItemComponent = IccMenuItemComponent;
+
+  cMenuItems: any;
+
+  constructor(
+  ) { }
+
   ngOnInit() {
+    this.cMenuItems = {
+      menuItemConfigs: this.testMenuItems.children
+    };
+
 
     // console.log('data =', this.data)
     for (let i = 0; i < MAX_LEVELS; i++) {
@@ -187,7 +200,12 @@ export class TreeExampleComponent implements OnInit {
   }
 
   close() {
-    console.log(' template close')
+    console.log(' template close this.overlayComponentRef')
   }
+
+  onMenuItemChanged(event) {
+    console.log( ' ppppppppppppp menu clicked=', event)
+  }
+
 }
 

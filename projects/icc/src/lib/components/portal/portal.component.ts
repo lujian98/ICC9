@@ -41,6 +41,7 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         Object.assign(componentRef.instance, this.context);
         componentRef.changeDetectorRef.markForCheck();
         componentRef.changeDetectorRef.detectChanges();
+        this.overlayComponentRef.componentRef = componentRef.instance;
       }
     } else if (this.content instanceof TemplateRef) {
       if (this.overlayComponentRef) {

@@ -80,3 +80,29 @@ export class IccPopoverClickStrategy extends IccBasePopoverStrategy {
   );
 }
 
+export class IccPopoverContextmenuStrategy extends IccBasePopoverStrategy {
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
+    map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    share(),
+    takeWhile(() => this.alive)
+  );
+
+  show$ = this.click$.pipe(
+    filter(([shouldShow]) => shouldShow),
+    map(([, event]) => {
+      event.preventDefault();
+      return event;
+    }),
+    takeWhile(() => this.alive)
+  );
+
+  hide$ = this.click$.pipe(
+    filter(
+      ([shouldShow, event]) =>
+        !shouldShow && !(this.containerRef && this.containerRef.location.nativeElement.contains(event.target))
+    ),
+    map(([, event]) => event),
+    takeWhile(() => this.alive)
+  );
+}
+

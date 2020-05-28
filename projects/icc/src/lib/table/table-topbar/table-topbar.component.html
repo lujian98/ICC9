@@ -3,7 +3,7 @@
   <div class="icc-flex"></div>
   <div *ngIf="tableConfigs.enableTableSideMenu">
     <icc-menu *ngIf="menuItems" [menuItemConfig]="menuItems"
-      (iccMenuItemChangedEvent)="onMenuItemChanged($event)">
+      (iccItemChangedEvent)="onMenuItemChanged($event)">
     </icc-menu>
   </div>
 </div>

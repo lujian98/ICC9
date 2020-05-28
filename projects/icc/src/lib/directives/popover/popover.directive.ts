@@ -1,11 +1,14 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Directive, EventEmitter, ElementRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccPortalContent } from '../../components/portal/model';
 import { IccPortalComponent } from '../../components/portal/portal.component';
 import { IccOverlayConfig } from '../../services/overlay/overlay.model';
 import { IccOverlayService } from '../../services/overlay/overlay.service';
-import { IccBasePopoverStrategy, IccPopoverClickStrategy, IccPopoverHoverStrategy } from './popover.strategy';
+import {
+  IccBasePopoverStrategy, IccPopoverClickStrategy, IccPopoverHoverStrategy,
+  IccPopoverContextmenuStrategy
+} from './popover.strategy';
 
 
 @Directive({
@@ -17,11 +20,13 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input() popoverPosition: string;
   @Input() width: string | number;
   @Input() height: string | number;
-  @Input() popoverType: 'over' | 'click' | 'disabled' = 'over';
+  @Input() popoverType: 'over' | 'click' | 'contextmenu' | 'disabled' = 'over';
 
   private popoverStrategy: IccBasePopoverStrategy;
   private overlayRef: OverlayRef;
   private isOpened = false;
+
+  @Output() iccItemChangedEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private overlayService: IccOverlayService<T>,
@@ -32,6 +37,8 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     if (this.popoverType !== 'disabled') { // afterClosed$
       if (this.popoverType === 'click') {
         this.popoverStrategy = new IccPopoverClickStrategy(document, this.elementRef.nativeElement);
+      } else if (this.popoverType === 'contextmenu') {
+        this.popoverStrategy = new IccPopoverContextmenuStrategy(document, this.elementRef.nativeElement);
       } else {
         this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
       }
@@ -60,7 +67,14 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       this.popoverStrategy.containerRef = this.overlayService.containerRef;
       this.overlayService.overlayComponentRef.afterClosed$.
         pipe(takeWhile(() => this.isOpened))
-        .subscribe(() => this.closePopover());
+        .subscribe(() => {
+          this.closePopover();
+        });
+
+      setTimeout(() => { // TODO use portal componet ready events
+        this.setPortalComponentEvent();
+      }, 10);
+
     }
   }
 
@@ -72,6 +86,18 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     this.popoverStrategy.isOpened = this.isOpened;
     this.popoverStrategy.overlayRef = null;
     this.popoverStrategy.containerRef = null;
+  }
+
+  private setPortalComponentEvent() {
+    if (this.overlayService.overlayComponentRef.componentRef) {
+      const portalComponent = this.overlayService.overlayComponentRef.componentRef;
+      if (portalComponent.iccItemChangedEvent) {
+        portalComponent.iccItemChangedEvent
+          .subscribe((changes: any) => {
+            this.iccItemChangedEvent.emit(changes);
+          });
+      }
+    }
   }
 
   ngOnDestroy() {

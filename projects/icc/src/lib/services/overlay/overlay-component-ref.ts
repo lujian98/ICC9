@@ -6,6 +6,7 @@ import { IccPortalContent } from '../../components/portal/model';
 export class IccOverlayComponentRef<T> {
   private afterClosed = new Subject<IccOverlayComponentCloseEvent<T>>();
   afterClosed$ = this.afterClosed.asObservable();
+  componentRef: any;
 
   constructor(
     public overlay: OverlayRef,
@@ -21,6 +22,7 @@ export class IccOverlayComponentRef<T> {
   }
 
   private _close(event: IccOverlayComponentCloseEvent) {
+    console.log( ' eeeeeeeeeIccOverlayComponentRef  , closed ')
     this.overlay.dispose();
     this.afterClosed.next(event);
     this.afterClosed.complete();

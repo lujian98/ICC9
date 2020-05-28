@@ -1,7 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IccItemFieldService } from '../../items/item_field.service';
-import { IccFieldViewService } from '../../directives/field-view/field-view.service';
-import { IccField } from '../../items';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IccFieldConfig } from '../../models/item-config';
 
 
@@ -10,20 +7,18 @@ import { IccFieldConfig } from '../../models/item-config';
   templateUrl: 'menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class IccMenuComponent implements OnChanges {
-  constructor(
-    private itemService: IccItemFieldService,
-    private fieldViewService: IccFieldViewService,
-  ) { }
+export class IccMenuComponent {
   @Input() menuItemConfig: IccFieldConfig;
-  @Output() iccMenuItemChangedEvent: EventEmitter<any> = new EventEmitter();
+  @Output() iccItemChangedEvent: EventEmitter<any> = new EventEmitter();
 
-  menuItems: IccField;
+  constructor(
+  ) { }
 
   testMenuItems: IccFieldConfig =
     {
       icon: 'fas fa-ellipsis-v',
-      // name: 'close',
+      // name: 'close',    console.log(' 2222222 this.menuItemConfig =', this.menuItemConfigs)
+
       children: [
         {
           title: 'Speakers',
@@ -95,41 +90,9 @@ export class IccMenuComponent implements OnChanges {
       ]
     };
 
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.menuItemConfig) {
-      // this.menuItemConfig = this.testMenuItems;
-      this.menuItems = this.getMenuItems(this.menuItemConfig);
-    }
-  }
-
-  private getMenuItems(configs: IccFieldConfig): IccField {
-    if (configs) {
-      const menuItems: IccField = this.getMenuItem(configs);
-      if (configs.children && configs.children.length > 0) {
-        const items = [];
-        configs.children.forEach((config: IccFieldConfig) => {
-          items.push(this.getMenuItems(config));
-        });
-        menuItems.children = items;
-      }
-      return menuItems;
-    }
-  }
-
-  private getMenuItem(config: IccFieldConfig): IccField {
-    if (!config.type) {
-      config.type = 'button';
-    }
-    const item = this.itemService.getItem(config);
-    item.menuField = this.fieldViewService.getFieldView(config);
-    return item;
-  }
-
   onMenuItemChanged(menuItem: any) {
     if (!menuItem.disabled) {
-      // console.log( ' yyyyyyyyyyyyy click in the menu', menuItem)
-      this.iccMenuItemChangedEvent.emit(menuItem);
+      this.iccItemChangedEvent.emit(menuItem);
     }
   }
 }

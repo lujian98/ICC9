@@ -1,10 +1,10 @@
-
 <div class="test tooltip-demo" [iccPopover]="texttooltip">Text Tooltip</div>
 <div class="test1 tooltip-demo" [iccPopover]="tpl">Template Tooltip</div>
 <div class="tooltip-demo" [iccPopover]="tooltip" [iccPopoverContext]="tooltipdata"> Component Tooltip</div>
 
 <ng-template #tpl let-close="close">
-  And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging. Right?
+  And here's some amazing content. It's very engaging. Right? And here's some amazing content. It's very engaging.
+  Right?
   <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
     <a class="button is-danger is-small" (click)="close({id: 2})">Close</a>
   </div>
@@ -13,9 +13,21 @@
 
 <icc-toolbar [toolbarItemConfig]="toolbarItemConfig"></icc-toolbar>
 
+<div><br></div>
+
+<div><br></div>
+
+<div [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="cMenuItems"
+  (iccItemChangedEvent)="onMenuItemChanged($event)">
+  menuItemComponent
+</div>
+
+<div><br></div>
+
+
+
 <div class="app-tree-container">
-  <icc-table
-    [tableConfigs]="{
+  <icc-table [tableConfigs]="{
       'tableType': 'flatTree',
       'enableMultiColumnSort': true,
       'enableColumnResize': true,
@@ -23,9 +35,7 @@
       'enableColumnDnD': true,
       'enableColumnHide': true,
       'isNestedData': true
-    }"
-    [data]="data"
-    [columnConfigs]="columnConfigs">
+    }" [data]="data" [columnConfigs]="columnConfigs">
   </icc-table>
 </div>
 
