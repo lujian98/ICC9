@@ -204,7 +204,7 @@ export class TreeExampleComponent implements OnInit {
   }
 
   onMenuItemChanged(event) {
-    console.log( ' ppppppppppppp menu clicked=', event)
+    console.log( ' ppppppppppppp menu clicked=', event.value.name)
   }
 
 }

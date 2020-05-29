@@ -6,6 +6,7 @@ import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
 import { IccTableEventService } from '../../table/services/table-event.service';
+import { IccMenuItemComponent } from '../../components/menu/menu-item/menu-item.component';
 
 @Component({
   selector: 'icc-flat-tree',
@@ -16,6 +17,20 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeControl = new FlatTreeControl<FlatTreeNode>(node => node.level, node => node.expandable);
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
+
+  menuItemComponent = IccMenuItemComponent;
+  menuItems = {
+    menuItemConfigs: [{
+      title: 'Add',
+      name: 'add',
+    }, {
+      title: 'Edit',
+      name: 'edit',
+    }, {
+      title: 'Delete',
+      name: 'delete',
+    }]
+  };
 
   getLevel = (node: FlatTreeNode) => node.level;
 
@@ -279,6 +294,10 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       results.push(this.data[i]);
     }
     return results;
+  }
+
+  onMenuItemChanged(event) {
+    console.log(' menu item clicked=', event.value.name);
   }
 }
 

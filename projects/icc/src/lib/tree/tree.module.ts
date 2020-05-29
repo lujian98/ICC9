@@ -4,6 +4,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { IccVirtualScrollModule } from '../directives/virtual-scroll/virtual-scroll.module';
+import { IccPopoverModule } from '../directives/popover/popover.module';
+import { IccMenuModule } from '../components/menu/menu.module';
 
 import { IccBaseTreeComponent } from './base-tree.component';
 import { IccNestedTreeComponent } from './nested-tree/nested-tree.component';
@@ -22,7 +24,9 @@ import { IccTableEventService } from '../table/services/table-event.service';
     DragDropModule,
     ScrollingModule,
     CdkTreeModule,
-    IccVirtualScrollModule
+    IccVirtualScrollModule,
+    IccPopoverModule,
+    IccMenuModule
   ],
   exports: [
     IccBaseTreeComponent,
