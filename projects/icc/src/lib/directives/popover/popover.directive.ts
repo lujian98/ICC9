@@ -65,16 +65,18 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       this.popoverStrategy.isOpened = this.isOpened;
       this.popoverStrategy.overlayRef = this.overlayRef;
       this.popoverStrategy.containerRef = this.overlayService.containerRef;
-      this.overlayService.overlayComponentRef.afterClosed$.
-        pipe(takeWhile(() => this.isOpened))
+
+      this.overlayService.overlayComponentRef.afterClosed$
+        .pipe(takeWhile(() => this.isOpened))
         .subscribe(() => {
           this.closePopover();
         });
 
-      setTimeout(() => { // TODO use portal componet ready events
-        this.setPortalComponentEvent();
-      }, 10);
-
+      this.overlayService.overlayComponentRef.isComponentAttached$
+        .pipe(takeWhile(() => this.isOpened))
+        .subscribe(() => {
+          this.setPortalComponentEvent();
+        });
     }
   }
 

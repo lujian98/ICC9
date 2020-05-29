@@ -41,8 +41,9 @@ export class IccPortalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
         Object.assign(componentRef.instance, this.context);
         componentRef.changeDetectorRef.markForCheck();
         componentRef.changeDetectorRef.detectChanges();
-        this.overlayComponentRef.componentRef = componentRef.instance;
       }
+      this.overlayComponentRef.componentRef = componentRef.instance;
+      this.overlayComponentRef.isComponentAttached$.next(true);
     } else if (this.content instanceof TemplateRef) {
       if (this.overlayComponentRef) {
         this.context = { // Using { $implicit: this.context } will not work bind close

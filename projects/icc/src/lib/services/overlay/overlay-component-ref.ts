@@ -1,4 +1,5 @@
 import { OverlayRef } from '@angular/cdk/overlay';
+import { ComponentRef, Injectable, Injector, Type } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IccOverlayComponentCloseEvent } from './overlay.model';
 import { IccPortalContent } from '../../components/portal/model';
@@ -8,11 +9,12 @@ export class IccOverlayComponentRef<T> {
   afterClosed$ = this.afterClosed.asObservable();
   componentRef: any;
 
+  isComponentAttached$: Subject<{}> = new Subject();
+
   constructor(
     public overlay: OverlayRef,
     public componentContent: IccPortalContent<T>,
     public componentContext: {}
-
   ) {
     this.overlay.backdropClick().subscribe(() => this._close({ type: 'backdropClick', context: null }));
   }
@@ -22,7 +24,7 @@ export class IccOverlayComponentRef<T> {
   }
 
   private _close(event: IccOverlayComponentCloseEvent) {
-    console.log( ' eeeeeeeeeIccOverlayComponentRef  , closed ')
+    this.componentRef = null;
     this.overlay.dispose();
     this.afterClosed.next(event);
     this.afterClosed.complete();

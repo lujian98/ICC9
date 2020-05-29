@@ -81,13 +81,19 @@ export class IccPopoverClickStrategy extends IccBasePopoverStrategy {
 }
 
 export class IccPopoverContextmenuStrategy extends IccBasePopoverStrategy {
-  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
+  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
     map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
     share(),
     takeWhile(() => this.alive)
   );
 
-  show$ = this.click$.pipe(
+  protected rightClick$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
+    map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    share(),
+    takeWhile(() => this.alive)
+  );
+
+  show$ = this.rightClick$.pipe(
     filter(([shouldShow]) => shouldShow),
     map(([, event]) => {
       event.preventDefault();
