@@ -25,7 +25,6 @@ export class IccOverlayComponentRef<T> {
 
   private _close(event: IccOverlayComponentCloseEvent) {
     this.componentRef = null;
-    this.overlay.dispose();
     this.afterClosed.next(event);
     this.afterClosed.complete();
   }

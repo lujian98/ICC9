@@ -20,7 +20,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input() popoverPosition: string;
   @Input() width: string | number;
   @Input() height: string | number;
-  @Input() popoverType: 'over' | 'click' | 'contextmenu' | 'disabled' = 'over';
+  @Input() popoverType: 'hover' | 'click' | 'contextmenu' | 'disabled' = 'hover';
   @Input() popoverLevel = 0;
 
   private popoverStrategy: IccBasePopoverStrategy;
@@ -50,7 +50,6 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
 
   private openPopover(mouseEvent: MouseEvent) {
     if (!this.isOpened) {
-      console.log( ' kkkkkkkkkkkkk popoverLevel=', this.popoverLevel, ' event=', mouseEvent)
       let origin = this.elementRef.nativeElement;
       if (this.popoverType === 'contextmenu') {
         const fakeElement = {
@@ -99,14 +98,13 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
     }
   }
 
-  private closePopover() {
-    this.isOpened = false;
-    if (this.overlayRef) {
-      this.overlayRef.detach();
+  private closePopover() { // TODO check overlay closeable
+    if (this.overlayService.isOverlayClosed(this.overlayRef, this.popoverType, this.popoverLevel)) {
+      this.isOpened = false;
+      this.popoverStrategy.isOpened = this.isOpened;
+      this.popoverStrategy.overlayRef = null;
+      this.popoverStrategy.containerRef = null;
     }
-    this.popoverStrategy.isOpened = this.isOpened;
-    this.popoverStrategy.overlayRef = null;
-    this.popoverStrategy.containerRef = null;
   }
 
   private setPortalComponentEvent() {

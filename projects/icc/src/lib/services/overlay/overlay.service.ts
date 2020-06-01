@@ -25,6 +25,9 @@ export class IccOverlayService<T> {
     componentContent: IccPortalContent<T> = '',
     componentContext: {} = {}
   ): OverlayRef {
+    if (config.popoverLevel === 0) {
+      this.closeAllOverlays();
+    }
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     this.overlayRef = this.overlay.create(overlayConfig);
@@ -44,7 +47,10 @@ export class IccOverlayService<T> {
     this.overlayRef
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))
-      .subscribe(() => this.overlayRef.dispose());
+      .subscribe(() => {
+        // this.overlayRef.dispose();
+        this.closeAllOverlays();
+      });
     console.log(' this.overlays =', this.overlays)
     return this.overlayRef;
   }
@@ -93,7 +99,7 @@ export class IccOverlayService<T> {
 
   contextPositionStrategy(): ConnectionPositionPair[] {
     const postions: ConnectionPositionPair[] = [
-      { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetX: null, offsetY: null },
+      { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetX: 1, offsetY: null },
       { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetX: null, offsetY: null },
       { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top', offsetX: null, offsetY: null },
       { originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top', offsetX: null, offsetY: null },
@@ -102,7 +108,6 @@ export class IccOverlayService<T> {
     ];
     return postions;
   }
-
 
   getPositions(position: string): ConnectionPositionPair[] {
     const keys = ['bottomLeft', 'bottomRight', 'bottom'];
@@ -123,10 +128,36 @@ export class IccOverlayService<T> {
     return postions;
   }
 
-  destroy() {
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
+  public closeAllOverlays() {
+    if (this.overlays && this.overlays.length > 0) {
+      this.overlays.forEach((overlay, index) => {
+        this.destroyOverlay(overlay, false);
+      });
     }
+    this.overlays = [];
+  }
+
+  public isOverlayClosed(overlayRef: OverlayRef, popoverType: string, popoverLevel: number): boolean {
+    const index = this.overlays.indexOf(overlayRef);
+    if (popoverType !== 'hover' || (popoverType === 'hover' && index === this.overlays.length - 1)) {
+      this.destroyOverlay(overlayRef);
+      return true;
+    }
+  }
+
+  destroyOverlay(overlayRef: OverlayRef, removeIndex = true) {
+    if (overlayRef) {
+      if (removeIndex) {
+        const index = this.overlays.indexOf(overlayRef);
+        this.overlays.splice(index, 1);
+      }
+      overlayRef.detach();
+      overlayRef.dispose();
+    }
+  }
+
+  destroy() {
+    this.destroyOverlay(this.overlayRef);
   }
 }
 
