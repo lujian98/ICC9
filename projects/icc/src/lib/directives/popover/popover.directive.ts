@@ -21,6 +21,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
   @Input() width: string | number;
   @Input() height: string | number;
   @Input() popoverType: 'over' | 'click' | 'contextmenu' | 'disabled' = 'over';
+  @Input() popoverLevel = 0;
 
   private popoverStrategy: IccBasePopoverStrategy;
   private overlayRef: OverlayRef;
@@ -42,21 +43,39 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
       } else {
         this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
       }
-      this.popoverStrategy.show$.subscribe(() => this.openPopover());
+      this.popoverStrategy.show$.subscribe((event: MouseEvent) => this.openPopover(event));
       this.popoverStrategy.hide$.subscribe(() => this.closePopover());
     }
   }
 
-  private openPopover() {
+  private openPopover(mouseEvent: MouseEvent) {
     if (!this.isOpened) {
+      console.log( ' kkkkkkkkkkkkk popoverLevel=', this.popoverLevel, ' event=', mouseEvent)
+      let origin = this.elementRef.nativeElement;
+      if (this.popoverType === 'contextmenu') {
+        const fakeElement = {
+          getBoundingClientRect: (): ClientRect => ({
+            bottom: mouseEvent.clientY,
+            height: 0,
+            left: mouseEvent.clientX,
+            right: mouseEvent.clientX,
+            top: mouseEvent.clientY,
+            width: 0,
+          })
+        };
+        origin = new ElementRef(fakeElement);
+      }
+
       this.isOpened = true;
       const overlayConfig: IccOverlayConfig = {
         position: this.popoverPosition,
         width: this.width,
-        height: this.height
+        height: this.height,
+        popoverType: this.popoverType,
+        popoverLevel: this.popoverLevel,
       };
       this.overlayRef = this.overlayService.open(
-        this.elementRef.nativeElement,
+        origin,
         IccPortalComponent,
         overlayConfig,
         this.content,

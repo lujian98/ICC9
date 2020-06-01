@@ -13,6 +13,7 @@ import { IccFieldConfig } from '../../../models/item-config';
 export class IccMenuItemComponent implements OnInit {
   @Input() menuItemConfigs: IccFieldConfig[];
   @Input() menuItems: IccField[];
+  @Input() level = 0;
 
   @Output() iccItemChangedEvent: EventEmitter<any> = new EventEmitter();
 

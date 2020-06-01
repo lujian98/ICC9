@@ -1,6 +1,6 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy, GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
-import { ComponentRef, Injectable, Injector, Type } from '@angular/core';
+import { ComponentRef, ElementRef, Injectable, Injector, Type } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { IccOverlayComponentRef } from './overlay-component-ref';
 import { IccOverlayConfig, DEFAULT_CONFIG } from './overlay.model';
@@ -13,6 +13,9 @@ export class IccOverlayService<T> {
   overlayComponentRef: IccOverlayComponentRef<T>;
   protected overlayRef: OverlayRef;
   containerRef: ComponentRef<{}>;
+
+  private overlays: OverlayRef[] = [];
+
   constructor(protected overlay: Overlay, protected injector: Injector) { }
 
   open<G>(
@@ -25,6 +28,7 @@ export class IccOverlayService<T> {
     config = { ...DEFAULT_CONFIG, ...config };
     const overlayConfig = this.getOverlayConfig(config, origin);
     this.overlayRef = this.overlay.create(overlayConfig);
+    this.overlays.push(this.overlayRef);
     if (componentContent) {
       this.overlayComponentRef = new IccOverlayComponentRef<T>(this.overlayRef, componentContent, componentContext);
     }
@@ -41,6 +45,7 @@ export class IccOverlayService<T> {
       .backdropClick()
       .pipe(takeWhile(() => config.shouldCloseOnBackdropClick))
       .subscribe(() => this.overlayRef.dispose());
+    console.log(' this.overlays =', this.overlays)
     return this.overlayRef;
   }
 
@@ -70,7 +75,10 @@ export class IccOverlayService<T> {
   }
 
   getPositionStrategy(config: IccOverlayConfig, origin: HTMLElement): PositionStrategy {
-    const positions = this.getPositions(config.position);
+    let positions = this.getPositions(config.position);
+    if (config.popoverType === 'contextmenu') {
+      positions = this.contextPositionStrategy();
+    }
     // TODO define the position from the config.position and offset.
     return this.overlay
       .position()
@@ -80,7 +88,21 @@ export class IccOverlayService<T> {
       .withPush(false);
     // .withViewportMargin(8)
     // .withDefaultOffsetY(10)
+    // }
   }
+
+  contextPositionStrategy(): ConnectionPositionPair[] {
+    const postions: ConnectionPositionPair[] = [
+      { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetX: null, offsetY: null },
+      { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetX: null, offsetY: null },
+      { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top', offsetX: null, offsetY: null },
+      { originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top', offsetX: null, offsetY: null },
+      { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: null, offsetY: null },
+      { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: null, offsetY: null },
+    ];
+    return postions;
+  }
+
 
   getPositions(position: string): ConnectionPositionPair[] {
     const keys = ['bottomLeft', 'bottomRight', 'bottom'];
@@ -93,7 +115,6 @@ export class IccOverlayService<T> {
       { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetX: null, offsetY: null }, // topLeft
       { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetX: null, offsetY: null }, // Not sure this Bottom
       { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom', offsetX: null, offsetY: null },  // rightTop
-
     ];
     const index = keys.indexOf(position);
     if (index !== -1) {

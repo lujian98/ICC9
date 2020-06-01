@@ -1,14 +1,14 @@
 <div class="icc-menu-panel">
   <span *ngFor="let item of menuItems">
     <span *ngIf="item.children && item.children.length > 0">
-      <button class="icc-menu-item icc-button" [iccPopover]="menu" popoverPosition="bottomRight">
+      <button class="icc-menu-item icc-button" [iccPopover]="menu" [popoverLevel]="level+1" popoverPosition="bottomRight">
         <i *ngIf="item.icon" [class]="item.icon"></i>
         <span class="icc-menu-item-title"> {{item.title}}</span>
         <span class="icc-flex"></span>
         <i class="fas fa-caret-right"></i>
       </button>
       <ng-template #menu>
-        <icc-menu-item [menuItems]="item.children" (iccItemChangedEvent)="onMenuItemChanged($event)">
+        <icc-menu-item [menuItems]="item.children" [level]="level+1" (iccItemChangedEvent)="onMenuItemChanged($event)">
         </icc-menu-item>
       </ng-template>
     </span>

@@ -6,6 +6,8 @@ export interface IccOverlayConfig {
   backdropClass?: string;
   shouldCloseOnBackdropClick?: boolean;
   position?: string;
+  popoverType?: string;
+  popoverLevel?: number;
 }
 
 export const DEFAULT_CONFIG: IccOverlayConfig = {
