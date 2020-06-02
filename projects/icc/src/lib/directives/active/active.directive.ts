@@ -5,8 +5,8 @@ import { Highlightable } from '@angular/cdk/a11y';
 @Directive({
   selector: '[iccActive]'
 })
-export class IccActiveDirective implements Highlightable {
-  @Input('iccActive') label?: string;
+export class IccActiveDirective <T> implements Highlightable {
+  @Input('iccActive') item?: T;
   disabled: boolean;
   @Output() selected = new EventEmitter<void>();
   @HostBinding('tabindex') tabIndex = 0;
@@ -20,9 +20,9 @@ export class IccActiveDirective implements Highlightable {
     this.selected.emit();
   }
 
-  getLabel(): string {
-    return this.label || '';
-  }
+  // getLabel(): string {
+  //  return this.label || '';
+  // }
 
   setActiveStyles() {
     console.log('icc active');

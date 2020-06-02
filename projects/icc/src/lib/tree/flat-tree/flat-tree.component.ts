@@ -20,10 +20,8 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
 
-  keyManager: ActiveDescendantKeyManager<IccActiveDirective>;
-
-  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective>;
-
+  keyManager: ActiveDescendantKeyManager<IccActiveDirective<FlatTreeNode>>;
+  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective<FlatTreeNode>>;
 
   menuItemComponent = IccMenuItemComponent;
   menuItems = {
@@ -58,24 +56,14 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       this.data = this.treeFlattener.flattenNodes(this.data);
     }
     this.setTreeColumns();
-
-    // setTimeout(() => {
-    console.log(' ttttttttttttttt this.listItems=', this.listItems)
-    // }, 200);
-
-
-
+    console.log(' ttttttttttttttt this.listItems=', this.listItems) // TODO track listItem change
     this.keyManager = new ActiveDescendantKeyManager(this.listItems).withWrap().withTypeAhead(30);
-    // this.listItems.first.tabIndex = 0;
-    // todo: subscribe ot listItems changes
     this.listItems.forEach((item, index) => {
-      // TODO: prevent memory leak by unsubscribing
       item.selected.subscribe(() => {
         this.keyManager.setActiveItem(index);
       });
     });
-
-    this.keyManager.setActiveItem(0);
+    // this.keyManager.setActiveItem(0);
   }
 
   protected setTreeData() {
@@ -90,9 +78,6 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       }
     });
     this.dataSource.data = [...treeData];
-
-    console.log(' ttttttttttttttt this.listItems=', this.listItems)
-    // this.keyManager.setActiveItem(2);
   }
 
   nodeExpand(node: FlatTreeNode) {
@@ -330,17 +315,30 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
 
   @HostListener('keydown', ['$event'])
   manage(event: KeyboardEvent) {
+    let idx = null;
     if (this.keyManager.activeItem) {
-      const name = this.keyManager.activeItem.label;
-      let idx = this.dataSource.data.findIndex(item => item.name === name);
-      if (idx + 1 === this.dataSource.data.length) {
-        idx = -1;
-      }
-      const node = this.dataSource.data[idx + 1];
-      const nextItem = this.listItems.filter(item => item.label === node.name);
-      this.keyManager.setActiveItem(nextItem[0]);
+      const activeItem = this.keyManager.activeItem.item;
+      idx = this.dataSource.data.indexOf(activeItem);
     } else {
-      this.keyManager.setActiveItem(0);
+      idx = -1;
+    }
+    switch (event.key) {
+      case 'ArrowLeft': idx = 0; break;
+      case 'ArrowRight': idx = this.dataSource.data.length - 1; break;
+      case 'ArrowUp': idx -= 1; break;
+      case 'ArrowDown': idx += 1; break;
+    }
+    if (idx !== null) {
+      if (idx === this.dataSource.data.length) {
+        idx = 0;
+      } else if (idx < 0) {
+        idx = this.dataSource.data.length - 1;
+      }
+      const data = this.dataSource.data[idx];
+      const node = this.listItems.filter(item => item.item.name === data.name);
+      if (node.length > 0) {
+        this.keyManager.setActiveItem(node[0]);
+      }
     }
   }
 }

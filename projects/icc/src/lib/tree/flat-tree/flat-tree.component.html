@@ -12,7 +12,7 @@
     [cdkDropListSortingDisabled]="true"
     (cdkDropListDropped)="drop($event)">
     <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node; when: hasChild"
-      [iccActive]="node.name"
+      [iccActive]="node"
       [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="menuItems"
       (iccItemChangedEvent)="onMenuItemChanged($event)"
       cdkDrag
@@ -45,7 +45,7 @@
       </div>
     </cdk-tree-node>
     <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node"
-      [iccActive]="node.name"
+      [iccActive]="node"
       [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="menuItems"
       (iccItemChangedEvent)="onMenuItemChanged($event)"
       cdkDrag
