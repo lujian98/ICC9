@@ -28,8 +28,8 @@
         </span>
           <input type="checkbox"
             [checked]="descendantsAllSelected(node)"
-            [indeterminate]="descendantsPartiallySelected(node)"
-            (change)="selectionToggle(node)">
+            [indeterminate]="descendantsPartiallySelected(node)">
+            <!--             (change)="selectionToggle(node)" -->
             {{ node.name }} - flat tree B1
         </span>
       </div>
@@ -56,8 +56,8 @@
         [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
         <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
           <input type="checkbox"
-          [checked]="selection.isSelected(node)"
-          (change)="leafNodeSelectionToggle(node)">
+          [checked]="selection.isSelected(node)">
+          <!--           (change)="leafNodeSelectionToggle(node)" -->
           {{ node.name }} - A1
         </span>
       </div>

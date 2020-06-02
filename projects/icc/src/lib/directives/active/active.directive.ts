@@ -18,6 +18,8 @@ export class IccActiveDirective <T> implements Highlightable {
   @HostListener('keydown.space', ['$event'])
   @HostListener('click', ['$event'])
   manage(event: KeyboardEvent) {
+    // console.log(' event mmmmmmmmmmmmmmmmmmmmmmmxxxxxxxxxxxxxxxx ')
+    // event.stopPropagation();
     this.selected.emit(this.item);
   }
 

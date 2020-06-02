@@ -1,8 +1,9 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, HostListener, ViewChildren, QueryList } from '@angular/core';
+import { AfterViewInit, Component, Inject, HostListener, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { ListKeyManager, ListKeyManagerOption, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { Subscription } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
@@ -16,12 +17,12 @@ import { IccActiveDirective } from '../../directives/active/active.directive';
   templateUrl: './flat-tree.component.html',
   styleUrls: ['./flat-tree.component.scss', '../tree.component.scss'],
 })
-export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> implements AfterViewInit {
+export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> implements AfterViewInit, OnDestroy {
   treeControl = new FlatTreeControl<FlatTreeNode>(node => node.level, node => node.expandable);
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
 
-  private selectAlive = false;
+  private subscriptions: Subscription[] = [];
   keyManager: ActiveDescendantKeyManager<IccActiveDirective<FlatTreeNode>>;
   @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective<FlatTreeNode>>;
 
@@ -64,21 +65,19 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   }
 
   private setSelectkeyManager() {
-    this.selectAlive = false;
+    this.removeSubscriptions();
+    this.subscriptions = [];
     this.listItems.forEach((item, index) => {
-      this.selectAlive = true;
-      item.selected.pipe(takeWhile(() => this.selectAlive)).subscribe((node) => {
-        this.keyManager.setActiveItem(index);
-        if (node.expandable) {
-          console.log('  tree 7777777777777 mmmmmmm node=', node);
-
-          // this.selectionToggle(node);
-        } else {
-          console.log('  leaf xxxxxxxx mmmmmmm node=', node);
-
-          // this.leafNodeSelectionToggle(node);
-        }
-      });
+      this.subscriptions.push(
+        item.selected.subscribe((node) => {
+          this.keyManager.setActiveItem(index);
+          if (node.expandable) {
+            this.selectionToggle(node);
+          } else {
+            this.leafNodeSelectionToggle(node);
+          }
+        })
+      );
     });
   }
 
@@ -327,6 +326,20 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
 
   onMenuItemChanged(event) {
     console.log(' menu item clicked=', event.value.name);
+  }
+
+  removeSubscriptions() {
+    this.subscriptions.forEach(sub => {
+      if (sub) {
+        sub.unsubscribe();
+      }
+    });
+    this.subscriptions = null;
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    this.removeSubscriptions();
   }
 
   @HostListener('keydown', ['$event'])
