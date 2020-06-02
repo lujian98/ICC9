@@ -16,7 +16,7 @@ export class IccBaseTreeComponent<T> implements OnInit, OnDestroy {
   @Input() tableConfigs: IccTableConfigs;
   columns: IccField[] = [];
 
-  private alive = true;
+  protected alive = true;
   protected tableEventService: IccTableEventService;
 
   nodeId: number; // TODO global unique node id????

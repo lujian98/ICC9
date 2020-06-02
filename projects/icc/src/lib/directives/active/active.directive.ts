@@ -8,7 +8,8 @@ import { Highlightable } from '@angular/cdk/a11y';
 export class IccActiveDirective <T> implements Highlightable {
   @Input('iccActive') item?: T;
   disabled: boolean;
-  @Output() selected = new EventEmitter<void>();
+  @Output() selected: EventEmitter<T> = new EventEmitter();
+
   @HostBinding('tabindex') tabIndex = 0;
 
   constructor(private element: ElementRef) { }
@@ -17,7 +18,7 @@ export class IccActiveDirective <T> implements Highlightable {
   @HostListener('keydown.space', ['$event'])
   @HostListener('click', ['$event'])
   manage(event: KeyboardEvent) {
-    this.selected.emit();
+    this.selected.emit(this.item);
   }
 
   // getLabel(): string {

@@ -3,6 +3,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { ListKeyManager, ListKeyManagerOption, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { takeWhile } from 'rxjs/operators';
 import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
@@ -20,6 +21,7 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
 
+  private selectAlive = false;
   keyManager: ActiveDescendantKeyManager<IccActiveDirective<FlatTreeNode>>;
   @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective<FlatTreeNode>>;
 
@@ -56,14 +58,28 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       this.data = this.treeFlattener.flattenNodes(this.data);
     }
     this.setTreeColumns();
-    console.log(' ttttttttttttttt this.listItems=', this.listItems) // TODO track listItem change
     this.keyManager = new ActiveDescendantKeyManager(this.listItems).withWrap().withTypeAhead(30);
+    this.setSelectkeyManager();
+    this.listItems.changes.pipe(takeWhile(() => this.alive)).subscribe(() => this.setSelectkeyManager());
+  }
+
+  private setSelectkeyManager() {
+    this.selectAlive = false;
     this.listItems.forEach((item, index) => {
-      item.selected.subscribe(() => {
+      this.selectAlive = true;
+      item.selected.pipe(takeWhile(() => this.selectAlive)).subscribe((node) => {
         this.keyManager.setActiveItem(index);
+        if (node.expandable) {
+          console.log('  tree 7777777777777 mmmmmmm node=', node);
+
+          // this.selectionToggle(node);
+        } else {
+          console.log('  leaf xxxxxxxx mmmmmmm node=', node);
+
+          // this.leafNodeSelectionToggle(node);
+        }
       });
     });
-    // this.keyManager.setActiveItem(0);
   }
 
   protected setTreeData() {
