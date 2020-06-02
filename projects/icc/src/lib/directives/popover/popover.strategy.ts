@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ComponentRef } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { combineLatest, forkJoin, fromEvent, merge, Observable } from 'rxjs';
 import { debounceTime, filter, map, share, startWith, switchMap, takeWhile } from 'rxjs/operators';
 
 export interface IccPopoverStrategy {
@@ -19,6 +19,7 @@ export abstract class IccBasePopoverStrategy implements IccPopoverStrategy {
   containerRef: ComponentRef<any>;
   abstract show$: Observable<Event>;
   abstract hide$: Observable<Event>;
+  change$: Observable<any>;
   constructor(
     protected document: Document,
     protected host: HTMLElement,
@@ -81,14 +82,10 @@ export class IccPopoverClickStrategy extends IccBasePopoverStrategy {
 }
 
 export class IccPopoverContextmenuStrategy extends IccBasePopoverStrategy {
-  protected click$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'click').pipe(
-    map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
-    share(),
-    takeWhile(() => this.alive)
-  );
-
   protected rightClick$: Observable<[boolean, Event]> = fromEvent<Event>(this.document, 'contextmenu').pipe(
-    map((event: Event) => [!this.containerRef && this.host.contains(event.target as Node), event] as [boolean, Event]),
+    map((event: Event) => {
+      return [this.host.contains(event.target as Node), event] as [boolean, Event];
+    }),
     share(),
     takeWhile(() => this.alive)
   );
@@ -102,13 +99,23 @@ export class IccPopoverContextmenuStrategy extends IccBasePopoverStrategy {
     takeWhile(() => this.alive)
   );
 
+  change$ = this.rightClick$.pipe(
+    filter(() => this.isOpened),
+    map(event => event),
+    takeWhile(() => this.alive)
+  );
+
+  protected click$: Observable<Event> = fromEvent<Event>(this.document, 'click').pipe(
+    map((event: Event) => event),
+    takeWhile(() => this.alive)
+  );
+
   hide$ = this.click$.pipe(
     filter(
-      ([shouldShow, event]) =>
-        !shouldShow && !(this.containerRef && this.containerRef.location.nativeElement.contains(event.target))
+      (event) =>
+       !(this.containerRef && this.containerRef.location.nativeElement.contains(event.target))
     ),
-    map(([, event]) => event),
+    map((event) => event),
     takeWhile(() => this.alive)
   );
 }
-

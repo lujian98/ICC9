@@ -139,7 +139,8 @@ export class IccOverlayService<T> {
 
   public isOverlayClosed(overlayRef: OverlayRef, popoverType: string, popoverLevel: number): boolean {
     const index = this.overlays.indexOf(overlayRef);
-    if (popoverType !== 'hover' || (popoverType === 'hover' && index === this.overlays.length - 1)) {
+    // if (popoverType !== 'hover' || (popoverType === 'hover' && index === this.overlays.length - 1)) {
+    if (index === this.overlays.length - 1) {
       this.destroyOverlay(overlayRef);
       return true;
     }

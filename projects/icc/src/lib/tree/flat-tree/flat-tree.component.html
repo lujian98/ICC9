@@ -6,6 +6,7 @@
   (scroll)="onViewportScroll($event)"
   (scrolledIndexChange)="nextBatch($event)">
 
+  <!--     (contextmenu)="$event.preventDefault()" -->
   <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl"
     cdkDropList
     [cdkDropListSortingDisabled]="true"

@@ -40,6 +40,7 @@ export class IccPopoverDirective<T> implements OnInit, OnDestroy {
         this.popoverStrategy = new IccPopoverClickStrategy(document, this.elementRef.nativeElement);
       } else if (this.popoverType === 'contextmenu') {
         this.popoverStrategy = new IccPopoverContextmenuStrategy(document, this.elementRef.nativeElement);
+        this.popoverStrategy.change$.subscribe((event: MouseEvent) => this.closePopover());
       } else {
         this.popoverStrategy = new IccPopoverHoverStrategy(document, this.elementRef.nativeElement);
       }
