@@ -1,12 +1,14 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Inject, HostListener, ViewChildren, QueryList } from '@angular/core';
+import { ListKeyManager, ListKeyManagerOption, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { IccTreeFlattener } from '../../datasource/tree-flattener';
 import { FlatTreeNode, ItemNode } from '../../models';
 import { IccBaseTreeComponent } from '../base-tree.component';
 import { IccTableEventService } from '../../table/services/table-event.service';
 import { IccMenuItemComponent } from '../../components/menu/menu-item/menu-item.component';
+import { IccActiveDirective } from '../../directives/active/active.directive';
 
 @Component({
   selector: 'icc-flat-tree',
@@ -17,6 +19,11 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
   treeControl = new FlatTreeControl<FlatTreeNode>(node => node.level, node => node.expandable);
   treeFlattener: IccTreeFlattener<ItemNode, FlatTreeNode>;
   nodeId = 200000;
+
+  keyManager: ActiveDescendantKeyManager<IccActiveDirective>;
+
+  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective>;
+
 
   menuItemComponent = IccMenuItemComponent;
   menuItems = {
@@ -51,6 +58,24 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       this.data = this.treeFlattener.flattenNodes(this.data);
     }
     this.setTreeColumns();
+
+    // setTimeout(() => {
+    console.log(' ttttttttttttttt this.listItems=', this.listItems)
+    // }, 200);
+
+
+
+    this.keyManager = new ActiveDescendantKeyManager(this.listItems).withWrap().withTypeAhead(30);
+    // this.listItems.first.tabIndex = 0;
+    // todo: subscribe ot listItems changes
+    this.listItems.forEach((item, index) => {
+      // TODO: prevent memory leak by unsubscribing
+      item.selected.subscribe(() => {
+        this.keyManager.setActiveItem(index);
+      });
+    });
+
+    this.keyManager.setActiveItem(0);
   }
 
   protected setTreeData() {
@@ -65,6 +90,9 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
       }
     });
     this.dataSource.data = [...treeData];
+
+    console.log(' ttttttttttttttt this.listItems=', this.listItems)
+    // this.keyManager.setActiveItem(2);
   }
 
   nodeExpand(node: FlatTreeNode) {
@@ -298,6 +326,22 @@ export class IccFlatTreeComponent extends IccBaseTreeComponent<FlatTreeNode> imp
 
   onMenuItemChanged(event) {
     console.log(' menu item clicked=', event.value.name);
+  }
+
+  @HostListener('keydown', ['$event'])
+  manage(event: KeyboardEvent) {
+    if (this.keyManager.activeItem) {
+      const name = this.keyManager.activeItem.label;
+      let idx = this.dataSource.data.findIndex(item => item.name === name);
+      if (idx + 1 === this.dataSource.data.length) {
+        idx = -1;
+      }
+      const node = this.dataSource.data[idx + 1];
+      const nextItem = this.listItems.filter(item => item.label === node.name);
+      this.keyManager.setActiveItem(nextItem[0]);
+    } else {
+      this.keyManager.setActiveItem(0);
+    }
   }
 }
 

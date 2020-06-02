@@ -1,12 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IccDateRange, IccDateRangeOptions, IccDateSelectionOptions, IccDatePresetItem } from 'icc';
+import {
+  Component, ViewChildren, ElementRef, AfterViewInit,
+  ContentChildren, AfterContentInit, QueryList, HostListener, OnInit, ViewChild
+} from '@angular/core';
+
+import { ListKeyManager, ListKeyManagerOption, ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+// import { NavigableListItemDirective } from './navigable-list-item.directive';
+
+import { IccDateRange, IccDateRangeOptions, IccDateSelectionOptions, IccDatePresetItem, IccActiveDirective } from 'icc';
 
 @Component({
   selector: 'doc-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })
-export class DocDatePickerComponent implements OnInit {
+export class DocDatePickerComponent implements OnInit, AfterViewInit {
+
+  constructor() { }
   range: IccDateRange = { fromDate: new Date(), toDate: new Date() };
   options: IccDateRangeOptions;
   dateoptions: IccDateSelectionOptions;
@@ -14,9 +23,29 @@ export class DocDatePickerComponent implements OnInit {
   presets: Array<IccDatePresetItem> = [];
   presets2: Array<IccDatePresetItem> = [];
 
+  list = [
+    'list item 1',
+    'list item 2',
+    'list item 3',
+    'list item 4',
+    'list item 5',
+  ];
+
+  /*
+  keyManager: ActiveDescendantKeyManager<NavigableListItemDirective>;
+  @ViewChildren(NavigableListItemDirective, { read: NavigableListItemDirective })
+  listItems: QueryList<NavigableListItemDirective>;
+  */
+
+  keyManager: ActiveDescendantKeyManager<IccActiveDirective>;
+  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective>;
+
   @ViewChild('pickerOne') pickerOne;
 
-  constructor() {}
+  @HostListener('keydown', ['$event'])
+  manage(event: KeyboardEvent) {
+    this.keyManager.onKeydown(event);
+  }
 
   ngOnInit() {
     const today = new Date();
@@ -41,6 +70,23 @@ export class DocDatePickerComponent implements OnInit {
       selectedDate: selectedDate,
       minMax: { fromDate: minDate, toDate: maxDate }
     };
+  }
+
+  ngAfterViewInit() {
+    // console.log( ' jjjjjjjjjjjj this.listItems =', this.listItems)
+
+    this.keyManager = new ActiveDescendantKeyManager(this.listItems).withWrap().withTypeAhead(30);
+    // this.listItems.first.tabIndex = 0;
+    // todo: subscribe ot listItems changes
+    this.listItems.forEach((item, index) => {
+      // TODO: prevent memory leak by unsubscribing
+      item.selected.subscribe(() => {
+        this.keyManager.setActiveItem(index);
+      })
+    })
+
+    this.keyManager.setActiveItem(0);
+
   }
 
   updateRange(range: IccDateRange) {
@@ -106,3 +152,4 @@ export class DocDatePickerComponent implements OnInit {
     return new Date(date.getFullYear(), date.getMonth(), diff);
   }
 }
+

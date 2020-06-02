@@ -11,33 +11,8 @@
     cdkDropList
     [cdkDropListSortingDisabled]="true"
     (cdkDropListDropped)="drop($event)">
-    <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node"
-      [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="menuItems"
-      (iccItemChangedEvent)="onMenuItemChanged($event)"
-      cdkDrag
-      (cdkDragStarted)="dragStart(node)"
-      (cdkDragMoved)="dragMoved($event)"
-      [cdkDragData]="node">
-      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
-        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
-        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
-          <input type="checkbox"
-          [checked]="selection.isSelected(node)"
-          (change)="leafNodeSelectionToggle(node)">
-          {{ node.name }} - A1
-        </span>
-      </div>
-      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
-        [ngStyle]="{
-          'width': column.width + 'px',
-          'left':column.left,
-          'right':column.right,
-          'display':column.hidden?'none':'inline-block'
-        }">
-        {{ node[column.name] }} - X2
-      </div>
-    </cdk-tree-node>
     <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node; when: hasChild"
+      [iccActive]="node.name"
       [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="menuItems"
       (iccItemChangedEvent)="onMenuItemChanged($event)"
       cdkDrag
@@ -68,7 +43,33 @@
         }">
         {{ node[column.name] }} - Y2
       </div>
-
+    </cdk-tree-node>
+    <cdk-tree-node [ngStyle]="{'width': tableWidth + 'px'}" *cdkTreeNodeDef="let node"
+      [iccActive]="node.name"
+      [iccPopover]="menuItemComponent" popoverType='contextmenu' [iccPopoverContext]="menuItems"
+      (iccItemChangedEvent)="onMenuItemChanged($event)"
+      cdkDrag
+      (cdkDragStarted)="dragStart(node)"
+      (cdkDragMoved)="dragMoved($event)"
+      [cdkDragData]="node">
+      <div class="icc-tree-node" [ngStyle]="{'width': treeColumn.width + 'px'}"
+        [attr.tree-node-id]="node.nodeId" [attr.id]="node.nodeId">
+        <span [ngStyle]="{'padding-left': node.level * 20 + 'px'}">
+          <input type="checkbox"
+          [checked]="selection.isSelected(node)"
+          (change)="leafNodeSelectionToggle(node)">
+          {{ node.name }} - A1
+        </span>
+      </div>
+      <div class="icc-table-column" *ngFor="let column of visibleColumns | slice : 1; let colIndex = index;"
+        [ngStyle]="{
+          'width': column.width + 'px',
+          'left':column.left,
+          'right':column.right,
+          'display':column.hidden?'none':'inline-block'
+        }">
+        {{ node[column.name] }} - X2
+      </div>
     </cdk-tree-node>
   </cdk-tree>
 

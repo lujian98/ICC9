@@ -20,7 +20,12 @@
 
 
 
+  <li iccActive *ngFor="let item of list"> {{ item }} </li>
+
+
+
 <!--
+   (navSelected)="onSelected(item)"
 
     <div *ngIf="value" iccSuffix (click)="clearField($event)">
     <i class="fas fa-times" style="color:orange"></i>

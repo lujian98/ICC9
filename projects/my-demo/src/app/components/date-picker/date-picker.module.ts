@@ -2,14 +2,15 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IccDatePickerModule, IccFormFieldModule } from 'icc';
+import { IccDatePickerModule, IccFormFieldModule, IccActiveModule } from 'icc';
 
 import { DocDatePickerComponent } from './date-picker.component';
-
+import { NavigableListItemDirective } from './navigable-list-item.directive';
 
 @NgModule({
   declarations: [
     DocDatePickerComponent,
+    NavigableListItemDirective,
   ],
   imports: [
     NoopAnimationsModule,
@@ -17,6 +18,7 @@ import { DocDatePickerComponent } from './date-picker.component';
     ReactiveFormsModule,
     IccDatePickerModule,
     IccFormFieldModule,
+    IccActiveModule
   ],
   providers: [],
 })
