@@ -13,7 +13,7 @@ import { IccDateRange, IccDateRangeOptions, IccDateSelectionOptions, IccDatePres
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss']
 })
-export class DocDatePickerComponent implements OnInit, AfterViewInit {
+export class DocDatePickerComponent<T> implements OnInit, AfterViewInit {
 
   constructor() { }
   range: IccDateRange = { fromDate: new Date(), toDate: new Date() };
@@ -37,8 +37,8 @@ export class DocDatePickerComponent implements OnInit, AfterViewInit {
   listItems: QueryList<NavigableListItemDirective>;
   */
 
-  keyManager: ActiveDescendantKeyManager<IccActiveDirective>;
-  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective>;
+  keyManager: ActiveDescendantKeyManager<IccActiveDirective<T>>;
+  @ViewChildren(IccActiveDirective, { read: IccActiveDirective }) listItems: QueryList<IccActiveDirective<T>>;
 
   @ViewChild('pickerOne') pickerOne;
 
