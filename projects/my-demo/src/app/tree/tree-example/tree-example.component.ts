@@ -7,6 +7,8 @@ import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component'
 import { FoodNode, TREE_DATA } from '../models/tree-data';
 import { LEVEL_TREE_DATA } from '../models/level-tree-data';
 
+import { IccPopoverService } from './popover.service';
+
 const MAX_LEVELS = 220; // 2500/3 for 100,000 node
 const MAX_NODES_PER_LEVEL = 2;
 
@@ -161,9 +163,15 @@ export class TreeExampleComponent implements OnInit {
   cMenuItems: any;
 
   constructor(
-  ) { }
+    private popoverService: IccPopoverService
+  ) {
+
+  }
 
   ngOnInit() {
+    this.popoverService.content = this.tooltip;
+    this.popoverService.context = this.tooltipdata;
+
     this.cMenuItems = {
       menuItemConfigs: this.testMenuItems.children
     };
@@ -175,6 +183,11 @@ export class TreeExampleComponent implements OnInit {
     }
     // console.log('fffffffffffffffffff this.nestTreeData =', this.nestTreeData)
     // this.data = this.nestTreeData;
+  }
+
+  clickPopoverService(e: MouseEvent) {
+    console.log( 'e=', e)
+    this.popoverService.openPopover(e);
   }
 
   generateNode(level: number, index: number): ItemNode {

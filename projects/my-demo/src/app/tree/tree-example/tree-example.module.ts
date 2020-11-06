@@ -7,7 +7,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { IccTableModule, IccTreeModule, IccPopoverModule, IccPortalModule, IccToolbarModule, IccMenuModule} from 'icc';
 import { TreeExampleComponent } from './tree-example.component';
 import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component';
-
+import { IccPopoverService } from './popover.service';
 @NgModule({
   declarations: [
     TreeExampleComponent,
@@ -31,7 +31,7 @@ import { TooltipDemoComponent } from '../../tooltip-demo/tooltip-demo.component'
   entryComponents: [
     TooltipDemoComponent
   ],
-  providers: [],
+  providers: [IccPopoverService],
   bootstrap: []
 })
 export class TreeExampleModule { }
